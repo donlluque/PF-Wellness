@@ -1,26 +1,15 @@
-import {  } from "./actionConst";
-
+import {} from "./types";
 
 const initialState = {
-    doctors : [],
-    patients : [],
-
+  doctors: [],
+  patients: [],
 };
 
-
-
-export default function rootReducer (state = initialState, action){
-    switch (action.type) {
-
-
-
-
-
-
-
-        default: 
-            return {
-                ...state
-            }
-    }
-};
+export default function rootReducer(state = initialState, action) {
+  switch (action.type) {
+    default:
+      return {
+        ...state,
+      };
+  }
+}

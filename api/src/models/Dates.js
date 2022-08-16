@@ -4,10 +4,10 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "doctor",
+    "dates",
     {
       id: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
       },
@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      hora_final: {
+      hora_inicial: {
         type: DataTypes.TIME,
         allowNull: false,
       },

@@ -1,6 +1,6 @@
 ![ClinicaLogo](https://)
 
-# Proyecto Final - Clínica .....
+# Proyecto Final - Clínica Wellness
 La propuesta de Proyecto Final consiste en la implantación de un sistema de turnos aplicado a una Clínica de Rehabilitación Física.
 Si bien usaremos como ejemplo dicha clínica, el PF se puede adaptar para todo tipo de clínica o sanatorio que requiera una solución en la organización de horarios tanto para pacientes como médicos así como también la administración de la información personal de cada uno.
 Como desglose de lo explicado anteriormente consideramos que hay dos lados importantes que deben ser diferenciados para dicha implementación: el lado del paciente y el lado médico.

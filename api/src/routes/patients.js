@@ -1,11 +1,16 @@
 const { Router } = require("express");
 const router = Router();
-const { Doctor, Patient } = require("../db.js");
+const { Patient } = require("../db.js");
+const { getAllPatient } = require("../controllers/index.js");
 
 // PRUEBA DE FUNCIONAMIENTO DE RUTA
 router.get("/", async (req, res, next) => {
   try {
-    res.status(200).send("La ruta funciona OK");
+    let allPatient = await getAllPatient();
+
+    await Patient.bulkCreate(allPatient);
+
+    res.status(200).send(allPatient);
   } catch (error) {
     next(error);
   }

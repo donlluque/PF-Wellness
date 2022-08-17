@@ -76,9 +76,9 @@ const { Doctor, Patient, Dates, Prepaid_health, Specialities } =
 Patient.belongsToMany(Doctor, { through: Dates });
 Doctor.belongsToMany(Patient, { through: Dates });
 
-Specialities.hasMany(Doctor, { foreignKey: "especialidades_id" });
+Specialities.hasMany(Doctor, { foreignkey: "especialidades_id" });
 
-Doctor.belongsTo(Specialities, { foreignKey: "especialidades_id" });
+Doctor.belongsTo(Specialities, { foreignkey: "especialidades_id" });
 
 // Doctor.belongsToMany(Patient, { through: "doctorPatient", timestamps: false });
 // Patient.belongsToMany(Doctor, { through: "doctorPatient", timestamps: false });

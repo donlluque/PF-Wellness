@@ -7,7 +7,7 @@ module.exports = (sequelize) => {
     "patient",
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
       },
@@ -38,7 +38,7 @@ module.exports = (sequelize) => {
       },
 
       phone: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
 
@@ -58,7 +58,7 @@ module.exports = (sequelize) => {
       },
 
       birthday: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
       },
 

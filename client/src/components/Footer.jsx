@@ -18,8 +18,15 @@ function Footer() {
             <p>Av. Colón 299, Córdoba, Argentina</p>
         </div>
       </div>
+      <div>
+        <h3>WELLNESS</h3>
+        <p>"Constituirnos como un centro líder en rehabilitación física, <br></br>
+        con los mejores profesionales y la más alta calidad de atención<br></br>
+        a nuestros pacientes."
+        </p>
+      </div>
      </div>
     );
   }
-  
+
   export default Footer;

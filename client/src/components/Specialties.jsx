@@ -1,5 +1,8 @@
+import React from "react";
+
 function Specialties() {
-  return <div>
+  return (
+  <div>
     <div>Especialidades</div>
     <div>
       <h3>Deportologia</h3>
@@ -111,7 +114,8 @@ function Specialties() {
     </div>
 
 
-  </div>;
+  </div>
+  );
 }
 
 export default Specialties;

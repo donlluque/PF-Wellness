@@ -26,7 +26,16 @@ function About() {
       </div>
     </div>
    <h3>Nuestra misión es brindar una atención médica de primer nivel y lograr la satisfacción total de nuestros pacientes.</h3>
+   <h2>CONTACTO</h2>
+   <div>
+    <p>Tel: 0800-354-5050
+       Whatsapp: +54 9 351 365-4238
+       Email: consultaswellness@gmail.com
+       Dirección: Av. Colón 299, Córdoba, Argentina
+    </p>
+    </div>
   </div>
+              
   );
 }
 

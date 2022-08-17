@@ -1,3 +1,4 @@
+import React from "react";
 import img1 from "../assets/depositphotos_230692850-stock-photo-man-having-chiropractic-arm-adjustment.jpg";
 import img2 from "../assets/csc-instalaciones-gimnasios-768x446.jpg";
 import img3 from "../assets/depositphotos_41256383-stock-photo-patient-being-assisted-by-physical.jpg";

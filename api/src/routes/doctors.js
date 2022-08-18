@@ -28,7 +28,7 @@ router.get("/", async (req, res, next) => {
 
       nombre.length
         ? res.status(200).send(nombre)
-        : res.status(400).send("y eso");
+        : res.status(400).send("Not exist");
     } else if (name) {
       const nombre = await allDoctors.filter((e) =>
         e.name.toLowerCase().includes(name.toLowerCase())
@@ -45,7 +45,7 @@ router.get("/", async (req, res, next) => {
         : res.send("it is not exist this name");
     }
     res.status(200).send(allDoctors);
-    // console.log(allDoctors, "soy get");
+    // console.log(allDoctors, "soy allDoctors");
   } catch (error) {
     res
       .status(404)

@@ -1,5 +1,5 @@
 const axios = require("axios");
-const e = require("express");
+const express = require("express");
 const { Doctor } = require("../db");
 
 const getAllDoctor = async () => {
@@ -73,8 +73,6 @@ const getAllPatient = async () => {
   return allPatient;
 };
 
-
-
 const getAllPrepaid = async () => {
   const prepaid = await axios.get(
     "https://62fce4526e617f88dea06652.mockapi.io/prepaid_health"
@@ -96,5 +94,5 @@ module.exports = {
   getAllDoctor,
   getAllSpecialities,
   getAllPatient,
-  getAllPrepaid
+  getAllPrepaid,
 };

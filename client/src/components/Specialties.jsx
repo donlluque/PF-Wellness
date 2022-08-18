@@ -23,7 +23,7 @@ function Specialties() {
         <li>Hernias</li>
         <li>Ligamentos</li>
       </ul>
-      <img alt="deportologia" src={deportologia}/>
+      <img alt="deportologia" src={deportologia} width="200px" height="250px"/>
     </div>
 
     <div>
@@ -39,7 +39,7 @@ function Specialties() {
         <li>Neuralgia</li>
         <li>Respiratoria</li>
       </ul>
-      <img alt="kineyfisio" src={kinesiologia}/>
+      <img alt="kineyfisio" src={kinesiologia} width="200px" height="250px"/>
     </div>
 
     <div>
@@ -53,7 +53,7 @@ function Specialties() {
         <li>Miembro Inferior</li>
         <li>Miembro Superior</li>
       </ul>
-      <img alt="osteopatia" src={osteopatia}/>
+      <img alt="osteopatia" src={osteopatia} width="200px" height="250px"/>
     </div>
 
     <div>
@@ -70,7 +70,7 @@ function Specialties() {
         <li>Dorsalgias</li>
         <li>Hombro</li>
       </ul>
-      <img alt="quiropraxia" src={quiropraxia}/>
+      <img alt="quiropraxia" src={quiropraxia} width="200px" height="250px"/>
     </div>
     
     <div>
@@ -85,7 +85,7 @@ function Specialties() {
         <li>Artrosis</li>
         <li>Reumatismo</li>
       </ul>
-      <img alt="reumatologia" src={reumatologia}/>
+      <img alt="reumatologia" src={reumatologia} width="200px" height="250px"/>
     </div>
    
     <div>
@@ -100,7 +100,7 @@ function Specialties() {
         <li>Mano</li>
         <li>Pie</li>
       </ul>
-      <img alt="terapia de dolor" src={terapiaDeDolor}/>
+      <img alt="terapia de dolor" src={terapiaDeDolor} width="200px" height="250px"/>
     </div>
    
     <div>
@@ -117,7 +117,7 @@ function Specialties() {
         <li>Pie</li>
         <li>Rodilla</li>
       </ul>
-      <img alt="traumatologia" src={traumatologia}/>
+      <img alt="traumatologia" src={traumatologia} width="200px" height="250px"/>
     </div>
 
 

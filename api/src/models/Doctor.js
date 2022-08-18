@@ -17,11 +17,6 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      last_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-
       medic_id: {
         type: DataTypes.STRING,
         allowNull: false,

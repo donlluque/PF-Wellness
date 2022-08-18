@@ -13,7 +13,6 @@ const getAllDoctor = async () => {
     return {
       id: e.id,
       name: e.name,
-      last_name: e.last_name,
       medic_id: e.medic_id,
       general_area: e.general_area,
       especialidades_id: e.especialidades_id,

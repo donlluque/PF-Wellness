@@ -16,23 +16,19 @@ router.get("/", async (req, res, next) => {
     // console.log(allDoctors);
     if (!doctorsDb.length) {
       await Doctor.bulkCreate(allDoctors);
-      res.status(200).send(allDoctors);
     }
 
     if (name) {
-      const nombre = await allDoctors.filter(
-        (e) =>
-          e.name.toLowerCase().includes(name.toLowerCase())
+      const nombre = await allDoctors.filter((e) =>
+        e.name.toLowerCase().includes(name.toLowerCase())
       );
 
       nombre.length
         ? res.status(200).send(nombre)
         : res.status(400).send("Not exist");
-
     } else {
       res.status(200).send(allDoctors);
     }
-
   } catch (error) {
     res
       .status(404)

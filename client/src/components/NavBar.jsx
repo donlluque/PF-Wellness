@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 function NavBar() {
   return (
     <Box position="absolute" w="100%">
-      <Flex m={2}>
+      <Flex m={2} >
         <Image
           boxSize="100px"
           objectFit="cover"

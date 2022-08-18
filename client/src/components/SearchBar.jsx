@@ -1,10 +1,13 @@
 import React from "react";
+import { searchByName } from "../redux/actions";
 import { useState } from "react";
-//import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { IconButton, Input, Box } from '@chakra-ui/react';
+import { GrSearch } from "react-icons/gr";
 
 
 export default function SearchBar() {
-   // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const [doctor, setDoctor] = useState("");
 
  function handleChange(e) {
@@ -15,19 +18,17 @@ export default function SearchBar() {
  function handleClick(e) {
     
     if(doctor){
-        //dispatch(getPokeByName(pokemon));
+        dispatch(searchByName(doctor));
         setDoctor("");
     }else{
-        alert ("Insert a Pokemon name")
+        alert ("Por favor insertar un profesional")
     }
  }
 
     return(
-        <div >
-            <input type="text" value={doctor} placeholder="Buscar Profesional" onChange={e => handleChange(e)}/>
-            <button type="button" onClick={e => handleClick(e)}>
-                Buscar
-            </button>
-        </div>
+        <Box position="absolute" display="flex" ml="25rem" w="20rem" mt={1}>
+            <Input type="text" value={doctor} placeholder="Buscar Profesional" variant='flushed' onChange={e => handleChange(e)}/>
+            <IconButton onClick={e => handleClick(e)} aria-label='Search database' icon={<GrSearch />} />
+        </Box>
     )
 }

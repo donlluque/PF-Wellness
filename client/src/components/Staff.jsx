@@ -1,9 +1,10 @@
 import React from "react";
-import { getDoctors } from "../redux/actions";
+import {  getDoctors } from "../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import DoctorCard from "./DoctorCard";
 import NavStaff from "./NavStaff";
+import { Box } from '@chakra-ui/react';
 
 function Staff() {
 
@@ -15,9 +16,9 @@ function Staff() {
   },[dispatch])
   return (
   <div>
-    <div>
+    <Box position="absolute" m={20} ml="25rem" flexDirection="row" align="center">
     <NavStaff/>
-    </div>
+    </Box>
 {
   allDoctors && allDoctors
   .map(doc => {

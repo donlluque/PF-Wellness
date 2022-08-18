@@ -4,6 +4,8 @@ const { Router } = require("express");
 const doctors = require("./doctors.js");
 const patients = require("./patients.js");
 const specialities = require("./specialities.js");
+const prepaid_health = require ("./prepaid_health.js")
+const dates = require ("./dates.js")
 
 const router = Router();
 
@@ -12,5 +14,7 @@ const router = Router();
 router.use("/doctors", doctors);
 router.use("/patients", patients);
 router.use("/specialities", specialities);
+router.use("/prepaid_health", prepaid_health);
+router.use("/dates", dates);
 
 module.exports = router;

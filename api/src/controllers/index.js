@@ -73,8 +73,28 @@ const getAllPatient = async () => {
   return allPatient;
 };
 
+
+
+const getAllPrepaid = async () => {
+  const prepaid = await axios.get(
+    "https://62fce4526e617f88dea06652.mockapi.io/prepaid_health"
+  );
+
+  const allPrepaid = await prepaid.data.map((p) => {
+    return {
+      id: p.id,
+      name: p.name,
+      address: p.address,
+      phone: p.phone,
+      logo: p.logo,
+    };
+  });
+  return allPrepaid;
+};
+
 module.exports = {
   getAllDoctor,
   getAllSpecialities,
   getAllPatient,
+  getAllPrepaid
 };

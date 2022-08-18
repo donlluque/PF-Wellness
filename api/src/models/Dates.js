@@ -1,4 +1,6 @@
 const { DataTypes } = require("sequelize");
+const { Doctor } = require("./Doctor");
+const { Patient } = require("./Patient");
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
@@ -27,14 +29,20 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      doctor_id: {
+      doctorId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        references: {
+          model: Doctor,
+          key: "id",
+        },
       },
 
-      patient_id: {
+      patientId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        references: {
+          model: Patient, // 'Movies' would also work
+          key: "id",
+        },
       },
 
       history_id: {

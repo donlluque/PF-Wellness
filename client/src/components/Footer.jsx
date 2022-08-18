@@ -1,47 +1,90 @@
+import {
+  Box,
+  Image,
+  Heading,
+  List,
+  ListItem,
+  ListIcon,
+  Container,
+  Text,
+} from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
+import { BsTelephone } from "react-icons/bs";
+import { ImMobile } from "react-icons/im";
+import { MdAlternateEmail, MdOutlinePlace } from "react-icons/md";
+import Logo from "../assets/logoPf.jpeg";
 
 function Footer() {
-    return(
-      <div>
-      <div>
-        <h4>CONTACTO</h4>
-        <div>
-           <p>0800-354-5050</p>
-        </div>
-        <div>
-          <p>+54 9 351 365-4238</p>
-        </div>
-        <div>
-            <p>consultaswellness@gmail.com</p>
-        </div>
-        <div>
-            <p>Av. Colón 299, Córdoba, Argentina</p>
-        </div>
-      </div>
-      <div>
-        <h3>WELLNESS</h3>
-        <p>"Constituirnos como un centro líder en rehabilitación física, <br></br>
-        con los mejores profesionales y la más alta calidad de atención<br></br>
-        a nuestros pacientes."
-        </p>
-      </div>
-      <div>
-        <Link to={"/about"}>
-          <button>Nosotros</button>
-        </Link>
-        <Link to={"/especialidades"}>
-          <button>Especialidades</button>
-        </Link>
-        <Link to={"/prestaciones"}>
-          <button>Prestaciones</button>
-        </Link>
-        <Link to={"/staff"}>
-          <button>Staff</button>
-        </Link>
-      </div>
-     </div>
-    );
-  }
+  return (
+    <Box
+      display={{ md: "flex" }}
+      alignItems="center"
+      justifyContent="space-evenly"
+      p="2rem"
+      bgColor="#c4c776"
+    >
+      <Box>
+        <Image src={Logo} w="15rem" m="1rem" />
+        <Container>
+          <Text as="i">
+            "Constituirnos como un centro líder en rehabilitación física, con
+            los mejores profesionales y la más alta calidad de atención a
+            nuestros pacientes."
+          </Text>
+        </Container>
+      </Box>
+      <Box>
+        <Heading as="h6" size="sm" m="1rem">
+          CONTACTO
+        </Heading>
+        <List spacing={3}>
+          <ListItem>
+            <ListIcon as={BsTelephone} color="green.500" />
+            0800-354-5050
+          </ListItem>
+          <ListItem>
+            <ListIcon as={ImMobile} color="green.500" />
+            +54 9 351 365-4238
+          </ListItem>
+          <ListItem>
+            <ListIcon as={MdAlternateEmail} color="green.500" />
+            consultaswellness@gmail.com
+          </ListItem>
+          {/* You can also use custom icons from react-icons */}
+          <ListItem>
+            <ListIcon as={MdOutlinePlace} color="green.500" />
+            Av. Colón 299, Córdoba, Argentina
+          </ListItem>
+        </List>
+      </Box>
+      <Box>
+        <List spacing={3}>
+          <ListItem>
+            <Link to={"/about"}>
+              <button>Nosotros</button>
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link to={"/especialidades"}>
+              <button>Especialidades</button>
+            </Link>
+          </ListItem>
+          {/* You can also use custom icons from react-icons */}
+          <ListItem>
+            <Link to={"/prestaciones"}>
+              <button>Prestaciones</button>
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link to={"/staff"}>
+              <button>Staff</button>
+            </Link>
+          </ListItem>
+        </List>
+      </Box>
+    </Box>
+  );
+}
 
-  export default Footer;
+export default Footer;

@@ -12,6 +12,7 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { FcNext } from "react-icons/fc";
 
 function Home() {
   return (
@@ -21,7 +22,7 @@ function Home() {
           Clinica de fisioterapia y rehabilitación física
         </Heading>
       </Center>
-      <Container border="1px solid red" maxW="100vw" centerContent>
+      <Container maxW="100vw" centerContent>
         <Flex direction="row" m={5}>
           <Box>
             <Heading as="h3" size="lg" mt={6} textAlign="center">
@@ -64,18 +65,18 @@ function Home() {
             <Container m={3} w="40rem">
               <List spacing={3}>
                 <ListItem>
-                  <ListIcon /> Excelencia médica
+                  <ListIcon as={FcNext} /> Excelencia médica
                 </ListItem>
                 <ListItem>
-                  <ListIcon />
+                  <ListIcon as={FcNext} />
                   Atención personalizada
                 </ListItem>
                 <ListItem>
-                  <ListIcon />
+                  <ListIcon as={FcNext} />
                   Compromiso
                 </ListItem>
                 <ListItem>
-                  <ListIcon />
+                  <ListIcon as={FcNext} />
                   Respeto
                 </ListItem>
               </List>
@@ -94,29 +95,80 @@ function Home() {
           </Button>
         </Link>
       </Container>
-      <Container maxW="100vw" centerContent bgColor="#fcf7d7">
-        <Heading as="h2" size="lg" m={8}>
+      <Container maxW="100vw" centerContent bgColor="#fcf7d7" pb="2rem">
+        <Heading as="h2" size="xl" m={8}>
           Especialidades médicas destacadas
         </Heading>
         <SimpleGrid columns={2} spacing={20}>
-          <Box bg="tomato" height="100px" w="200px">
-            Especialidad 1
+          <Box display="flex" alignItems="center">
+            <Image
+              src="https://www.clinicalascondes.cl/Dev_CLC/media/Imagenes/home-traumatologia-2019/intro-traumatologia.jpg"
+              alt="img"
+              borderRadius="50%"
+              boxSize="8rem"
+              m="1rem"
+            />
+            <Box>
+              <Heading as="h2" size="lg">
+                Traumatología
+              </Heading>
+              <Link to="/especialidades">
+                <Button variant="ghost">Leer más &gt;&gt;</Button>
+              </Link>
+            </Box>
           </Box>
-          <Box bg="tomato" height="100px" w="200px">
-            Especialidad 2
+          <Box display="flex" alignItems="center">
+            <Image
+              src="https://blog.agendapro.com/hubfs/kine%20aparatos%20redes%20%281%29.jpg"
+              alt="img"
+              borderRadius="50%"
+              boxSize="8rem"
+              m="1rem"
+            />
+            <Box>
+              <Heading as="h2" size="lg">
+                Kinesiología
+              </Heading>
+              <Link to="/especialidades">
+                <Button variant="ghost">Leer más &gt;&gt;</Button>
+              </Link>
+            </Box>
           </Box>
-          <Box bg="tomato" height="100px" w="200px">
-            Especialidad 3
+          <Box display="flex" alignItems="center">
+            <Image
+              src="https://www.centromartesana.it/wp-content/uploads/2021/05/osteopatia-1.jpg"
+              alt="img"
+              borderRadius="50%"
+              boxSize="8rem"
+              m="1rem"
+            />
+            <Box>
+              <Heading as="h2" size="lg">
+                Osteopatía
+              </Heading>
+              <Link to="/especialidades">
+                <Button variant="ghost">Leer más &gt;&gt;</Button>
+              </Link>
+            </Box>
           </Box>
-          <Box bg="tomato" height="100px" w="200px">
-            Especialidad 4
+          <Box display="flex" alignItems="center">
+            <Image
+              src="https://centropelegri.com.ar/wp-content/uploads/2021/07/Deportologia-2-300x208.jpg"
+              alt="img"
+              borderRadius="50%"
+              boxSize="8rem"
+              m="1rem"
+            />
+            <Box>
+              <Heading as="h2" size="lg">
+                Deportología
+              </Heading>
+              <Link to="/especialidades">
+                <Button variant="ghost">Leer más &gt;&gt;</Button>
+              </Link>
+            </Box>
           </Box>
         </SimpleGrid>
-        <Link to="/especialidades">
-          <Button colorScheme="blue" m={4}>
-            Ver todas
-          </Button>
-        </Link>
       </Container>
     </>
   );

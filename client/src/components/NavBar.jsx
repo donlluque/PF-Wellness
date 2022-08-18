@@ -8,15 +8,17 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import Logo from "../assets/logoPf.jpeg";
 
 function NavBar() {
   return (
     <Box position="absolute" w="100%">
       <Flex m={2}>
         <Image
-          boxSize="100px"
+          w="15rem"
+          ml="0.5rem"
           objectFit="cover"
-          src="https://bit.ly/dan-abramov"
+          src={Logo}
           alt="Dan Abramov"
         />
         <Spacer />

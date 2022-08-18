@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
     return(
@@ -24,6 +25,20 @@ function Footer() {
         con los mejores profesionales y la más alta calidad de atención<br></br>
         a nuestros pacientes."
         </p>
+      </div>
+      <div>
+        <Link to={"/about"}>
+          <button>Nosotros</button>
+        </Link>
+        <Link to={"/especialidades"}>
+          <button>Especialidades</button>
+        </Link>
+        <Link to={"/prestaciones"}>
+          <button>Prestaciones</button>
+        </Link>
+        <Link to={"/staff"}>
+          <button>Staff</button>
+        </Link>
       </div>
      </div>
     );

@@ -46,7 +46,7 @@ router.get("/", async (req, res, next) => {
         ? res.status(200).send(apellido)
         : res.send("it is not exist this name");
     }
-    res.status(200).send(allDoctors);
+    else res.status(200).send(allDoctors);
     // console.log(allDoctors, "soy allDoctors");
   } catch (error) {
     res

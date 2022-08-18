@@ -7,12 +7,14 @@ const { getAllSpecialities } = require("../controllers/index");
 router.get("/", async (req, res, next) => {
   try {
     const allSpecialities = await getAllSpecialities();
-    if (!allSpecialities) {
+    const specialitiesDb = await Specialities.findAll();
+    if (!specialitiesDb.length) {
       await Specialities.bulkCreate(allSpecialities);
+      res.status(200).send(allSpecialities);
+    } else {
       res.status(200).send(allSpecialities);
     }
     console.log(allSpecialities, "soy allSpecialities");
-    res.status(200).send(allSpecialities);
   } catch (error) {
     res.status(404).send("Error en el catch getSpecialities", error);
   }

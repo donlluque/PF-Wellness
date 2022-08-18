@@ -1,4 +1,11 @@
 import React from "react";
+import deportologia from "../img/deportologia.jpg";
+import kinesiologia from "../img/kine.jpg";
+import osteopatia from "../img/osteo.jpg";
+import quiropraxia from "../img/quiropraxia.jpg";
+import reumatologia from "../img/reumato.jpg";
+import terapiaDeDolor from "../img/terapiadedolor.jpeg";
+import traumatologia from "../img/traumato.webp";
 
 function Specialties() {
   return (
@@ -16,7 +23,7 @@ function Specialties() {
         <li>Hernias</li>
         <li>Ligamentos</li>
       </ul>
-      <img/>
+      <img alt="deportologia" src={deportologia}/>
     </div>
 
     <div>
@@ -32,7 +39,7 @@ function Specialties() {
         <li>Neuralgia</li>
         <li>Respiratoria</li>
       </ul>
-      <img/>
+      <img alt="kineyfisio" src={kinesiologia}/>
     </div>
 
     <div>
@@ -46,7 +53,7 @@ function Specialties() {
         <li>Miembro Inferior</li>
         <li>Miembro Superior</li>
       </ul>
-      <img/>
+      <img alt="osteopatia" src={osteopatia}/>
     </div>
 
     <div>
@@ -63,7 +70,7 @@ function Specialties() {
         <li>Dorsalgias</li>
         <li>Hombro</li>
       </ul>
-      <img/>
+      <img alt="quiropraxia" src={quiropraxia}/>
     </div>
     
     <div>
@@ -78,7 +85,7 @@ function Specialties() {
         <li>Artrosis</li>
         <li>Reumatismo</li>
       </ul>
-      <img/>
+      <img alt="reumatologia" src={reumatologia}/>
     </div>
    
     <div>
@@ -93,7 +100,7 @@ function Specialties() {
         <li>Mano</li>
         <li>Pie</li>
       </ul>
-      <img/>
+      <img alt="terapia de dolor" src={terapiaDeDolor}/>
     </div>
    
     <div>
@@ -110,7 +117,7 @@ function Specialties() {
         <li>Pie</li>
         <li>Rodilla</li>
       </ul>
-      <img/>
+      <img alt="traumatologia" src={traumatologia}/>
     </div>
 
 

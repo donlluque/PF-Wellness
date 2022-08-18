@@ -5,7 +5,7 @@ const { getAllDoctor } = require("../controllers/index");
 
 // PRUEBA DE FUNCIONAMIENTO DE RUTA
 router.get("/", async (req, res, next) => {
-  const { name, last_name } = req.query;
+  const { name } = req.query;
 
   // console.log(req.query);
 
@@ -19,35 +19,20 @@ router.get("/", async (req, res, next) => {
       res.status(200).send(allDoctors);
     }
 
-    if (name && last_name) {
+    if (name) {
       const nombre = await allDoctors.filter(
         (e) =>
-          e.name.toLowerCase().includes(name.toLowerCase()) &&
-          e.last_name.toLowerCase().includes(last_name.toLowerCase())
+          e.name.toLowerCase().includes(name.toLowerCase())
       );
-
-      // console.log(nombre, "soy nombre");
 
       nombre.length
         ? res.status(200).send(nombre)
         : res.status(400).send("Not exist");
-    } else if (name) {
-      const nombre = await allDoctors.filter((e) =>
-        e.name.toLowerCase().includes(name.toLowerCase())
-      );
-      nombre.length
-        ? res.status(200).send(nombre)
-        : res.send("it is not exist this name");
-    } else if (last_name) {
-      const apellido = await allDoctors.filter((e) =>
-        e.last_name.toLowerCase().includes(last_name.toLowerCase())
-      );
-      apellido.length
-        ? res.status(200).send(apellido)
-        : res.send("it is not exist this name");
+
+    } else {
+      res.status(200).send(allDoctors);
     }
-    else res.status(200).send(allDoctors);
-    // console.log(allDoctors, "soy allDoctors");
+
   } catch (error) {
     res
       .status(404)

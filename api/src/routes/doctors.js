@@ -7,7 +7,7 @@ const { getAllDoctor } = require("../controllers/index");
 router.get("/", async (req, res, next) => {
   const { name, last_name } = req.query;
 
-  console.log(req.query);
+  // console.log(req.query);
 
   try {
     const allDoctors = await getAllDoctor();

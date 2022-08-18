@@ -1,5 +1,42 @@
+import React from "react";
+import { getDoctors } from "../redux/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import DoctorCard from "./DoctorCard";
+import NavStaff from "./NavStaff";
+
 function Staff() {
-  return <div>Staff</div>;
+
+  const dispatch = useDispatch();
+  const allDoctors = useSelector((state) => state.doctors);
+
+  useEffect(() =>{
+    dispatch(getDoctors());
+  },[dispatch])
+  return (
+  <div>
+    <div>
+    <NavStaff/>
+    </div>
+{
+  allDoctors && allDoctors
+  .map(doc => {
+    return(
+      <div key={doc.id}>
+        <DoctorCard
+        name={doc.name}
+        last_name={doc.last_name}
+        picture={doc.picture}
+        general_area={doc.general_area}
+        id={doc.id}
+        />
+      </div>
+    )
+  })
+}
+  </div>
+  );
+
 }
 
 export default Staff;

@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import About from "./components/About";
-import Specialties from "./components/Specialties";
-import Prepaid from "./components/Prepaid";
 import Staff from "./components/Staff";
 import Error from "./components/Error";
 import Home from "./components/Home";
+import Specialties from "./components/Specialties";
+import Prepaid from "./components/Prepaid";
 
 export default function App() {
   return (

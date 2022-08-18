@@ -5,13 +5,12 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import axios from "axios";
 import dotenv from "dotenv";
 import "./index.css";
 import { extendTheme, ChakraProvider } from "@chakra-ui/react";
 dotenv.config();
 
-axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
+export let baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 const colors = {
   brand: {
@@ -23,7 +22,16 @@ const colors = {
   },
 };
 
-const theme = extendTheme({ colors });
+const breakPoints = {
+  brand: {
+    sm: "320px",
+    md: "768px",
+    lg: "960px",
+    xl: "1200px",
+    "2x1": "1536px",
+  },
+};
+const theme = extendTheme({ colors, breakPoints });
 
 ReactDOM.render(
   <React.StrictMode>

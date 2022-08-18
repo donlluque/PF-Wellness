@@ -7,12 +7,16 @@ const { getAllPrepaid } = require("../controllers/index.js");
 router.get("/", async (req, res, next) => {
   try {
     let allPrepaid = await getAllPrepaid();
+    if(!allPrepaid){
+      await Prepaid_health.bulkCreate(allPrepaid);
 
-    await Prepaid_health.bulkCreate(allPrepaid);
+      res.status(200).send(allPrepaid);
+
+    }
 
     res.status(200).send(allPrepaid);
   } catch (error) {
-    next(error);
+    res.status(404).send("Error en el catch getAllPrepaid", error)
   }
 });
 

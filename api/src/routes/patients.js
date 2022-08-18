@@ -8,10 +8,11 @@ router.get("/", async (req, res, next) => {
   const { name, last_name } = req.query;
   try {
     let allPatient = await getAllPatient();
-    if (!allPatient) {
+    const patientDb = await Patient.findAll();
+    if (!patientDb.length) {
       await Patient.bulkCreate(allPatient);
-      res.status(200).send(allPatient);
     }
+
     if (name && last_name){
       const nombre = await allPatient.filter(
         (e) =>
@@ -40,7 +41,10 @@ router.get("/", async (req, res, next) => {
         : res.send("it is not exist this name");
     }
     
-     else res.status(200).send(allPatient);
+   else {
+      res.status(200).send(allPatient);
+    }
+
   } catch (error) {
     res.status(404).send("Error en el catch getPetients", error);
   }

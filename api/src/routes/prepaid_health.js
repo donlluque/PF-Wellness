@@ -8,13 +8,13 @@ router.get("/", async (req, res, next) => {
   const {name}= req.query
   try {
     let allPrepaid = await getAllPrepaid();
-    if(!allPrepaid){
-      
-      await Prepaid_health.bulkCreate(allPrepaid);
-      
-      res.status(200).send(allPrepaid);
 
-    }
+    const PrepaidHealthDb = await Prepaid_health.findAll();
+    if (!PrepaidHealthDb.length) {
+      await Prepaid_health.bulkCreate(allPrepaid);
+
+    } 
+
     if (name){
       const nombre = await allPrepaid.filter(
         (e) =>
@@ -26,11 +26,15 @@ router.get("/", async (req, res, next) => {
     }
     
 
-    else res.status(200).send(allPrepaid);
+   else {
+      res.status(200).send(allPrepaid);
+    }
+
   } catch (error) {
-    res.status(404).send("Error en el catch getAllPrepaid", error)
+    res.status(404).send("Error en el catch getAllPrepaid", error);
   }
 });
+
 
 router.get("/:id", async (req, res, next) => {
   const {id}=req.params;
@@ -52,3 +56,4 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 module.exports = router;
+

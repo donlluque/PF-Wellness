@@ -9,10 +9,12 @@ router.get("/", async (req, res, next) => {
   console.log(name)
   try {
     const allSpecialities = await getAllSpecialities();
-    if (!allSpecialities) {
+    const specialitiesDb = await Specialities.findAll();
+    if (!specialitiesDb.length) {
       await Specialities.bulkCreate(allSpecialities);
       res.status(200).send(allSpecialities);
-    }
+    } 
+
     if(name){
       const nombre = await allSpecialities.filter((e)=> 
         e.name.toLowerCase().includes(name.toLowerCase())
@@ -26,7 +28,10 @@ router.get("/", async (req, res, next) => {
       }
     }
     // console.log(allSpecialities, "soy allSpecialities");
-    else res.status(200).send(allSpecialities);
+ else {
+      res.status(200).send(allSpecialities);
+    }
+
   } catch (error) {
     res.status(404).send("Error en el catch getSpecialities", error);
   }

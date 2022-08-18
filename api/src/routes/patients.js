@@ -7,12 +7,13 @@ const { getAllPatient } = require("../controllers/index.js");
 router.get("/", async (req, res, next) => {
   try {
     let allPatient = await getAllPatient();
-
-    await Patient.bulkCreate(allPatient);
-
+    if (!allPatient) {
+      await Patient.bulkCreate(allPatient);
+      res.status(200).send(allPatient);
+    }
     res.status(200).send(allPatient);
   } catch (error) {
-    next(error);
+    res.status(404).send("Error en el catch getPetients", error);
   }
 });
 

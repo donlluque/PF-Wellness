@@ -10,23 +10,20 @@ module.exports = (sequelize) => {
     {
       id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
       },
 
       hora_final: {
-        type: DataTypes.TIME,
-        allowNull: false,
+        type: DataTypes.STRING,
       },
 
       hora_inicial: {
-        type: DataTypes.TIME,
-        allowNull: false,
+        type: DataTypes.STRING,
       },
 
       date: {
-        type: DataTypes.DATE,
-        allowNull: false,
+        type: DataTypes.STRING,
       },
 
       doctorId: {
@@ -47,7 +44,6 @@ module.exports = (sequelize) => {
 
       history_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
       },
     },
     { timestamps: false }

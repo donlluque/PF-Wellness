@@ -5,16 +5,51 @@ const { getAllDoctor } = require("../controllers/index");
 
 // PRUEBA DE FUNCIONAMIENTO DE RUTA
 router.get("/", async (req, res, next) => {
+  const { name, last_name } = req.query;
+
+  console.log(req.query);
+
   try {
     const allDoctors = await getAllDoctor();
 
-    await Doctor.bulkCreate(allDoctors);
+    // console.log(allDoctors);
+    if (!allDoctors) {
+      await Doctor.bulkCreate(allDoctors);
+      res.status(200).send(allDoctors);
+    }
+    if (name && last_name) {
+      const nombre = await allDoctors.filter(
+        (e) =>
+          e.name.toLowerCase().includes(name.toLowerCase()) &&
+          e.last_name.toLowerCase().includes(last_name.toLowerCase())
+      );
 
-    // console.log(allDoctors, "soy get");
+      // console.log(nombre, "soy nombre");
 
+      nombre.length
+        ? res.status(200).send(nombre)
+        : res.status(400).send("Not exist");
+    } else if (name) {
+      const nombre = await allDoctors.filter((e) =>
+        e.name.toLowerCase().includes(name.toLowerCase())
+      );
+      nombre.length
+        ? res.status(200).send(nombre)
+        : res.send("it is not exist this name");
+    } else if (last_name) {
+      const apellido = await allDoctors.filter((e) =>
+        e.last_name.toLowerCase().includes(last_name.toLowerCase())
+      );
+      apellido.length
+        ? res.status(200).send(apellido)
+        : res.send("it is not exist this name");
+    }
     res.status(200).send(allDoctors);
+    // console.log(allDoctors, "soy allDoctors");
   } catch (error) {
-    next(error);
+    res
+      .status(404)
+      .send("Error en el catch de search Name and Last name", error);
   }
 });
 

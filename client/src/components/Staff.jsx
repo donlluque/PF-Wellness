@@ -6,6 +6,7 @@ import DoctorCard from "./DoctorCard";
 import NavStaff from "./NavStaff";
 
 function Staff() {
+
   const dispatch = useDispatch();
   const allDoctors = useSelector((state) => state.doctors);
 
@@ -35,6 +36,7 @@ function Staff() {
 }
   </div>
   );
+
 }
 
 export default Staff;

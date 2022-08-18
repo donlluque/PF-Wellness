@@ -1,5 +1,5 @@
-function Prestaciones() {
+function Prepaid() {
   return <div>Prestaciones</div>;
 }
 
-export default Prestaciones;
+export default Prepaid;

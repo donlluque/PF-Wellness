@@ -1,19 +1,15 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import About from "./components/About";
-import Specialities from "./components/Specialities";
+import Specialties from "./components/Specialties";
 import Prepaid from "./components/Prepaid";
 import Staff from "./components/Staff";
 import Error from "./components/Error";
 import Home from "./components/Home";
-import NavBar from "./components/NavBar";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Route path="/">
-        <NavBar />
-      </Route>
       <Switch>
         <Route exact path="/">
           <Home />
@@ -22,7 +18,7 @@ export default function App() {
           <About />
         </Route>
         <Route exact path="/especialidades">
-          <Specialities />
+          <Specialties />
         </Route>
         <Route exact path="/prestaciones">
           <Prepaid />

@@ -5,13 +5,7 @@ import { Link } from "react-router-dom";
 function Error() {
   const { pathname } = useLocation();
   return (
-    <Box
-      h="60vh"
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      bgColor="#fcf7d7"
-    >
+    <Box h="60vh" display="flex" flexDirection="column" alignItems="center">
       <Heading
         textColor="red"
         mt="6rem"

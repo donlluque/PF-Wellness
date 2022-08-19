@@ -80,6 +80,9 @@ Prepaid_health.belongsToMany(Doctor, {
   through: "Doctor_Prepaid_Health",
 });
 
+Prepaid_health.hasMany(Patient, { foreignKey: 'patient_Prepaid_health' });
+Patient.belongsTo(Prepaid_health, { foreignKey: 'patient_Prepaid_health' });
+
 // Doctor.belongsToMany(Patient, { through: "doctorPatient", timestamps: false });
 // Patient.belongsToMany(Doctor, { through: "doctorPatient", timestamps: false });
 

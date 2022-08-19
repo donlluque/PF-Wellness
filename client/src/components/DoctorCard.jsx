@@ -70,9 +70,11 @@ import DoctorDetail from "./DoctorDetail";
           </Stack>
 
           <Button
+           colorScheme="teal" 
+           variant="solid"
             onClick={onOpen}
             w={'full'}
-            bg={useColorModeValue('#151f21', 'gray.900')}
+            
             color={'white'}
             rounded={'md'}
             _hover={{

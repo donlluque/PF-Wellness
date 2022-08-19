@@ -8,7 +8,8 @@ import { Box,
        Center,
        Heading,
        Wrap,
-       WrapItem
+       WrapItem,
+       Flex
  } from '@chakra-ui/react';
  import Pagination from "./Pagination";
 
@@ -28,15 +29,15 @@ function Staff() {
   // },[dispatch])display={{md:'flex'}}
   return (
     <>
-     <Center h="100vh" top={0} bgColor="#b8d6b0" mb={2}>
+     <Center h="100vh" top={0} bgColor="teal.50" mb={2}>
         <Heading as="h1" size="2xl">
           Staff
         </Heading>
       </Center>
   <Box bg='#EDF2F7' mt='-10' justifyContent='center'>
-    <Box flexDirection="row" align="center" position='absolute'>
+    <Center >
     <NavStaff setInput={setInput} setPage={setPage}/>
-    </Box>
+    </Center>
 {
   allDoctors && allDoctors
   .slice((page - 1) * forPage, (page - 1) * forPage + forPage)

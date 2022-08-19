@@ -4,7 +4,8 @@ import { getDoctors, filter } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import { useState } from 'react';
 import { Select,
-      Button
+      Button,
+      Box
 } from '@chakra-ui/react'
 
 export default function NavStaff({setInput, setPage}){
@@ -33,11 +34,15 @@ export default function NavStaff({setInput, setPage}){
    }
   
     return(
-        <div>
-            <nav>
+        <Box display={'inline-flex'} >
+              
                 <SearchBar setInput={setInput} setPage={setPage}/>
-                <div>
-                <Select variant='flushed' bg='#81C784 ' borderColor='#81C784 ' color='white' onChange={e => handleFilter(e)} value={values.especialidad} name='especialidad'>
+              
+                <Box display='inline-flex'>
+              
+                <Button m='1rem' onClick={e => {handleClick(e)}}>BACK</Button>
+                
+                    <Select m='1rem' bg={'green.100'} color='tela.700' onChange={e => handleFilter(e)} value={values.especialidad} name='especialidad'>
                     <option value='All'>Areas Generales</option>
                     <option value='deportologia'>Deportología</option>
                     <option value='fisioterapia y kinesiologia'>Kinesiología y Fisioterapia</option>
@@ -46,8 +51,9 @@ export default function NavStaff({setInput, setPage}){
                     <option value='reumatologia'>Reumatología</option>
                     <option value='terapia de dolor'>Terapia de Dolor</option>
                     <option value='traumatologia'>Traumatología</option>
-                </Select>
-                <Select variant='flushed'  bg='#81C784 ' borderColor='#81C784 ' color='white' onChange={e => handleFilter(e)} value={values.obrasocial} name='obrasocial'>
+                    </Select>
+                     
+                <Select m='1rem' bg={'green.100'} color='tela.700' onChange={e => handleFilter(e)} value={values.obrasocial} name='obrasocial'>
                     <option value='All'>Prestaciones</option>
                     <option value='osde'>Osde</option>
                     <option value='swiss medical'>Swiss Medical</option>
@@ -57,11 +63,10 @@ export default function NavStaff({setInput, setPage}){
                     <option value='medife'>Medife</option>
                     
                 </Select>
-                <Button onClick={e => {handleClick(e)}}>BACK</Button>
 
-                </div>
-            </nav>
-        </div>
+                </Box>
+           
+        </Box>
 
     );
 

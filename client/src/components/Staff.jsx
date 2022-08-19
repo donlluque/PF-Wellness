@@ -14,7 +14,7 @@ import { Box,
 
 function Staff() {
 
-  const dispatch = useDispatch();
+ // const dispatch = useDispatch();
   const allDoctors = useSelector((state) => state.doctors);
 
    //------------PAGINADO-------------
@@ -25,25 +25,26 @@ function Staff() {
 
   // useEffect(() =>{
   //   dispatch(getDoctors());
-  // },[dispatch])
+  // },[dispatch])display={{md:'flex'}}
   return (
     <>
-     <Center h="100vh" top={0} bgColor="#fcf7d7" mb={2}>
+     <Center h="100vh" top={0} bgColor="#b8d6b0" mb={2}>
         <Heading as="h1" size="2xl">
           Staff
         </Heading>
       </Center>
-  <Box>
+  <Box bg='#EDF2F7' mt='-10' justifyContent='center'>
     <Box flexDirection="row" align="center" position='absolute'>
-    <NavStaff/>
+    <NavStaff setInput={setInput} setPage={setPage}/>
     </Box>
 {
   allDoctors && allDoctors
   .slice((page - 1) * forPage, (page - 1) * forPage + forPage)
   .map(doc => {
     return(
-    <Center p='5px' display='inline-flex'>
-      <Box >
+    <Wrap display='inline-flex' ml={'3rem'} justify='center'>
+      <WrapItem >
+        <Box>
         <DoctorCard
         name={doc.name}
         picture={doc.picture}
@@ -52,7 +53,8 @@ function Staff() {
         id={doc.id}
         />
         </Box>
-      </Center>
+        </WrapItem>
+      </Wrap>
     )
   })
 }

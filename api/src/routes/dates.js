@@ -1,10 +1,10 @@
 const { Router } = require("express");
 const router = Router();
-const { Dates, Doctor, Patient } = require("../db.js");
+const { Dates, Doctor, Patient, Prepaid_health } = require("../db.js");
 
 router.post("/", async (req, res, next) => {
   try {
-    const doctorId = "3"; //dato enviado desde el front
+    const doctorId = "100"; //dato enviado desde el front
     const patientId = "1"; //dato enviado desde el front
 
     const doctor = await Doctor.findOne({
@@ -40,12 +40,20 @@ router.post("/", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
   try {
     const nuevo = await Doctor.findAll({
-      include: {
-        model: Patient,
-        throught: {
-          attributes: [],
+      include: [
+        {
+          model: Prepaid_health,
+          throught: {
+            attributes: [],
+          },
         },
-      },
+        {
+          model: Patient,
+          throught: {
+            attributes: [],
+          },
+        },
+      ],
     });
 
     const dates = await Dates.findAll();

@@ -3,8 +3,11 @@ import SearchBar from "./SearchBar";
 import { getDoctors, filter } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import { useState } from 'react';
+import { Select,
+      Button
+} from '@chakra-ui/react'
 
-export default function NavStaff(){
+export default function NavStaff({setInput, setPage}){
    const dispatch = useDispatch();
    const [values, setValues] = useState({
     especialidad: 'All',
@@ -20,7 +23,9 @@ export default function NavStaff(){
 
     function handleFilter(e){
         e.preventDefault();
-        setValues({...values,[e.target.name]: e.target.value})
+        setValues({...values,[e.target.name]: e.target.value});
+        setPage(1);
+        setInput(1);
     }  
     function handleClick(e) {
         e.preventDefault();
@@ -30,9 +35,9 @@ export default function NavStaff(){
     return(
         <div>
             <nav>
-                <SearchBar/>
+                <SearchBar setInput={setInput} setPage={setPage}/>
                 <div>
-                <select onChange={e => handleFilter(e)} value={values.especialidad} name='especialidad'>
+                <Select variant='flushed' bg='#81C784 ' borderColor='#81C784 ' color='white' onChange={e => handleFilter(e)} value={values.especialidad} name='especialidad'>
                     <option value='All'>Areas Generales</option>
                     <option value='deportologia'>Deportología</option>
                     <option value='fisioterapia y kinesiologia'>Kinesiología y Fisioterapia</option>
@@ -41,8 +46,8 @@ export default function NavStaff(){
                     <option value='reumatologia'>Reumatología</option>
                     <option value='terapia de dolor'>Terapia de Dolor</option>
                     <option value='traumatologia'>Traumatología</option>
-                </select>
-                <select onChange={e => handleFilter(e)} value={values.obrasocial} name='obrasocial'>
+                </Select>
+                <Select variant='flushed'  bg='#81C784 ' borderColor='#81C784 ' color='white' onChange={e => handleFilter(e)} value={values.obrasocial} name='obrasocial'>
                     <option value='All'>Prestaciones</option>
                     <option value='osde'>Osde</option>
                     <option value='swiss medical'>Swiss Medical</option>
@@ -51,8 +56,8 @@ export default function NavStaff(){
                     <option value='parque salud'>Parque Salud</option>
                     <option value='medife'>Medife</option>
                     
-                </select>
-                <button onClick={e => {handleClick(e)}}>BACK</button>
+                </Select>
+                <Button onClick={e => {handleClick(e)}}>BACK</Button>
 
                 </div>
             </nav>

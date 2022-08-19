@@ -6,13 +6,14 @@ import { IconButton, Input, Box } from '@chakra-ui/react';
 import { GrSearch } from "react-icons/gr";
 
 
-export default function SearchBar() {
+export default function SearchBar({setInput, setPage}) {
     const dispatch = useDispatch();
     const [doctor, setDoctor] = useState("");
 
  function handleChange(e) {
     
-    setDoctor(e.target.value)//el valor del input.
+    setDoctor(e.target.value);//el valor del input.
+
  }
 
  function handleClick(e) {
@@ -23,6 +24,8 @@ export default function SearchBar() {
     }else{
         alert ("Por favor insertar un profesional")
     }
+    setPage(1);
+    setInput(1);
  }
 
     return(

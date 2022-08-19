@@ -12,11 +12,11 @@ router.get("/", async (req, res, next) => {
   try {
     const allDoctors = await getAllDoctor();
     let doctorsDb = await Doctor.findAll();
-
     // console.log(allDoctors);
     if (!doctorsDb.length) {
       await Doctor.bulkCreate(allDoctors);
     }
+    // console.log(doctorsDb, "soy doctorsDb ");
 
     if (name) {
       const nombre = await allDoctors.filter((e) =>

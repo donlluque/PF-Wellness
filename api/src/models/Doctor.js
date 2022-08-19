@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
       },
 
       especialidades_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
 

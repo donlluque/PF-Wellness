@@ -11,7 +11,7 @@ const { getByPH } = require("../controllers/filters/filterByPH.js");
 // } = require("../controllers/filters/filterBySpecialities.js");
 
 router.get("/", async (req, res) => {
-  const { general_area, prepaid_health, specialities } = req.query;
+  const { general_area, prepaid_health } = req.query;
   // console.log(general_area, "areaaaaaaaaaaaaaa");
   try {
     if (general_area === "" && prepaid_health === "") {

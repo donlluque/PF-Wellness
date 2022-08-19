@@ -33,20 +33,6 @@ const getAllDoctor = async () => {
   return allDoctors;
 };
 
-const getAllSpecialities = async () => {
-  const specialities = await axios.get(
-    "https://62fce4526e617f88dea06652.mockapi.io/specialities"
-  );
-
-  const allSpecialities = await specialities.data.map((s) => {
-    return {
-      id: s.id,
-      name: s.name,
-    };
-  });
-  return allSpecialities;
-};
-
 const getAllPatient = async () => {
   const patient = await axios.get(
     "https://62fceb116e617f88dea10ecd.mockapi.io/patient/Patient"
@@ -91,7 +77,6 @@ const getAllPrepaid = async () => {
 
 module.exports = {
   getAllDoctor,
-  getAllSpecialities,
   getAllPatient,
   getAllPrepaid,
 };

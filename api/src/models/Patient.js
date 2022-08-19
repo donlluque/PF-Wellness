@@ -54,7 +54,6 @@ module.exports = (sequelize) => {
 
       prepaid_health: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
 
       birthday: {

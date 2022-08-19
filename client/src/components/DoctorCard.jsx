@@ -1,6 +1,6 @@
 import React from "react";
 //import { Link } from "react-router-dom";
-import { useDisclosure } from "@chakra-ui/react";
+import { useDisclosure, WrapItem } from "@chakra-ui/react";
 import {
    Modal,
    ModalOverlay,
@@ -9,36 +9,54 @@ import {
    ModalFooter,
    ModalBody,
    Button,
+   Box,
+   Wrap,
+   Image,
+   Text,
+   List,
+   ListItem
  } from '@chakra-ui/react'
 import DoctorDetail from "./DoctorDetail";
 
 
 
- export default function DoctorCard({id, picture, name, last_name, general_area}) {
+ export default function DoctorCard({id, picture, name, general_area, especialidades_id}) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     
 
  return(
-        <div >
-
-          <div>
-             <div>
-              <img src={picture} alt="img not found" width="200px" height="250px"/>
-             </div>
-            <div>
-               <h3>{last_name} {name}</h3>
-             </div>
-             <div>
-                <h4>{general_area}</h4>
-             </div>
-          </div>
+        <Wrap >
+         <WrapItem >
+          <Box
+            
+            m="3rem"
+            border="1px solid gray"
+            w="20rem"
+            h="20rem"
+            p="1rem"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            boxShadow="2xl"
+            borderRadius="1rem"
+            >
+              <Image src={picture} alt="img not found" maxW="10rem" mb="1rem" borderRadius='5%'/>
+             <List spacing={3}>
+                <ListItem fontSize='2xl'>{name}</ListItem>
+              
+                <ListItem ml='7' color='gray.500'>{general_area} - {especialidades_id}</ListItem>
+                
+                <Button mt='5' ml='7' onClick={onOpen}>LEER MAS</Button>
+             </List>
+          </Box>
+          </WrapItem>
 <>
-       <Button onClick={onOpen}>LEER MAS</Button>
+       
  
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-           <ModalHeader> {name} {last_name}</ModalHeader>
+           <ModalHeader> {name}</ModalHeader>
             {/* <ModalCloseButton /> */}
              <ModalBody>
               {/* <Lorem count={2} /> */}
@@ -55,6 +73,6 @@ import DoctorDetail from "./DoctorDetail";
         </Modal>
       </>
 
-       </div>
+       </Wrap>
      )
  }

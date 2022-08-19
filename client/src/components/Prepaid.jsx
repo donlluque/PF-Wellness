@@ -35,6 +35,7 @@ function Prepaid() {
             alignItems="center"
             boxShadow="2xl"
             borderRadius="1rem"
+            
           >
             <Image
               src="http://www.elsindical.com.ar/notas/var/www/html/notas/wp-content/uploads/2017/01/Logo-OSDE.jpg"
@@ -81,7 +82,7 @@ function Prepaid() {
               </ListItem>
               <ListItem>
                 <ListIcon as={MdAlternateEmail} color="green.500" />
-                BUSCAR
+                contacto@swissmedical.com.ar
               </ListItem>
             </List>
           </Box>
@@ -113,7 +114,7 @@ function Prepaid() {
               </ListItem>
               <ListItem>
                 <ListIcon as={MdAlternateEmail} color="green.500" />
-                BUSCAR
+                consultas@galeno.com.ar
               </ListItem>
             </List>
           </Box>
@@ -209,7 +210,7 @@ function Prepaid() {
               </ListItem>
               <ListItem>
                 <ListIcon as={MdAlternateEmail} color="green.500" />
-                buscar
+                info@medife.com.ar
               </ListItem>
             </List>
           </Box>

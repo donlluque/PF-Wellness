@@ -22,7 +22,7 @@ function Footer() {
       alignItems="center"
       justifyContent="space-evenly"
       p="2rem"
-      bgColor="#c4c776"
+      bgColor="teal.400"
     >
       <Box>
         <Image src={Logo} w="15rem" m="1rem" />
@@ -40,20 +40,20 @@ function Footer() {
         </Heading>
         <List spacing={3}>
           <ListItem>
-            <ListIcon as={BsTelephone} color="green.500" />
+            <ListIcon as={BsTelephone} color="teal.900" />
             0800-354-5050
           </ListItem>
           <ListItem>
-            <ListIcon as={ImMobile} color="green.500" />
+            <ListIcon as={ImMobile} color="teal.900" />
             +54 9 351 365-4238
           </ListItem>
           <ListItem>
-            <ListIcon as={MdAlternateEmail} color="green.500" />
+            <ListIcon as={MdAlternateEmail} color="teal.900" />
             consultaswellness@gmail.com
           </ListItem>
           {/* You can also use custom icons from react-icons */}
           <ListItem>
-            <ListIcon as={MdOutlinePlace} color="green.500" />
+            <ListIcon as={MdOutlinePlace} color="teal.900" />
             Av. Colón 299, Córdoba, Argentina
           </ListItem>
         </List>

@@ -17,7 +17,7 @@ import { FcNext } from "react-icons/fc";
 function Home() {
   return (
     <>
-      <Center h="100vh" top={0} bgColor="#fcf7d7" mb={2}>
+      <Center h="100vh" top={0} bgColor="teal.50" mb={2}>
         <Heading as="h1" size="2xl">
           Clinica de fisioterapia y rehabilitación física
         </Heading>
@@ -90,12 +90,12 @@ function Home() {
           />
         </Flex>
         <Link to="/about">
-          <Button colorScheme="blue" m={4}>
+          <Button colorScheme="teal" m={4}>
             Leer más
           </Button>
         </Link>
       </Container>
-      <Container maxW="100vw" centerContent bgColor="#fcf7d7" pb="2rem">
+      <Container maxW="100vw" centerContent bgColor="teal.50" pb="2rem">
         <Heading as="h2" size="xl" m={8}>
           Especialidades médicas destacadas
         </Heading>
@@ -113,7 +113,9 @@ function Home() {
                 Traumatología
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost">Leer más &gt;&gt;</Button>
+                <Button colorScheme="teal" variant="ghost">
+                  Leer más &gt;&gt;
+                </Button>
               </Link>
             </Box>
           </Box>
@@ -130,7 +132,9 @@ function Home() {
                 Kinesiología
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost">Leer más &gt;&gt;</Button>
+                <Button variant="ghost" colorScheme="teal">
+                  Leer más &gt;&gt;
+                </Button>
               </Link>
             </Box>
           </Box>
@@ -147,7 +151,9 @@ function Home() {
                 Osteopatía
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost">Leer más &gt;&gt;</Button>
+                <Button variant="ghost" colorScheme="teal">
+                  Leer más &gt;&gt;
+                </Button>
               </Link>
             </Box>
           </Box>
@@ -164,7 +170,9 @@ function Home() {
                 Deportología
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost">Leer más &gt;&gt;</Button>
+                <Button variant="ghost" colorScheme="teal">
+                  Leer más &gt;&gt;
+                </Button>
               </Link>
             </Box>
           </Box>

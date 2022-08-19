@@ -8,7 +8,8 @@ import Specialties from "./components/Specialties";
 import Prepaid from "./components/Prepaid";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import FormUserRegistration from "./components/FormUserRegistration";
+import UserProfile from "./components/UserProfile";
+import Turnos from "./components/Turnos";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -16,15 +17,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Route path="/">
-        {pathname === "/about" ||
-        pathname === "/especialidades" ||
-        pathname === "/prestaciones" ||
-        pathname === "/staff" ||
-        pathname === "/" ? (
-          <NavBar />
-        ) : (
-          false
-        )}
+        <NavBar />
       </Route>
       <Switch>
         <Route exact path="/">
@@ -42,8 +35,12 @@ export default function App() {
         <Route exact path="/staff">
           <Staff />
         </Route>
-        <Route exact path="/crearcuenta">
-          <FormUserRegistration />
+        <Route exact path="/turnos">
+          <Turnos />
+        </Route>
+
+        <Route exact path="/userProfile/:id">
+          <UserProfile />
         </Route>
         <Route exact path="*">
           <Error />

@@ -5,6 +5,7 @@ import {
   Image,
   Wrap,
   Container,
+  Text,
   Box,
   ListIcon,
   ListItem,
@@ -17,10 +18,28 @@ import { MdAlternateEmail } from "react-icons/md";
 function Prepaid() {
   return (
     <>
-      <Center h="100vh" top={0} bgColor="#fcf7d7" mb={2}>
-        <Heading as="h1" size="2xl">
+      <Center
+        h="100vh"
+        top={0}
+        bgRepeat="no-repeat"
+        bgSize="cover"
+        bgImage="linear-gradient(
+      rgba(230, 255, 250, 0.7),
+      rgba(230, 255, 250, 0.7)
+    ),
+    url(https://rehabtiva.com/wp-content/uploads/2014/04/Box-3-Fisioterapia-Osteopat%C3%ADa-Podolog%C3%ADa-Rehabtiva-Las-Rozas.jpg)"
+        mb={2}
+        flexDirection="column"
+      >
+        <Heading textAlign="center" as="h1" size="4xl" m="1rem">
           Prestaciones
         </Heading>
+        <Box>
+          <Text as="i" fontSize="xl">
+            "En Wellness queremos ayudarte. Descubre los beneficios de las obras
+            sociales con las que trabajamos"
+          </Text>
+        </Box>
       </Center>
       <Wrap justify="center">
         <WrapItem>
@@ -35,7 +54,6 @@ function Prepaid() {
             alignItems="center"
             boxShadow="2xl"
             borderRadius="1rem"
-            
           >
             <Image
               src="http://www.elsindical.com.ar/notas/var/www/html/notas/wp-content/uploads/2017/01/Logo-OSDE.jpg"

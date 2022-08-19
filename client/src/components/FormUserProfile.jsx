@@ -44,11 +44,7 @@ function FormUserProfile() {
 
   return (
     <>
-      <Box
-        display={{ md: "flex" }}
-        justifyContent="center"
-        border="1px solid red"
-      >
+      <Box display={{ md: "flex" }} justifyContent="center">
         <Box display="flex" flexDirection="column" alignItems="center">
           <Image
             w="200px"

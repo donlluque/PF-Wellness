@@ -54,12 +54,16 @@ function NavBar() {
 
         <Spacer />
         <ButtonGroup>
-          <Button colorScheme="teal" variant="solid">
-            Turnos Online
-          </Button>
-          <Button colorScheme="teal" variant="outline">
-            Acceder
-          </Button>
+          <Link to="/crearcuenta">
+            <Button colorScheme="teal" variant="solid">
+              Turnos Online
+            </Button>
+          </Link>
+          <Link to="/crearcuenta">
+            <Button colorScheme="teal" variant="outline">
+              Acceder
+            </Button>
+          </Link>
         </ButtonGroup>
       </Flex>
     </Box>

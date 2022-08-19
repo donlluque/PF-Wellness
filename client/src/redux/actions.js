@@ -40,6 +40,30 @@ export function cleanDoctor(){
       type: "CLEAN_DOCTOR"
   }
 }
+
+export function filter(filter){
+  const {especialidad, obrasocial} = filter;
+  return function(dispatch){
+    return fetch(`${baseURL}/filter?general_area=${especialidad}&prepaid_health=${obrasocial}`)
+    .then((res) =>
+    res.ok
+    ? res.json()
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: `No se encuentra ningún`,
+            })
+      )
+      .then((data) => {
+        dispatch({ type: "FILTER", payload: data });
+      })
+      .catch((err) => {
+        
+        dispatch({ type: "HANDLE_ERROR", payload: err });
+      });
+  };
+};
+
 //SEARCH BAR
 export function searchByName(input) {
   return function (dispatch) {

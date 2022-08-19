@@ -1,41 +1,69 @@
 import React from "react";
 import {  getDoctors } from "../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import DoctorCard from "./DoctorCard";
 import NavStaff from "./NavStaff";
-import { Box } from '@chakra-ui/react';
+import { Box,
+       Center,
+       Heading,
+       Wrap,
+       WrapItem
+ } from '@chakra-ui/react';
+ import Pagination from "./Pagination";
 
 function Staff() {
 
   const dispatch = useDispatch();
   const allDoctors = useSelector((state) => state.doctors);
 
-  useEffect(() =>{
-    dispatch(getDoctors());
-  },[dispatch])
+   //------------PAGINADO-------------
+   const [page, setPage] = useState(1);
+   const [forPage] = useState(6);
+   const [input, setInput] = useState(1);
+   const max = Math.ceil(allDoctors.length / forPage);
+
+  // useEffect(() =>{
+  //   dispatch(getDoctors());
+  // },[dispatch])
   return (
-  <div>
-    <Box position="absolute" m={20} ml="25rem" flexDirection="row" align="center">
+    <>
+     <Center h="100vh" top={0} bgColor="#fcf7d7" mb={2}>
+        <Heading as="h1" size="2xl">
+          Staff
+        </Heading>
+      </Center>
+  <Box>
+    <Box flexDirection="row" align="center" position='absolute'>
     <NavStaff/>
     </Box>
 {
   allDoctors && allDoctors
+  .slice((page - 1) * forPage, (page - 1) * forPage + forPage)
   .map(doc => {
     return(
-      <div key={doc.id}>
+    <Center p='5px' display='inline-flex'>
+      <Box >
         <DoctorCard
         name={doc.name}
-        last_name={doc.last_name}
         picture={doc.picture}
         general_area={doc.general_area}
+        especialidades_id={doc.especialidades_id}
         id={doc.id}
         />
-      </div>
+        </Box>
+      </Center>
     )
   })
 }
-  </div>
+<Pagination
+          page={page}
+          setPage={setPage}
+          pokemonsPerPage={max}
+          input={input}
+          setInput={setInput}/>
+  </Box>
+  </>
   );
 
 }

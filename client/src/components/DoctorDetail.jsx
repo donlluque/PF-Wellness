@@ -1,6 +1,5 @@
 import React from "react";
 import { getDetail, cleanDoctor} from "../redux/actions";
-import {  useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 

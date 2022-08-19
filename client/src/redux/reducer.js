@@ -25,6 +25,11 @@ export default function rootReducer(state = initialState, action) {
           ...state,
           detail: {},
      };
+    case "FILTER":
+      return{
+         ...state,
+         doctors: action.payload
+      }; 
     case "SEARCH_DOCTOR":
       return{
        ...state,

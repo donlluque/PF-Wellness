@@ -13,7 +13,7 @@ router.get("/", async (req, res, next) => {
       await Patient.bulkCreate(allPatient);
     }
 
-    if (name && last_name){
+    if (name && last_name) {
       const nombre = await allPatient.filter(
         (e) =>
           e.name.toLowerCase().includes(name.toLowerCase()) &&
@@ -39,28 +39,61 @@ router.get("/", async (req, res, next) => {
       apellido.length
         ? res.status(200).send(apellido)
         : res.send("it is not exist this name");
+    } else {
+      res.status(200).send(patientDb);
     }
-    
-   else {
-      res.status(200).send(allPatient);
-    }
-
   } catch (error) {
     res.status(404).send("Error en el catch getPetients", error);
   }
 });
-router.get("/:dni", async (req, res, next) => {
-  const {dni}= req.params;
+
+router.get("/:id", async (req, res, next) => {
+  const { id } = req.params;
   try {
-    const allPatient= await getAllPatient();
-    const patient = await allPatient.find((e)=> e.document== dni);
-    if(patient){
-      res.status(200).send(patient)
-    }
-    else res.status(400).send("The patient doesn't exist")
+    const allPatient = await Patient.findAll();
+    const patient = await allPatient.find((e) => e.id == id);
+    if (patient) {
+      res.status(200).send(patient);
+    } else res.status(400).send("The patient doesn't exist");
   } catch (error) {
-    res.status(404).send("Error en el catch de patient dni",error);
+    res.status(404).send("Error en el catch de patient dni", error);
   }
-})
+});
+
+router.put("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const {
+    name,
+    last_name,
+    document,
+    type_document,
+    email,
+    phone,
+    nationality,
+    direction,
+    birthday,
+    medical_history,
+    picture,
+  } = req.body;
+  try {
+    let perfiles = await Patient.findOne({ where: { id: id } });
+    await perfiles.update({
+      name,
+      last_name,
+      document,
+      type_document,
+      email,
+      phone,
+      nationality,
+      direction,
+      birthday,
+      medical_history,
+      picture,
+    });
+    res.status(200).send("se modifico");
+  } catch (error) {
+    res.status(404).send(error);
+  }
+});
 
 module.exports = router;

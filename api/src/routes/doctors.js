@@ -38,12 +38,13 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-
+  // console.log(id);
   try {
     const allDoctors = await getAllDoctor();
     // console.log(allDoctors, "doctor id");
 
-    const doctor = await allDoctors.find((e) => e.id === id);
+    const doctor = await allDoctors.find((e) => e.id == id);
+
     if (doctor) {
       res.status(200).send(doctor);
     } else {

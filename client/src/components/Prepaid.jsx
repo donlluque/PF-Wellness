@@ -41,11 +41,12 @@ function Prepaid() {
           </Text>
         </Box>
       </Center>
-      <Wrap justify="center">
+      
+      <Wrap bg='#EDF2F7' justify="center" mt='-2'>
         <WrapItem>
           <Box
             m="3rem"
-            border="1px solid gray"
+            bg="white"
             w="20rem"
             h="15rem"
             p="1rem"
@@ -53,7 +54,8 @@ function Prepaid() {
             flexDirection="column"
             alignItems="center"
             boxShadow="2xl"
-            borderRadius="1rem"
+            borderRadius="0.5rem"
+            
           >
             <Image
               src="http://www.elsindical.com.ar/notas/var/www/html/notas/wp-content/uploads/2017/01/Logo-OSDE.jpg"
@@ -76,7 +78,7 @@ function Prepaid() {
         <WrapItem>
           <Box
             m="3rem"
-            border="1px solid gray"
+            bg="white"
             w="20rem"
             p="1rem"
             h="15rem"
@@ -84,7 +86,7 @@ function Prepaid() {
             flexDirection="column"
             alignItems="center"
             boxShadow="2xl"
-            borderRadius="1rem"
+            borderRadius="0.5rem"
           >
             <Image
               src="https://www.mi-prepaga.com.ar/wp-content/uploads/2019/01/Swiss-Medical.jpg"
@@ -109,14 +111,14 @@ function Prepaid() {
           <Box
             m="3rem"
             h="15rem"
-            border="1px solid gray"
+            bg="white"
             w="20rem"
             p="1rem"
             display="flex"
             flexDirection="column"
             alignItems="center"
             boxShadow="2xl"
-            borderRadius="1rem"
+            borderRadius="0.5rem"
           >
             <Image
               src="https://www.mi-prepaga.com.ar/wp-content/uploads/2019/01/Galeno-768x334.jpg"
@@ -141,21 +143,22 @@ function Prepaid() {
           <Box
             m="3rem"
             h="15rem"
-            border="1px solid gray"
+            bg="white"
             w="20rem"
             p="1rem"
             display="flex"
             flexDirection="column"
             alignItems="center"
             boxShadow="2xl"
-            borderRadius="1rem"
+            borderRadius="0.5rem"
           >
             <Image
               src="https://www.dentacdigital.com.ar/img/obrassociales-prepagas/logo-medicus.jpg"
               alt="img"
               maxW="10rem"
               minH="8rem"
-              mb="1rem"
+              mb='1rem'
+             
             />
             <List spacing={3}>
               <ListItem>
@@ -173,14 +176,14 @@ function Prepaid() {
           <Box
             m="3rem"
             h="15rem"
-            border="1px solid gray"
+            bg="white"
             w="20rem"
             p="1rem"
             display="flex"
             flexDirection="column"
             alignItems="center"
             boxShadow="2xl"
-            borderRadius="1rem"
+            borderRadius="0.5rem"
           >
             <Image
               src="http://www.estudionayi.com.ar/imagenes_misaplicaciones/WG4_17984___WG4_17984___parque.png"
@@ -205,14 +208,14 @@ function Prepaid() {
           <Box
             m="3rem"
             h="15rem"
-            border="1px solid gray"
+            bg="white"
             w="20rem"
             p="1rem"
             display="flex"
             flexDirection="column"
             alignItems="center"
             boxShadow="2xl"
-            borderRadius="1rem"
+            borderRadius="0.5rem"
           >
             <Image
               src="https://prepagasyobrassociales.com.ar/wp-content/uploads/2019/11/Prepaga-Medife-2.jpg"
@@ -234,6 +237,7 @@ function Prepaid() {
           </Box>
         </WrapItem>
       </Wrap>
+      
     </>
   );
 }

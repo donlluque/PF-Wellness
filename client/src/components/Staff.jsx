@@ -1,7 +1,6 @@
 import React from "react";
-import {  getDoctors } from "../redux/actions";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import { useSelector} from "react-redux";
+import { useState} from "react";
 import DoctorCard from "./DoctorCard";
 import NavStaff from "./NavStaff";
 import { Box,
@@ -15,7 +14,6 @@ import { Box,
 
 function Staff() {
 
- // const dispatch = useDispatch();
   const allDoctors = useSelector((state) => state.doctors);
 
    //------------PAGINADO-------------
@@ -24,9 +22,6 @@ function Staff() {
    const [input, setInput] = useState(1);
    const max = Math.ceil(allDoctors.length / forPage);
 
-  // useEffect(() =>{
-  //   dispatch(getDoctors());
-  // },[dispatch])display={{md:'flex'}}
   return (
     <>
      <Center h="100vh" top={0} bgColor="teal.50" mb={2} 
@@ -49,7 +44,7 @@ function Staff() {
           </Text>
         </Box>
       </Center>
-  <Box bg='#EDF2F7' mt='-10' justifyContent='center'>
+  <Box bg='#EDF2F7' mt='-2' justifyContent='center'>
     <Center >
     <NavStaff setInput={setInput} setPage={setPage}/>
     </Center>

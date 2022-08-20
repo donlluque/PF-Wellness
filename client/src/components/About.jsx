@@ -50,14 +50,14 @@ function About() {
           ¿Quiénes somos?
         </Heading>
         <Box display={{ md: "flex" }} alignItems="justify">
-          <Box p={3} w="40vw" m={2}>
+          <Box p={3} w="40vw" h="10vw" m={2} bgColor="rgb(235, 237, 239, 0.4)" borderRadius="0.5rem">
             Wellness es un Centro Especializado en rehabilitación física que
-            nace con la idea de brindar un servicio donde se priorice el
-            bienestar. Nuestra trayectoria, forjada en la excelencia, es la que
+            nace con la idea de brindar un servicio donde se priorice el 
+            <Text as='em'> bienestar.</Text> Nuestra trayectoria, forjada en la excelencia, es la que
             hoy nos permite realizar tratamientos efectivos con la mejor calidad
             de atención.
           </Box>
-          <Image width="20rem" src={img1} alt="img" m={3} />
+          <Image width="20rem" src={img1} alt="img" m={3} borderRadius="0.5rem" />
         </Box>
         <Box
           bgColor="teal.50"
@@ -81,8 +81,8 @@ function About() {
           </Box>
           <Box>
             <Box display={{ md: "flex" }} justifyContent="center">
-              <Image src={img2} alt="img" m={2} w="20rem" />
-              <Image src={img3} alt="img" m={2} w="20rem" />
+              <Image src={img2} alt="img" m={2} w="20rem" borderRadius="0.5rem" />
+              <Image src={img3} alt="img" m={2} w="20rem" borderRadius="0.5rem" />
             </Box>
           </Box>
           <Heading as="h5" size="md" textAlign="center" m="2rem">

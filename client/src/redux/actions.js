@@ -101,7 +101,7 @@ export const getOnePatient = (id) => {
 //POST
 export const postPatient = (form) => {
   return function (dispatch) {
-    return fetch(`${baseURL}/`, {
+    return fetch(`${baseURL}/patients`, {
       method: "POST",
       body: JSON.stringify(form),
       headers: { "Content-Type": "application/json" },
@@ -156,7 +156,7 @@ export const logIn = () => ({ type: "LOG_IN" });
 
 export const getByUserName = (username) => {
   return function (dispatch) {
-    fetch(`${baseURL}/doctors`)
+    fetch(`${baseURL}/patients/user${username}`)
       .then((res) => res.json())
       .then((json) => {
         dispatch({

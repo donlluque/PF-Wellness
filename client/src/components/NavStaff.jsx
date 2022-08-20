@@ -4,9 +4,11 @@ import { getDoctors, filter } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import { useState } from 'react';
 import { Select,
+    IconButton,
       Button,
       Box
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import { GiAnticlockwiseRotation } from "react-icons/gi";
 
 export default function NavStaff({setInput, setPage}){
    const dispatch = useDispatch();
@@ -39,9 +41,9 @@ export default function NavStaff({setInput, setPage}){
                 <SearchBar setInput={setInput} setPage={setPage}/>
               
                 <Box display='inline-flex'>
-              
-                <Button m='1rem' onClick={e => {handleClick(e)}}>BACK</Button>
-                
+                <IconButton m='1rem' onClick={e => handleClick(e)} aria-label='Search database' icon={<GiAnticlockwiseRotation />} />
+                {/* <Button m='1rem' onClick={e => {handleClick(e)}}>BACK</Button> */}
+
                     <Select m='1rem' bg={'green.100'} color='tela.700' onChange={e => handleFilter(e)} value={values.especialidad} name='especialidad'>
                     <option value='All'>Areas Generales</option>
                     <option value='deportologia'>Deportología</option>

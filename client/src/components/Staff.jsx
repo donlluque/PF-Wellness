@@ -62,7 +62,7 @@ function Staff() {
 <Pagination
           page={page}
           setPage={setPage}
-          pokemonsPerPage={max}
+          PerPage={max}
           input={input}
           setInput={setInput}/>
   </Box>

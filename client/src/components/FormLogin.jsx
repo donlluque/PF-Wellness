@@ -10,10 +10,26 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { getByUserName, logIn } from "../redux/actions";
 
 function FormLogin({ onClose }) {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
+  const dispatch = useDispatch();
+  const [form, setForm] = useState({});
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(getByUserName(form.username));
+    onClose();
+    setForm({});
+  };
+
   return (
     <>
       <Stack spacing="24px">
@@ -21,6 +37,7 @@ function FormLogin({ onClose }) {
           <FormLabel htmlFor="username">Usuario</FormLabel>
 
           <Input
+            onChange={(e) => handleChange(e)}
             type="username"
             name="username"
             placeholder="Ingresar nombre de usuario"
@@ -30,6 +47,7 @@ function FormLogin({ onClose }) {
           <FormLabel htmlFor="password">Contraseña</FormLabel>
           <InputGroup size="md">
             <Input
+              onChange={(e) => handleChange(e)}
               r="4.5rem"
               type={show ? "text" : "password"}
               placeholder="Crear contraseña"
@@ -46,7 +64,9 @@ function FormLogin({ onClose }) {
             </InputRightElement>
           </InputGroup>
         </Box>
-        <Button colorScheme="teal">Ingresar</Button>
+        <Button colorScheme="teal" onClick={(e) => handleSubmit(e)}>
+          Ingresar
+        </Button>
         <Button colorScheme="teal" variant="outline" onClick={onClose}>
           Cancelar
         </Button>

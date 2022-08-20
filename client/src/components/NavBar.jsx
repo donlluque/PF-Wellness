@@ -14,17 +14,30 @@ import {
   DrawerCloseButton,
   useDisclosure,
   Text,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Logo from "../assets/logoPf.jpeg";
 import { useRef, useState } from "react";
 import FormLogin from "./FormLogin";
 import FormRegistration from "./FormRegistration";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../redux/actions";
 
 function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = useRef();
   const [login, setLogin] = useState(true);
+  const isUserLogIn = useSelector((state) => state.logInState);
+  const idUserLogIn = useSelector((state) => state.idUserLogIn);
+  const dispatch = useDispatch();
 
   const handleLogin = () => {
     setLogin(!login);
@@ -79,9 +92,30 @@ function NavBar() {
             </Button>
           </Link>
 
-          <Button colorScheme="teal" variant="outline" onClick={onOpen}>
-            Acceder
-          </Button>
+          {!isUserLogIn && (
+            <Button colorScheme="teal" variant="outline" onClick={onOpen}>
+              Acceder
+            </Button>
+          )}
+          {isUserLogIn && (
+            <Menu>
+              {({ isOpen }) => (
+                <>
+                  <MenuButton isActive={isOpen} as={Button}>
+                    {isOpen ? "Close" : "Open"}
+                  </MenuButton>
+                  <MenuList>
+                    <Link to={`/userProfile/${idUserLogIn}`}>
+                      <MenuItem>Ver perfil</MenuItem>
+                    </Link>
+                    <MenuItem onClick={() => dispatch(logOut())}>
+                      Cerrar Sesión
+                    </MenuItem>
+                  </MenuList>
+                </>
+              )}
+            </Menu>
+          )}
         </ButtonGroup>
       </Flex>
       <Drawer

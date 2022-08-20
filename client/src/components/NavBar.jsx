@@ -22,14 +22,16 @@ import {
   MenuGroup,
   MenuOptionGroup,
   MenuDivider,
+  Icon,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Logo from "../assets/logoPf.jpeg";
 import { useRef, useState } from "react";
 import FormLogin from "./FormLogin";
 import FormRegistration from "./FormRegistration";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../redux/actions";
+import { FaUserCircle} from "react-icons/fa";
 
 function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,10 +40,16 @@ function NavBar() {
   const isUserLogIn = useSelector((state) => state.logInState);
   const idUserLogIn = useSelector((state) => state.idUserLogIn);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleLogin = () => {
     setLogin(!login);
   };
+
+  const handleLogOut = () => {
+    dispatch(logOut());
+    history.push('/');
+  }
 
   return (
     <Box position="absolute" w="100%">
@@ -102,13 +110,13 @@ function NavBar() {
               {({ isOpen }) => (
                 <>
                   <MenuButton isActive={isOpen} as={Button}>
-                    {isOpen ? "Close" : "Open"}
+                    {isOpen ? "Close" : <Icon boxSize={7} as={FaUserCircle}/>}
                   </MenuButton>
                   <MenuList>
                     <Link to={`/userProfile/${idUserLogIn}`}>
                       <MenuItem>Ver perfil</MenuItem>
                     </Link>
-                    <MenuItem onClick={() => dispatch(logOut())}>
+                    <MenuItem onClick={handleLogOut}>
                       Cerrar Sesión
                     </MenuItem>
                   </MenuList>

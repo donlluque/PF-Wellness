@@ -6,7 +6,7 @@ import { IconButton, Input, Box, Wrap } from '@chakra-ui/react';
 import { GrSearch } from "react-icons/gr";
 
 
-export default function SearchBar({setInput, setPage}) {
+export default function SearchBar({setInput, setPage, setFilterActive}) {
     const dispatch = useDispatch();
     const [doctor, setDoctor] = useState("");
 
@@ -26,6 +26,7 @@ export default function SearchBar({setInput, setPage}) {
     }
     setPage(1);
     setInput(1);
+    setFilterActive(true);
  }
 
     return(

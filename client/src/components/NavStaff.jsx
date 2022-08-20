@@ -4,17 +4,19 @@ import { getDoctors, filter } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import { useState } from 'react';
 import { Select,
+    IconButton,
       Button,
       Box
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import { GiAnticlockwiseRotation } from "react-icons/gi";
 
 export default function NavStaff({setInput, setPage}){
    const dispatch = useDispatch();
    const [values, setValues] = useState({
     especialidad: 'All',
     obrasocial: 'All'
-
-   })
+   });
+   const [filterActive, setFilterActive] = useState(false);
 
    useEffect(( ) => {
     
@@ -27,21 +29,28 @@ export default function NavStaff({setInput, setPage}){
         setValues({...values,[e.target.name]: e.target.value});
         setPage(1);
         setInput(1);
+        setFilterActive(true);
     }  
     function handleClick(e) {
-        e.preventDefault();
+    e.preventDefault();
     dispatch(getDoctors());
+    setFilterActive(false);
+    setValues({
+        especialidad: 'All',
+        obrasocial: 'All'
+       });
    }
   
     return(
         <Box display={'inline-flex'} >
               
-                <SearchBar setInput={setInput} setPage={setPage}/>
-              
+                <SearchBar setFilterActive={setFilterActive} setInput={setInput} setPage={setPage}/>
+                 {   
+                    filterActive &&
+                    <IconButton m='1rem' onClick={e => handleClick(e)} aria-label='Search database' icon={<GiAnticlockwiseRotation />} />
+                 }
                 <Box display='inline-flex'>
-              
-                <Button m='1rem' onClick={e => {handleClick(e)}}>BACK</Button>
-                
+                   
                     <Select m='1rem' bg={'green.100'} color='tela.700' onChange={e => handleFilter(e)} value={values.especialidad} name='especialidad'>
                     <option value='All'>Areas Generales</option>
                     <option value='deportologia'>Deportología</option>

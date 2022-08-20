@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
 import About from "./components/About";
 import Staff from "./components/Staff";
@@ -8,8 +8,12 @@ import Specialties from "./components/Specialties";
 import Prepaid from "./components/Prepaid";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import UserProfile from "./components/UserProfile";
+import Turnos from "./components/Turnos";
 
 export default function App() {
+  const { pathname } = useLocation();
+  console.log(pathname);
   return (
     <BrowserRouter>
       <Route path="/">
@@ -30,6 +34,13 @@ export default function App() {
         </Route>
         <Route exact path="/staff">
           <Staff />
+        </Route>
+        <Route exact path="/turnos">
+          <Turnos />
+        </Route>
+
+        <Route exact path="/userProfile/:id">
+          <UserProfile />
         </Route>
         <Route exact path="*">
           <Error />

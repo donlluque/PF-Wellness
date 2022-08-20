@@ -10,6 +10,8 @@ import {
   ListIcon,
   Center,
   SimpleGrid,
+  Spacer,
+  Text,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FcNext } from "react-icons/fc";
@@ -17,10 +19,26 @@ import { FcNext } from "react-icons/fc";
 function Home() {
   return (
     <>
-      <Center h="100vh" top={0} bgColor="#fcf7d7" mb={2}>
-        <Heading as="h1" size="2xl">
-          Clinica de fisioterapia y rehabilitación física
+      <Center
+        h="100vh"
+        top={0}
+        bgImage="linear-gradient(
+      rgba(230, 255, 250, 0.5),
+      rgba(230, 255, 250, 0.5)
+    ),
+    url(https://www.unitecoprofesional.es/blog/wp-content/uploads/2021/09/como-hacer-una-historia-clinica.jpg)"
+        mb={2}
+        flexDirection="column"
+      >
+        <Heading textAlign="center" as="h1" size="4xl" m="1rem">
+          Clínica de fisioterapia y
+          <Spacer /> rehabilitación física
         </Heading>
+        <Box>
+          <Text as="i" fontSize="xl">
+            "Cuida tu cuerpo. Es el único lugar que tienes para vivir"
+          </Text>
+        </Box>
       </Center>
       <Container maxW="100vw" centerContent>
         <Flex direction="row" m={5}>
@@ -90,12 +108,12 @@ function Home() {
           />
         </Flex>
         <Link to="/about">
-          <Button colorScheme="blue" m={4}>
+          <Button colorScheme="teal" m={4}>
             Leer más
           </Button>
         </Link>
       </Container>
-      <Container maxW="100vw" centerContent bgColor="#fcf7d7" pb="2rem">
+      <Container maxW="100vw" centerContent bgColor="teal.50" pb="2rem">
         <Heading as="h2" size="xl" m={8}>
           Especialidades médicas destacadas
         </Heading>
@@ -113,7 +131,9 @@ function Home() {
                 Traumatología
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost">Leer más &gt;&gt;</Button>
+                <Button colorScheme="teal" variant="ghost">
+                  Leer más &gt;&gt;
+                </Button>
               </Link>
             </Box>
           </Box>
@@ -130,7 +150,9 @@ function Home() {
                 Kinesiología
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost">Leer más &gt;&gt;</Button>
+                <Button variant="ghost" colorScheme="teal">
+                  Leer más &gt;&gt;
+                </Button>
               </Link>
             </Box>
           </Box>
@@ -147,7 +169,9 @@ function Home() {
                 Osteopatía
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost">Leer más &gt;&gt;</Button>
+                <Button variant="ghost" colorScheme="teal">
+                  Leer más &gt;&gt;
+                </Button>
               </Link>
             </Box>
           </Box>
@@ -164,7 +188,9 @@ function Home() {
                 Deportología
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost">Leer más &gt;&gt;</Button>
+                <Button variant="ghost" colorScheme="teal">
+                  Leer más &gt;&gt;
+                </Button>
               </Link>
             </Box>
           </Box>

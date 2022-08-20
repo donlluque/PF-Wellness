@@ -7,8 +7,8 @@ module.exports = (sequelize) => {
     "doctor",
     {
       id: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
       },
 
@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
       },
 
       especialidades_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
 
@@ -64,7 +64,6 @@ module.exports = (sequelize) => {
 
       prepaid_health: {
         type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: false,
       },
 
       picture: {

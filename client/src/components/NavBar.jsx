@@ -6,14 +6,54 @@ import {
   Spacer,
   Image,
   Box,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+  Text,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+  Icon,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Logo from "../assets/logoPf.jpeg";
+import { useRef, useState } from "react";
+import FormLogin from "./FormLogin";
+import FormRegistration from "./FormRegistration";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../redux/actions";
+import { FaUserCircle} from "react-icons/fa";
 
 function NavBar() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const firstField = useRef();
+  const [login, setLogin] = useState(true);
+  const isUserLogIn = useSelector((state) => state.logInState);
+  const idUserLogIn = useSelector((state) => state.idUserLogIn);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleLogin = () => {
+    setLogin(!login);
+  };
+
+  const handleLogOut = () => {
+    dispatch(logOut());
+    history.push('/');
+  }
+
   return (
     <Box position="absolute" w="100%">
-      <Flex m={2} >
+      <Flex m={2}>
         <Image
           w="15rem"
           ml="0.5rem"
@@ -54,14 +94,89 @@ function NavBar() {
 
         <Spacer />
         <ButtonGroup>
-          <Button colorScheme="teal" variant="solid">
-            Turnos Online
-          </Button>
-          <Button colorScheme="teal" variant="outline">
-            Acceder
-          </Button>
+          <Link to="/turnos">
+            <Button colorScheme="teal" variant="solid">
+              Turnos Online
+            </Button>
+          </Link>
+
+          {!isUserLogIn && (
+            <Button colorScheme="teal" variant="outline" onClick={onOpen}>
+              Acceder
+            </Button>
+          )}
+          {isUserLogIn && (
+            <Menu>
+              {({ isOpen }) => (
+                <>
+                  <MenuButton isActive={isOpen} as={Button}>
+                    {isOpen ? "Close" : <Icon boxSize={7} as={FaUserCircle}/>}
+                  </MenuButton>
+                  <MenuList>
+                    <Link to={`/userProfile/${idUserLogIn}`}>
+                      <MenuItem>Ver perfil</MenuItem>
+                    </Link>
+                    <MenuItem onClick={handleLogOut}>
+                      Cerrar Sesión
+                    </MenuItem>
+                  </MenuList>
+                </>
+              )}
+            </Menu>
+          )}
         </ButtonGroup>
       </Flex>
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        initialFocusRef={firstField}
+        onClose={onClose}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          {login ? (
+            <DrawerHeader borderBottomWidth="1px">Ingresar</DrawerHeader>
+          ) : (
+            <DrawerHeader borderBottomWidth="1px">Crear cuenta</DrawerHeader>
+          )}
+
+          <DrawerBody>
+            {login ? (
+              <Stack pt={6}>
+                <Text align={"center"}>
+                  No tiene cuenta?{" "}
+                  <Button
+                    colorScheme="teal"
+                    variant="link"
+                    onClick={handleLogin}
+                  >
+                    Crear cuenta
+                  </Button>
+                </Text>
+              </Stack>
+            ) : (
+              <Stack pt={6}>
+                <Text align={"center"}>
+                  Ya tiene cuenta?{" "}
+                  <Button
+                    variant="link"
+                    onClick={handleLogin}
+                    colorScheme="teal"
+                  >
+                    Ingresar
+                  </Button>
+                </Text>
+              </Stack>
+            )}
+            {login ? (
+              <FormLogin onClose={onClose} />
+            ) : (
+              <FormRegistration onClose={onClose} />
+            )}
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </Box>
   );
 }

@@ -7,8 +7,8 @@ module.exports = (sequelize) => {
     "patient",
     {
       id: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
       },
 
@@ -52,11 +52,6 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      prepaid_health: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-
       birthday: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -64,12 +59,12 @@ module.exports = (sequelize) => {
 
       medical_history: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        
       },
 
       picture: {
         type: DataTypes.STRING,
-        allowNull: false,
+        
       },
     },
     { timestamps: false }

@@ -1,48 +1,84 @@
-
-
 const initialState = {
   doctors: [],
   patients: [],
+  patientDetail: {},
   detail: {},
   msgError: {},
-  msgConfirm: {}
+  msgConfirm: {},
+  logInState: false,
+  idUserLogIn: "",
 };
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
     case "GET_DOCTORS":
-      return{
+      return {
         ...state,
-        doctors: action.payload
+        doctors: action.payload,
       };
     case "GET_DETAIL":
-      return{
+      return {
         ...state,
-        detail: action.payload
+        detail: action.payload,
       };
     case "CLEAN_DOCTOR":
       return {
-          ...state,
-          detail: {},
-     };
+        ...state,
+        detail: {},
+      };
+    case "FILTER":
+      return {
+        ...state,
+        doctors: action.payload,
+      };
     case "SEARCH_DOCTOR":
-      return{
-       ...state,
-       doctors: action.payload
-      };  
+      return {
+        ...state,
+        doctors: action.payload,
+      };
     case "HANDLE_ERROR":
-      return{
+      return {
         ...state,
-        msgError: action.payload
+        msgError: action.payload,
       };
-      case "CONFIRM_ACTION":
-      return{
+    case "CONFIRM_ACTION":
+      return {
         ...state,
-        msgConfirm: action.payload
+        msgConfirm: action.payload,
       };
-      case "POST_USER": {
+    case "POST_PATIENT": {
       return { ...state };
     }
+    case "PUT_PATIENT": {
+      return {
+        ...state,
+      };
+    }
+    case "GET_ONE_PATIENT": {
+      return {
+        ...state,
+        patientDetail: action.payload,
+      };
+    }
+    case "LOG_IN": {
+      return {
+        ...state,
+        logInState: true,
+      };
+    }
+    case "LOG_OUT": {
+      return {
+        ...state,
+        logInState: false,
+      };
+    }
+    case "ID_USER": {
+      return {
+        ...state,
+        idUserLogIn: action.payload,
+      };
+    }
+
     default:
       return {
         ...state,

@@ -11,26 +11,34 @@ const { getByPH } = require("../controllers/filters/filterByPH.js");
 // } = require("../controllers/filters/filterBySpecialities.js");
 
 router.get("/", async (req, res) => {
-  const { general_area, prepaid_health, specialities } = req.query;
+  const { general_area, prepaid_health } = req.query;
   // console.log(general_area, "areaaaaaaaaaaaaaa");
   try {
     if (general_area === "" && prepaid_health === "") {
       res.status(400).send("Faltan campos");
     } else if (general_area === "All" && prepaid_health === "All") {
       const allDoctors = await getAllDoctor();
-      res.status(200).send(allDoctors);
-    } else if (general_area === "All" && prepaid_health === "All") {
-      const allDoctors = await getAllDoctor();
-      res.status(200).send(allDoctors);
+      if (!allDoctors.length) {
+        res.status(400).send("recargar db");
+      } else {
+        res.status(200).send(allDoctors);
+      }
       // } else if (general_area !== "All" && specialities !== "All") {
       //   const especialidad = await getBySpecialities(specialities);
-      res.status(200).send(especialidad);
     } else if (general_area !== "All" && prepaid_health === "All") {
       const doctorsGA = await getByGeneralArea(general_area);
-      res.status(200).send(doctorsGA);
+      if (!doctorsGA.length) {
+        res.status(400).send("No hay doctores en esa area");
+      } else {
+        res.status(200).send(doctorsGA);
+      }
     } else if (general_area === "All" && prepaid_health !== "All") {
       const doctorsPH = await getByPH(prepaid_health);
-      res.status(200).send(doctorsPH);
+      if (!doctorsPH.length) {
+        res.status(400).send("No hay doctores con esa obra social");
+      } else {
+        res.status(200).send(doctorsPH);
+      }
     } else if (general_area !== "All" && prepaid_health !== "All") {
       const general = await getByGeneralArea(general_area);
       // console.log(general, "soy general");
@@ -39,8 +47,14 @@ router.get("/", async (req, res) => {
           (e) => e.toLowerCase() === prepaid_health.toLowerCase()
         )
       );
-      // console.log(mixFiltro, "soy mixFiltro");
-      res.status(200).send(mixFiltro);
+      if (!mixFiltro.length) {
+        res
+          .status(400)
+          .send(`No tenemos doctor en ${general_area} con ${prepaid_health}`);
+      } else {
+        console.log(mixFiltro, "soy mixFiltro");
+        res.status(200).send(mixFiltro);
+      }
     }
   } catch (error) {
     res.status(404).send("Error en el catch filters", error);

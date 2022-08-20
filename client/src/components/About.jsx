@@ -13,6 +13,7 @@ import {
   List,
   ListIcon,
   ListItem,
+  Text,
 } from "@chakra-ui/react";
 import { BsTelephone } from "react-icons/bs";
 import { ImMobile } from "react-icons/im";
@@ -21,10 +22,28 @@ import { VscCheckAll, VscQuote } from "react-icons/vsc";
 function About() {
   return (
     <>
-      <Center h="100vh" top={0} bgColor="#fcf7d7" mb={2}>
-        <Heading as="h1" size="2xl">
+      <Center
+        flexDirection="column"
+        bgRepeat="no-repeat"
+        bgSize="cover"
+        h="100vh"
+        top={0}
+        bgImage="linear-gradient(
+      rgba(230, 255, 250, 0.7),
+      rgba(230, 255, 250, 0.7)
+    ),
+    url(https://www.clinicapremium.com/wp-content/uploads/2020/06/trabaja-en-clinica-premium-marbella.jpg)"
+        mb={2}
+      >
+        <Heading textAlign="center" as="h1" size="4xl" m="1rem">
           Nosotros
         </Heading>
+        <Box>
+          <Text as="i" fontSize="xl">
+            "Estamos justo donde nos necesitas. Experiencia. Servicio.
+            Integridad"
+          </Text>
+        </Box>
       </Center>
       <Container maxW="100%" centerContent>
         <Heading as="h2" size="lg" m={5}>
@@ -41,7 +60,7 @@ function About() {
           <Image width="20rem" src={img1} alt="img" m={3} />
         </Box>
         <Box
-          bgColor="#fcf7d7"
+          bgColor="teal.50"
           w="100%"
           display="flex"
           flexDirection="column"
@@ -81,20 +100,20 @@ function About() {
             </Heading>
             <List spacing={4} p="2rem">
               <ListItem>
-                <ListIcon as={BsTelephone} color="green.500" />
+                <ListIcon as={BsTelephone} color="teal.900" />
                 0800-354-5050
               </ListItem>
               <ListItem>
-                <ListIcon as={ImMobile} color="green.500" />
+                <ListIcon as={ImMobile} color="teal.900" />
                 +54 9 351 365-4238
               </ListItem>
               <ListItem>
-                <ListIcon as={MdAlternateEmail} color="green.500" />
+                <ListIcon as={MdAlternateEmail} color="teal.900" />
                 consultaswellness@gmail.com
               </ListItem>
               {/* You can also use custom icons from react-icons */}
               <ListItem>
-                <ListIcon as={MdOutlinePlace} color="green.500" />
+                <ListIcon as={MdOutlinePlace} color="teal.900" />
                 Av. Colón 299, Córdoba, Argentina
               </ListItem>
             </List>

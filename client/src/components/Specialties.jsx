@@ -17,16 +17,33 @@ import {
   ListIcon,
   Container,
   Text,
+  Spacer,
 } from "@chakra-ui/react";
 import { FcApproval } from "react-icons/fc";
-
 function Specialties() {
   return (
     <>
-      <Center h="100vh" top={0} bgColor="#fcf7d7" mb={2}>
-        <Heading as="h1" size="2xl">
-          Especialidades Médicas
+      <Center
+        h="100vh"
+        top={0}
+        bgRepeat="no-repeat"
+        bgSize="cover"
+        bgImage="linear-gradient(
+      rgba(230, 255, 250, 0.7),
+      rgba(230, 255, 250, 0.7)
+    ),
+    url(http://noticias.unsam.edu.ar/wp-content/uploads/2014/04/Kinesiologie.jpg)"
+        mb={2}
+        flexDirection="column"
+      >
+        <Heading textAlign="center" as="h1" size="4xl" m="1rem">
+          Especialidades <Spacer /> Médicas
         </Heading>
+        <Box>
+          <Text as="i" fontSize="xl">
+            "El conocimiento hace la diferencia"
+          </Text>
+        </Box>
       </Center>
       <Box display="flex" flexDirection="column" alignItems="center">
         <Stack pt="2rem" borderRadius="1.5rem" w="100%">
@@ -70,7 +87,7 @@ function Specialties() {
             />
           </Box>
         </Stack>
-        <Stack pt="2rem" borderRadius="1.5rem" w="100%" bgColor="#fcf7d7">
+        <Stack pt="2rem" borderRadius="1.5rem" w="100%" bgColor="teal.50">
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Kinesiologia y Fisioterapia
           </Heading>
@@ -84,23 +101,23 @@ function Specialties() {
               </Text>
               <List spacing={3} w="100%" pl="3rem" pt="1rem">
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Columna
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Lumbalgia
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Miembro Superior
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Neuralgia
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Respiratoria
                 </ListItem>
               </List>
@@ -132,11 +149,11 @@ function Specialties() {
               </Text>
               <List spacing={3} w="100%" pl="3rem" pt="1rem">
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Miembro Inferior
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Miembro Superior
                 </ListItem>
               </List>
@@ -153,7 +170,7 @@ function Specialties() {
             />
           </Box>
         </Stack>
-        <Stack pt="2rem" borderRadius="1.5rem" w="100%" bgColor="#fcf7d7">
+        <Stack pt="2rem" borderRadius="1.5rem" w="100%" bgColor="teal.50">
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Quiropraxia
           </Heading>
@@ -168,23 +185,23 @@ function Specialties() {
               </Text>
               <List spacing={3} w="100%" pl="3rem" pt="1rem">
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Cadera
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Cervicalgias
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Columna
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Dorsalgias
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Hombro
                 </ListItem>
               </List>
@@ -217,23 +234,23 @@ function Specialties() {
               </Text>
               <List spacing={3} w="100%" pl="3rem" pt="1rem">
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Artritis
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Artrosis
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Reumatismo
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Dorsalgias
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Hombro
                 </ListItem>
               </List>
@@ -250,7 +267,7 @@ function Specialties() {
             />
           </Box>
         </Stack>
-        <Stack pt="2rem" borderRadius="1.5rem" w="100%" bgColor="#fcf7d7">
+        <Stack pt="2rem" borderRadius="1.5rem" w="100%" bgColor="teal.50">
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Terapia de Dolor
           </Heading>
@@ -264,15 +281,15 @@ function Specialties() {
               </Text>
               <List spacing={3} w="100%" pl="3rem" pt="1rem">
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Columna
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Mano
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Pie
                 </ListItem>
               </List>
@@ -303,23 +320,23 @@ function Specialties() {
               </Text>
               <List spacing={3} w="100%" pl="3rem" pt="1rem">
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Cadera
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Hombro
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Pediatria
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Pie
                 </ListItem>
                 <ListItem>
-                  <ListIcon as={FcApproval} color="green.500" />
+                  <ListIcon as={FcApproval} color="teal.900" />
                   Rodilla
                 </ListItem>
               </List>

@@ -11,23 +11,31 @@ router.get("/", async (req, res, next) => {
 
   try {
     const allDoctors = await getAllDoctor();
-    let doctorsDb = await Doctor.findAll();
-    // console.log(allDoctors);
+
+    const doctorsDb = await Doctor.findAll({
+      include: {
+        model: Prepaid_health,
+        throught: {
+          attributes: [],
+        },
+      },
+    });
+
     if (!doctorsDb.length) {
-      await Doctor.bulkCreate(allDoctors);
-    }
-    // console.log(doctorsDb, "soy doctorsDb ");
-
-    if (name) {
-      const nombre = await allDoctors.filter((e) =>
-        e.name.toLowerCase().includes(name.toLowerCase())
-      );
-
-      nombre.length
-        ? res.status(200).send(nombre)
-        : res.status(400).send("Not exist");
+      const doctors = await Doctor.bulkCreate(allDoctors);
+      res.status(200).send(doctors);
     } else {
-      res.status(200).send(allDoctors);
+      if (name) {
+        const nombre = await doctorsDb.filter((e) =>
+          e.name.toLowerCase().includes(name.toLowerCase())
+        );
+
+        nombre.length
+          ? res.status(200).send(nombre)
+          : res.status(400).send("Not exist");
+      } else {
+        res.status(200).send(doctorsDb);
+      }
     }
   } catch (error) {
     res
@@ -38,14 +46,19 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  // console.log(id);
+  console.log(id);
   try {
-    const allDoctors = await getAllDoctor();
-    // console.log(allDoctors, "doctor id");
+    const doctor = await Doctor.findOne({
+      where: { id },
+      include: {
+        model: Prepaid_health,
+        throught: {
+          attributes: [],
+        },
+      },
+    });
 
-    const doctor = await allDoctors.find((e) => e.id == id);
-
-    if (doctor) {
+    if (id) {
       res.status(200).send(doctor);
     } else {
       res.status(400).send("the doctor is not enable");
@@ -59,67 +72,45 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    //Info traida por body desde el formuluario
-    //Datos del doctor llenados en el Formulario
-    const doctor = {
-      id: "100",
-      name: "Doctor Rodriguez",
-      medic_id: "FO12AGEC90265146386015207816",
-      general_area: "Terapia de dolor",
-      especialidades_id: 47,
-      activo: true,
-      phone: "+54 9 351 205-4738",
-      email: "rodriguez@gmail.com",
-      birthday: "15/01/1998",
-      document: 26526955,
-      type_document: "DNI",
-      picture:
-        "https://hospitalprivado.com.ar/uploads/cache/profile_j_maria-kurpis-5166.jpg",
-      description: "Horario de atención lunes, martes y viernes 10 a 16hs",
-    };
-
-    // Obra social del doctor seleccionadas en el formulario
-    const prepaidHealth = [
-      {
-        id: "1",
-        name: "osde",
-      },
-      {
-        id: "2",
-        name: "swiss medical",
-      },
-    ];
-
-    const idsPrepaidHealth = prepaidHealth.map((type) => type.id);
+    const {
+      name,
+      medic_id,
+      general_area,
+      especialidades_id,
+      phone,
+      email,
+      birthday,
+      document,
+      type_document,
+      prepaid_health,
+      picture,
+      description,
+    } = req.body;
 
     const dataPrepaidHealth = await Prepaid_health.findAll({
-      where: { id: idsPrepaidHealth },
-      attribute: ["name"],
+      where: { name: prepaid_health },
     });
 
-    const newDoctor = await Doctor.create(doctor);
+    // console.log(dataPrepaidHealth);
+
+    const newDoctor = await Doctor.create({
+      name,
+      medic_id,
+      general_area,
+      especialidades_id,
+      phone,
+      email,
+      birthday,
+      document,
+      type_document,
+      picture,
+      description,
+    });
+
     await newDoctor.addPrepaid_health(dataPrepaidHealth);
 
     res.status(200).send(newDoctor);
-    // console.log(doctor);
-  } catch (error) {
-    res.status(404).send("Error en el catch de doctorID", error);
-  }
+  } catch (error) {}
 });
 
-//RUTA GET PARA LOS CREADOS DESDE EL POST, INCLUYENDO LOS DATOS DE LAS OBRAS SOCIALES
-// router.get("/", async (req, res, next) => {
-//   try {
-//     const nuevo = await Doctor.findAll({
-//       include: {
-//         model: Prepaid_health,
-//         throught: {
-//           attributes: [],
-//         },
-//       },
-//     });
-
-//     res.status(200).send(nuevo);
-//   } catch (error) {}
-// });
 module.exports = router;

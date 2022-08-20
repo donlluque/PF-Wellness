@@ -22,14 +22,16 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
+      user_name: {
+        type: DataTypes.STRING,
+      },
+
       document: {
         type: DataTypes.INTEGER,
-        allowNull: false,
       },
 
       type_document: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
 
       email: {
@@ -39,32 +41,30 @@ module.exports = (sequelize) => {
 
       phone: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
 
       nationality: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
 
       direction: {
         type: DataTypes.TEXT,
-        allowNull: false,
       },
 
       birthday: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
 
       medical_history: {
         type: DataTypes.TEXT,
-        
       },
 
       picture: {
         type: DataTypes.STRING,
-        
+      },
+
+      prepaid_health: {
+        type: DataTypes.STRING,
       },
     },
     { timestamps: false }

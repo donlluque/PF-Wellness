@@ -48,7 +48,7 @@ function Specialties() {
       <Box display="flex" flexDirection="column" alignItems="center">
         <Stack pt="2rem" borderRadius="1.5rem" w="100%">
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
-            Deportologia
+            Deportología
           </Heading>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
@@ -89,7 +89,7 @@ function Specialties() {
         </Stack>
         <Stack pt="2rem" borderRadius="1.5rem" w="100%" bgColor="teal.50">
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
-            Kinesiologia y Fisioterapia
+            Kinesiología y Fisioterapia
           </Heading>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
@@ -136,7 +136,7 @@ function Specialties() {
         </Stack>
         <Stack pt="2rem" borderRadius="1.5rem" w="100%">
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
-            Osteopatia
+            Osteopatía
           </Heading>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
@@ -329,7 +329,7 @@ function Specialties() {
                 </ListItem>
                 <ListItem>
                   <ListIcon as={FcApproval} color="teal.900" />
-                  Pediatria
+                  Pediatría
                 </ListItem>
                 <ListItem>
                   <ListIcon as={FcApproval} color="teal.900" />

@@ -28,7 +28,9 @@ import DoctorDetail from "./DoctorDetail";
 
 
 
- export default function DoctorCard({id, picture, name, general_area, especialidades_id}) {
+
+export default function DoctorCard({id, picture, name, general_area, especialidades_id}) {
+
     const { isOpen, onOpen, onClose } = useDisclosure();
     
 
@@ -86,6 +88,7 @@ import DoctorDetail from "./DoctorDetail";
         </Box>
       </Box>
     </Center>
+
 <>
        
         <Modal isOpen={isOpen} onClose={onClose}>

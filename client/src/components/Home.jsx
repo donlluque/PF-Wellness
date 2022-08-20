@@ -55,6 +55,7 @@ function Home() {
             objectFit="cover"
             src="https://st2.depositphotos.com/2249091/8550/i/450/depositphotos_85502714-stock-photo-small-boy-with-kinesio-tape.jpg"
             alt="Dan Abramov"
+            borderRadius="0.5rem"
           />
         </Flex>
         <Flex m={5}>
@@ -63,6 +64,7 @@ function Home() {
             objectFit="cover"
             src="https://www.utalca.cl/content/uploads/2019/04/nota_kine.jpg"
             alt="Dan Abramov"
+            borderRadius="0.5rem"
           />
           <Box>
             <Heading as="h3" size="lg" mt={6} textAlign="center">
@@ -105,6 +107,7 @@ function Home() {
             objectFit="cover"
             src="https://www.ccdm.cl/wp-content/uploads/2014/12/IMG_4854.jpg"
             alt="Dan Abramov"
+            borderRadius="0.5rem"
           />
         </Flex>
         <Link to="/about">

@@ -51,7 +51,7 @@ export default function NavStaff({setInput, setPage}){
                  }
                 <Box display='inline-flex'>
                    
-                    <Select m='1rem' bg={'green.100'} color='tela.700' onChange={e => handleFilter(e)} value={values.especialidad} name='especialidad'>
+                    <Select m='1rem' bg={'teal.300'} color='teal.700' onChange={e => handleFilter(e)} value={values.especialidad} name='especialidad'>
                     <option value='All'>Areas Generales</option>
                     <option value='deportologia'>Deportología</option>
                     <option value='fisioterapia y kinesiologia'>Kinesiología y Fisioterapia</option>
@@ -62,7 +62,7 @@ export default function NavStaff({setInput, setPage}){
                     <option value='traumatologia'>Traumatología</option>
                     </Select>
                      
-                <Select m='1rem' bg={'green.100'} color='tela.700' onChange={e => handleFilter(e)} value={values.obrasocial} name='obrasocial'>
+                <Select m='1rem' bg={'teal.300'} color='teal.700' onChange={e => handleFilter(e)} value={values.obrasocial} name='obrasocial'>
                     <option value='All'>Prestaciones</option>
                     <option value='osde'>Osde</option>
                     <option value='swiss medical'>Swiss Medical</option>

@@ -115,7 +115,11 @@ export const postPatient = (form) => {
               statusText: `Ya existe un usuario con el mail ${form.email}`,
             })
       )
-      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+      .then((data) => {
+        dispatch({ type: "CONFIRM_ACTION", payload: data });
+        dispatch({ type: "LOG_IN" });
+        dispatch({ type: "ID_USER", payload: data.id });
+      })
       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
   };
 };
@@ -123,7 +127,7 @@ export const postPatient = (form) => {
 //PUT
 export const putPatient = (data) => {
   return function (dispatch) {
-    return fetch(`${baseURL}/patients`, {
+    return fetch(`${baseURL}/patients/${data.id}`, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
@@ -143,6 +147,27 @@ export const putPatient = (data) => {
       )
       .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
       .catch((err) => console.log(err));
+  };
+};
+
+export const logOut = () => ({ type: "LOG_OUT" });
+
+export const logIn = () => ({ type: "LOG_IN" });
+
+export const getByUserName = (username) => {
+  return function (dispatch) {
+    fetch(`${baseURL}/doctors`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch({
+          type: "ID_USER",
+          payload: json.id,
+        });
+        dispatch({ type: "LOG_IN" });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };
 

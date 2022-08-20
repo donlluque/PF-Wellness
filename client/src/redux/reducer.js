@@ -5,6 +5,8 @@ const initialState = {
   detail: {},
   msgError: {},
   msgConfirm: {},
+  logInState: false,
+  idUserLogIn: "",
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -56,6 +58,24 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         patientDetail: action.payload,
+      };
+    }
+    case "LOG_IN": {
+      return {
+        ...state,
+        logInState: true,
+      };
+    }
+    case "LOG_OUT": {
+      return {
+        ...state,
+        logInState: false,
+      };
+    }
+    case "ID_USER": {
+      return {
+        ...state,
+        idUserLogIn: action.payload,
       };
     }
 

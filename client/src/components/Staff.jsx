@@ -26,7 +26,6 @@ function Staff() {
       <div key={doc.id}>
         <DoctorCard
         name={doc.name}
-        last_name={doc.last_name}
         picture={doc.picture}
         general_area={doc.general_area}
         id={doc.id}

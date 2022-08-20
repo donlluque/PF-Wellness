@@ -14,7 +14,7 @@ import DoctorDetail from "./DoctorDetail";
 
 
 
- export default function DoctorCard({id, picture, name, last_name, general_area}) {
+ export default function DoctorCard({id, picture, name, general_area}) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     
 
@@ -26,7 +26,7 @@ import DoctorDetail from "./DoctorDetail";
               <img src={picture} alt="img not found" width="200px" height="250px"/>
              </div>
             <div>
-               <h3>{last_name} {name}</h3>
+               <h3>{name}</h3>
              </div>
              <div>
                 <h4>{general_area}</h4>
@@ -38,7 +38,7 @@ import DoctorDetail from "./DoctorDetail";
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-           <ModalHeader> {name} {last_name}</ModalHeader>
+           <ModalHeader> {name}</ModalHeader>
             {/* <ModalCloseButton /> */}
              <ModalBody>
               {/* <Lorem count={2} /> */}

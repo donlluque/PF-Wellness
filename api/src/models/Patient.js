@@ -15,15 +15,27 @@ module.exports = (sequelize) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        set(value) {
+          this.setDataValue("name", value[0].toUpperCase() + value.slice(1));
+        },
       },
 
       last_name: {
         type: DataTypes.STRING,
         allowNull: false,
+        set(value) {
+          this.setDataValue(
+            "last_name",
+            value[0].toUpperCase() + value.slice(1)
+          );
+        },
       },
 
       user_name: {
         type: DataTypes.STRING,
+        set(value) {
+          this.setDataValue("user_name", value.toLowerCase());
+        },
       },
 
       document: {
@@ -37,6 +49,9 @@ module.exports = (sequelize) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        set(value) {
+          this.setDataValue("email", value.toLowerCase());
+        },
       },
 
       phone: {

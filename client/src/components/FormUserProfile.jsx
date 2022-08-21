@@ -26,6 +26,8 @@ function FormUserProfile() {
   const dataPatient = useSelector((state) => state.patientDetail);
   const [errors, setErrors] = useState({});
   const date = new Date().toLocaleDateString().split("/").reverse();
+  const { name, last_name, email } = dataPatient;
+  const [aux, setAux] = useState({ name, last_name, email });
 
   const styleDate = (date) => {
     if (date[1].length === 1) {
@@ -33,11 +35,16 @@ function FormUserProfile() {
     }
     return date.join("-");
   };
-
+  console.log("renderizado", name, last_name, email);
   useEffect(() => {
     dispatch(getOnePatient(id));
-    setForm({ ...form, dataPatient });
+    setForm({ ...form, name, last_name, email, id });
+    setAux(!aux);
   }, [dispatch]);
+
+  useEffect(() => {
+    return setAux(!aux);
+  }, dispatch);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -46,7 +53,8 @@ function FormUserProfile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors(validateForm(form));
+    //setErrors(validateForm(form));
+    console.log(form);
     dispatch(putPatient(form));
     setPutActive(false);
   };
@@ -166,13 +174,13 @@ function FormUserProfile() {
               />
             </FormControl>
             <FormControl isDisabled={!putActive} isInvalid={errors.nationality}>
-              <FormLabel m="1rem" htmlFor="nacionality">
+              <FormLabel m="1rem" htmlFor="nationality">
                 Nacionalidad
               </FormLabel>
               <Input
                 value={form.nationality}
                 onChange={(e) => handleChange(e)}
-                name="nacionality"
+                name="nationality"
                 placeholder="Nacionalidad"
               />
             </FormControl>
@@ -193,9 +201,9 @@ function FormUserProfile() {
                 Obra social
               </FormLabel>
               <Select
-                value={form.prepaid}
+                value={form.prepaid_health}
                 onChange={(e) => handleChange(e)}
-                name="prepaid"
+                name="prepaid_health"
               >
                 <option>Seleccionar una opción</option>
                 <option value="False">Ninguna</option>

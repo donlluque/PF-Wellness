@@ -11,11 +11,10 @@ import {
   FormErrorMessage,
   ListItem,
   List,
-  Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { postPatient } from "../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { validateForm } from "../hooks/validateForm";
 
@@ -38,6 +37,7 @@ function FormRegistration({ onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postPatient(form));
+    onClose();
     setForm({});
   };
 
@@ -88,10 +88,10 @@ function FormRegistration({ onClose }) {
           </FormControl>
           <FormControl isRequired>
             <Box mt="1rem">
-              <FormLabel htmlFor="username">Usuario</FormLabel>
+              <FormLabel htmlFor="user_name">Usuario</FormLabel>
               <Input
                 type="username"
-                name="username"
+                name="user_name"
                 placeholder="Crear nombre de usuario"
                 onChange={(e) => handleChange(e)}
               />

@@ -103,12 +103,6 @@ router.put("/:id", async (req, res, next) => {
     picture,
   } = req.body;
 
-  let newPrepaid_health = "";
-
-  if (prepaid_health) {
-    newPrepaid_health = prepaid_health.toLowerCase();
-  }
-
   let perfiles = await Patient.findOne({
     where: { id: id },
   });
@@ -128,7 +122,7 @@ router.put("/:id", async (req, res, next) => {
   });
 
   const dataPrepaidHealth = await Prepaid_health.findOne({
-    where: { name: newPrepaid_health },
+    where: { name: prepaid_health },
   });
 
   //TRAER LOS DATOS DE LAS OBRAS SOCIALES PARA QUE SE PUEDA AÑADIR

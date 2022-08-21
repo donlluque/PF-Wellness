@@ -49,7 +49,12 @@ function NavBar() {
 
   return (
     <Box position="absolute" w="100%">
-      <Flex m={2}>
+      <Box
+        display="flex"
+        m={2}
+        flexDirection={{ sm: "column", md: "column", lg: "column", xl: "row" }}
+        alignItems={{ sm: "center", md: "center", lg: "center" }}
+      >
         <Image
           w="15rem"
           ml="0.5rem"
@@ -58,8 +63,21 @@ function NavBar() {
           alt="Dan Abramov"
         />
         <Spacer />
-        <Box>
-          <Stack direction="row" spacing={4} align="center">
+        <Box
+          display="flex"
+          flexDirection={{
+            sm: "column",
+            md: "column",
+            lg: "column",
+            xl: "row",
+          }}
+          alignItems={{ sm: "center", md: "center", lg: "center" }}
+        >
+          <Stack
+            spacing={4}
+            direction={{ sm: "column", md: "row" }}
+            align={{ sm: "center", md: "row" }}
+          >
             <Link to="/">
               <Button colorScheme="teal" variant="ghost">
                 Home
@@ -119,7 +137,7 @@ function NavBar() {
             </Menu>
           )}
         </ButtonGroup>
-      </Flex>
+      </Box>
       <Drawer
         isOpen={isOpen}
         placement="right"

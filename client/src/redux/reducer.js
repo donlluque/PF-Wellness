@@ -78,6 +78,12 @@ export default function rootReducer(state = initialState, action) {
         idUserLogIn: action.payload,
       };
     }
+    case "CLEAN_ERROR": {
+      return {
+        ...state,
+        msgError: {},
+      };
+    }
 
     default:
       return {

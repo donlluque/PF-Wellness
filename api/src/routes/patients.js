@@ -57,6 +57,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/user", async (req, res, next) => {
   const { userName } = req.query;
+
   try {
     const user = await Patient.findOne({ where: { user_name: userName } });
     if (user) res.status(200).send(user);

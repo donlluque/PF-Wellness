@@ -21,6 +21,8 @@ function Home() {
     <>
       <Center
         h="100vh"
+        bgRepeat="no-repeat"
+        bgSize="cover"
         top={0}
         bgImage="linear-gradient(
       rgba(230, 255, 250, 0.5),

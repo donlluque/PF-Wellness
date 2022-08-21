@@ -126,11 +126,12 @@ export const postPatient = (form) => {
 
 //PUT
 export const putPatient = (data) => {
+  console.log("data actions", data);
   return function (dispatch) {
     return fetch(`${baseURL}/patients/${data.id}`, {
       method: "PUT",
       body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
+      //headers: { "Content-Type": "application/json" },
     })
       .then((res) =>
         res.ok
@@ -142,7 +143,7 @@ export const putPatient = (data) => {
           : Promise.reject({
               err: true,
               status: res.status || "00",
-              statusText: "Error al guardar los datos",
+              statusText: res.statusText,
             })
       )
       .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))

@@ -102,7 +102,11 @@ router.put("/:id", async (req, res, next) => {
     picture,
   } = req.body;
 
-  const newPrepaid_health = prepaid_health.toLowerCase();
+  let newPrepaid_health = "";
+
+  if (prepaid_health) {
+    newPrepaid_health = prepaid_health.toLowerCase();
+  }
 
   let perfiles = await Patient.findOne({
     where: { id: id },

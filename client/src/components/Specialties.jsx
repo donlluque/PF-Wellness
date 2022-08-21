@@ -77,12 +77,12 @@ function Specialties() {
               </List>
             </Container>
             <Image
-              border="1px solid gray"
+              
               alt="deportologia"
               src={deportologia}
-              p="1rem"
-              borderRadius="1rem"
-              bgColor="white"
+              
+              borderRadius="0.5rem"
+              
               mr="5rem"
             />
           </Box>
@@ -123,12 +123,12 @@ function Specialties() {
               </List>
             </Container>
             <Image
-              border="1px solid gray"
+             
               alt="kineyfisio"
               src={kinesiologia}
-              p="1rem"
-              borderRadius="1rem"
-              bgColor="white"
+             
+              borderRadius="0.5rem"
+             
               mr="5rem"
               maxW="30rem"
             />
@@ -159,13 +159,13 @@ function Specialties() {
               </List>
             </Container>
             <Image
-              border="1px solid gray"
+            
               alt="osteopatia"
               src={osteopatia}
               maxW="30rem"
-              p="1rem"
-              borderRadius="1rem"
-              bgColor="white"
+             
+              borderRadius="0.5rem"
+              
               mr="5rem"
             />
           </Box>
@@ -207,13 +207,13 @@ function Specialties() {
               </List>
             </Container>
             <Image
-              border="1px solid gray"
+              
               alt="quiropraxia"
               src={quiropraxia}
-              p="1rem"
-              borderRadius="1rem"
+             
+              borderRadius="0.5rem"
               minW="25rem"
-              bgColor="white"
+              
               mr="5rem"
             />
           </Box>
@@ -256,13 +256,10 @@ function Specialties() {
               </List>
             </Container>
             <Image
-              border="1px solid gray"
               alt="reumatologia"
               src={reumatologia}
-              p="1rem"
-              borderRadius="1rem"
+              borderRadius="0.5rem"
               maxW="30rem"
-              bgColor="white"
               mr="5rem"
             />
           </Box>
@@ -295,13 +292,10 @@ function Specialties() {
               </List>
             </Container>
             <Image
-              border="1px solid gray"
-              borderRadius="1rem"
+              borderRadius="0.5rem"
               alt="terapiaDeDolor"
               src={terapiaDeDolor}
-              p="1rem"
               maxW="30rem"
-              bgColor="white"
               mr="5rem"
             />
           </Box>
@@ -342,12 +336,9 @@ function Specialties() {
               </List>
             </Container>
             <Image
-              border="1px solid gray"
-              borderRadius="1rem"
+              borderRadius="0.5rem"
               alt="traumatologia"
               src={traumatologia}
-              p="1rem"
-              bgColor="white"
               mr="5rem"
             />
           </Box>

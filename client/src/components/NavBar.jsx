@@ -18,10 +18,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
   Icon,
 } from "@chakra-ui/react";
 import { Link, useHistory } from "react-router-dom";
@@ -31,7 +27,7 @@ import FormLogin from "./FormLogin";
 import FormRegistration from "./FormRegistration";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../redux/actions";
-import { FaUserCircle} from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 
 function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -48,12 +44,17 @@ function NavBar() {
 
   const handleLogOut = () => {
     dispatch(logOut());
-    history.push('/');
-  }
+    history.push("/");
+  };
 
   return (
     <Box position="absolute" w="100%">
-      <Flex m={2}>
+      <Box
+        display="flex"
+        m={2}
+        flexDirection={{ sm: "column", md: "column", lg: "column", xl: "row" }}
+        alignItems={{ sm: "center", md: "center", lg: "center" }}
+      >
         <Image
           w="15rem"
           ml="0.5rem"
@@ -62,8 +63,21 @@ function NavBar() {
           alt="Dan Abramov"
         />
         <Spacer />
-        <Box>
-          <Stack direction="row" spacing={4} align="center">
+        <Box
+          display="flex"
+          flexDirection={{
+            sm: "column",
+            md: "column",
+            lg: "column",
+            xl: "row",
+          }}
+          alignItems={{ sm: "center", md: "center", lg: "center" }}
+        >
+          <Stack
+            spacing={4}
+            direction={{ sm: "column", md: "row" }}
+            align={{ sm: "center", md: "row" }}
+          >
             <Link to="/">
               <Button colorScheme="teal" variant="ghost">
                 Home
@@ -110,22 +124,20 @@ function NavBar() {
               {({ isOpen }) => (
                 <>
                   <MenuButton isActive={isOpen} as={Button}>
-                    {isOpen ? "Close" : <Icon boxSize={7} as={FaUserCircle}/>}
+                    {isOpen ? "Close" : <Icon boxSize={7} as={FaUserCircle} />}
                   </MenuButton>
                   <MenuList>
                     <Link to={`/userProfile/${idUserLogIn}`}>
                       <MenuItem>Ver perfil</MenuItem>
                     </Link>
-                    <MenuItem onClick={handleLogOut}>
-                      Cerrar Sesión
-                    </MenuItem>
+                    <MenuItem onClick={handleLogOut}>Cerrar Sesión</MenuItem>
                   </MenuList>
                 </>
               )}
             </Menu>
           )}
         </ButtonGroup>
-      </Flex>
+      </Box>
       <Drawer
         isOpen={isOpen}
         placement="right"

@@ -49,7 +49,8 @@ export function filter(filter) {
           : Promise.reject({
               err: true,
               status: res.status || "00",
-              statusText: `No se encuentra ningún`,
+              especialidad: especialidad,
+              obrasocial: obrasocial,
             })
       )
       .then((data) => {
@@ -127,6 +128,7 @@ export const postPatient = (form) => {
 
 //PUT
 export const putPatient = (data) => {
+  console.log("data actions", data);
   return function (dispatch) {
     return fetch(`${baseURL}/patients/${data.id}`, {
       method: "PUT",
@@ -143,7 +145,7 @@ export const putPatient = (data) => {
           : Promise.reject({
               err: true,
               status: res.status || "00",
-              statusText: "Error al guardar los datos",
+              statusText: res.statusText,
             })
       )
       .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
@@ -155,10 +157,12 @@ export const logOut = () => ({ type: "LOG_OUT" });
 
 export const logIn = () => ({ type: "LOG_IN" });
 
-export const getByUserName = (username) => {
+export const getByUserName = (userName) => {
+  console.log("actions");
   return function (dispatch) {
-    fetch(`${baseURL}/patients/user${username}`)
+    fetch(`${baseURL}/patients/user?userName=${userName}`)
       .then((res) => res.json())
+
       .then((json) => {
         dispatch({
           type: "ID_USER",
@@ -171,6 +175,8 @@ export const getByUserName = (username) => {
       });
   };
 };
+
+export const cleanError = () => ({ type: "CLEAN_ERROR" });
 
 /////DELETE
 /*

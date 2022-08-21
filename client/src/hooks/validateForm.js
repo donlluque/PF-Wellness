@@ -10,20 +10,20 @@ export const validateForm = (form) => {
   let regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/; //letras y numeros, puntos, guiones,arroba
   let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚú\s]+$/; //acepta letras y espacios, caracteres ajenos al ingles como la ñ
 
-  if (!form.name.trim()) {
+  if (!form.name) {
     errors.name = "Requerido";
-  } else if (!regexName.test(form.name.trim())) {
+  } else if (!regexName.test(form.name)) {
     errors.name = "Solo se aceptan letras y espacios en blanco";
   }
   if (!form.last_name) {
     errors.last_name = "Requerido";
-  } else if (!regexName.test(form.last_name.trim())) {
-    errors.last_name = "Solose aceptan letras y espacios en blanco";
+  } else if (!regexName.test(form.last_name)) {
+    errors.last_name = "Solo se aceptan letras y espacios en blanco";
   }
 
   if (!form.email) {
     errors.email = "Requerido";
-  } else if (!regexEmail.test(form.email.trim())) {
+  } else if (!regexEmail.test(form.email)) {
     errors.email = "Dirección de email inválida";
   }
 

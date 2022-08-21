@@ -37,12 +37,8 @@ function ConfirmMessage({ putActive, deleteActive, postActive }) {
   return (
     <Div>
       <Content>
-        <h4>
-          The activity {msg.name} was successfully {action}!
-        </h4>
-        <A href={`https://pi-countries-main-iota.vercel.app/activities`}>
-          <button>Close</button>
-        </A>
+        <h4>Los datosDatos modificados con exito!</h4>
+        <button>Close</button>
       </Content>
     </Div>
   );

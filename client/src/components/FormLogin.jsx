@@ -25,7 +25,8 @@ function FormLogin({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getByUserName(form.username));
+    console.log(form);
+    dispatch(getByUserName(form.user_name));
     onClose();
     setForm({});
   };
@@ -34,12 +35,12 @@ function FormLogin({ onClose }) {
     <>
       <Stack spacing="24px">
         <Box mt="1rem">
-          <FormLabel htmlFor="username">Usuario</FormLabel>
+          <FormLabel htmlFor="user_name">Usuario</FormLabel>
 
           <Input
             onChange={(e) => handleChange(e)}
             type="username"
-            name="username"
+            name="user_name"
             placeholder="Ingresar nombre de usuario"
           />
         </Box>

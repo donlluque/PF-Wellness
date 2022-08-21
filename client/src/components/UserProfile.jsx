@@ -1,4 +1,5 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
+
 import FormUserProfile from "./FormUserProfile";
 
 function UserProfile() {
@@ -17,6 +18,7 @@ function UserProfile() {
             <Tab bgColor="white">Datos Personales</Tab>
             <Tab bgColor="white">Mis turnos</Tab>
           </TabList>
+
           <TabPanels bgColor="white">
             <TabPanel>
               <FormUserProfile />

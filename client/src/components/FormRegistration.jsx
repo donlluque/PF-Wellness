@@ -11,11 +11,10 @@ import {
   FormErrorMessage,
   ListItem,
   List,
-  Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { postPatient } from "../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { validateForm } from "../hooks/validateForm";
 
@@ -40,6 +39,7 @@ function FormRegistration({ onClose }) {
     e.preventDefault();
     console.log(form)
     dispatch(postPatient(form));
+    onClose();
     setForm({});
   };
 

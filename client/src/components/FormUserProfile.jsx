@@ -9,11 +9,21 @@ import {
   Button,
   Box,
   FormErrorMessage,
+  Spacer,
+  Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
+
 import { putPatient } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getOnePatient } from "../redux/actions";
 import { validateForm } from "../hooks/validateForm.js";
@@ -23,9 +33,11 @@ function FormUserProfile() {
   const [putActive, setPutActive] = useState(false);
   const dispatch = useDispatch();
   const { id } = useParams();
-  const dataPatient = useSelector((state) => state.patientDetail);
+  const { patientDetail, msgConfirm } = useSelector((state) => state);
   const [errors, setErrors] = useState({});
   const date = new Date().toLocaleDateString().split("/").reverse();
+  const { name, last_name, email } = patientDetail;
+  const [aux, setAux] = useState({ name, last_name, email });
 
   const styleDate = (date) => {
     if (date[1].length === 1) {
@@ -33,11 +45,16 @@ function FormUserProfile() {
     }
     return date.join("-");
   };
-
+  console.log("renderizado", name, last_name, email);
   useEffect(() => {
     dispatch(getOnePatient(id));
-    setForm({ ...form, dataPatient });
+    setForm({ ...form, name, last_name, email, id });
+    setAux(!aux);
   }, [dispatch]);
+
+  useEffect(() => {
+    return setAux(!aux);
+  }, dispatch);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -46,8 +63,11 @@ function FormUserProfile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors(validateForm(form));
+    //setErrors(validateForm(form));
+
     dispatch(putPatient(form));
+    setOverlay(<OverlayOne />);
+    onOpen();
     setPutActive(false);
   };
 
@@ -59,6 +79,17 @@ function FormUserProfile() {
     setErrors(validateForm({ ...form, [e.target.name]: e.target.value }));
   };
 
+  //MENSAJE
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const OverlayOne = () => (
+    <ModalOverlay
+      bg="blackAlpha.300"
+      backdropFilter="blur(10px) hue-rotate(90deg)"
+    />
+  );
+
+  const [overlay, setOverlay] = useState(<OverlayOne />);
   return (
     <>
       <Box display={{ md: "flex" }} justifyContent="center">
@@ -166,13 +197,13 @@ function FormUserProfile() {
               />
             </FormControl>
             <FormControl isDisabled={!putActive} isInvalid={errors.nationality}>
-              <FormLabel m="1rem" htmlFor="nacionality">
+              <FormLabel m="1rem" htmlFor="nationality">
                 Nacionalidad
               </FormLabel>
               <Input
                 value={form.nationality}
                 onChange={(e) => handleChange(e)}
-                name="nacionality"
+                name="nationality"
                 placeholder="Nacionalidad"
               />
             </FormControl>
@@ -193,9 +224,9 @@ function FormUserProfile() {
                 Obra social
               </FormLabel>
               <Select
-                value={form.prepaid}
+                value={form.prepaid_health}
                 onChange={(e) => handleChange(e)}
-                name="prepaid"
+                name="prepaid_health"
               >
                 <option>Seleccionar una opción</option>
                 <option value="False">Ninguna</option>
@@ -219,6 +250,32 @@ function FormUserProfile() {
             </Button>
           </form>
         </Box>
+
+        {
+          (msgConfirm.status = "200" && (
+            <Modal
+              isCentered
+              isOpen={isOpen}
+              onClose={onClose}
+              colorScheme="teal"
+            >
+              {overlay}
+              <ModalContent bgColor="green.50">
+                <ModalHeader color="teal.600">Perfil actualizado</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <Text color="teal.600">
+                    {msgConfirm.name}, tus datos fueron modificados
+                    exitosamente!
+                  </Text>
+                </ModalBody>
+                <ModalFooter>
+                  <Spacer />
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          ))
+        }
       </Box>
     </>
   );

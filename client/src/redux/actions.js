@@ -131,7 +131,7 @@ export const putPatient = (data) => {
     return fetch(`${baseURL}/patients/${data.id}`, {
       method: "PUT",
       body: JSON.stringify(data),
-      //headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" },
     })
       .then((res) =>
         res.ok

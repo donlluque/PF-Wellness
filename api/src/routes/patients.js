@@ -126,6 +126,8 @@ router.put("/:id", async (req, res, next) => {
     where: { name: newPrepaid_health },
   });
 
+  //TRAER LOS DATOS DE LAS OBRAS SOCIALES PARA QUE SE PUEDA AÑADIR
+
   await este.addPrepaid_health(dataPrepaidHealth);
 
   let otro = await Patient.findOne({

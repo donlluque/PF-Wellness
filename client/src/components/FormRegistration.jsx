@@ -27,6 +27,7 @@ function FormRegistration({ onClose }) {
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
+   
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrors(validateForm({ ...form, [e.target.name]: e.target.value }));
   };
@@ -37,6 +38,7 @@ function FormRegistration({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(form)
     dispatch(postPatient(form));
     setForm({});
   };
@@ -88,10 +90,10 @@ function FormRegistration({ onClose }) {
           </FormControl>
           <FormControl isRequired>
             <Box mt="1rem">
-              <FormLabel htmlFor="username">Usuario</FormLabel>
+              <FormLabel htmlFor="user_name">Usuario</FormLabel>
               <Input
                 type="username"
-                name="username"
+                name="user_name"
                 placeholder="Crear nombre de usuario"
                 onChange={(e) => handleChange(e)}
               />

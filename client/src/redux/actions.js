@@ -1,5 +1,5 @@
 import { baseURL } from "../index.js";
-import axios from 'axios';
+import axios from "axios";
 
 export function getDoctors() {
   return function (dispatch) {
@@ -51,6 +51,7 @@ export function filter(filter) {
               status: res.status || "00",
               especialidad: especialidad,
               obrasocial: obrasocial,
+              type: "filter",
             })
       )
       .then((data) => {
@@ -72,7 +73,8 @@ export function searchByName(input) {
           : Promise.reject({
               err: true,
               status: res.status || "00",
-              statusText: `No se encuentra ningún ${input} `,
+              type: "search",
+              statusText: `No se encuentra ningún profesional con el nombre "${input}" `,
             })
       )
       .then((data) => {
@@ -149,7 +151,7 @@ export const putPatient = (data) => {
             })
       )
       .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
-      .catch((err) => console.log(err));
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
   };
 };
 
@@ -158,25 +160,34 @@ export const logOut = () => ({ type: "LOG_OUT" });
 export const logIn = () => ({ type: "LOG_IN" });
 
 export const getByUserName = (userName) => {
-  console.log("actions");
   return function (dispatch) {
     fetch(`${baseURL}/patients/user?userName=${userName}`)
-      .then((res) => res.json())
-
+      .then((res) =>
+        res.ok
+          ? res.json()
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: `El nombre de usuario ${userName} no se encuentra registrado`,
+            })
+      )
       .then((json) => {
         dispatch({
           type: "ID_USER",
           payload: json.id,
         });
         dispatch({ type: "LOG_IN" });
+
+        dispatch({ type: "CONFIRM_ACTION", payload: json });
       })
       .catch((error) => {
-        console.log(error);
+        dispatch({ type: "HANDLE_ERROR", payload: error });
       });
   };
 };
 
 export const cleanError = () => ({ type: "CLEAN_ERROR" });
+export const cleanConfirm = () => ({ type: "CLEAN_MSG" });
 
 /////DELETE
 /*

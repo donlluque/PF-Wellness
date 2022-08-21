@@ -1,7 +1,6 @@
 import {
   Button,
   Stack,
-  Flex,
   ButtonGroup,
   Spacer,
   Image,
@@ -124,7 +123,11 @@ function NavBar() {
               {({ isOpen }) => (
                 <>
                   <MenuButton isActive={isOpen} as={Button}>
-                    {isOpen ? "Close" : <Icon boxSize={7} as={FaUserCircle} />}
+                    {isOpen ? (
+                      <Icon boxSize={7} as={FaUserCircle} />
+                    ) : (
+                      <Icon boxSize={7} as={FaUserCircle} />
+                    )}
                   </MenuButton>
                   <MenuList>
                     <Link to={`/userProfile/${idUserLogIn}`}>
@@ -182,7 +185,7 @@ function NavBar() {
               </Stack>
             )}
             {login ? (
-              <FormLogin onClose={onClose} />
+              <FormLogin onCloseVentana={onClose} />
             ) : (
               <FormRegistration onClose={onClose} />
             )}

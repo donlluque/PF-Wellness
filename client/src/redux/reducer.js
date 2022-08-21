@@ -84,6 +84,12 @@ export default function rootReducer(state = initialState, action) {
         msgError: {},
       };
     }
+    case "CLEAN_MSG": {
+      return {
+        ...state,
+        msgConfirm: {},
+      };
+    }
 
     default:
       return {

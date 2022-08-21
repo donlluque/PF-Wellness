@@ -11,10 +11,12 @@ import {
   FormErrorMessage,
   ListItem,
   List,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { postPatient } from "../redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { validateForm } from "../hooks/validateForm";
 
@@ -24,9 +26,9 @@ function FormRegistration({ onClose }) {
   const handleClick = () => setShow(!show);
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
+  const { msgError } = useSelector((state) => state.msgError);
 
   const handleChange = (e) => {
-   
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrors(validateForm({ ...form, [e.target.name]: e.target.value }));
   };
@@ -37,7 +39,7 @@ function FormRegistration({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form)
+    console.log(form);
     dispatch(postPatient(form));
     onClose();
     setForm({});

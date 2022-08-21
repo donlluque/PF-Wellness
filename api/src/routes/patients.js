@@ -67,21 +67,21 @@ router.get("/user", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
 
-  // const patient = await Patient.findOne({
-  //   where: { id },
-  //   include: {
-  //     model: Prepaid_health,
-  //     throught: {
-  //       attributes: [],
-  //     },
-  //   },
-  // });
+  const patient = await Patient.findOne({
+    where: { id },
+    include: {
+      model: Prepaid_health,
+      throught: {
+        attributes: [],
+      },
+    },
+  });
 
-  const pacientes = await getAllPatient();
-  const paciente = pacientes.find(e => e.id == id);
+  // const pacientes = await getAllPatient();
+  // const paciente = pacientes.find(e => e.id == id);
 
   if (patient) {
-    res.status(200).send(paciente);
+    res.status(200).send(patient);
   } else res.status(400).send("The patient doesn't exist");
 });
 
@@ -101,49 +101,48 @@ router.put("/:id", async (req, res, next) => {
     prepaid_health,
     picture,
   } = req.body;
-  try {
-    let perfiles = await Patient.findOne({
-      where: { id: id },
-    });
 
-    const este = await perfiles.update({
-      name,
-      last_name,
-      document,
-      type_document,
-      email,
-      phone,
-      nationality,
-      direction,
-      birthday,
-      medical_history,
-      picture,
-    });
+  const newPrepaid_health = prepaid_health.toLowerCase();
 
-    const dataPrepaidHealth = await Prepaid_health.findOne({
-      where: { name: prepaid_health },
-    });
+  let perfiles = await Patient.findOne({
+    where: { id: id },
+  });
 
-    await este.addPrepaid_health(dataPrepaidHealth);
+  const este = await perfiles.update({
+    name,
+    last_name,
+    document,
+    type_document,
+    email,
+    phone,
+    nationality,
+    direction,
+    birthday,
+    medical_history,
+    picture,
+  });
 
-    let otro = await Patient.findOne({
-      where: { id: id },
-      include: {
-        model: Prepaid_health,
-        throught: {
-          attributes: [],
-        },
+  const dataPrepaidHealth = await Prepaid_health.findOne({
+    where: { name: newPrepaid_health },
+  });
+
+  await este.addPrepaid_health(dataPrepaidHealth);
+
+  let otro = await Patient.findOne({
+    where: { id: id },
+    include: {
+      model: Prepaid_health,
+      throught: {
+        attributes: [],
       },
-    });
-    if (otro.prepaid_healths.length > 1)
-      await este.removePrepaid_health(otro.prepaid_healths);
+    },
+  });
+  if (otro.prepaid_healths.length > 1)
+    await este.removePrepaid_health(otro.prepaid_healths);
 
-    await otro.addPrepaid_health(dataPrepaidHealth);
+  await otro.addPrepaid_health(dataPrepaidHealth);
 
-    res.status(200).send(otro);
-  } catch (error) {
-    res.status(404).send(error);
-  }
+  res.status(200).send(este);
 });
 
 router.post("/", async (req, res, next) => {

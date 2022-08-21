@@ -22,21 +22,21 @@ router.get("/", async (req, res, next) => {
     });
 
     if (!doctorsDb.length) {
-      const doctors = await Doctor.bulkCreate(allDoctors);
-      res.status(200).send(doctors);
-    } else {
-      if (name) {
-        const nombre = await doctorsDb.filter((e) =>
-          e.name.toLowerCase().includes(name.toLowerCase())
-        );
+      await Doctor.bulkCreate(allDoctors);
 
-        nombre.length
-          ? res.status(200).send(nombre)
-          : res.status(400).send("Not exist");
-      } else {
-        res.status(200).send(doctorsDb);
-      }
     }
+    if (name) {
+      const nombre = await allDoctors.filter((e) =>
+        e.name.toLowerCase().includes(name.toLowerCase())
+      );
+
+      nombre.length
+        ? res.status(200).send(nombre)
+        : res.status(400).send("Not exist");
+    } else {
+      res.status(200).send(allDoctors);
+    }
+    
   } catch (error) {
     res
       .status(404)
@@ -48,15 +48,17 @@ router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   console.log(id);
   try {
-    const doctor = await Doctor.findOne({
-      where: { id },
-      include: {
-        model: Prepaid_health,
-        throught: {
-          attributes: [],
-        },
-      },
-    });
+    // const doctor = await Doctor.findOne({
+    //   where: { id },
+    //   include: {
+    //     model: Prepaid_health,
+    //     throught: {
+    //       attributes: [],
+    //     },
+    //   },
+    // });
+    const doctors = await getAllDoctor();
+    const doctor = doctors.find(e => e.id == id);
 
     if (id) {
       res.status(200).send(doctor);

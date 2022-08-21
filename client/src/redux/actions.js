@@ -1,4 +1,5 @@
 import { baseURL } from "../index.js";
+import axios from 'axios';
 
 export function getDoctors() {
   return function (dispatch) {

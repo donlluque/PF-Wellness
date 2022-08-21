@@ -24,7 +24,7 @@ function UserProfile() {
               <FormUserProfile />
             </TabPanel>
             <TabPanel>
-              <Box>No hay turnos reservados</Box>
+              <Box w='20rem' h='30rem'>No hay turnos reservados</Box>
             </TabPanel>
           </TabPanels>
         </Tabs>

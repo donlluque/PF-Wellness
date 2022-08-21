@@ -26,6 +26,7 @@ function FormRegistration({ onClose }) {
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
+   
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrors(validateForm({ ...form, [e.target.name]: e.target.value }));
   };
@@ -36,6 +37,7 @@ function FormRegistration({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(form)
     dispatch(postPatient(form));
     onClose();
     setForm({});

@@ -29,6 +29,7 @@ import { getOnePatient } from "../redux/actions";
 import { validateForm } from "../hooks/validateForm.js";
 
 function FormUserProfile() {
+  
   const [form, setForm] = useState({});
   const [putActive, setPutActive] = useState(false);
   const dispatch = useDispatch();
@@ -47,8 +48,8 @@ function FormUserProfile() {
   };
   console.log("renderizado", name, last_name, email);
   useEffect(() => {
-    dispatch(getOnePatient(id));
     setForm({ ...form, name, last_name, email, id });
+    dispatch(getOnePatient(id));
     setAux(!aux);
   }, [dispatch]);
 
@@ -57,7 +58,7 @@ function FormUserProfile() {
   }, dispatch);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({...form, [e.target.name]: e.target.value });
     setErrors(validateForm({ ...form, [e.target.name]: e.target.value }));
   };
 
@@ -112,49 +113,52 @@ function FormUserProfile() {
         </Box>
         <Box m="1rem" w="50rem">
           <form>
-            <FormControl isDisabled={!putActive} isInvalid={errors.name}>
+            <FormControl isDisabled={!putActive} >
               <FormLabel m="1rem" htmlFor="name">
                 Nombre
               </FormLabel>
               <Input
+                disabled
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
-                value={form.name}
+                value={name}
                 name="name"
                 placeholder="Escribe nombre completo"
               />
-              {errors.name && (
+              {/* {errors.name && (
                 <FormErrorMessage>{errors.name}</FormErrorMessage>
-              )}
+              )} */}
             </FormControl>
-            <FormControl isDisabled={!putActive} isInvalid={errors.last_name}>
+            <FormControl isDisabled={!putActive} >
               <FormLabel m="1rem" htmlFor="last_name">
                 Apellido
               </FormLabel>
               <Input
-                value={form.last_name}
+                disabled
+                value={last_name}
                 onChange={(e) => handleChange(e)}
                 name="last_name"
                 placeholder="Escribe apellido"
               />
-              {errors.last_name && (
+              {/* {errors.last_name && (
                 <FormErrorMessage>{errors.last_name}</FormErrorMessage>
-              )}
+              )} */}
             </FormControl>
-            <FormControl isDisabled={!putActive} isInvalid={errors.email}>
+            <FormControl isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="email">
                 Email
               </FormLabel>
               <Input
-                value={form.email}
+                disabled
+                value={email}
                 onChange={(e) => handleChange(e)}
                 type="email"
                 placeholder="Dirección de email"
                 name="email"
               />
-              {errors.email && (
+              {/* {errors.email && (
                 <FormErrorMessage>{errors.email}</FormErrorMessage>
-              )}
+              )} */}
             </FormControl>
             <FormControl isDisabled={!putActive} isInvalid={errors.birthday}>
               <FormLabel m="1rem" htmlFor="birthday">
@@ -238,8 +242,9 @@ function FormUserProfile() {
                 <option value="Swiss Medical">Swiss Medical</option>
               </Select>
             </FormControl>
+            {/* isDisabled={errors.name || errors.last_name || errors.email} */}
             <Button
-              isDisabled={errors.name || errors.last_name || errors.email}
+            
               mt="1rem"
               onClick={(e) => handleSubmit(e)}
               type="submit"
@@ -265,7 +270,7 @@ function FormUserProfile() {
                 <ModalCloseButton />
                 <ModalBody>
                   <Text color="teal.600">
-                    {msgConfirm.name}, tus datos fueron modificados
+                   Tus datos fueron modificados
                     exitosamente!
                   </Text>
                 </ModalBody>

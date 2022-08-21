@@ -118,7 +118,7 @@ function About() {
               </ListItem>
             </List>
           </Box>
-          <Box m="1rem" border="1px solid gray" p="1rem" borderRadius="1rem">
+          <Box m="1rem" p="1rem" borderRadius="1rem">
             <iframe
               title="mapa"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5405.254985384337!2d-64.19322203134845!3d-31.411447370491572!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9432987886a77c07%3A0x4f75f1c212944cac!2sAv.%20Col%C3%B3n%20299%2C%20X5000EPC%20C%C3%B3rdoba%2C%20Argentina!5e0!3m2!1ses!2sit!4v1660863672409!5m2!1ses!2sit"
@@ -134,5 +134,5 @@ function About() {
     </>
   );
 }
-
+// border="1px solid gray"
 export default About;

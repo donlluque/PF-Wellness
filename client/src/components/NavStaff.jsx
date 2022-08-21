@@ -16,7 +16,6 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
 } from "@chakra-ui/react";
 import { GiAnticlockwiseRotation } from "react-icons/gi";
 
@@ -28,7 +27,7 @@ export default function NavStaff({ setInput, setPage }) {
   });
   const [filterActive, setFilterActive] = useState(false);
   const msgError = useSelector((state) => state.msgError);
-  console.log(msgError);
+  console.log(msgError.type === "search");
 
   useEffect(() => {
     dispatch(filter(values));
@@ -71,6 +70,7 @@ export default function NavStaff({ setInput, setPage }) {
         setFilterActive={setFilterActive}
         setInput={setInput}
         setPage={setPage}
+        onOpen={onOpen}
       />
       {filterActive && (
         <IconButton
@@ -118,7 +118,7 @@ export default function NavStaff({ setInput, setPage }) {
           <option value="medife">Medife</option>
         </Select>
       </Box>
-      {msgError.status && (
+      {msgError.type === "filter" && (
         <Modal
           isCentered
           isOpen={isOpen}
@@ -143,6 +143,47 @@ export default function NavStaff({ setInput, setPage }) {
                 onClick={() => {
                   onClose();
                   dispatch(cleanError());
+                  dispatch(getDoctors());
+                  setFilterActive(false);
+                  setValues({
+                    especialidad: "All",
+                    obrasocial: "All",
+                  });
+                }}
+              >
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      )}
+      {msgError.type === "search" && (
+        <Modal
+          isCentered
+          isOpen={isOpen}
+          onClose={onClose}
+          colorScheme="red"
+          closeOnOverlayClick={false}
+          isOp
+        >
+          {overlay}
+          <ModalContent bgColor="green.50">
+            <ModalHeader color="red.600">Lo sentimos!</ModalHeader>
+
+            <ModalBody>
+              <Text color="red.600">{msgError.statusText}</Text>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                onClick={() => {
+                  onClose();
+                  dispatch(cleanError());
+                  dispatch(getDoctors());
+                  setFilterActive(false);
+                  setValues({
+                    especialidad: "All",
+                    obrasocial: "All",
+                  });
                 }}
               >
                 Close

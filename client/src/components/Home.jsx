@@ -32,23 +32,32 @@ function Home() {
         mb={2}
         flexDirection="column"
       >
-        <Heading textAlign="center" as="h1" size="4xl" m="1rem">
+        <Heading
+          textAlign="center"
+          as="h1"
+          fontSize={{ base: "2xl", sm: "4xl", md: "5xl", lg: "6xl" }}
+          m="1rem"
+        >
           Clínica de fisioterapia y
           <Spacer /> rehabilitación física
         </Heading>
-        <Box>
+        <Box w={{ base: "75%", sm: "75%", md: "60%" }} textAlign="center">
           <Text as="i" fontSize="xl">
             "Cuida tu cuerpo. Es el único lugar que tienes para vivir"
           </Text>
         </Box>
       </Center>
       <Container maxW="100vw" centerContent>
-        <Flex direction="row" m={5}>
+        <Flex
+          direction={{ base: "column", sm: "column", md: "column", lg: "row" }}
+          m={5}
+          alignItems={{ base: "center", sm: "center", md: "center" }}
+        >
           <Box>
             <Heading as="h3" size="lg" mt={6} textAlign="center">
               Nuestra Misión
             </Heading>
-            <Container m={3} w="40rem">
+            <Container m={3} w="100%">
               Brindar una atención médica personalizada de primer nivel.
             </Container>
           </Box>
@@ -60,7 +69,16 @@ function Home() {
             borderRadius="0.5rem"
           />
         </Flex>
-        <Flex m={5}>
+        <Flex
+          m={5}
+          direction={{
+            base: "column-reverse",
+            sm: "column-reverse",
+            md: "column-reverse",
+            lg: "row",
+          }}
+          alignItems="center"
+        >
           <Image
             width="20rem"
             objectFit="cover"
@@ -72,20 +90,35 @@ function Home() {
             <Heading as="h3" size="lg" mt={6} textAlign="center">
               Nuestra Visión
             </Heading>
-            <Container m={3} w="40rem">
+            <Container m={3} w="100%">
               Constituirnos como un centro líder en rehabilitación física, con
               los mejores profesionales y la más alta calidad de atención a
               nuestros pacientes.
             </Container>
           </Box>
         </Flex>
-        <Flex m={5} maxW="100%">
+        <Flex
+          m={5}
+          maxW="100%"
+          direction={{ base: "column", sm: "column", md: "column", lg: "row" }}
+          alignItems="center"
+        >
           <Box>
             <Heading as="h3" size="lg" mt={6} textAlign="center">
               Nuestros Valores
             </Heading>
             <Container m={3} w="40rem">
-              <List spacing={3}>
+              <List
+                spacing={3}
+                display="flex"
+                flexDirection="column"
+                alignItems={{
+                  base: "center",
+                  sm: "center",
+                  md: "center",
+                  lg: "start",
+                }}
+              >
                 <ListItem>
                   <ListIcon as={FcNext} /> Excelencia médica
                 </ListItem>
@@ -118,11 +151,21 @@ function Home() {
           </Button>
         </Link>
       </Container>
-      <Container maxW="100vw" centerContent bgColor="teal.50" pb="2rem">
+      <Container
+        maxW="100vw"
+        centerContent
+        bgColor="teal.50"
+        pb="2rem"
+        textAlign="center"
+      >
         <Heading as="h2" size="xl" m={8}>
           Especialidades médicas destacadas
         </Heading>
-        <SimpleGrid columns={2} spacing={20}>
+        <SimpleGrid
+          columns={{ base: 1, sm: 1, md: 2 }}
+          spacing={20}
+          alignItems="center"
+        >
           <Box display="flex" alignItems="center">
             <Image
               src="https://www.clinicalascondes.cl/Dev_CLC/media/Imagenes/home-traumatologia-2019/intro-traumatologia.jpg"

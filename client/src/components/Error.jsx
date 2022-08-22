@@ -1,6 +1,7 @@
 import { Container, Heading, Box, Button } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { baseURL } from "../index.js";
 
 function Error() {
   const { pathname } = useLocation();
@@ -29,7 +30,7 @@ function Error() {
         bgColor="white"
         borderRadius="2rem"
       >
-        {`La URL`} <b>{`ponerurl${pathname}`}</b> {`no existe`}
+        {`La URL`} <b>{`${baseURL}${pathname}`}</b> {`no existe`}
       </Box>
     </Box>
   );

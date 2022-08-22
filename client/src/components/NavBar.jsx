@@ -27,6 +27,7 @@ import FormRegistration from "./FormRegistration";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../redux/actions";
 import { FaUserCircle } from "react-icons/fa";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,35 +47,40 @@ function NavBar() {
     history.push("/");
   };
 
+  //LOGIN NUEVO
+  const { loginWithRedirect } = useAuth0();
+  const { logout } = useAuth0();
+
   return (
     <Box position="absolute" w="100%">
       <Box
         display="flex"
         m={2}
-        flexDirection={{ sm: "column", md: "column", lg: "column", xl: "row" }}
-        alignItems={{ sm: "center", md: "center", lg: "center" }}
+        flexDirection={{
+          sm: "column",
+          md: "column",
+          lg: "column",
+          xl: "row",
+        }}
+        alignItems={{
+          base: "center",
+          sm: "center",
+          md: "center",
+          lg: "center",
+        }}
       >
         <Image
-          w="15rem"
+          w={{ base: 150, sm: 150, md: 300, lg: 300 }}
           ml="0.5rem"
           objectFit="cover"
           src={Logo}
           alt="Dan Abramov"
         />
         <Spacer />
-        <Box
-          display="flex"
-          flexDirection={{
-            sm: "column",
-            md: "column",
-            lg: "column",
-            xl: "row",
-          }}
-          alignItems={{ sm: "center", md: "center", lg: "center" }}
-        >
+        <Box>
           <Stack
             spacing={4}
-            direction={{ sm: "column", md: "row" }}
+            direction={{ base: "column", sm: "column", md: "row" }}
             align={{ sm: "center", md: "row" }}
           >
             <Link to="/">
@@ -106,7 +112,15 @@ function NavBar() {
         </Box>
 
         <Spacer />
-        <ButtonGroup>
+        <ButtonGroup
+          display="flex"
+          flexDirection={{
+            base: "row",
+            sm: "row",
+            md: "row",
+            lg: "row",
+          }}
+        >
           <Link to="/turnos">
             <Button colorScheme="teal" variant="solid">
               Turnos Online
@@ -114,11 +128,15 @@ function NavBar() {
           </Link>
 
           {!isUserLogIn && (
-            <Button colorScheme="teal" variant="outline" onClick={onOpen}>
+            <Button
+              colorScheme="teal"
+              variant="outline"
+              onClick={() => loginWithRedirect()}
+            >
               Acceder
             </Button>
           )}
-          {isUserLogIn && (
+          {true && (
             <Menu>
               {({ isOpen }) => (
                 <>
@@ -133,7 +151,13 @@ function NavBar() {
                     <Link to={`/userProfile/${idUserLogIn}`}>
                       <MenuItem>Ver perfil</MenuItem>
                     </Link>
-                    <MenuItem onClick={handleLogOut}>Cerrar Sesión</MenuItem>
+                    <MenuItem
+                      onClick={() =>
+                        logout({ returnTo: window.location.origin })
+                      }
+                    >
+                      Cerrar Sesión
+                    </MenuItem>
                   </MenuList>
                 </>
               )}

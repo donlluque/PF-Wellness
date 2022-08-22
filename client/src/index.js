@@ -8,41 +8,28 @@ import store from "./redux/store";
 import dotenv from "dotenv";
 import "./index.css";
 import { extendTheme, ChakraProvider } from "@chakra-ui/react";
+import { Auth0Provider } from "@auth0/auth0-react";
 dotenv.config();
 
 export let baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
-const colors = {
-  brand: {
-    900: "#fcf7d7",
-    800: "#fea667",
-    700: "#ffe461",
-    600: "#c4c776",
-    500: "#f4d092",
-  },
-};
-
-const breakPoints = {
-  brand: {
-    sm: "320px",
-    md: "768px",
-    lg: "960px",
-    xl: "1200px",
-    "2x1": "1536px",
-  },
-};
-const theme = extendTheme({ colors, breakPoints });
-
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <ChakraProvider theme={theme}>
-          <App />
-        </ChakraProvider>
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>,
+  <Auth0Provider
+    domain="clinicaawellness.us.auth0.com"
+    clientId="fNRrwqrUHnHTj3YZ4dOK55sPLJcK57bj"
+    // redirectUri={window.location.origin}
+    redirectUri="http://localhost:3000"
+  >
+    <React.StrictMode>
+      <BrowserRouter>
+        <Provider store={store}>
+          <ChakraProvider>
+            <App />
+          </ChakraProvider>
+        </Provider>
+      </BrowserRouter>
+    </React.StrictMode>
+  </Auth0Provider>,
   document.getElementById("root")
 );
 

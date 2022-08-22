@@ -18,15 +18,25 @@ import Logo from "../assets/logoPf.jpeg";
 function Footer() {
   return (
     <Box
-      display={{ md: "flex" }}
-      alignItems="center"
+      display="flex"
+      flexDirection={{ base: "column", sm: "column", md: "column", lg: "row" }}
+      alignItems={{ base: "center", sm: "center", md: "center" }}
       justifyContent="space-evenly"
       p="2rem"
       bgColor="teal.400"
     >
-      <Box>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems={{
+          base: "center",
+          sm: "center",
+          md: "center",
+          lg: "baseline",
+        }}
+      >
         <Image src={Logo} w="15rem" m="1rem" />
-        <Container>
+        <Container textAlign={{ base: "center", sm: "center" }}>
           <Text as="i">
             "Constituirnos como un centro líder en rehabilitación física, con
             los mejores profesionales y la más alta calidad de atención a
@@ -34,54 +44,96 @@ function Footer() {
           </Text>
         </Container>
       </Box>
-      <Box>
-        <Heading as="h6" size="sm" m="1rem">
-          CONTACTO
-        </Heading>
-        <List spacing={3}>
-          <ListItem>
-            <ListIcon as={BsTelephone} color="teal.900" />
-            0800-354-5050
-          </ListItem>
-          <ListItem>
-            <ListIcon as={ImMobile} color="teal.900" />
-            +54 9 351 365-4238
-          </ListItem>
-          <ListItem>
-            <ListIcon as={MdAlternateEmail} color="teal.900" />
-            consultaswellness@gmail.com
-          </ListItem>
-          {/* You can also use custom icons from react-icons */}
-          <ListItem>
-            <ListIcon as={MdOutlinePlace} color="teal.900" />
-            Av. Colón 299, Córdoba, Argentina
-          </ListItem>
-        </List>
-      </Box>
-      <Box>
-        <List spacing={3}>
-          <ListItem>
-            <Link to={"/about"}>
-              <button>Nosotros</button>
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Link to={"/especialidades"}>
-              <button>Especialidades</button>
-            </Link>
-          </ListItem>
-          {/* You can also use custom icons from react-icons */}
-          <ListItem>
-            <Link to={"/prestaciones"}>
-              <button>Prestaciones</button>
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Link to={"/staff"}>
-              <button>Staff</button>
-            </Link>
-          </ListItem>
-        </List>
+      <Box
+        mt={{ base: "1rem", sm: "1rem", md: "1rem", lg: 0 }}
+        display="flex"
+        flexDirection={{ base: "column", sm: "column", md: "row" }}
+        justifyContent="space-evenly"
+        w="100%"
+        alignItems={{ base: "center", sm: "center", md: "center" }}
+      >
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems={{
+            base: "center",
+            sm: "center",
+            md: "center",
+            lg: "baseline",
+          }}
+        >
+          <Heading as="h6" size="sm" m="1rem">
+            CONTACTO
+          </Heading>
+          <List
+            spacing={3}
+            display="flex"
+            flexDirection="column"
+            alignItems={{
+              base: "center",
+              sm: "center",
+              md: "center",
+              lg: "baseline",
+            }}
+          >
+            <ListItem>
+              <ListIcon as={BsTelephone} color="teal.900" />
+              0800-354-5050
+            </ListItem>
+            <ListItem>
+              <ListIcon as={ImMobile} color="teal.900" />
+              +54 9 351 365-4238
+            </ListItem>
+            <ListItem>
+              <ListIcon as={MdAlternateEmail} color="teal.900" />
+              consultaswellness@gmail.com
+            </ListItem>
+            {/* You can also use custom icons from react-icons */}
+            <ListItem>
+              <ListIcon as={MdOutlinePlace} color="teal.900" />
+              Av. Colón 299, Córdoba, Argentina
+            </ListItem>
+          </List>
+        </Box>
+        <Box mt="1rem">
+          <List
+            spacing={{ base: 0, sm: 0, md: 3 }}
+            display="flex"
+            flexDirection={{ base: "row", sm: "row", md: "column" }}
+            flexWrap={{ base: "wrap", sm: "wrap" }}
+            justifyItems={{ base: "center", sm: "center" }}
+          >
+            <ListItem>
+              <Link to={"/about"}>
+                <button>
+                  <Text fontWeight="semibold">Nosotros</Text>
+                </button>
+              </Link>
+            </ListItem>
+            <ListItem pl={{ base: "1rem", sm: "1.5rem", md: 0 }}>
+              <Link to={"/especialidades"}>
+                <button>
+                  <Text fontWeight="semibold">Especialidades</Text>
+                </button>
+              </Link>
+            </ListItem>
+            {/* You can also use custom icons from react-icons */}
+            <ListItem pl={{ base: "1rem", sm: "1.5rem", md: 0 }}>
+              <Link to={"/prestaciones"}>
+                <button>
+                  <Text fontWeight="semibold">Prestaciones</Text>
+                </button>
+              </Link>
+            </ListItem>
+            <ListItem pl={{ base: "1rem", sm: "1.5rem", md: 0 }}>
+              <Link to={"/staff"}>
+                <button>
+                  <Text fontWeight="semibold">Staff</Text>
+                </button>
+              </Link>
+            </ListItem>
+          </List>
+        </Box>
       </Box>
     </Box>
   );

@@ -77,8 +77,24 @@ const getAllPrepaid = async () => {
   return allPrepaid;
 };
 
+const getAllWorkDates = async () => {
+  const workDates = await axios.get(
+    "https://62fcea066e617f88dea0f5c0.mockapi.io/work_dates"
+  );
+
+  const allWorkDates = await workDates.data.map((p) => {
+    return {
+      day: p.day,
+      hourInitial: p.hourInitial,
+      hourEnd: p.hourEnd,
+    };
+  });
+  return allWorkDates;
+};
+
 module.exports = {
   getAllDoctor,
   getAllPatient,
   getAllPrepaid,
+  getAllWorkDates,
 };

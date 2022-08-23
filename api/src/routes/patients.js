@@ -146,24 +146,24 @@ router.put("/:id", async (req, res, next) => {
   res.status(200).send(este);
 });
 
-router.post("/", async (req, res, next) => {
-  const { name, last_name, email, user_name } = req.body;
+// router.post("/", async (req, res, next) => {
+//   const { name, last_name, email, user_name } = req.body;
 
-  if (!name || !last_name || !email || !user_name)
-    res.status(400).send("Sorry, I need more data to post");
+//   if (!name || !last_name || !email || !user_name)
+//     res.status(400).send("Sorry, I need more data to post");
 
-  try {
-    let newPatient = await Patient.create({
-      name,
-      last_name,
-      email,
-      user_name,
-    });
+//   try {
+//     let newPatient = await Patient.create({
+//       name,
+//       last_name,
+//       email,
+//       user_name,
+//     });
 
-    res.status(200).json(newPatient);
-  } catch (error) {
-    next(error);
-  }
-});
+//     res.status(200).json(newPatient);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 module.exports = router;

@@ -78,8 +78,8 @@ Doctor.belongsToMany(Patient, { through: Dates });
 Doctor.belongsToMany(Prepaid_health, { through: "Doctor_Prepaid_Health" });
 Prepaid_health.belongsToMany(Doctor, { through: "Doctor_Prepaid_Health" });
 
-Patient.belongsToMany(Prepaid_health, { through: 'Patient_Prepaid_Health' });
-Prepaid_health.belongsToMany(Patient, { through: 'Patient_Prepaid_Health' });
+Patient.belongsToMany(Prepaid_health, { through: "Patient_Prepaid_Health" });
+Prepaid_health.belongsToMany(Patient, { through: "Patient_Prepaid_Health" });
 
 // Doctor.belongsToMany(Patient, { through: "doctorPatient", timestamps: false });
 // Patient.belongsToMany(Doctor, { through: "doctorPatient", timestamps: false });

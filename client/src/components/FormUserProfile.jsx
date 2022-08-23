@@ -29,7 +29,6 @@ import { getOnePatient } from "../redux/actions";
 import { validateForm } from "../hooks/validateForm.js";
 
 function FormUserProfile() {
-  
   const [form, setForm] = useState({});
   const [putActive, setPutActive] = useState(false);
   const dispatch = useDispatch();
@@ -39,6 +38,7 @@ function FormUserProfile() {
   const date = new Date().toLocaleDateString().split("/").reverse();
   const { name, last_name, email } = patientDetail;
   const [aux, setAux] = useState({ name, last_name, email });
+  const user = useSelector((state) => state.user);
 
   const styleDate = (date) => {
     if (date[1].length === 1) {
@@ -48,7 +48,18 @@ function FormUserProfile() {
   };
   console.log("renderizado", name, last_name, email);
   useEffect(() => {
-    setForm({ ...form, name, last_name, email, id });
+    if (Object.keys(user).length) {
+      setForm({
+        ...form,
+        name: user.given_name,
+        last_name: user.family_name,
+        email: user.email,
+        user_name: user.nickname,
+        id,
+      });
+    } else {
+      setForm({ ...form, name, last_name, email, id });
+    }
     dispatch(getOnePatient(id));
     setAux(!aux);
   }, [dispatch]);
@@ -58,7 +69,7 @@ function FormUserProfile() {
   }, dispatch);
 
   const handleChange = (e) => {
-    setForm({...form, [e.target.name]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value });
     setErrors(validateForm({ ...form, [e.target.name]: e.target.value }));
   };
 
@@ -113,7 +124,7 @@ function FormUserProfile() {
         </Box>
         <Box m="1rem" w="50rem">
           <form>
-            <FormControl isDisabled={!putActive} >
+            <FormControl isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="name">
                 Nombre
               </FormLabel>
@@ -121,7 +132,7 @@ function FormUserProfile() {
                 disabled
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
-                value={name}
+                value={form.name}
                 name="name"
                 placeholder="Escribe nombre completo"
               />
@@ -129,13 +140,13 @@ function FormUserProfile() {
                 <FormErrorMessage>{errors.name}</FormErrorMessage>
               )} */}
             </FormControl>
-            <FormControl isDisabled={!putActive} >
+            <FormControl isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="last_name">
                 Apellido
               </FormLabel>
               <Input
                 disabled
-                value={last_name}
+                value={form.last_name}
                 onChange={(e) => handleChange(e)}
                 name="last_name"
                 placeholder="Escribe apellido"
@@ -150,7 +161,7 @@ function FormUserProfile() {
               </FormLabel>
               <Input
                 disabled
-                value={email}
+                value={form.email}
                 onChange={(e) => handleChange(e)}
                 type="email"
                 placeholder="Dirección de email"
@@ -244,7 +255,6 @@ function FormUserProfile() {
             </FormControl>
             {/* isDisabled={errors.name || errors.last_name || errors.email} */}
             <Button
-            
               mt="1rem"
               onClick={(e) => handleSubmit(e)}
               type="submit"
@@ -270,8 +280,7 @@ function FormUserProfile() {
                 <ModalCloseButton />
                 <ModalBody>
                   <Text color="teal.600">
-                   Tus datos fueron modificados
-                    exitosamente!
+                    Tus datos fueron modificados exitosamente!
                   </Text>
                 </ModalBody>
                 <ModalFooter>

@@ -7,8 +7,6 @@ const { getAllPatient } = require("../controllers/index.js");
 router.get("/", async (req, res, next) => {
   const { name, last_name } = req.query;
   try {
-    let allPatient = await getAllPatient();
-
     const patientDb = await Patient.findAll({
       include: {
         model: Prepaid_health,
@@ -18,37 +16,34 @@ router.get("/", async (req, res, next) => {
       },
     });
 
-    if (!patientDb.length || patientDb.length < 21) {
-      const pacientes = await Patient.bulkCreate(allPatient);
-      res.status(200).send(pacientes);
-    } else {
-      if (name && last_name) {
-        const nombre = await allPatient.filter(
-          (e) =>
-            e.name.toLowerCase().includes(name.toLowerCase()) &&
-            e.last_name.toLowerCase().includes(last_name.toLowerCase())
-        );
-
-        nombre.length
-          ? res.status(200).send(nombre)
-          : res.status(400).send("Not exist");
-      } else if (name) {
-        const nombre = await allPatient.filter((e) =>
-          e.name.toLowerCase().includes(name.toLowerCase())
-        );
-        nombre.length
-          ? res.status(200).send(nombre)
-          : res.send("it is not exist this name");
-      } else if (last_name) {
-        const apellido = await allPatient.filter((e) =>
+    if (name && last_name) {
+      const nombre = await patientDb.filter(
+        (e) =>
+          e.name.toLowerCase().includes(name.toLowerCase()) &&
           e.last_name.toLowerCase().includes(last_name.toLowerCase())
-        );
-        apellido.length
-          ? res.status(200).send(apellido)
-          : res.send("it is not exist this name");
-      } else {
-        res.status(200).send(patientDb);
-      }
+      );
+
+      nombre.length
+        ? res.status(200).send(nombre)
+        : res.status(400).send("Not exist");
+    } else if (name) {
+      const nombre = await patientDb.filter((e) =>
+        e.name.toLowerCase().includes(name.toLowerCase())
+      );
+      nombre.length
+        ? res.status(200).send(nombre)
+        : res.send("it is not exist this name");
+    } else if (last_name) {
+      const apellido = await patientDb.filter((e) =>
+        e.last_name.toLowerCase().includes(last_name.toLowerCase())
+      );
+      apellido.length
+        ? res.status(200).send(apellido)
+        : res.send("it is not exist this name");
+    } else if (!patientDb.length) {
+      res.status(200).send("No existe info en la base de datos");
+    } else {
+      res.status(200).send(patientDb);
     }
   } catch (error) {
     res.status(404).send("Error en el catch getPetients", error);
@@ -77,9 +72,6 @@ router.get("/:id", async (req, res, next) => {
       },
     },
   });
-
-  // const pacientes = await getAllPatient();
-  // const paciente = pacientes.find(e => e.id == id);
 
   if (patient) {
     res.status(200).send(patient);

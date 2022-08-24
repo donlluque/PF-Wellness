@@ -7,9 +7,6 @@ const { getAllDoctor } = require("../controllers/index");
 // PRUEBA DE FUNCIONAMIENTO DE RUTA
 router.get("/", async (req, res, next) => {
   const { name } = req.query;
-
-  const allDoctors = await getAllDoctor();
-
   const doctorsDb = await Doctor.findAll({
     include: [
       {
@@ -28,13 +25,14 @@ router.get("/", async (req, res, next) => {
   });
 
   if (name) {
-    const nombre = await allDoctors.filter((e) =>
+    const nombre = await doctorsDb.filter((e) =>
       e.name.toLowerCase().includes(name.toLowerCase())
     );
-
     nombre.length
       ? res.status(200).send(nombre)
       : res.status(400).send("Not exist");
+  } else if (!doctorsDb.length) {
+    res.status(400).send("No existe info en la Base de datos");
   } else {
     res.send(doctorsDb);
   }
@@ -42,7 +40,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  console.log(id);
+
   try {
     const doctor = await Doctor.findOne({
       where: { id },
@@ -90,37 +88,43 @@ router.post("/", async (req, res, next) => {
     description,
   } = req.body;
 
-  console.log(work_days);
-
-  const dataPrepaidHealth = await Prepaid_health.findAll({
-    where: { name: prepaid_health },
+  const doctor = await Doctor.findOne({
+    where: { email },
   });
 
-  const dataWorkDays = await Work_days.findAll({
-    where: {
-      id: work_days,
-    },
-  });
+  if (!doctor) {
+    const newDoctor = await Doctor.create({
+      name,
+      medic_id,
+      general_area,
+      especialidades_id,
+      phone,
+      email,
+      birthday,
+      document,
+      type_document,
+      picture,
+      description,
+      hours_json,
+    });
 
-  const newDoctor = await Doctor.create({
-    name,
-    medic_id,
-    general_area,
-    especialidades_id,
-    phone,
-    email,
-    birthday,
-    document,
-    type_document,
-    picture,
-    description,
-    hours_json,
-  });
+    const dataPrepaidHealth = await Prepaid_health.findAll({
+      where: { name: prepaid_health },
+    });
 
-  await newDoctor.addPrepaid_health(dataPrepaidHealth);
-  await newDoctor.addWork_days(dataWorkDays);
+    const dataWorkDays = await Work_days.findAll({
+      where: {
+        id: work_days,
+      },
+    });
 
-  res.status(200).send(newDoctor);
+    await newDoctor.addPrepaid_health(dataPrepaidHealth);
+    await newDoctor.addWork_days(dataWorkDays);
+
+    res.status(200).send(newDoctor);
+  } else {
+    res.status(400).send("Ya existe un doctor con este email");
+  }
 });
 
 module.exports = router;

@@ -77,10 +77,6 @@ module.exports = (sequelize) => {
       picture: {
         type: DataTypes.STRING,
       },
-
-      prepaid_health: {
-        type: DataTypes.STRING,
-      },
     },
     { timestamps: false }
   );

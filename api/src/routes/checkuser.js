@@ -5,11 +5,14 @@ const { Patient } = require("../db.js");
 router.post("/", async (req, res, next) => {
   const { given_name, email, family_name, nickname } = req.body;
   console.log(req.body, "ruta back checkuser");
+  res.send("hola");
 
   const patient = await Patient.findOne({
     where: { email: email },
   });
 
+  let paciente = { given_name, email, family_name, nickname };
+  console.log(paciente, "soy paciente");
   console.log(patient, "soy patient");
 
   try {
@@ -27,6 +30,7 @@ router.post("/", async (req, res, next) => {
           user_name: nickname,
         },
       });
+      console.log(newPatient, "soy newPatient");
       return res.status(200).send(newPatient);
     }
   } catch (error) {

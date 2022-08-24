@@ -15,7 +15,7 @@ import {
   AlertIcon,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { postPatient } from "../redux/actions";
+// import { postPatient } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { validateForm } from "../hooks/validateForm";
@@ -37,13 +37,13 @@ function FormRegistration({ onClose }) {
     setErrors(validateForm({ ...form, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(form);
-    dispatch(postPatient(form));
-    onClose();
-    setForm({});
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(form);
+  //   dispatch(postPatient(form));
+  //   onClose();
+  //   setForm({});
+  // };
 
   return (
     <>
@@ -143,7 +143,7 @@ function FormRegistration({ onClose }) {
               </List>
             </Box>
           </FormControl>
-          <Button
+          {/* <Button
             colorScheme="teal"
             isDisabled={
               errors.name || errors.last_name || errors.email || errors.password
@@ -151,7 +151,7 @@ function FormRegistration({ onClose }) {
             onClick={handleSubmit}
           >
             Crear cuenta
-          </Button>
+          </Button> */}
           <Button colorScheme="teal" variant="outline" mr={3} onClick={onClose}>
             Cancelar
           </Button>

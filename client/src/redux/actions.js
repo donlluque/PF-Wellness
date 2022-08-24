@@ -87,8 +87,9 @@ export function searchByName(input) {
 }
 
 export const getOnePatient = (id) => {
+  console.log(id, "ID getOnePatient ");
   return function (dispatch) {
-    fetch(`${baseURL}/patients/${id}`)
+    return fetch(`${baseURL}/patients/${id}`)
       .then((res) => res.json())
       .then((json) => {
         dispatch({
@@ -102,7 +103,6 @@ export const getOnePatient = (id) => {
   };
 };
 
-//POST
 export const postPatient = (form) => {
   return function (dispatch) {
     return fetch(`${baseURL}/patients`, {
@@ -187,22 +187,15 @@ export const getByUserName = (userName) => {
 };
 
 // export const dateUser = (payload) => {
-//   console.log(payload, "action date user");
-//   return async (dispatch) => {
-//     try {
-//       let response = await axios.post(`${baseURL}/checkuser`, payload);
-//       return dispatch({
-//         type: "CHECK_USER",
-//         payload: response.data,
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
+//   return async function (dispatch) {
+//     let json = await axios.post("http://localhost:3001/checkuser", payload);
+//     console.log(json, "payload de action date");
 //   };
 // };
 
 export const dateUser = (payload) => {
-  return function (dispatch) {
+  // console.log(payload, "soy  payload de dateUser");
+  return async function (dispatch) {
     return fetch(`${baseURL}/checkuser`, {
       method: "POST",
       body: JSON.stringify(payload),
@@ -217,11 +210,6 @@ export const dateUser = (payload) => {
               statusText: `Ya existe un usuario con el mail ${payload.email}`,
             })
       )
-      .then((data) => {
-        dispatch({ type: "CONFIRM_ACTION", payload: data });
-        dispatch({ type: "LOG_IN" });
-        dispatch({ type: "ID_USER", payload: data.id });
-      })
       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
   };
 };

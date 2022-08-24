@@ -93,7 +93,7 @@ export default function rootReducer(state = initialState, action) {
     }
 
     case "CHECK_USER": {
-      console.log(action.payload, "reducer check_user");
+      // console.log(action.payload, "reducer check_user");
       return {
         ...state,
         user: action.payload,

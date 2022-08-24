@@ -41,6 +41,10 @@ function FormUserProfile() {
   const [aux, setAux] = useState({ name, last_name, email });
   const user = useSelector((state) => state.user);
 
+  console.log(user, "soy user ");
+
+  console.log(id, "soy el id de params");
+
   const styleDate = (date) => {
     if (date[1].length === 1) {
       date[1] = "0" + date[1];
@@ -112,7 +116,7 @@ function FormUserProfile() {
             src="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
             alt=""
           /> */}
-        
+
           {!putActive && (
             <Button
               m="2rem"
@@ -126,12 +130,10 @@ function FormUserProfile() {
         </Box>
         <Box m="1rem" w="50rem">
           <form>
-
-          <FormControl isDisabled={!putActive} >
-          <UploadImages />
-          </FormControl>
-            <FormControl isDisabled={!putActive} >
-
+            <FormControl isDisabled={!putActive}>
+              <UploadImages />
+            </FormControl>
+            <FormControl isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="name">
                 Nombre
               </FormLabel>

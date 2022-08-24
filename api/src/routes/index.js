@@ -7,7 +7,8 @@ const prepaid_health = require("./prepaid_health.js");
 const filtro = require("./filter.js");
 const dates = require("./dates.js");
 const checkUser = require("./checkuser");
-const work_dates = require("./work_dates.js");
+const work_days = require("./work_days.js");
+const hours_working = require("./hours_working.js");
 
 const router = Router();
 
@@ -16,7 +17,8 @@ const router = Router();
 router.use("/doctors", doctors);
 router.use("/patients", patients);
 router.use("/prepaid_health", prepaid_health);
-router.use("/work_dates", work_dates);
+router.use("/work_days", work_days);
+router.use("/hours_working", hours_working);
 router.use("/filter", filtro);
 router.use("/dates", dates);
 router.use("/checkuser", checkUser);

@@ -46,10 +46,9 @@ function NavBar() {
     dispatch(logOut());
     history.push("/");
   };
-
   //LOGIN NUEVO
-  const { loginWithRedirect } = useAuth0();
-  const { logout } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  console.log(isAuthenticated);
 
   return (
     <Box position="absolute" w="100%">
@@ -127,7 +126,7 @@ function NavBar() {
             </Button>
           </Link>
 
-          {!isUserLogIn && (
+          {!isAuthenticated && (
             <Button
               colorScheme="teal"
               variant="outline"
@@ -136,7 +135,7 @@ function NavBar() {
               Acceder
             </Button>
           )}
-          {true && (
+          {isAuthenticated && (
             <Menu>
               {({ isOpen }) => (
                 <>

@@ -23,7 +23,6 @@ router.get("/", async (req, res, next) => {
 
     if (!doctorsDb.length) {
       await Doctor.bulkCreate(allDoctors);
-
     }
     if (name) {
       const nombre = await allDoctors.filter((e) =>
@@ -36,7 +35,6 @@ router.get("/", async (req, res, next) => {
     } else {
       res.status(200).send(allDoctors);
     }
-    
   } catch (error) {
     res
       .status(404)
@@ -58,7 +56,7 @@ router.get("/:id", async (req, res, next) => {
     //   },
     // });
     const doctors = await getAllDoctor();
-    const doctor = doctors.find(e => e.id == id);
+    const doctor = doctors.find((e) => e.id == id);
 
     if (id) {
       res.status(200).send(doctor);

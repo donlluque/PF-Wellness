@@ -7,6 +7,7 @@ const initialState = {
   msgConfirm: {},
   logInState: false,
   idUserLogIn: "",
+  prepaidHealth: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -16,7 +17,7 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         doctors: action.payload,
       };
-    case "GET_DETAIL":
+    case "GET_DETAIL_DOCTORS":
       return {
         ...state,
         detail: action.payload,
@@ -26,26 +27,17 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         detail: {},
       };
-    case "FILTER":
+    case "FILTER_DOCTORS":
       return {
         ...state,
         doctors: action.payload,
       };
-    case "SEARCH_DOCTOR":
+    case "SEARCH_DOCTOR_BY_NAME":
       return {
         ...state,
         doctors: action.payload,
       };
-    case "HANDLE_ERROR":
-      return {
-        ...state,
-        msgError: action.payload,
-      };
-    case "CONFIRM_ACTION":
-      return {
-        ...state,
-        msgConfirm: action.payload,
-      };
+
     case "POST_PATIENT": {
       return { ...state };
     }
@@ -60,6 +52,7 @@ export default function rootReducer(state = initialState, action) {
         patientDetail: action.payload,
       };
     }
+    //sirve?
     case "LOG_IN": {
       return {
         ...state,
@@ -72,12 +65,30 @@ export default function rootReducer(state = initialState, action) {
         logInState: false,
       };
     }
+    //sirve?
     case "ID_USER": {
       return {
         ...state,
         idUserLogIn: action.payload,
       };
     }
+
+    case "GET_PREPAID_HEALTH": {
+      return {
+        ...state,
+        prepaidHealth: action.payload,
+      };
+    }
+    case "HANDLE_ERROR":
+      return {
+        ...state,
+        msgError: action.payload,
+      };
+    case "CONFIRM_ACTION":
+      return {
+        ...state,
+        msgConfirm: action.payload,
+      };
     case "CLEAN_ERROR": {
       return {
         ...state,
@@ -90,7 +101,6 @@ export default function rootReducer(state = initialState, action) {
         msgConfirm: {},
       };
     }
-
     default:
       return {
         ...state,

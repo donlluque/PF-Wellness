@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import SearchBar from "./SearchBar";
-import { getDoctors, filter, cleanError } from "../redux/actions";
+import { getDoctors, filterDoctors, cleanError } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import {
@@ -30,7 +30,7 @@ export default function NavStaff({ setInput, setPage }) {
   console.log(msgError.type === "search");
 
   useEffect(() => {
-    dispatch(filter(values));
+    dispatch(filterDoctors(values));
   }, [dispatch, values]);
 
   function handleFilter(e) {

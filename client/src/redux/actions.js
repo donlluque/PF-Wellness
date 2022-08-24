@@ -1,6 +1,6 @@
 import { baseURL } from "../index.js";
-import axios from "axios";
 
+//DOCTORS
 export function getDoctors() {
   return function (dispatch) {
     fetch(`${baseURL}/doctors`)
@@ -16,13 +16,14 @@ export function getDoctors() {
       });
   };
 }
-export function getDetail(id) {
+
+export function getDetailDoctors(id) {
   return function (dispatch) {
     fetch(`${baseURL}/doctors/${id}`)
       .then((res) => res.json())
       .then((json) => {
         dispatch({
-          type: "GET_DETAIL",
+          type: "GET_DETAIL_DOCTORS",
           payload: json,
         });
       })
@@ -37,7 +38,7 @@ export function cleanDoctor() {
   };
 }
 
-export function filter(filter) {
+export function filterDoctors(filter) {
   const { especialidad, obrasocial } = filter;
   return function (dispatch) {
     return fetch(
@@ -55,7 +56,7 @@ export function filter(filter) {
             })
       )
       .then((data) => {
-        dispatch({ type: "FILTER", payload: data });
+        dispatch({ type: "FILTER_DOCTORS", payload: data });
       })
       .catch((err) => {
         dispatch({ type: "HANDLE_ERROR", payload: err });
@@ -64,7 +65,7 @@ export function filter(filter) {
 }
 
 //SEARCH BAR
-export function searchByName(input) {
+export function searchDoctorByName(input) {
   return function (dispatch) {
     return fetch(`${baseURL}/doctors/?name=${input}`)
       .then((res) =>
@@ -78,7 +79,7 @@ export function searchByName(input) {
             })
       )
       .then((data) => {
-        dispatch({ type: "SEARCH_DOCTOR", payload: data });
+        dispatch({ type: "SEARCH_DOCTOR_BY_NAME", payload: data });
       })
       .catch((err) => {
         dispatch({ type: "HANDLE_ERROR", payload: err });
@@ -86,6 +87,47 @@ export function searchByName(input) {
   };
 }
 
+export const postDoctors = (form) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/doctors`, {
+      method: "POST",
+      body: JSON.stringify(form),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? res.json()
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: `VER ERROR`,
+            })
+      )
+      .then((data) => {
+        dispatch({ type: "CONFIRM_ACTION", payload: data });
+      })
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  };
+};
+
+//PREPAID HEALTH
+export const getPrepaidHealth = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/prepaid_health`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_PREPAID_HEALTH",
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+//PATIENT
 export const getOnePatient = (id) => {
   return function (dispatch) {
     fetch(`${baseURL}/patients/${id}`)
@@ -102,7 +144,7 @@ export const getOnePatient = (id) => {
   };
 };
 
-//POST
+//POST PATIENT
 export const postPatient = (form) => {
   return function (dispatch) {
     return fetch(`${baseURL}/patients`, {
@@ -128,7 +170,7 @@ export const postPatient = (form) => {
   };
 };
 
-//PUT
+//PUT PATIENT
 export const putPatient = (data) => {
   console.log("data actions", data);
   return function (dispatch) {
@@ -159,6 +201,7 @@ export const logOut = () => ({ type: "LOG_OUT" });
 
 export const logIn = () => ({ type: "LOG_IN" });
 
+//sirve??
 export const getByUserName = (userName) => {
   return function (dispatch) {
     fetch(`${baseURL}/patients/user?userName=${userName}`)

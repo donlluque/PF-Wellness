@@ -1,29 +1,32 @@
 const { Router } = require("express");
 const { Op } = require("sequelize");
 const router = Router();
-const { Doctor, Patient, Prepaid_health, Work_dates } = require("../db.js");
+const { Doctor, Patient, Prepaid_health, Work_days } = require("../db.js");
 const { getAllDoctor } = require("../controllers/index");
 
 // PRUEBA DE FUNCIONAMIENTO DE RUTA
 router.get("/", async (req, res, next) => {
   const { name } = req.query;
 
-  // console.log(req.query);
-
   const allDoctors = await getAllDoctor();
 
   const doctorsDb = await Doctor.findAll({
-    include: {
-      model: Prepaid_health,
-      throught: {
-        attributes: [],
+    include: [
+      {
+        model: Prepaid_health,
+        throught: {
+          attributes: [],
+        },
       },
-    },
+      {
+        model: Work_days,
+        throught: {
+          attributes: [],
+        },
+      },
+    ],
   });
 
-  if (!doctorsDb.length) {
-    await Doctor.bulkCreate(allDoctors);
-  }
   if (name) {
     const nombre = await allDoctors.filter((e) =>
       e.name.toLowerCase().includes(name.toLowerCase())
@@ -33,7 +36,7 @@ router.get("/", async (req, res, next) => {
       ? res.status(200).send(nombre)
       : res.status(400).send("Not exist");
   } else {
-    res.status(200).send(allDoctors);
+    res.send(doctorsDb);
   }
 });
 
@@ -51,7 +54,7 @@ router.get("/:id", async (req, res, next) => {
           },
         },
         {
-          model: Work_dates,
+          model: Work_days,
           throught: {
             attributes: [],
           },
@@ -81,18 +84,21 @@ router.post("/", async (req, res, next) => {
     document,
     type_document,
     prepaid_health,
+    hours_json,
+    work_days,
     picture,
     description,
-    work_date,
   } = req.body;
+
+  console.log(work_days);
 
   const dataPrepaidHealth = await Prepaid_health.findAll({
     where: { name: prepaid_health },
   });
 
-  const dataWorkDates = await Work_dates.findAll({
+  const dataWorkDays = await Work_days.findAll({
     where: {
-      id: work_date,
+      id: work_days,
     },
   });
 
@@ -108,12 +114,13 @@ router.post("/", async (req, res, next) => {
     type_document,
     picture,
     description,
+    hours_json,
   });
 
   await newDoctor.addPrepaid_health(dataPrepaidHealth);
-  await newDoctor.addWork_dates(dataWorkDates);
+  await newDoctor.addWork_days(dataWorkDays);
 
-  res.status(200).send(dataWorkDates);
+  res.status(200).send(newDoctor);
 });
 
 module.exports = router;

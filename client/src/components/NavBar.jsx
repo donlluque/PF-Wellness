@@ -25,7 +25,7 @@ import { useRef, useState } from "react";
 import FormLogin from "./FormLogin";
 import FormRegistration from "./FormRegistration";
 import { useDispatch, useSelector } from "react-redux";
-import { logOut } from "../redux/actions";
+import { dateUser, logOut } from "../redux/actions";
 import { FaUserCircle } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -48,8 +48,14 @@ function NavBar() {
   };
 
   //LOGIN NUEVO
-  const { loginWithRedirect } = useAuth0();
-  const { logout, isAuthenticated } = useAuth0();
+  const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
+  console.log(user);
+  if (user) {
+    if (Object.keys(user).length) {
+      dispatch(dateUser(user));
+    }
+  }
+
 
   return (
     <Box position="absolute" w="100%">
@@ -131,7 +137,9 @@ function NavBar() {
             <Button
               colorScheme="teal"
               variant="outline"
-              onClick={() => loginWithRedirect()}
+              onClick={() => {
+                loginWithRedirect();
+              }}
             >
               Acceder
             </Button>

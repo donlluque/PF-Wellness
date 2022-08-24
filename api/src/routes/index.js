@@ -6,7 +6,9 @@ const patients = require("./patients.js");
 const prepaid_health = require("./prepaid_health.js");
 const filtro = require("./filter.js");
 const dates = require("./dates.js");
+const checkUser = require("./checkuser");
 const work_dates = require("./work_dates.js");
+
 const router = Router();
 
 // Configurar los routers
@@ -17,5 +19,6 @@ router.use("/prepaid_health", prepaid_health);
 router.use("/work_dates", work_dates);
 router.use("/filter", filtro);
 router.use("/dates", dates);
+router.use("/checkuser", checkUser);
 
 module.exports = router;

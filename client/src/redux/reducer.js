@@ -7,6 +7,7 @@ const initialState = {
   msgConfirm: {},
   logInState: false,
   idUserLogIn: "",
+  user: {},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -88,6 +89,14 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         msgConfirm: {},
+      };
+    }
+
+    case "CHECK_USER": {
+      console.log(action.payload, "reducer check_user");
+      return {
+        ...state,
+        user: action.payload,
       };
     }
 

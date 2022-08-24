@@ -15,8 +15,8 @@ export let baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 ReactDOM.render(
   <Auth0Provider
-    domain="clinicaawellness.us.auth0.com"
-    clientId="fNRrwqrUHnHTj3YZ4dOK55sPLJcK57bj"
+    domain="dev--i6spdu9.us.auth0.com"
+    clientId="RRRtYXoCVLhXWaqDWwnRqQkoyUC6wEhc"
     // redirectUri={window.location.origin}
     redirectUri="http://localhost:3000"
   >

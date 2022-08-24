@@ -48,7 +48,6 @@ function NavBar() {
   };
 
   //LOGIN NUEVO
-
   const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
   console.log(user);
   if (user) {
@@ -56,6 +55,7 @@ function NavBar() {
       dispatch(dateUser(user));
     }
   }
+
 
   return (
     <Box position="absolute" w="100%">

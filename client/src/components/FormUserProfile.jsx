@@ -27,6 +27,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getOnePatient } from "../redux/actions";
 import { validateForm } from "../hooks/validateForm.js";
+import UploadImages from "./UploadImages";
 
 function FormUserProfile() {
   const [form, setForm] = useState({});
@@ -106,11 +107,12 @@ function FormUserProfile() {
     <>
       <Box display={{ md: "flex" }} justifyContent="center">
         <Box display="flex" flexDirection="column" alignItems="center">
-          <Image
+          {/* <Image
             w="200px"
             src="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
             alt=""
-          />
+          /> */}
+        
           {!putActive && (
             <Button
               m="2rem"
@@ -124,7 +126,12 @@ function FormUserProfile() {
         </Box>
         <Box m="1rem" w="50rem">
           <form>
-            <FormControl isDisabled={!putActive}>
+
+          <FormControl isDisabled={!putActive} >
+          <UploadImages />
+          </FormControl>
+            <FormControl isDisabled={!putActive} >
+
               <FormLabel m="1rem" htmlFor="name">
                 Nombre
               </FormLabel>

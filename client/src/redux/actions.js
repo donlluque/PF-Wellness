@@ -103,30 +103,30 @@ export const getOnePatient = (id) => {
 };
 
 //POST
-export const postPatient = (form) => {
-  return function (dispatch) {
-    return fetch(`${baseURL}/patients`, {
-      method: "POST",
-      body: JSON.stringify(form),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) =>
-        res.ok
-          ? res.json()
-          : Promise.reject({
-              err: true,
-              status: res.status || "00",
-              statusText: `Ya existe un usuario con el mail ${form.email}`,
-            })
-      )
-      .then((data) => {
-        dispatch({ type: "CONFIRM_ACTION", payload: data });
-        dispatch({ type: "LOG_IN" });
-        dispatch({ type: "ID_USER", payload: data.id });
-      })
-      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
-  };
-};
+// export const postPatient = (form) => {
+//   return function (dispatch) {
+//     return fetch(`${baseURL}/patients`, {
+//       method: "POST",
+//       body: JSON.stringify(form),
+//       headers: { "Content-Type": "application/json" },
+//     })
+//       .then((res) =>
+//         res.ok
+//           ? res.json()
+//           : Promise.reject({
+//               err: true,
+//               status: res.status || "00",
+//               statusText: `Ya existe un usuario con el mail ${form.email}`,
+//             })
+//       )
+//       .then((data) => {
+//         dispatch({ type: "CONFIRM_ACTION", payload: data });
+//         dispatch({ type: "LOG_IN" });
+//         dispatch({ type: "ID_USER", payload: data.id });
+//       })
+//       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+//   };
+// };
 
 //PUT
 export const putPatient = (data) => {
@@ -186,45 +186,47 @@ export const getByUserName = (userName) => {
   };
 };
 
-// export const dateUser = (payload) => {
-//   console.log(payload, "action date user");
-//   return async (dispatch) => {
-//     try {
-//       let response = await axios.post(`${baseURL}/checkuser`, payload);
-//       return dispatch({
-//         type: "CHECK_USER",
-//         payload: response.data,
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// };
-
 export const dateUser = (payload) => {
-  return function (dispatch) {
-    return fetch(`${baseURL}/checkuser`, {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) =>
-        res.ok
-          ? res.json()
-          : Promise.reject({
-              err: true,
-              status: res.status || "00",
-              statusText: `Ya existe un usuario con el mail ${payload.email}`,
-            })
-      )
-      .then((data) => {
-        dispatch({ type: "CONFIRM_ACTION", payload: data });
-        dispatch({ type: "LOG_IN" });
-        dispatch({ type: "ID_USER", payload: data.id });
-      })
-      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(`${baseURL}/checkuser`, payload);
+      console.log(response.data, "action date user");
+      return dispatch({
+        type: "CHECK_USER",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
+
+// export const dateUser = (payload) => {
+//   return function (dispatch) {
+//     return fetch(`${baseURL}/checkuser`, {
+//       method: "POST",
+//       body: JSON.stringify(payload),
+//       headers: { "Content-Type": "application/json" },
+//     })
+//       .then((res) =>
+//         res.ok
+//           ? res.json()
+//           : Promise.reject({
+//               err: true,
+//               status: res.status || "00",
+//               statusText: `Ya existe un usuario con el mail ${payload.email}`,
+//             })
+//       )
+//       .then((data) => {
+//         console.log(data, "soy data");
+//         dispatch({ type: "CHECK_USER", payload: data });
+//         dispatch({ type: "CONFIRM_ACTION", payload: data });
+//         dispatch({ type: "LOG_IN" });
+//         dispatch({ type: "ID_USER", payload: data.id });
+//       })
+//       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+//   };
+// };
 
 export const cleanError = () => ({ type: "CLEAN_ERROR" });
 export const cleanConfirm = () => ({ type: "CLEAN_MSG" });

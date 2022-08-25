@@ -28,15 +28,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { dateUser, logOut } from "../redux/actions";
 import { FaUserCircle } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
 
 function NavBar() {
+  const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = useRef();
   const [login, setLogin] = useState(true);
   const isUserLogIn = useSelector((state) => state.logInState);
   const idUserLogIn = useSelector((state) => state.idUserLogIn);
+  const detail = useSelector((state) => state.patientDetail);
+  const [refresh, setRefresh] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  const usuario = useSelector((state) => state.user);
+
+  console.log(usuario, "soy iddddddddd");
 
   const handleLogin = () => {
     setLogin(!login);
@@ -48,14 +55,21 @@ function NavBar() {
   };
 
   //LOGIN NUEVO
-  const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
-  console.log(user);
-  if (user) {
-    if (Object.keys(user).length) {
-      dispatch(dateUser(user));
-    }
-  }
+  console.log(user, "user de NavBAr");
 
+  useEffect(() => {
+    setRefresh(true);
+    setRefresh(false);
+  }, [usuario]);
+
+  useEffect(() => {
+    if (user) {
+      if (Object.keys(user).length) {
+        // console.log(user, "soyu user de NavBar");
+        dispatch(dateUser(user));
+      }
+    }
+  }, [user]);
 
   return (
     <Box position="absolute" w="100%">
@@ -156,7 +170,13 @@ function NavBar() {
                     )}
                   </MenuButton>
                   <MenuList>
-                    <Link to={`/userProfile/${idUserLogIn}`}>
+                    <Link
+                      to={
+                        usuario.length
+                          ? `/userProfile/${usuario[0].id}`
+                          : `/userProfile/${usuario.id}`
+                      }
+                    >
                       <MenuItem>Ver perfil</MenuItem>
                     </Link>
                     <MenuItem

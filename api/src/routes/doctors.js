@@ -81,7 +81,7 @@ router.post("/", async (req, res, next) => {
     birthday,
     document,
     type_document,
-    prepaid_health,
+    prepaid_healths,
     hours_json,
     work_days,
     picture,
@@ -109,7 +109,7 @@ router.post("/", async (req, res, next) => {
     });
 
     const dataPrepaidHealth = await Prepaid_health.findAll({
-      where: { name: prepaid_health },
+      where: { name: prepaid_healths },
     });
 
     const dataWorkDays = await Work_days.findAll({

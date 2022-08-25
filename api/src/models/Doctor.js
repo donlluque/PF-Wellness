@@ -68,10 +68,6 @@ module.exports = (sequelize) => {
         //allowNull: false,
       },
 
-      description: {
-        type: DataTypes.TEXT,
-        //allowNull: false,
-      },
       hours_json: {
         type: DataTypes.JSON,
       },

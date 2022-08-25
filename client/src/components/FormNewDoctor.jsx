@@ -88,7 +88,7 @@ const initialForm = {
   specialty: "",
   work_days: [],
   hours_json: {},
-  prepaid_health: [],
+  prepaid_healths: [],
 };
 function FormNewDoctor() {
   const [form, setForm] = useState(initialForm);
@@ -133,7 +133,6 @@ function FormNewDoctor() {
   const handleBlur = (e) => {
     setErrors(validateForm({ ...form, [e.target.name]: e.target.value }));
   };
-
   //seccion horas
   const handleChangeFormHours = (e) => {
     console.log(e);
@@ -183,7 +182,7 @@ function FormNewDoctor() {
   const handleDeletePrepaid = (prepaidHealth) => {
     setForm({
       ...form,
-      prepaid_health: form.prepaid_health.filter((c) => c !== prepaidHealth),
+      prepaid_healths: form.prepaid_healths.filter((c) => c !== prepaidHealth),
     });
   };
 
@@ -445,13 +444,13 @@ function FormNewDoctor() {
             </FormControl>
 
             <FormControl>
-              <FormLabel m="1rem" htmlFor="prepaid_health">
+              <FormLabel m="1rem" htmlFor="prepaid_healths">
                 Prestaciones asociadas
               </FormLabel>
               <Select
-                value={form.prepaid_health}
+                value={form.prepaid_healths}
                 onChange={(e) => handleChangeList(e)}
-                name="prepaid_health"
+                name="prepaid_healths"
               >
                 <option>Seleccionar una opción</option>
                 <option value="Particular">Particular</option>
@@ -461,8 +460,8 @@ function FormNewDoctor() {
                   ))}
               </Select>
             </FormControl>
-            {form.prepaid_health.length
-              ? form.prepaid_health.map((e) => (
+            {form.prepaid_healths.length
+              ? form.prepaid_healths.map((e) => (
                   <List>
                     <ListItem key={e}>
                       {e}

@@ -18,28 +18,10 @@ dotenv.config();
 export let baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 ReactDOM.render(
-<<<<<<< HEAD
-  <Auth0Provider
-    domain="clinicaawellness.us.auth0.com"
-    clientId="fNRrwqrUHnHTj3YZ4dOK55sPLJcK57bj"
-    // redirectUri={window.location.origin}
-    redirectUri="http://localhost:3000"
-  >
-    <React.StrictMode>
-      <BrowserRouter>
-        <Provider store={store}>
-          <ChakraProvider>
-            <App />
-          </ChakraProvider>
-        </Provider>
-      </BrowserRouter>
-    </React.StrictMode>
-  </Auth0Provider>,
-=======
   <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <Auth0Provider
-      domain="dev--i6spdu9.us.auth0.com"
-      clientId="RRRtYXoCVLhXWaqDWwnRqQkoyUC6wEhc"
+      domain="clinicaawellness.us.auth0.com"
+      clientId="fNRrwqrUHnHTj3YZ4dOK55sPLJcK57bj"
       // redirectUri={window.location.origin}
       redirectUri="http://localhost:3000"
     >
@@ -54,7 +36,6 @@ ReactDOM.render(
       </React.StrictMode>
     </Auth0Provider>
   </MuiPickersUtilsProvider>,
->>>>>>> bd7cf034337be61ab2a371900fd6c06b275b8b42
   document.getElementById("root")
 );
 

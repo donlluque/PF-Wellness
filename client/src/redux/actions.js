@@ -88,7 +88,7 @@ export function searchDoctorByName(input) {
 }
 //post doctors
 export const postDoctors = (form) => {
-  console.log(form);
+  console.log("soy form", form);
   return function (dispatch) {
     return fetch(`${baseURL}/doctors`, {
       method: "POST",

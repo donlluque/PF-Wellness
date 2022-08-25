@@ -30,7 +30,7 @@ router.post("/", async (req, res, next) => {
       return res.status(200).send(newPatient);
     }
   } catch (error) {
-    console.log(error);
+    console.log('soy error',error);
   }
 });
 

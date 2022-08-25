@@ -221,6 +221,7 @@ export const dateUser = (payload) => {
         dispatch({ type: "CONFIRM_ACTION", payload: data });
         dispatch({ type: "LOG_IN" });
         dispatch({ type: "ID_USER", payload: data.id });
+        dispatch({ type: "CHECK_USER", payload: data})
       })
       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
   };

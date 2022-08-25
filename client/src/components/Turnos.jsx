@@ -1,4 +1,6 @@
 import { Box, Container, Heading } from "@chakra-ui/react";
+import Staff from './Staff.jsx';
+import NavStaff from "./NavStaff.jsx";
 
 function Turnos() {
   return (
@@ -10,6 +12,7 @@ function Turnos() {
         justifyContent="center"
         h="80vh"
       >
+       
         <Heading as="h1" size="4xl">
           PROXIMAMENTE!
         </Heading>
@@ -17,6 +20,10 @@ function Turnos() {
           - Página en construcción -
         </Box>
       </Box>
+
+      {/* <Staff/> */}
+
+     
     </>
   );
 }

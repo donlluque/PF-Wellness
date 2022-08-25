@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { dateUser, logOut } from "../redux/actions";
 import { FaUserCircle } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
 
 function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,16 +47,18 @@ function NavBar() {
     dispatch(logOut());
     history.push("/");
   };
-
+  
   //LOGIN NUEVO
   const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
+  
   console.log(user);
+  useEffect(() => {
   if (user) {
     if (Object.keys(user).length) {
       dispatch(dateUser(user));
     }
   }
-
+ }, [user])
 
   return (
     <Box position="absolute" w="100%">

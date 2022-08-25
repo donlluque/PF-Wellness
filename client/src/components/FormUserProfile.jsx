@@ -30,14 +30,16 @@ import { validateForm } from "../hooks/validateForm.js";
 import UploadImages from "./UploadImages";
 
 function FormUserProfile() {
+  const { id } = useParams();
+  const {patientDetail, msgConfirm} = useSelector((state) => state);
+  const { name, last_name, email } = patientDetail;
   const [form, setForm] = useState({});
   const [putActive, setPutActive] = useState(false);
   const dispatch = useDispatch();
-  const { id } = useParams();
-  const { patientDetail, msgConfirm } = useSelector((state) => state);
+  
   const [errors, setErrors] = useState({});
   const date = new Date().toLocaleDateString().split("/").reverse();
-  const { name, last_name, email } = patientDetail;
+ 
   const [aux, setAux] = useState({ name, last_name, email });
   const user = useSelector((state) => state.user);
 
@@ -49,6 +51,10 @@ function FormUserProfile() {
   };
   console.log("renderizado", name, last_name, email);
   useEffect(() => {
+    
+    setAux(!aux);
+    dispatch(getOnePatient(id));
+    console.log(id);
     if (Object.keys(user).length) {
       setForm({
         ...form,
@@ -61,8 +67,6 @@ function FormUserProfile() {
     } else {
       setForm({ ...form, name, last_name, email, id });
     }
-    dispatch(getOnePatient(id));
-    setAux(!aux);
   }, [dispatch]);
 
   useEffect(() => {

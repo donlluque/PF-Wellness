@@ -27,7 +27,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      especialidades_id: {
+      specialty: {
         type: DataTypes.STRING,
         allowNull: false,
       },

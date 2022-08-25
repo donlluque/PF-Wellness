@@ -74,7 +74,6 @@ router.get("/:id", async (req, res, next) => {
       },
     });
 
-
     // const pacientes = await getAllPatient();
     // const paciente = pacientes.find(e => e.id == id);
 
@@ -84,7 +83,7 @@ router.get("/:id", async (req, res, next) => {
   } catch (error) {
     console.log(error);
   }
-
+});
 
 router.put("/:id", async (req, res, next) => {
   const { id } = req.params;

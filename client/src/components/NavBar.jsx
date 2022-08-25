@@ -53,8 +53,8 @@ function NavBar() {
     dispatch(logOut());
     history.push("/");
   };
-
   //LOGIN NUEVO
+
   console.log(user, "user de NavBAr");
 
   useEffect(() => {

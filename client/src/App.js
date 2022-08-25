@@ -10,6 +10,9 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import UserProfile from "./components/UserProfile";
 import Turnos from "./components/Turnos";
+import Calendar from "./components/Calendar";
+
+import AdminProfile from "./components/AdminProfile";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -41,6 +44,12 @@ export default function App() {
 
         <Route exact path="/userProfile/:id">
           <UserProfile />
+        </Route>
+        <Route exact path="/calendar">
+          <Calendar />
+        </Route>
+        <Route exact path="/admin">
+          <AdminProfile />
         </Route>
         <Route exact path="*">
           <Error />

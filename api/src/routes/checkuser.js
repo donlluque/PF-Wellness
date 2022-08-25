@@ -3,23 +3,19 @@ const router = Router();
 const { Patient } = require("../db.js");
 
 router.post("/", async (req, res, next) => {
-  const { given_name, email, family_name, nickname } = req.body;
-  console.log(req.body, "ruta back checkuser");
-  res.send("hola");
-
-  const patient = await Patient.findOne({
-    where: { email: email },
-  });
-
-  let paciente = { given_name, email, family_name, nickname };
-  console.log(paciente, "soy paciente");
-  console.log(patient, "soy patient");
-
   try {
+    const { given_name, email, family_name, nickname, picture } = req.body;
+    console.log(req.body, "ruta back checkuser");
+
+    const patient = await Patient.findOne({
+      where: { email: email },
+    });
+
+    console.log(patient, "soy patient");
     if (!email) res.status(400).send("Sorry, I need more data to post");
 
     if (patient) {
-      return res.status(200).send("hola");
+      return res.status(200).send(patient);
     } else {
       const newPatient = await Patient.findOrCreate({
         where: { email: email },
@@ -28,6 +24,7 @@ router.post("/", async (req, res, next) => {
           last_name: family_name,
           email,
           user_name: nickname,
+          picture: picture,
         },
       });
       console.log(newPatient, "soy newPatient");

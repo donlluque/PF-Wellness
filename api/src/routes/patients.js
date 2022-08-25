@@ -68,22 +68,26 @@ router.get("/user", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
 
-  const patient = await Patient.findOne({
-    where: { id },
-    include: {
-      model: Prepaid_health,
-      throught: {
-        attributes: [],
+  try {
+    const patient = await Patient.findOne({
+      where: { id },
+      include: {
+        model: Prepaid_health,
+        throught: {
+          attributes: [],
+        },
       },
-    },
-  });
+    });
 
-  // const pacientes = await getAllPatient();
-  // const paciente = pacientes.find(e => e.id == id);
+    // const pacientes = await getAllPatient();
+    // const paciente = pacientes.find(e => e.id == id);
 
-  if (patient) {
-    res.status(200).send(patient);
-  } else res.status(400).send("The patient doesn't exist");
+    if (patient) {
+      res.status(200).send(patient);
+    } else res.status(400).send("The patient doesn't exist");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 router.put("/:id", async (req, res, next) => {

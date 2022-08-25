@@ -35,16 +35,16 @@ function FormUserProfile() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { patientDetail, msgConfirm } = useSelector((state) => state);
+  const { name, last_name, email } = patientDetail;
   const [errors, setErrors] = useState({});
   const date = new Date().toLocaleDateString().split("/").reverse();
-  const { name, last_name, email } = patientDetail;
   const [aux, setAux] = useState({ name, last_name, email });
   const user = useSelector((state) => state.user);
 
   console.log(user, "soy user ");
 
   console.log(id, "soy el id de params");
-
+  console.log("HOLAAAAAAAA");
   const styleDate = (date) => {
     if (date[1].length === 1) {
       date[1] = "0" + date[1];
@@ -53,14 +53,22 @@ function FormUserProfile() {
   };
   console.log("renderizado", name, last_name, email);
   useEffect(() => {
+    console.log(patientDetail, "patientDetail");
     if (Object.keys(user).length) {
       setForm({
         ...form,
-        name: user.given_name,
-        last_name: user.family_name,
+        name: user.name,
+        last_name: user.last_name,
         email: user.email,
         user_name: user.nickname,
-        id,
+        birthday: user.birthday,
+        direction: user.direction,
+        document: user.document,
+        nationality: user.nationality,
+        phone: user.phone,
+        picture: user.picture,
+        prepaid_health: user.prepaid_health,
+        id: user.id,
       });
     } else {
       setForm({ ...form, name, last_name, email, id });
@@ -253,13 +261,13 @@ function FormUserProfile() {
                 name="prepaid_health"
               >
                 <option>Seleccionar una opción</option>
-                <option value="False">Ninguna</option>
-                <option value="Galeno">Galeno</option>
-                <option value="Medicus">Medicus</option>
-                <option value="Medife">Medife</option>
-                <option value="Osde">Osde</option>
-                <option value="Parque Salud">Parque Salud</option>
-                <option value="Swiss Medical">Swiss Medical</option>
+                <option value="false">Ninguna</option>
+                <option value="galeno">Galeno</option>
+                <option value="medicus">Medicus</option>
+                <option value="medife">Medife</option>
+                <option value="osde">Osde</option>
+                <option value="parque Salud">Parque Salud</option>
+                <option value="swiss Medical">Swiss Medical</option>
               </Select>
             </FormControl>
             {/* isDisabled={errors.name || errors.last_name || errors.email} */}

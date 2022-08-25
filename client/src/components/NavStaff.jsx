@@ -98,15 +98,15 @@ export default function NavStaff({ setInput, setPage }) {
           name="especialidad"
         >
           <option value="All">Areas Generales</option>
-          <option value="deportologia">Deportología</option>
-          <option value="fisioterapia y kinesiologia">
+          <option value="Deportología">Deportología</option>
+          <option value="Fisioterapia y kinesiología">
             Kinesiología y Fisioterapia
           </option>
-          <option value="Osteopatia">Osteopatía</option>
-          <option value="quiropraxia">Quiropraxia</option>
-          <option value="reumatologia">Reumatología</option>
-          <option value="terapia de dolor">Terapia de Dolor</option>
-          <option value="traumatologia">Traumatología</option>
+          <option value="Osteopatía">Osteopatía</option>
+          <option value="Quiropraxia">Quiropraxia</option>
+          <option value="Reumatología">Reumatología</option>
+          <option value="Terapia de dolor">Terapia de Dolor</option>
+          <option value="Traumatología">Traumatología</option>
         </Select>
 
         <Select

@@ -2,12 +2,14 @@ const initialState = {
   doctors: [],
   patients: [],
   patientDetail: {},
-  detail: {},
+  doctorDetail: {},
   msgError: {},
   msgConfirm: {},
-  logInState: false,
-  idUserLogIn: "",
+  prepaidHealth: [],
+  hoursWorking: [],
+  days: [],
   user: {},
+  turns: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -17,36 +19,27 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         doctors: action.payload,
       };
-    case "GET_DETAIL":
+    case "GET_DETAIL_DOCTORS":
       return {
         ...state,
-        detail: action.payload,
+        doctorDetail: action.payload,
       };
     case "CLEAN_DOCTOR":
       return {
         ...state,
         detail: {},
       };
-    case "FILTER":
+    case "FILTER_DOCTORS":
       return {
         ...state,
         doctors: action.payload,
       };
-    case "SEARCH_DOCTOR":
+    case "SEARCH_DOCTOR_BY_NAME":
       return {
         ...state,
         doctors: action.payload,
       };
-    case "HANDLE_ERROR":
-      return {
-        ...state,
-        msgError: action.payload,
-      };
-    case "CONFIRM_ACTION":
-      return {
-        ...state,
-        msgConfirm: action.payload,
-      };
+
     case "POST_PATIENT": {
       return { ...state };
     }
@@ -61,24 +54,50 @@ export default function rootReducer(state = initialState, action) {
         patientDetail: action.payload,
       };
     }
-    case "LOG_IN": {
-      return {
-        ...state,
-        logInState: true,
-      };
-    }
-    case "LOG_OUT": {
-      return {
-        ...state,
-        logInState: false,
-      };
-    }
+
+    //sirve?
     case "ID_USER": {
       return {
         ...state,
         idUserLogIn: action.payload,
       };
     }
+
+    case "GET_HOURS": {
+      return {
+        ...state,
+        hoursWorking: action.payload,
+      };
+    }
+    case "GET_DAYS": {
+      return {
+        ...state,
+        days: action.payload,
+      };
+    }
+    case "GET_TURNS": {
+      return {
+        ...state,
+        turns: action.payload,
+      };
+    }
+
+    case "GET_PREPAID_HEALTH": {
+      return {
+        ...state,
+        prepaidHealth: action.payload,
+      };
+    }
+    case "HANDLE_ERROR":
+      return {
+        ...state,
+        msgError: action.payload,
+      };
+    case "CONFIRM_ACTION":
+      return {
+        ...state,
+        msgConfirm: action.payload,
+      };
     case "CLEAN_ERROR": {
       return {
         ...state,
@@ -93,7 +112,7 @@ export default function rootReducer(state = initialState, action) {
     }
 
     case "CHECK_USER": {
-      console.log(action.payload, "reducer check_user");
+      // console.log(action.payload, "reducer check_user");
       return {
         ...state,
         user: action.payload,

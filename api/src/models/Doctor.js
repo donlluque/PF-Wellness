@@ -27,7 +27,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      especialidades_id: {
+      specialty: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -60,20 +60,16 @@ module.exports = (sequelize) => {
       type_document: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
-
-      prepaid_health: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        defaultValue: "DNI",
       },
 
       picture: {
         type: DataTypes.STRING,
-        allowNull: false,
+        //allowNull: false,
       },
 
-      description: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+      hours_json: {
+        type: DataTypes.JSON,
       },
     },
     { timestamps: false }

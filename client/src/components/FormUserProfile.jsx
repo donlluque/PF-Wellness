@@ -30,43 +30,51 @@ import { validateForm } from "../hooks/validateForm.js";
 import UploadImages from "./UploadImages";
 
 function FormUserProfile() {
-  const { id } = useParams();
-  const {patientDetail, msgConfirm} = useSelector((state) => state);
-  const { name, last_name, email } = patientDetail;
   const [form, setForm] = useState({});
   const [putActive, setPutActive] = useState(false);
   const dispatch = useDispatch();
-  
+  const { id } = useParams();
+  const { patientDetail, msgConfirm } = useSelector((state) => state);
+  const { name, last_name, email, picture } = patientDetail;
   const [errors, setErrors] = useState({});
   const date = new Date().toLocaleDateString().split("/").reverse();
- 
-  const [aux, setAux] = useState({ name, last_name, email });
+  const [aux, setAux] = useState({ name, last_name, email, picture });
   const user = useSelector((state) => state.user);
 
+  console.log(user, "soy user ");
+
+  console.log(id, "soy el id de params");
+  console.log("HOLAAAAAAAA");
   const styleDate = (date) => {
     if (date[1].length === 1) {
       date[1] = "0" + date[1];
     }
     return date.join("-");
   };
-  console.log("renderizado", name, last_name, email);
+  console.log("renderizado", name, last_name, email, picture);
   useEffect(() => {
-    
-    setAux(!aux);
-    dispatch(getOnePatient(id));
-    console.log(id);
+    console.log(patientDetail, "patientDetail");
     if (Object.keys(user).length) {
       setForm({
         ...form,
-        name: user.given_name,
-        last_name: user.family_name,
+        name: user.name,
+        last_name: user.last_name,
         email: user.email,
         user_name: user.nickname,
-        id,
+        birthday: user.birthday,
+        direction: user.direction,
+        document: user.document,
+        nationality: user.nationality,
+        phone: user.phone,
+        picture: user.picture,
+        prepaid_health: user.prepaid_health,
+        id: user.id,
       });
     } else {
       setForm({ ...form, name, last_name, email, id });
     }
+    dispatch(getOnePatient(id));
+    setAux(!aux);
   }, [dispatch]);
 
   useEffect(() => {
@@ -81,11 +89,14 @@ function FormUserProfile() {
   const handleSubmit = (e) => {
     e.preventDefault();
     //setErrors(validateForm(form));
-
-    dispatch(putPatient(form));
-    setOverlay(<OverlayOne />);
-    onOpen();
-    setPutActive(false);
+    if (errors) {
+      return alert("Completa los campos");
+    } else {
+      dispatch(putPatient(form));
+      setOverlay(<OverlayOne />);
+      onOpen();
+      setPutActive(false);
+    }
   };
 
   const handlePutActive = () => {
@@ -116,7 +127,7 @@ function FormUserProfile() {
             src="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
             alt=""
           /> */}
-        
+
           {!putActive && (
             <Button
               m="2rem"
@@ -130,17 +141,14 @@ function FormUserProfile() {
         </Box>
         <Box m="1rem" w="50rem">
           <form>
-
-          <FormControl isDisabled={!putActive} >
-          <UploadImages />
-          </FormControl>
-            <FormControl isDisabled={!putActive} >
-
+            <FormControl isDisabled={!putActive}>
+              <UploadImages />
+            </FormControl>
+            <FormControl isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="name">
                 Nombre
               </FormLabel>
               <Input
-                disabled
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
                 value={form.name}
@@ -156,7 +164,6 @@ function FormUserProfile() {
                 Apellido
               </FormLabel>
               <Input
-                disabled
                 value={form.last_name}
                 onChange={(e) => handleChange(e)}
                 name="last_name"
@@ -255,13 +262,13 @@ function FormUserProfile() {
                 name="prepaid_health"
               >
                 <option>Seleccionar una opción</option>
-                <option value="False">Ninguna</option>
-                <option value="Galeno">Galeno</option>
-                <option value="Medicus">Medicus</option>
-                <option value="Medife">Medife</option>
-                <option value="Osde">Osde</option>
-                <option value="Parque Salud">Parque Salud</option>
-                <option value="Swiss Medical">Swiss Medical</option>
+                <option value="false">Ninguna</option>
+                <option value="galeno">Galeno</option>
+                <option value="medicus">Medicus</option>
+                <option value="medife">Medife</option>
+                <option value="osde">Osde</option>
+                <option value="parque Salud">Parque Salud</option>
+                <option value="swiss Medical">Swiss Medical</option>
               </Select>
             </FormControl>
             {/* isDisabled={errors.name || errors.last_name || errors.email} */}

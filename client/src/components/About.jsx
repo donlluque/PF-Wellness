@@ -14,6 +14,7 @@ import {
   ListIcon,
   ListItem,
   Text,
+  Flex,
 } from "@chakra-ui/react";
 import { BsTelephone } from "react-icons/bs";
 import { ImMobile } from "react-icons/im";
@@ -35,30 +36,56 @@ function About() {
     url(https://www.clinicapremium.com/wp-content/uploads/2020/06/trabaja-en-clinica-premium-marbella.jpg)"
         mb={2}
       >
-        <Heading textAlign="center" as="h1" size="4xl" m="1rem">
+        <Heading
+          textAlign="center"
+          as="h1"
+          size="4xl"
+          m="1rem"
+          fontSize={{ base: "2xl", sm: "4xl", md: "5xl", lg: "6xl" }}
+        >
           Nosotros
         </Heading>
-        <Box>
-          <Text as="i" fontSize="xl">
+        <Box w={{ base: "75%", sm: "75%", md: "60%" }} textAlign="center">
+          <Text as="i" fontSize={{ base: "md", sm: "xl", md: "xl" }}>
             "Estamos justo donde nos necesitas. Experiencia. Servicio.
             Integridad"
           </Text>
         </Box>
       </Center>
       <Container maxW="100%" centerContent>
-        <Heading as="h2" size="lg" m={5}>
+        <Heading as="h2" size="xl" mt={5} mb={3}>
           ¿Quiénes somos?
         </Heading>
-        <Box display={{ md: "flex" }} alignItems="justify">
-          <Box p={3} w="40vw" h="10vw" m={2} bgColor="rgb(235, 237, 239, 0.4)" borderRadius="0.5rem">
-            Wellness es un Centro Especializado en rehabilitación física que
-            nace con la idea de brindar un servicio donde se priorice el 
-            <Text as='em'> bienestar.</Text> Nuestra trayectoria, forjada en la excelencia, es la que
-            hoy nos permite realizar tratamientos efectivos con la mejor calidad
-            de atención.
+        <Flex
+          direction={{ base: "column", sm: "column", md: "column", lg: "row" }}
+          m={5}
+          alignItems={{ base: "center", sm: "center", md: "center" }}
+        >
+          <Box
+            p={3}
+            m={2}
+            w={{ base: "90vw", sm: "80vw", md: "70vw", lg: "40vw" }}
+            borderRadius="0.5rem"
+          >
+            <Text spacing={2} textAlign="center">
+              <Text as="i" fontWeight="bold">
+                Wellness{" "}
+              </Text>{" "}
+              es un Centro Especializado en rehabilitación física que nace con
+              la idea de brindar un servicio donde se priorice el
+              <Text as="i"> bienestar</Text>. Nuestra trayectoria, forjada en la
+              excelencia, es la que hoy nos permite realizar tratamientos
+              efectivos con la mejor calidad de atención.
+            </Text>
           </Box>
-          <Image width="20rem" src={img1} alt="img" m={3} borderRadius="0.5rem" />
-        </Box>
+          <Image
+            width="20rem"
+            src={img1}
+            alt="img"
+            m={3}
+            borderRadius="0.5rem"
+          />
+        </Flex>
         <Box
           bgColor="teal.50"
           w="100%"
@@ -66,7 +93,7 @@ function About() {
           flexDirection="column"
           alignItems="center"
         >
-          <Heading as="h2" size="lg" m={5} textAlign="center">
+          <Heading as="h2" size="xl" m={5} textAlign="center">
             ¿Por qué nosotros?
           </Heading>
           <Box alignItems="center">
@@ -81,8 +108,20 @@ function About() {
           </Box>
           <Box>
             <Box display={{ md: "flex" }} justifyContent="center">
-              <Image src={img2} alt="img" m={2} w="20rem" borderRadius="0.5rem" />
-              <Image src={img3} alt="img" m={2} w="20rem" borderRadius="0.5rem" />
+              <Image
+                src={img2}
+                alt="img"
+                m={2}
+                w="20rem"
+                borderRadius="0.5rem"
+              />
+              <Image
+                src={img3}
+                alt="img"
+                m={2}
+                w="20rem"
+                borderRadius="0.5rem"
+              />
             </Box>
           </Box>
           <Heading as="h5" size="md" textAlign="center" m="2rem">
@@ -95,10 +134,21 @@ function About() {
 
         <Box display={{ md: "flex" }} justifyItems="center" alignItems="center">
           <Box>
-            <Heading as="h2" size="lg" textAlign="center">
+            <Heading as="h2" size="xl" textAlign="center">
               Contactanos
             </Heading>
-            <List spacing={4} p="2rem">
+            <List
+              spacing={4}
+              p="2rem"
+              display="flex"
+              flexDirection="column"
+              alignItems={{
+                base: "center",
+                sm: "center",
+                md: "center",
+                lg: "baseline",
+              }}
+            >
               <ListItem>
                 <ListIcon as={BsTelephone} color="teal.900" />
                 0800-354-5050

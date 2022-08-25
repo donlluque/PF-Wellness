@@ -1,6 +1,7 @@
 import { baseURL } from "../index.js";
 import axios from "axios";
 
+//DOCTORS
 export function getDoctors() {
   return function (dispatch) {
     fetch(`${baseURL}/doctors`)
@@ -16,13 +17,14 @@ export function getDoctors() {
       });
   };
 }
-export function getDetail(id) {
+
+export function getDetailDoctors(id) {
   return function (dispatch) {
     fetch(`${baseURL}/doctors/${id}`)
       .then((res) => res.json())
       .then((json) => {
         dispatch({
-          type: "GET_DETAIL",
+          type: "GET_DETAIL_DOCTORS",
           payload: json,
         });
       })
@@ -36,8 +38,7 @@ export function cleanDoctor() {
     type: "CLEAN_DOCTOR",
   };
 }
-
-export function filter(filter) {
+export function filterDoctors(filter) {
   const { especialidad, obrasocial } = filter;
   return function (dispatch) {
     return fetch(
@@ -55,7 +56,7 @@ export function filter(filter) {
             })
       )
       .then((data) => {
-        dispatch({ type: "FILTER", payload: data });
+        dispatch({ type: "FILTER_DOCTORS", payload: data });
       })
       .catch((err) => {
         dispatch({ type: "HANDLE_ERROR", payload: err });
@@ -64,7 +65,7 @@ export function filter(filter) {
 }
 
 //SEARCH BAR
-export function searchByName(input) {
+export function searchDoctorByName(input) {
   return function (dispatch) {
     return fetch(`${baseURL}/doctors/?name=${input}`)
       .then((res) =>
@@ -78,14 +79,127 @@ export function searchByName(input) {
             })
       )
       .then((data) => {
-        dispatch({ type: "SEARCH_DOCTOR", payload: data });
+        dispatch({ type: "SEARCH_DOCTOR_BY_NAME", payload: data });
       })
       .catch((err) => {
         dispatch({ type: "HANDLE_ERROR", payload: err });
       });
   };
 }
+//post doctors
+export const postDoctors = (form) => {
+  console.log("soy form", form);
+  return function (dispatch) {
+    return fetch(`${baseURL}/doctors`, {
+      method: "POST",
+      body: JSON.stringify(form),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? res.json()
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: `VER ERROR`,
+            })
+      )
+      .then((data) => {
+        dispatch({ type: "CONFIRM_ACTION", payload: data });
+      })
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  };
+};
 
+//PREPAID HEALTH
+export const getPrepaidHealth = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/prepaid_health`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_PREPAID_HEALTH",
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+//HOURS
+export const getHours = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/hours_working`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_HOURS",
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+//DAYS
+export const getDays = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/work_days`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_DAYS",
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+//APPOINTMENT
+export const postAppointment = (form) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/dates`, {
+      method: "POST",
+      body: JSON.stringify(form),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? res.json()
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: `VER ERROR`,
+            })
+      )
+      .then((data) => {
+        dispatch({ type: "CONFIRM_ACTION", payload: data });
+      })
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  };
+};
+
+export const getTurns = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_TURNS",
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+//PATIENT
 export const getOnePatient = (id) => {
   return function (dispatch) {
     fetch(`${baseURL}/patients/${id}`)
@@ -102,7 +216,7 @@ export const getOnePatient = (id) => {
   };
 };
 
-//POST
+//POST PATIENT
 export const postPatient = (form) => {
   return function (dispatch) {
     return fetch(`${baseURL}/patients`, {
@@ -128,7 +242,7 @@ export const postPatient = (form) => {
   };
 };
 
-//PUT
+//PUT PATIENT
 export const putPatient = (data) => {
   console.log("data actions", data);
   return function (dispatch) {
@@ -155,11 +269,12 @@ export const putPatient = (data) => {
   };
 };
 
-export const logOut = () => ({ type: "LOG_OUT" });
+//export const logOut = () => ({ type: "LOG_OUT" });
 
-export const logIn = () => ({ type: "LOG_IN" });
+//export const logIn = () => ({ type: "LOG_IN" });
 
-export const getByUserName = (userName) => {
+//sirve??
+/*export const getByUserName = (userName) => {
   return function (dispatch) {
     fetch(`${baseURL}/patients/user?userName=${userName}`)
       .then((res) =>
@@ -184,48 +299,50 @@ export const getByUserName = (userName) => {
         dispatch({ type: "HANDLE_ERROR", payload: error });
       });
   };
+};*/
+
+export const dateUser = (payload) => {
+  console.log(payload, "payloaaaaaaaaad");
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(`${baseURL}/checkuser`, payload);
+      console.log(response.data, "action date user");
+      return dispatch({
+        type: "CHECK_USER",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
 
 // export const dateUser = (payload) => {
-//   console.log(payload, "action date user");
-//   return async (dispatch) => {
-//     try {
-//       let response = await axios.post(`${baseURL}/checkuser`, payload);
-//       return dispatch({
-//         type: "CHECK_USER",
-//         payload: response.data,
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
+//   return function (dispatch) {
+//     return fetch(`${baseURL}/checkuser`, {
+//       method: "POST",
+//       body: JSON.stringify(payload),
+//       headers: { "Content-Type": "application/json" },
+//     })
+//       .then((res) =>
+//         res.ok
+//           ? res.json()
+//           : Promise.reject({
+//               err: true,
+//               status: res.status || "00",
+//               statusText: `Ya existe un usuario con el mail ${payload.email}`,
+//             })
+//       )
+//       .then((data) => {
+//         console.log(data, "soy data");
+//         dispatch({ type: "CHECK_USER", payload: data });
+//         dispatch({ type: "CONFIRM_ACTION", payload: data });
+//         dispatch({ type: "LOG_IN" });
+//         dispatch({ type: "ID_USER", payload: data.id });
+//       })
+//       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
 //   };
 // };
-
-export const dateUser = (payload) => {
-  return function (dispatch) {
-    return fetch(`${baseURL}/checkuser`, {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) =>
-        res.ok
-          ? res.json()
-          : Promise.reject({
-              err: true,
-              status: res.status || "00",
-              statusText: `Ya existe un usuario con el mail ${payload.email}`,
-            })
-      )
-      .then((data) => {
-        dispatch({ type: "CONFIRM_ACTION", payload: data });
-        dispatch({ type: "LOG_IN" });
-        dispatch({ type: "ID_USER", payload: data.id });
-        dispatch({ type: "CHECK_USER", payload: data})
-      })
-      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
-  };
-};
 
 export const cleanError = () => ({ type: "CLEAN_ERROR" });
 export const cleanConfirm = () => ({ type: "CLEAN_MSG" });

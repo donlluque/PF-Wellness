@@ -183,6 +183,22 @@ export const postAppointment = (form) => {
       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
   };
 };
+
+export const getTurns = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_TURNS",
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 //PATIENT
 export const getOnePatient = (id) => {
   return function (dispatch) {

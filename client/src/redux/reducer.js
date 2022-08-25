@@ -9,6 +9,7 @@ const initialState = {
   hoursWorking: [],
   days: [],
   user: {},
+  turns: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -72,6 +73,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         days: action.payload,
+      };
+    }
+    case "GET_TURNS": {
+      return {
+        ...state,
+        turns: action.payload,
       };
     }
 

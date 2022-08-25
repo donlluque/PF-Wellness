@@ -60,16 +60,17 @@ module.exports = (sequelize) => {
       type_document: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: "DNI",
       },
 
       picture: {
         type: DataTypes.STRING,
-        allowNull: false,
+        //allowNull: false,
       },
 
       description: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        //allowNull: false,
       },
       hours_json: {
         type: DataTypes.JSON,

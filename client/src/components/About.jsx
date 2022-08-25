@@ -137,7 +137,18 @@ function About() {
             <Heading as="h2" size="xl" textAlign="center">
               Contactanos
             </Heading>
-            <List spacing={4} p="2rem">
+            <List
+              spacing={4}
+              p="2rem"
+              display="flex"
+              flexDirection="column"
+              alignItems={{
+                base: "center",
+                sm: "center",
+                md: "center",
+                lg: "baseline",
+              }}
+            >
               <ListItem>
                 <ListIcon as={BsTelephone} color="teal.900" />
                 0800-354-5050

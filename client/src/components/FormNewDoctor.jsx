@@ -486,7 +486,7 @@ function FormNewDoctor() {
                 <option>Seleccionar una opción</option>
                 {days &&
                   days.map((d) => (
-                    <option key={d.id} value={d.day}>
+                    <option key={d.id} value={d.id}>
                       {d.day}
                     </option>
                   ))}

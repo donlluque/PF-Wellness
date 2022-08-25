@@ -14,7 +14,6 @@ module.exports = (sequelize) => {
 
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
         set(value) {
           this.setDataValue("name", value[0].toUpperCase() + value.slice(1));
         },
@@ -22,7 +21,6 @@ module.exports = (sequelize) => {
 
       last_name: {
         type: DataTypes.STRING,
-        allowNull: false,
         set(value) {
           this.setDataValue(
             "last_name",
@@ -40,6 +38,10 @@ module.exports = (sequelize) => {
 
       document: {
         type: DataTypes.INTEGER,
+        validate: {
+          min: 7,
+          max: 8,
+        },
       },
 
       type_document: {

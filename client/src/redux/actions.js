@@ -187,6 +187,7 @@ export const getByUserName = (userName) => {
 };
 
 export const dateUser = (payload) => {
+  console.log(payload, "payloaaaaaaaaad");
   return async (dispatch) => {
     try {
       let response = await axios.post(`${baseURL}/checkuser`, payload);

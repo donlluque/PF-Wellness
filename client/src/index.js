@@ -12,13 +12,14 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
+import esLocale from "date-fns/locale/es";
 
 dotenv.config();
 
 export let baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 ReactDOM.render(
-  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+  <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
     <Auth0Provider
       domain="dev--i6spdu9.us.auth0.com"
       clientId="RRRtYXoCVLhXWaqDWwnRqQkoyUC6wEhc"

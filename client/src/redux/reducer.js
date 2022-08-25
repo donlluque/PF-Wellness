@@ -2,16 +2,12 @@ const initialState = {
   doctors: [],
   patients: [],
   patientDetail: {},
-  detail: {},
+  doctorDetail: {},
   msgError: {},
   msgConfirm: {},
-  logInState: false,
-  idUserLogIn: "",
-
   prepaidHealth: [],
   hoursWorking: [],
   days: [],
-
   user: {},
 };
 
@@ -25,7 +21,7 @@ export default function rootReducer(state = initialState, action) {
     case "GET_DETAIL_DOCTORS":
       return {
         ...state,
-        detail: action.payload,
+        doctorDetail: action.payload,
       };
     case "CLEAN_DOCTOR":
       return {
@@ -57,19 +53,7 @@ export default function rootReducer(state = initialState, action) {
         patientDetail: action.payload,
       };
     }
-    //sirve?
-    case "LOG_IN": {
-      return {
-        ...state,
-        logInState: true,
-      };
-    }
-    case "LOG_OUT": {
-      return {
-        ...state,
-        logInState: false,
-      };
-    }
+
     //sirve?
     case "ID_USER": {
       return {

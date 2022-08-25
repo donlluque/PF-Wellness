@@ -16,6 +16,13 @@ router.post("/", async (req, res, next) => {
 
     if (patient) {
       return res.status(200).send(patient);
+    } else if (!given_name) {
+      let newPatient = await Patient.create({
+        email,
+        picture: picture,
+        user_name: nickname,
+      });
+      return res.status(200).send(newPatient);
     } else {
       const newPatient = await Patient.findOrCreate({
         where: { email: email },

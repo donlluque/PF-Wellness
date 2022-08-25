@@ -1,4 +1,5 @@
 export const validateForm = (form) => {
+  console.log(form, "form de las validaciones");
   let errors = {};
   //let regexPassword = { /^(?=.*[0-9])(?=.*[az])(?=.*[AZ])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$/};
   let regexPassword = {
@@ -43,6 +44,10 @@ export const validateForm = (form) => {
       errors.passwordLetters =
         "Se requiere un mínimo de 6 caracteres y un máximo de 10 ";
     }
+  }
+
+  if (Object.keys(form.document).length > 9) {
+    errors.document = "Maximo de numeros ingresados es 9";
   }
 
   return errors;

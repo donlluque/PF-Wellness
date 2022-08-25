@@ -35,10 +35,10 @@ function FormUserProfile() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { patientDetail, msgConfirm } = useSelector((state) => state);
-  const { name, last_name, email } = patientDetail;
+  const { name, last_name, email, picture } = patientDetail;
   const [errors, setErrors] = useState({});
   const date = new Date().toLocaleDateString().split("/").reverse();
-  const [aux, setAux] = useState({ name, last_name, email });
+  const [aux, setAux] = useState({ name, last_name, email, picture });
   const user = useSelector((state) => state.user);
 
   console.log(user, "soy user ");
@@ -51,7 +51,7 @@ function FormUserProfile() {
     }
     return date.join("-");
   };
-  console.log("renderizado", name, last_name, email);
+  console.log("renderizado", name, last_name, email, picture);
   useEffect(() => {
     console.log(patientDetail, "patientDetail");
     if (Object.keys(user).length) {
@@ -89,11 +89,14 @@ function FormUserProfile() {
   const handleSubmit = (e) => {
     e.preventDefault();
     //setErrors(validateForm(form));
-
-    dispatch(putPatient(form));
-    setOverlay(<OverlayOne />);
-    onOpen();
-    setPutActive(false);
+    if (errors) {
+      return alert("Completa los campos");
+    } else {
+      dispatch(putPatient(form));
+      setOverlay(<OverlayOne />);
+      onOpen();
+      setPutActive(false);
+    }
   };
 
   const handlePutActive = () => {
@@ -146,7 +149,6 @@ function FormUserProfile() {
                 Nombre
               </FormLabel>
               <Input
-                disabled
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
                 value={form.name}
@@ -162,7 +164,6 @@ function FormUserProfile() {
                 Apellido
               </FormLabel>
               <Input
-                disabled
                 value={form.last_name}
                 onChange={(e) => handleChange(e)}
                 name="last_name"

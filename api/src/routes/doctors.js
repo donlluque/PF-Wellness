@@ -1,45 +1,46 @@
 const { Router } = require("express");
 const { Op } = require("sequelize");
 const router = Router();
-const { Doctor, Patient, Prepaid_health, Work_dates } = require("../db.js");
+const { Doctor, Patient, Prepaid_health, Work_days } = require("../db.js");
 const { getAllDoctor } = require("../controllers/index");
 
 // PRUEBA DE FUNCIONAMIENTO DE RUTA
 router.get("/", async (req, res, next) => {
   const { name } = req.query;
-
-  // console.log(req.query);
-
-  const allDoctors = await getAllDoctor();
-
   const doctorsDb = await Doctor.findAll({
-    include: {
-      model: Prepaid_health,
-      throught: {
-        attributes: [],
+    include: [
+      {
+        model: Prepaid_health,
+        throught: {
+          attributes: [],
+        },
       },
-    },
+      {
+        model: Work_days,
+        throught: {
+          attributes: [],
+        },
+      },
+    ],
   });
 
-  if (!doctorsDb.length) {
-    await Doctor.bulkCreate(allDoctors);
-  }
   if (name) {
-    const nombre = await allDoctors.filter((e) =>
+    const nombre = await doctorsDb.filter((e) =>
       e.name.toLowerCase().includes(name.toLowerCase())
     );
-
     nombre.length
       ? res.status(200).send(nombre)
       : res.status(400).send("Not exist");
+  } else if (!doctorsDb.length) {
+    res.status(400).send("No existe info en la Base de datos");
   } else {
-    res.status(200).send(allDoctors);
+    res.send(doctorsDb);
   }
 });
 
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  console.log(id);
+
   try {
     const doctor = await Doctor.findOne({
       where: { id },
@@ -51,7 +52,7 @@ router.get("/:id", async (req, res, next) => {
           },
         },
         {
-          model: Work_dates,
+          model: Work_days,
           throught: {
             attributes: [],
           },
@@ -74,46 +75,56 @@ router.post("/", async (req, res, next) => {
     name,
     medic_id,
     general_area,
-    especialidades_id,
+    specialty,
     phone,
     email,
     birthday,
     document,
     type_document,
     prepaid_health,
+    hours_json,
+    work_days,
     picture,
     description,
-    work_date,
   } = req.body;
 
-  const dataPrepaidHealth = await Prepaid_health.findAll({
-    where: { name: prepaid_health },
+  const doctor = await Doctor.findOne({
+    where: { email },
   });
 
-  const dataWorkDates = await Work_dates.findAll({
-    where: {
-      id: work_date,
-    },
-  });
+  if (!doctor) {
+    const newDoctor = await Doctor.create({
+      name,
+      medic_id,
+      general_area,
+      specialty,
+      phone,
+      email,
+      birthday,
+      document,
+      type_document,
+      picture,
+      description,
+      hours_json,
+    });
 
-  const newDoctor = await Doctor.create({
-    name,
-    medic_id,
-    general_area,
-    especialidades_id,
-    phone,
-    email,
-    birthday,
-    document,
-    type_document,
-    picture,
-    description,
-  });
+    const dataPrepaidHealth = await Prepaid_health.findAll({
+      where: { name: prepaid_health },
+    });
 
-  await newDoctor.addPrepaid_health(dataPrepaidHealth);
-  await newDoctor.addWork_dates(dataWorkDates);
+    const dataWorkDays = await Work_days.findAll({
+      where: {
+        id: work_days,
+      },
+    });
 
-  res.status(200).send(dataWorkDates);
+    await newDoctor.addPrepaid_health(dataPrepaidHealth);
+    await newDoctor.addWork_days(dataWorkDays);
+
+    res.status(200).send(newDoctor);
+  } else {
+    res.status(400).send("Ya existe un doctor con este email");
+  }
 });
 
 module.exports = router;

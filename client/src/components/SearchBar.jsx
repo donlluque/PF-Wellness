@@ -1,5 +1,5 @@
 import React from "react";
-import { searchByName } from "../redux/actions";
+import { searchDoctorByName } from "../redux/actions";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { IconButton, Input, Box, Wrap } from "@chakra-ui/react";
@@ -20,7 +20,7 @@ export default function SearchBar({
 
   function handleClick(e) {
     if (doctor) {
-      dispatch(searchByName(doctor));
+      dispatch(searchDoctorByName(doctor));
       setDoctor("");
     } else {
       alert("Por favor insertar un profesional");

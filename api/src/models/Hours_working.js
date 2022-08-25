@@ -4,21 +4,14 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "work_dates",
+    "hours_working",
     {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      day: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      hourInitial: {
-        type: DataTypes.STRING,
-      },
-      hourEnd: {
+      hour: {
         type: DataTypes.STRING,
       },
     },

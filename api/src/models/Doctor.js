@@ -27,7 +27,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      especialidades_id: {
+      specialty: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -62,10 +62,6 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      prepaid_health: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-      },
-
       picture: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -74,6 +70,9 @@ module.exports = (sequelize) => {
       description: {
         type: DataTypes.TEXT,
         allowNull: false,
+      },
+      hours_json: {
+        type: DataTypes.JSON,
       },
     },
     { timestamps: false }

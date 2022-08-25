@@ -27,19 +27,24 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getOnePatient } from "../redux/actions";
 import { validateForm } from "../hooks/validateForm.js";
+import UploadImages from "./UploadImages";
 
 function FormUserProfile() {
-  
   const [form, setForm] = useState({});
   const [putActive, setPutActive] = useState(false);
   const dispatch = useDispatch();
   const { id } = useParams();
   const { patientDetail, msgConfirm } = useSelector((state) => state);
+  const { name, last_name, email } = patientDetail;
   const [errors, setErrors] = useState({});
   const date = new Date().toLocaleDateString().split("/").reverse();
-  const { name, last_name, email } = patientDetail;
   const [aux, setAux] = useState({ name, last_name, email });
+  const user = useSelector((state) => state.user);
 
+  console.log(user, "soy user ");
+
+  console.log(id, "soy el id de params");
+  console.log("HOLAAAAAAAA");
   const styleDate = (date) => {
     if (date[1].length === 1) {
       date[1] = "0" + date[1];
@@ -48,7 +53,26 @@ function FormUserProfile() {
   };
   console.log("renderizado", name, last_name, email);
   useEffect(() => {
-    setForm({ ...form, name, last_name, email, id });
+    console.log(patientDetail, "patientDetail");
+    if (Object.keys(user).length) {
+      setForm({
+        ...form,
+        name: user.name,
+        last_name: user.last_name,
+        email: user.email,
+        user_name: user.nickname,
+        birthday: user.birthday,
+        direction: user.direction,
+        document: user.document,
+        nationality: user.nationality,
+        phone: user.phone,
+        picture: user.picture,
+        prepaid_health: user.prepaid_health,
+        id: user.id,
+      });
+    } else {
+      setForm({ ...form, name, last_name, email, id });
+    }
     dispatch(getOnePatient(id));
     setAux(!aux);
   }, [dispatch]);
@@ -58,7 +82,7 @@ function FormUserProfile() {
   }, dispatch);
 
   const handleChange = (e) => {
-    setForm({...form, [e.target.name]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value });
     setErrors(validateForm({ ...form, [e.target.name]: e.target.value }));
   };
 
@@ -95,11 +119,12 @@ function FormUserProfile() {
     <>
       <Box display={{ md: "flex" }} justifyContent="center">
         <Box display="flex" flexDirection="column" alignItems="center">
-          <Image
+          {/* <Image
             w="200px"
             src="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
             alt=""
-          />
+          /> */}
+
           {!putActive && (
             <Button
               m="2rem"
@@ -113,7 +138,10 @@ function FormUserProfile() {
         </Box>
         <Box m="1rem" w="50rem">
           <form>
-            <FormControl isDisabled={!putActive} >
+            <FormControl isDisabled={!putActive}>
+              <UploadImages />
+            </FormControl>
+            <FormControl isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="name">
                 Nombre
               </FormLabel>
@@ -121,7 +149,7 @@ function FormUserProfile() {
                 disabled
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
-                value={name}
+                value={form.name}
                 name="name"
                 placeholder="Escribe nombre completo"
               />
@@ -129,13 +157,13 @@ function FormUserProfile() {
                 <FormErrorMessage>{errors.name}</FormErrorMessage>
               )} */}
             </FormControl>
-            <FormControl isDisabled={!putActive} >
+            <FormControl isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="last_name">
                 Apellido
               </FormLabel>
               <Input
                 disabled
-                value={last_name}
+                value={form.last_name}
                 onChange={(e) => handleChange(e)}
                 name="last_name"
                 placeholder="Escribe apellido"
@@ -150,7 +178,7 @@ function FormUserProfile() {
               </FormLabel>
               <Input
                 disabled
-                value={email}
+                value={form.email}
                 onChange={(e) => handleChange(e)}
                 type="email"
                 placeholder="Dirección de email"
@@ -233,18 +261,17 @@ function FormUserProfile() {
                 name="prepaid_health"
               >
                 <option>Seleccionar una opción</option>
-                <option value="False">Ninguna</option>
-                <option value="Galeno">Galeno</option>
-                <option value="Medicus">Medicus</option>
-                <option value="Medife">Medife</option>
-                <option value="Osde">Osde</option>
-                <option value="Parque Salud">Parque Salud</option>
-                <option value="Swiss Medical">Swiss Medical</option>
+                <option value="false">Ninguna</option>
+                <option value="galeno">Galeno</option>
+                <option value="medicus">Medicus</option>
+                <option value="medife">Medife</option>
+                <option value="osde">Osde</option>
+                <option value="parque Salud">Parque Salud</option>
+                <option value="swiss Medical">Swiss Medical</option>
               </Select>
             </FormControl>
             {/* isDisabled={errors.name || errors.last_name || errors.email} */}
             <Button
-            
               mt="1rem"
               onClick={(e) => handleSubmit(e)}
               type="submit"
@@ -270,8 +297,7 @@ function FormUserProfile() {
                 <ModalCloseButton />
                 <ModalBody>
                   <Text color="teal.600">
-                   Tus datos fueron modificados
-                    exitosamente!
+                    Tus datos fueron modificados exitosamente!
                   </Text>
                 </ModalBody>
                 <ModalFooter>

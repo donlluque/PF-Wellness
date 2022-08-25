@@ -87,20 +87,23 @@ router.get("/:id", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   const { id } = req.params;
+  console.log(id);
   const {
     name,
     last_name,
     document,
-    type_document,
-    email,
+    // type_document,
+    // email,
     phone,
     nationality,
     direction,
     birthday,
-    medical_history,
+    // medical_history,
     prepaid_health,
     picture,
   } = req.body;
+
+  console.log("prepaid_health", prepaid_health);
 
   let perfiles = await Patient.findOne({
     where: { id: id },
@@ -110,19 +113,21 @@ router.put("/:id", async (req, res, next) => {
     name,
     last_name,
     document,
-    type_document,
-    email,
+    // type_document,
+    // email,
     phone,
     nationality,
     direction,
     birthday,
-    medical_history,
+    // medical_history,
     picture,
   });
 
   const dataPrepaidHealth = await Prepaid_health.findOne({
     where: { name: prepaid_health },
   });
+
+  console.log(dataPrepaidHealth);
 
   //TRAER LOS DATOS DE LAS OBRAS SOCIALES PARA QUE SE PUEDA AÑADIR
 

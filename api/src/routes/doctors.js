@@ -80,12 +80,9 @@ router.post("/", async (req, res, next) => {
     email,
     birthday,
     document,
-    type_document,
     prepaid_healths,
     hours_json,
     work_days,
-    picture,
-    description,
   } = req.body;
 
   const doctor = await Doctor.findOne({
@@ -102,9 +99,6 @@ router.post("/", async (req, res, next) => {
       email,
       birthday,
       document,
-      type_document,
-      //picture,
-      //description,
       hours_json,
     });
 

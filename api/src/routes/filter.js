@@ -6,13 +6,10 @@ const {
   getByGeneralArea,
 } = require("../controllers/filters/filterGeneralArea.js");
 const { getByPH } = require("../controllers/filters/filterByPH.js");
-// const {
-//   getBySpecialities,
-// } = require("../controllers/filters/filterBySpecialities.js");
 
 router.get("/", async (req, res) => {
   const { general_area, prepaid_health } = req.query;
-  // console.log(general_area, "areaaaaaaaaaaaaaa");
+
   try {
     if (general_area === "" && prepaid_health === "") {
       res.status(400).send("Faltan campos");
@@ -23,8 +20,6 @@ router.get("/", async (req, res) => {
       } else {
         res.status(200).send(allDoctors);
       }
-      // } else if (general_area !== "All" && specialities !== "All") {
-      //   const especialidad = await getBySpecialities(specialities);
     } else if (general_area !== "All" && prepaid_health === "All") {
       const doctorsGA = await getByGeneralArea(general_area);
       if (!doctorsGA.length) {
@@ -43,8 +38,8 @@ router.get("/", async (req, res) => {
       const general = await getByGeneralArea(general_area);
       // console.log(general, "soy general");
       const mixFiltro = general.filter((e) =>
-        e.prepaid_health.find(
-          (e) => e.toLowerCase() === prepaid_health.toLowerCase()
+        e.prepaid_healths.find(
+          (e) => e.name.toLowerCase() === prepaid_health.toLowerCase()
         )
       );
       if (!mixFiltro.length) {

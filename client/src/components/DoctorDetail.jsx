@@ -15,7 +15,7 @@ export default function DoctorDetail({ id }) {
     };
   }, [dispatch]);
 
-  const doctor = useSelector((state) => state.detail);
+  const doctor = useSelector((state) => state.doctorDetail);
   // console.log("soy doctor",doctor);
   return (
     <Box>

@@ -86,7 +86,7 @@ export function searchDoctorByName(input) {
       });
   };
 }
-
+//post doctors
 export const postDoctors = (form) => {
   console.log(form);
   return function (dispatch) {
@@ -160,6 +160,29 @@ export const getDays = () => {
       });
   };
 };
+//APPOINTMENT
+export const postAppointment = (form) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/dates`, {
+      method: "POST",
+      body: JSON.stringify(form),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? res.json()
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: `VER ERROR`,
+            })
+      )
+      .then((data) => {
+        dispatch({ type: "CONFIRM_ACTION", payload: data });
+      })
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  };
+};
 //PATIENT
 export const getOnePatient = (id) => {
   return function (dispatch) {
@@ -203,32 +226,6 @@ export const postPatient = (form) => {
   };
 };
 
-//POST
-// export const postPatient = (form) => {
-//   return function (dispatch) {
-//     return fetch(`${baseURL}/patients`, {
-//       method: "POST",
-//       body: JSON.stringify(form),
-//       headers: { "Content-Type": "application/json" },
-//     })
-//       .then((res) =>
-//         res.ok
-//           ? res.json()
-//           : Promise.reject({
-//               err: true,
-//               status: res.status || "00",
-//               statusText: `Ya existe un usuario con el mail ${form.email}`,
-//             })
-//       )
-//       .then((data) => {
-//         dispatch({ type: "CONFIRM_ACTION", payload: data });
-//         dispatch({ type: "LOG_IN" });
-//         dispatch({ type: "ID_USER", payload: data.id });
-//       })
-//       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
-//   };
-// };
-
 //PUT PATIENT
 export const putPatient = (data) => {
   console.log("data actions", data);
@@ -256,12 +253,12 @@ export const putPatient = (data) => {
   };
 };
 
-export const logOut = () => ({ type: "LOG_OUT" });
+//export const logOut = () => ({ type: "LOG_OUT" });
 
-export const logIn = () => ({ type: "LOG_IN" });
+//export const logIn = () => ({ type: "LOG_IN" });
 
 //sirve??
-export const getByUserName = (userName) => {
+/*export const getByUserName = (userName) => {
   return function (dispatch) {
     fetch(`${baseURL}/patients/user?userName=${userName}`)
       .then((res) =>
@@ -286,7 +283,7 @@ export const getByUserName = (userName) => {
         dispatch({ type: "HANDLE_ERROR", payload: error });
       });
   };
-};
+};*/
 
 export const dateUser = (payload) => {
   console.log(payload, "payloaaaaaaaaad");

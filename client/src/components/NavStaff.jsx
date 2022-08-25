@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import SearchBar from "./SearchBar";
-import { getDoctors, filterDoctors, cleanError } from "../redux/actions";
+import {
+  getDoctors,
+  filterDoctors,
+  cleanError,
+  getPrepaidHealth,
+} from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import {
@@ -28,9 +33,11 @@ export default function NavStaff({ setInput, setPage }) {
   const [filterActive, setFilterActive] = useState(false);
   const msgError = useSelector((state) => state.msgError);
   console.log(msgError.type === "search");
+  const { prepaidHealth } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(filterDoctors(values));
+    dispatch(getPrepaidHealth());
   }, [dispatch, values]);
 
   function handleFilter(e) {
@@ -82,6 +89,7 @@ export default function NavStaff({ setInput, setPage }) {
       )}
       <Box display="inline-flex">
         <Select
+          cursor="pointer"
           m="1rem"
           bg={"teal.300"}
           color="teal.700"
@@ -108,14 +116,11 @@ export default function NavStaff({ setInput, setPage }) {
           onChange={(e) => handleFilter(e)}
           value={values.obrasocial}
           name="obrasocial"
+          cursor="pointer"
         >
           <option value="All">Prestaciones</option>
-          <option value="osde">Osde</option>
-          <option value="swiss medical">Swiss Medical</option>
-          <option value="galeno">Galeno</option>
-          <option value="medicus">Medicus</option>
-          <option value="parque salud">Parque Salud</option>
-          <option value="medife">Medife</option>
+          {prepaidHealth &&
+            prepaidHealth.map((e) => <option value={e.name}>{e.name}</option>)}
         </Select>
       </Box>
       {msgError.type === "filter" && (

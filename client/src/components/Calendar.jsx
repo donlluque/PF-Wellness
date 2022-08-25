@@ -1,29 +1,38 @@
-import { useState } from "react";
-import ReactDatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+//import { useState } from "react";
+//import ReactDatePicker from "react-datepicker";
+//import "react-datepicker/dist/react-datepicker.css";
+import React, { Fragment, useState } from "react";
+import { KeyboardDatePicker } from "@material-ui/pickers";
+
+import { Box, Center, Heading, Text } from "@chakra-ui/react";
 
 function Calendar() {
-  const [startDate, setStartDate] = useState(new Date());
-
-  let handleColor = (time) => {
-    return time.getHours() > 12 ? "text-success" : "text-error";
-  };
+  const [selectedDate, setDateChange] = useState(new Date());
 
   return (
     <>
-      <div w="100vw">
-        <ReactDatePicker
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          //dayClassName={(date) =>
-          // getDate(date) < Math.random() * 31 ? "random" : undefined
-          // }
-          showTimeSelect
-          isClearable
-          dateFormat="MMMM d, yyyy h:mm aa"
-          filterDate={(date) => date.getDay() !== 6 && date.getDay() !== 0}
+      <Center bgColor="teal.50" h="50vh">
+        <Heading
+          textAlign="center"
+          as="h1"
+          fontSize={{ base: "xl", sm: "3xl", md: "4xl", lg: "5xl" }}
+          m="1rem"
+        >
+          Seleccionar turno
+        </Heading>
+      </Center>
+      <Box>
+        <Text>1. Seleccionar fecha</Text>
+      </Box>
+      <Box>
+        <KeyboardDatePicker
+          value={selectedDate}
+          onChange={setDateChange}
+          disablePast
+          variant="static"
+          shouldDisableDay={6}
         />
-      </div>
+      </Box>
     </>
   );
 }

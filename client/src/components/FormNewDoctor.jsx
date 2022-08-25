@@ -24,11 +24,17 @@ import {
   Radio,
   RadioGroup,
   Stack,
+  Heading,
 } from "@chakra-ui/react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getPrepaidHealth, postDoctors } from "../redux/actions.js";
+import {
+  getDays,
+  getHours,
+  getPrepaidHealth,
+  postDoctors,
+} from "../redux/actions.js";
 import { validateForm } from "../hooks/validateForm.js";
 
 /*const doctor = {
@@ -80,22 +86,25 @@ const initialForm = {
   birthday: "",
   general_area: "",
   specialty: "",
-  days: [],
-  hours: {},
+  work_days: [],
+  hours_json: {},
   prepaid_health: [],
 };
 function FormNewDoctor() {
   const [form, setForm] = useState(initialForm);
   const [formHours, setFormHours] = useState({});
-  const [formHoursMorning, setFormHoursMorning] = useState({});
-  const [formHoursAfternoon, setFormHoursAfternoon] = useState({});
   const dispatch = useDispatch();
-  const { msgConfirm, prepaidHealth } = useSelector((state) => state);
+  const { msgConfirm, prepaidHealth, hoursWorking, days } = useSelector(
+    (state) => state
+  );
+
   const [errors, setErrors] = useState({});
   const date = new Date().toLocaleDateString().split("/").reverse();
 
   useEffect(() => {
     dispatch(getPrepaidHealth());
+    dispatch(getHours());
+    dispatch(getDays());
   }, [dispatch]);
 
   //Define formato fecha actual calendario
@@ -113,6 +122,7 @@ function FormNewDoctor() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    form.hours_json = formHours;
     //setErrors(validateForm(form));
     dispatch(postDoctors(form));
     setOverlay(<OverlayOne />);
@@ -138,10 +148,7 @@ function FormNewDoctor() {
       });
     }
   };
-
   const handleChangeFormHoursTotalDay = (e) => {
-    console.log(e.target.name, e.target.value);
-
     setFormHours({
       ...formHours,
       totalDay: { ...formHours.totalDay, [e.target.name]: e.target.value },
@@ -188,7 +195,6 @@ function FormNewDoctor() {
   };
 
   const handleChangeList = (e) => {
-    console.log(e.target.name);
     let search = form[e.target.name].find(
       (element) => element === e.target.value
     );
@@ -466,26 +472,27 @@ function FormNewDoctor() {
                 ))
               : []}
             <FormControl>
-              <FormLabel m="1rem" htmlFor="hours">
+              <Heading textAlign="center" m="1rem" as="h6" size="lg">
                 Días y horarios de atención
-              </FormLabel>
+              </Heading>
               <FormLabel m="1rem" htmlFor="days">
                 Días de atención
               </FormLabel>
               <Select
-                value={form.days}
-                name="days"
+                value={form.work_days}
+                name="work_days"
                 onChange={(e) => handleChangeList(e)}
               >
                 <option>Seleccionar una opción</option>
-                <option value="Lunes">Lunes</option>
-                <option value="Martes">Martes</option>
-                <option value="Miércoles">Miércoles</option>
-                <option value="Jueves">Jueves</option>
-                <option value="Viernes">Viernes</option>
+                {days &&
+                  days.map((d) => (
+                    <option key={d.id} value={d.day}>
+                      {d.day}
+                    </option>
+                  ))}
               </Select>
-              {form.days.length
-                ? form.days.map((e) => (
+              {form.work_days.length
+                ? form.work_days.map((e) => (
                     <List>
                       <ListItem key={e}>
                         {e}
@@ -494,44 +501,55 @@ function FormNewDoctor() {
                     </List>
                   ))
                 : []}
+              <FormLabel m="1rem" htmlFor="hours">
+                Rango horario
+              </FormLabel>
               <RadioGroup
                 name="prueba"
                 onChange={(value) => handleChangeFormHours(value)}
               >
                 <Stack direction="row">
                   <Radio name="totalDay" value="totalDay">
-                    Día completo
+                    Horario Corrido
                   </Radio>
                   <Radio name="notTotalDay" value="notTotalDay">
-                    Día cortado
+                    Horario cortado
                   </Radio>
                 </Stack>
               </RadioGroup>
               {formHours.totalDay ? (
                 <FormControl>
                   <FormLabel m="1rem" htmlFor="start">
-                    Hora Inicio
+                    Inicio
                   </FormLabel>
                   <Select
                     name="start"
                     onChange={(e) => handleChangeFormHoursTotalDay(e)}
                   >
-                    <option value={1}>8:00</option>
-                    <option value={2}>9:00</option>
-                    <option value={3}>10:00</option>
-                    <option value={4}>10:00</option>
+                    <option>Seleccionar horario</option>
+                    {hoursWorking &&
+                      hoursWorking.map((h) => (
+                        <option key={h.id} value={h.id}>
+                          {h.hour}
+                        </option>
+                      ))}
                   </Select>
                   <FormLabel m="1rem" htmlFor="end">
-                    Hora Fin
+                    Fin
                   </FormLabel>
                   <Select
                     name="end"
                     onChange={(e) => handleChangeFormHoursTotalDay(e)}
                   >
-                    <option value={5}>11:00</option>
-                    <option value={6}>12:00</option>
-                    <option value={7}>13:00</option>
-                    <option value={8}>14:00</option>
+                    <option>Seleccionar horario</option>
+                    {hoursWorking &&
+                      hoursWorking
+                        .filter((h) => h.id > formHours.totalDay.start)
+                        .map((h) => (
+                          <option value={h.id} key={h.id}>
+                            {h.hour}
+                          </option>
+                        ))}
                   </Select>
                 </FormControl>
               ) : (
@@ -540,58 +558,80 @@ function FormNewDoctor() {
               {formHours.notTotalDay ? (
                 <FormControl>
                   <FormLabel m="1rem" htmlFor="">
-                    Horario mañana
+                    Rango horario 1
                   </FormLabel>
                   <FormLabel m="1rem" htmlFor="start">
-                    Hora Inicio
+                    Inicio
                   </FormLabel>
                   <Select
                     name="start"
                     onChange={(e) => handleChangeFormHoursMorning(e)}
                   >
-                    <option value={1}>8:00</option>
-                    <option value={2}>9:00</option>
-                    <option value={3}>10:00</option>
-                    <option value={4}>10:00</option>
+                    <option>Seleccionar horario</option>
+                    {hoursWorking &&
+                      hoursWorking.map((h) => (
+                        <option value={h.id} key={h.id}>
+                          {h.hour}
+                        </option>
+                      ))}
                   </Select>
                   <FormLabel m="1rem" htmlFor="end">
-                    Hora Fin
+                    Fin
                   </FormLabel>
                   <Select
                     name="end"
                     onChange={(e) => handleChangeFormHoursMorning(e)}
                   >
-                    <option value={5}>11:00</option>
-                    <option value={6}>12:00</option>
-                    <option value={7}>13:00</option>
-                    <option value={8}>14:00</option>
+                    <option>Seleccionar horario</option>
+                    {hoursWorking &&
+                      hoursWorking
+                        .filter(
+                          (h) => h.id > formHours.notTotalDay.morning.start
+                        )
+                        .map((h) => (
+                          <option value={h.id} key={h.id}>
+                            {h.hour}
+                          </option>
+                        ))}
                   </Select>
                   <FormLabel m="1rem" htmlFor="hours">
-                    Horario tarde
+                    Rango horario 2
                   </FormLabel>
                   <FormLabel m="1rem" htmlFor="start">
-                    Hora Inicio
+                    Inicio
                   </FormLabel>
                   <Select
                     name="start"
                     onChange={(e) => handleChangeFormHoursAfternoon(e)}
                   >
-                    <option value={1}>8:00</option>
-                    <option value={2}>9:00</option>
-                    <option value={3}>10:00</option>
-                    <option value={4}>10:00</option>
+                    <option>Seleccionar horario</option>
+                    {hoursWorking &&
+                      hoursWorking
+                        .filter((h) => h.id > formHours.notTotalDay.morning.end)
+                        .map((h) => (
+                          <option value={h.id} key={h.id}>
+                            {h.hour}
+                          </option>
+                        ))}
                   </Select>
                   <FormLabel m="1rem" htmlFor="end">
-                    Hora Fin
+                    Fin
                   </FormLabel>
                   <Select
                     name="end"
                     onChange={(e) => handleChangeFormHoursAfternoon(e)}
                   >
-                    <option value={5}>11:00</option>
-                    <option value={6}>12:00</option>
-                    <option value={7}>13:00</option>
-                    <option value={8}>14:00</option>
+                    <option>Seleccionar horario</option>
+                    {hoursWorking &&
+                      hoursWorking
+                        .filter(
+                          (h) => h.id > formHours.notTotalDay.afternoon.start
+                        )
+                        .map((h) => (
+                          <option value={h.id} key={h.id}>
+                            {h.hour}
+                          </option>
+                        ))}
                   </Select>
                 </FormControl>
               ) : (
@@ -605,7 +645,6 @@ function FormNewDoctor() {
               type="submit"
               colorScheme="teal"
               variant="solid"
-              isDisabled={errors.name || errors.last_name || errors.email}
             >
               Crear doctor
             </Button>

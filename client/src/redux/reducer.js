@@ -9,6 +9,8 @@ const initialState = {
   idUserLogIn: "",
 
   prepaidHealth: [],
+  hoursWorking: [],
+  days: [],
 
   user: {},
 };
@@ -73,6 +75,19 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         idUserLogIn: action.payload,
+      };
+    }
+
+    case "GET_HOURS": {
+      return {
+        ...state,
+        hoursWorking: action.payload,
+      };
+    }
+    case "GET_DAYS": {
+      return {
+        ...state,
+        days: action.payload,
       };
     }
 

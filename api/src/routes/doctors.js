@@ -24,26 +24,6 @@ router.get("/", async (req, res, next) => {
     ],
   });
 
-<<<<<<< HEAD
-    if (!doctorsDb.length) {
-      await Doctor.bulkCreate(allDoctors);
-    }
-    if (name) {
-      const nombre = await allDoctors.filter((e) =>
-        e.name.toLowerCase().includes(name.toLowerCase())
-      );
-
-      nombre.length
-        ? res.status(200).send(nombre)
-        : res.status(400).send("Not exist");
-    } else {
-      res.status(200).send(allDoctors);
-    }
-  } catch (error) {
-    res
-      .status(404)
-      .send("Error en el catch de search Name and Last name", error);
-=======
   if (name) {
     const nombre = await doctorsDb.filter((e) =>
       e.name.toLowerCase().includes(name.toLowerCase())
@@ -55,7 +35,6 @@ router.get("/", async (req, res, next) => {
     res.status(400).send("No existe info en la Base de datos");
   } else {
     res.send(doctorsDb);
->>>>>>> 4dd15948ad51617c394d81d5c773e30385277f65
   }
 });
 
@@ -63,19 +42,6 @@ router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
 
   try {
-<<<<<<< HEAD
-    // const doctor = await Doctor.findOne({
-    //   where: { id },
-    //   include: {
-    //     model: Prepaid_health,
-    //     throught: {
-    //       attributes: [],
-    //     },
-    //   },
-    // });
-    const doctors = await getAllDoctor();
-    const doctor = doctors.find((e) => e.id == id);
-=======
     const doctor = await Doctor.findOne({
       where: { id },
       include: [
@@ -93,7 +59,6 @@ router.get("/:id", async (req, res, next) => {
         },
       ],
     });
->>>>>>> 4dd15948ad51617c394d81d5c773e30385277f65
 
     if (id) {
       res.status(200).send(doctor);
@@ -110,7 +75,7 @@ router.post("/", async (req, res, next) => {
     name,
     medic_id,
     general_area,
-    especialidades_id,
+    specialty,
     phone,
     email,
     birthday,
@@ -132,7 +97,7 @@ router.post("/", async (req, res, next) => {
       name,
       medic_id,
       general_area,
-      especialidades_id,
+      specialty,
       phone,
       email,
       birthday,

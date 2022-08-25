@@ -38,7 +38,6 @@ export function cleanDoctor() {
     type: "CLEAN_DOCTOR",
   };
 }
-
 export function filterDoctors(filter) {
   const { especialidad, obrasocial } = filter;
   return function (dispatch) {
@@ -89,6 +88,7 @@ export function searchDoctorByName(input) {
 }
 
 export const postDoctors = (form) => {
+  console.log(form);
   return function (dispatch) {
     return fetch(`${baseURL}/doctors`, {
       method: "POST",
@@ -128,6 +128,38 @@ export const getPrepaidHealth = () => {
   };
 };
 
+//HOURS
+export const getHours = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/hours_working`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_HOURS",
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+//DAYS
+export const getDays = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/work_days`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_DAYS",
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 //PATIENT
 export const getOnePatient = (id) => {
   return function (dispatch) {

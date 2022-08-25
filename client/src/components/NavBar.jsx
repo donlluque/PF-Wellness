@@ -54,10 +54,7 @@ function NavBar() {
     history.push("/");
   };
   //LOGIN NUEVO
-<<<<<<< HEAD
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
-  console.log(isAuthenticated);
-=======
+
   console.log(user, "user de NavBAr");
 
   useEffect(() => {
@@ -73,7 +70,6 @@ function NavBar() {
       }
     }
   }, [user]);
->>>>>>> 4dd15948ad51617c394d81d5c773e30385277f65
 
   return (
     <Box position="absolute" w="100%">

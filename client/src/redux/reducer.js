@@ -10,6 +10,7 @@ const initialState = {
   days: [],
   user: {},
   turns: [],
+  payments: {}
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -110,7 +111,12 @@ export default function rootReducer(state = initialState, action) {
         msgConfirm: {},
       };
     }
-
+    case "MAKE_PAYMENT": {
+      return {
+       ...state,
+       payments: action.payload
+      } 
+     };
     case "CHECK_USER": {
       console.log(action.payload, "reducer check_user");
       return {

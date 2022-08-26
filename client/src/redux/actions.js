@@ -317,6 +317,20 @@ export const dateUser = (payload) => {
   };
 };
 
+export const makePayment = (payload) => {
+ 
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(`${baseURL}/pagos`, payload);
+      return dispatch({
+        type: "MAKE_PAYMENT",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 // export const dateUser = (payload) => {
 //   return function (dispatch) {
 //     return fetch(`${baseURL}/checkuser`, {

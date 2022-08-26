@@ -41,6 +41,7 @@ function Calendar() {
   const hours = doctorDetail.hours_json;
   const totalHours = hoursWorking;
   const totalTurns = turns;
+  const dias = doctorDetail.work_days?.map((e) => e.id);
 
   useEffect(() => {
     dispatch(getDetailDoctors(idDoctor));
@@ -50,8 +51,8 @@ function Calendar() {
   }, [dispatch]);
 
   //const daySelect = selectedDate.toLocaleDateString();
-  //const daysNumber = doctorDetail.work_days.map((e) => e.id);
 
+  console.log("diaq", dias);
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postTurn(form));
@@ -159,13 +160,19 @@ function Calendar() {
               autoOk
               variant="static"
               openTo="date"
-              shouldDisableDate={(date) =>
-                date.getDay() !== 1 &&
+              shouldDisableDate={(date) => {
+                for (let i = 0; i < dias?.length; i++) {
+                  if (date.getDay() !== dias[i]) {
+                    return true;
+                  }
+                }
+              }}
+
+              /*date.getDay() !== 1 &&
                 date.getDay() !== 2 &&
                 date.getDay() !== 3 &&
                 date.getDay() !== 4 &&
-                date.getDay() !== 5
-              }
+                date.getDay() !== 5*/
             />
           </Box>
         </Box>
@@ -216,23 +223,3 @@ function Calendar() {
 }
 
 export default Calendar;
-
-/*arrayTurns.forEach((t) =>
-  hours.forEach((h) => {
-    if (h.id === t) {
-      array.push(h);
-    }
-  })
-);*/
-
-/*const prueba = (hours, arrayTurns) => {
-  let array = [];
-  for (let j = 0; j < hours.length; j++) {
-    for (let i = 0; i < arrayTurns.length; i++) {
-      if (hours[j].id === arrayTurns[i]) {
-        array.push(hours[j]);
-      }
-    }
-  }
-  return array;
-};*/

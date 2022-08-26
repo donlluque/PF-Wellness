@@ -26,5 +26,4 @@ router.use("/dates", dates);
 router.use("/checkuser", checkUser);
 router.use("/pagos", pagos_unicos);
 router.use("/asociados", pagos_asociados);
-
 module.exports = router;

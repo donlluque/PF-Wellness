@@ -32,7 +32,7 @@ export default function NavStaff({ setInput, setPage }) {
   });
   const [filterActive, setFilterActive] = useState(false);
   const msgError = useSelector((state) => state.msgError);
-  console.log(msgError.type === "search");
+
   const { prepaidHealth } = useSelector((state) => state);
 
   useEffect(() => {
@@ -43,8 +43,10 @@ export default function NavStaff({ setInput, setPage }) {
   function handleFilter(e) {
     e.preventDefault();
     setValues({ ...values, [e.target.name]: e.target.value });
-    setPage(1);
-    setInput(1);
+    if (setPage && setInput) {
+      setPage(1);
+      setInput(1);
+    }
     setFilterActive(true);
     //MENSAJE
     setOverlay(<OverlayOne />);
@@ -72,14 +74,14 @@ export default function NavStaff({ setInput, setPage }) {
   const [overlay, setOverlay] = useState(<OverlayOne />);
 
   return (
-    <Box>
+    <Box w="100%">
       <Box
-        w="100vw"
+        //w={{ sm: "", md: "", lg: "100vw" }}
         display="flex"
         flexDirection="column"
         alignItems={"center"}
       >
-        <Box w={{ base: "80%", lg: "50%" }}>
+        <Box w={{ base: "70%", sm: "70%", lg: "50%" }}>
           <SearchBar
             setFilterActive={setFilterActive}
             setInput={setInput}
@@ -89,7 +91,7 @@ export default function NavStaff({ setInput, setPage }) {
         </Box>
 
         <Box
-          w={{ sm: "70%", lg: "50%" }}
+          w={{ base: "70%", sm: "70%", lg: "50%" }}
           display="flex"
           flexDirection={{ base: "column", sm: "column", md: "row", lg: "row" }}
           justifyContent="space-evenly"
@@ -97,7 +99,6 @@ export default function NavStaff({ setInput, setPage }) {
         >
           <Select
             m="1rem"
-            ml={{ sm: 0 }}
             cursor="pointer"
             bg={"teal.200"}
             color="teal.700"
@@ -119,7 +120,6 @@ export default function NavStaff({ setInput, setPage }) {
 
           <Select
             m="1rem"
-            ml={{ sm: 0 }}
             bg={"teal.200"}
             color="teal.700"
             onChange={(e) => handleFilter(e)}

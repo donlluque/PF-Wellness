@@ -7,33 +7,33 @@ export const createAllTurns = () => {
   return availableTurns;
 };
 
-const turns = [
-  { idTurno: 1, fecha: "08/09/2022", idMedico: 10, idPatient: 1, idHour: "10" },
-];
-
-export const validateRange = (hours) => {
-  let totalTurns = createAllTurns();
+export const validateRange = (hours, totalHours) => {
+  let totalTurns = totalHours;
+  console.log("soy 0", totalTurns);
   let availableTurns = [];
   if (hours.totalDay) {
+    console.log("soy hours.totalDay", hours.totalDay);
     availableTurns = totalTurns.filter(
       (n) =>
-        n >= parseInt(hours.totalDay.start) && n < parseInt(hours.totalDay.end)
+        n.id >= parseInt(hours.totalDay.start) &&
+        n.id < parseInt(hours.totalDay.end)
     );
+    console.log("soy 1", availableTurns);
   } else if (hours.notTotalDay) {
     let morningTurns = [];
     let afternoonTurns = [];
     if (hours.notTotalDay.morning) {
       morningTurns = totalTurns.filter(
         (n) =>
-          n >= parseInt(hours.notTotalDay.morning.start) &&
-          n < parseInt(hours.notTotalDay.morning.end)
+          n.id >= parseInt(hours.notTotalDay.morning.start) &&
+          n.id < parseInt(hours.notTotalDay.morning.end)
       );
     }
     if (hours.notTotalDay.afternoon) {
       afternoonTurns = totalTurns.filter(
         (n) =>
-          n >= parseInt(hours.notTotalDay.afternoon.start) &&
-          n < parseInt(hours.notTotalDay.afternoon.end)
+          n.id >= parseInt(hours.notTotalDay.afternoon.start) &&
+          n.id < parseInt(hours.notTotalDay.afternoon.end)
       );
     }
     availableTurns = morningTurns.concat(afternoonTurns);
@@ -41,14 +41,15 @@ export const validateRange = (hours) => {
   return availableTurns;
 };
 
-export const searchTurnByDate = (hours, turns, selectedDate) => {
-  let turnsDate = turns.filter((turn) => turn.fecha === selectedDate); /// [{id: 1, fecha: ...}.... {..}, {}]
+export const searchTurnByDate = (turns, date) => {
+  let turnsDate = turns.filter((turn) => turn.date === date); /// [{id: 1, fecha: ...}.... {..}, {}]
   return turnsDate;
 };
 
-export const searchTurnsAvailable = (hours, turns, selectedDate) => {
-  let rangeTurns = validateRange(hours);
-  let dateTurns = searchTurnByDate(hours, turns, selectedDate);
-  let availableTurns = rangeTurns.filter((h) => h !== dateTurns.idHora);
+export const searchTurnsAvailable = (hours, totalHours, totalTurns, date) => {
+  let rangeTurns = validateRange(hours, totalHours);
+  let dateTurns = searchTurnByDate(totalTurns, date); //[{},{}] dateTurns.map(e => e.hours_working[0].hour))
+
+  let availableTurns = rangeTurns.filter((h) => h.id !== dateTurns.idHora);
   return availableTurns;
 };

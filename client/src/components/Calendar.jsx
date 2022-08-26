@@ -18,21 +18,16 @@ import {
   getDetailDoctors,
   getHours,
   getTurns,
-  postAppointment,
+  postTurn,
 } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { FcCheckmark } from "react-icons/fc";
-import { searchTurnByDate, searchTurnsAvailable } from "./validateTurn";
-
-let horasPrueba = [
-  { id: 1, hour: 8 },
-  { id: 2, hour: 9 },
-  { id: 3, hour: 10 },
-  { id: 4, hour: 11 },
-];
-
-let turnoPrueba = [1, 3, 4];
+import {
+  searchTurnByDate,
+  searchTurnsAvailable,
+  validateRange,
+} from "./validateTurn";
 
 function Calendar() {
   const history = useHistory();
@@ -44,21 +39,22 @@ function Calendar() {
   const { idDoctor } = useParams();
   const { doctorDetail, hoursWorking, turns } = useSelector((state) => state);
   const hours = doctorDetail.hours_json;
-  console.log(idDoctor, doctorDetail);
+  const totalHours = hoursWorking;
+  const totalTurns = turns;
 
   useEffect(() => {
     dispatch(getDetailDoctors(idDoctor));
     dispatch(getHours());
     setForm({ ...form, idDoctor: idDoctor });
-    //dispatch(getTurns());
+    dispatch(getTurns());
   }, [dispatch]);
 
   //const daySelect = selectedDate.toLocaleDateString();
   //const daysNumber = doctorDetail.work_days.map((e) => e.id);
-  let array = [];
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(postAppointment(form));
+    dispatch(postTurn(form));
   };
 
   const handleChangeCalendar = (date) => {
@@ -66,7 +62,7 @@ function Calendar() {
     setDateChange(date);
     setForm({ ...form, date: date.toLocaleDateString() });
     //validaciones
-    //setArrayTurns(searchTurnsAvailable(hours, turns, date)); //[] --> renderizar
+    setArrayTurns(searchTurnsAvailable(hours, totalHours, totalTurns, date));
   };
 
   const handleClick = (e) => {
@@ -185,7 +181,7 @@ function Calendar() {
           )}
           {form.date && (
             <Wrap justify={"center"} mt={"1rem"}>
-              {horasPrueba &&
+              {/*horasPrueba &&
                 turnoPrueba &&
                 turnoPrueba.forEach((t) =>
                   horasPrueba.forEach((h) => {
@@ -193,8 +189,8 @@ function Calendar() {
                       array.push(h);
                     }
                   })
-                )}
-              {array.map((h) => (
+                )*/}
+              {arrayTurns.map((h) => (
                 <WrapItem>
                   <Button
                     onClick={(e) => handleClick(e)}
@@ -212,7 +208,7 @@ function Calendar() {
           )}
         </Box>
       </Box>
-      <Button m="1rem" colorScheme={"teal"} onSubmit={(e) => handleSubmit(e)}>
+      <Button m="1rem" colorScheme={"teal"} onClick={(e) => handleSubmit(e)}>
         Confirmar Turno
       </Button>
     </>

@@ -6,7 +6,7 @@ const { getAllPatient } = require("../controllers/index.js");
 // PRUEBA DE FUNCIONAMIENTO DE RUTA
 router.get("/", async (req, res, next) => {
   const { name, last_name } = req.query;
-  try {
+  // try {
     const patientDb = await Patient.findAll({
       include: {
         model: Prepaid_health,
@@ -45,9 +45,9 @@ router.get("/", async (req, res, next) => {
     } else {
       res.status(200).send(patientDb);
     }
-  } catch (error) {
-    res.status(404).send("Error en el catch getPetients", error);
-  }
+  // } catch (error) {
+  //   res.status(404).send("Error en el catch getPetients", error);
+  // }
 });
 
 router.get("/user", async (req, res, next) => {

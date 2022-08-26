@@ -19,7 +19,7 @@ function Prepaid() {
   return (
     <>
       <Center
-        h="100vh"
+        h={{ base: "125vh", sm: "125vh", md: "100vh", lg: "100vh" }}
         top={0}
         bgRepeat="no-repeat"
         bgSize="cover"
@@ -31,7 +31,13 @@ function Prepaid() {
         mb={2}
         flexDirection="column"
       >
-        <Heading textAlign="center" as="h1" size="4xl" m="1rem">
+        <Heading
+          textAlign="center"
+          as="h1"
+          size="4xl"
+          m="1rem"
+          mt={{ base: "6rem", sm: "6rem", md: "4rem", lg: "1rem" }}
+        >
           Prestaciones
         </Heading>
         <Box>

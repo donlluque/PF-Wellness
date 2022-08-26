@@ -1,27 +1,37 @@
 const { Router } = require("express");
 const router = Router();
 const {
-  Dates,
-  Doctor,
+  Dates1,
+  turno,
   Patient,
+  Doctor,
   Prepaid_health,
   Hours_working,
+  Work_days,
 } = require("../db.js");
 
 router.post("/", async (req, res, next) => {
   const { date, idHour, idMedico } = req.body;
   try {
     const doctorId = idMedico; //dato enviado desde el front
-    const patientId = "7"; //dato enviado desde el front
+    const patientId = "9"; //dato enviado desde el front
 
     const doctor = await Doctor.findOne({
       where: {
         id: doctorId,
       },
     });
+
+    // console.log("doctor")
     const patient = await Patient.findOne({
       where: {
         id: patientId,
+      },
+      include: {
+        model: Prepaid_health,
+        throught: {
+          attributes: [],
+        },
       },
     });
 
@@ -29,42 +39,19 @@ router.post("/", async (req, res, next) => {
       where: {
         id: idHour,
       },
-      attributes: ["hour"],
     });
 
     console.log(hoursWorking);
-    var dates = [];
 
-    dates = await doctor.addPatient(patient);
+    const turno = await Dates1.create({
+      date,
+    });
 
-    if (!dates) {
-      await doctor.removePatient(patient);
-      dateUpdate = await doctor.addPatient(patient);
-      nuevoUpdate = await Dates.findOne({
-        where: {
-          id: dateUpdate[0].dataValues.id,
-        },
-      });
-      nuevoUpdate.update({
-        hora_inicial: hoursWorking,
-        date,
-      });
+    await turno.addDoctor(doctor);
+    await turno.addPatient(patient);
+    await turno.addHours_working(hoursWorking);
 
-      res.send(dateUpdate);
-    } else {
-      dateUpdate = await Dates.findOne({
-        where: {
-          id: dates[0].dataValues.id,
-        },
-      });
-
-      dateUpdate.update({
-        hora_inicial: hoursWorking,
-        date,
-      });
-
-      res.send(dateUpdate);
-    }
+    res.send(doctor);
   } catch (error) {
     next(error);
   }
@@ -72,7 +59,38 @@ router.post("/", async (req, res, next) => {
 
 router.get("/", async (req, res, next) => {
   try {
-    const dates = await Dates.findAll();
+    const dates = await Dates1.findAll({
+      include: [
+        {
+          model: Doctor,
+          include: [
+            {
+              model: Prepaid_health,
+            },
+            {
+              model: Work_days,
+            },
+          ],
+          throught: {
+            attributes: [],
+          },
+        },
+        {
+          model: Hours_working,
+
+          attributes: { exclude: ["id"] },
+        },
+        {
+          model: Patient,
+          include: {
+            model: Prepaid_health,
+          },
+          throught: {
+            attributes: [],
+          },
+        },
+      ],
+    });
 
     res.send(dates);
   } catch (error) {

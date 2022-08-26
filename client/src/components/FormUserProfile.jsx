@@ -28,58 +28,77 @@ import { useParams } from "react-router-dom";
 import { getOnePatient } from "../redux/actions";
 import { validateForm } from "../hooks/validateForm.js";
 import UploadImages from "./UploadImages";
+import { intlFormat } from "date-fns/esm";
 
 function FormUserProfile() {
-  const [form, setForm] = useState({});
+  const { id } = useParams();
+
   const [putActive, setPutActive] = useState(false);
   const dispatch = useDispatch();
-  const { id } = useParams();
+
+  console.log(id);
   const { patientDetail, msgConfirm } = useSelector((state) => state);
   const { name, last_name, email, picture } = patientDetail;
   const [errors, setErrors] = useState({});
   const date = new Date().toLocaleDateString().split("/").reverse();
   const [aux, setAux] = useState({ name, last_name, email, picture });
   const user = useSelector((state) => state.user);
+  console.log("user", user);
 
-  console.log(user, "soy user ");
+  const [form, setForm] = useState({
+    id,
+    name: "",
+    last_name: "",
+    email: "",
+    birthday: "",
+    document: "",
+    phone: "",
+    nationality: "",
+    direction: "",
+    prepaid_health: "",
+  });
 
-  console.log(id, "soy el id de params");
-  console.log("HOLAAAAAAAA");
+  console.log("form", form);
+
+  var perfil = JSON.parse(localStorage.getItem("user"));
+  console.log("perfil", perfil);
+  console.log(form, "soy user ");
   const styleDate = (date) => {
     if (date[1].length === 1) {
       date[1] = "0" + date[1];
     }
     return date.join("-");
   };
+
   console.log("renderizado", name, last_name, email, picture);
   useEffect(() => {
-    console.log(patientDetail, "patientDetail");
-    if (Object.keys(user).length) {
-      setForm({
-        ...form,
-        name: user.name,
-        last_name: user.last_name,
-        email: user.email,
-        user_name: user.nickname,
-        birthday: user.birthday,
-        direction: user.direction,
-        document: user.document,
-        nationality: user.nationality,
-        phone: user.phone,
-        picture: user.picture,
-        prepaid_health: user.prepaid_health,
-        id: user.id,
-      });
-    } else {
-      setForm({ ...form, name, last_name, email, id });
-    }
+    // if (Object.keys(user).length) {
+    //   setForm({
+    //     ...form,
+    //     name: user.name,
+    //     last_name: user.last_name,
+    //     email: user.email,
+    //     user_name: user.nickname,
+    //     birthday: user.birthday,
+    //     direction: user.direction,
+    //     document: user.document,
+    //     nationality: user.nationality,
+    //     phone: user.phone,
+    //     picture: user.picture,
+    //     prepaid_health: user.prepaid_health,
+    //     id: user.id,
+    //   });
+    //   // const este = localStorage.setItem("prueba", JSON.stringify(user));
+    // } else {
+    //   setForm({ ...form, name, last_name, email, id });
+    // }
     dispatch(getOnePatient(id));
-    setAux(!aux);
+    // setAux(!aux);
   }, [dispatch]);
 
-  useEffect(() => {
-    return setAux(!aux);
-  }, dispatch);
+  // useEffect(() => {
+  //   return setAux(!aux);
+  // }, dispatch);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -88,15 +107,17 @@ function FormUserProfile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //setErrors(validateForm(form));
-    if (errors) {
-      return alert("Completa los campos");
-    } else {
-      dispatch(putPatient(form));
-      setOverlay(<OverlayOne />);
-      onOpen();
-      setPutActive(false);
-    }
+    setErrors(validateForm(form));
+    // if (errors) {
+    //   return alert("Completa los campos");
+    // } else {
+    // localStorage.removeItem("user");
+    localStorage.setItem("user", JSON.stringify(form));
+    dispatch(putPatient(form));
+    setOverlay(<OverlayOne />);
+    onOpen();
+    setPutActive(false);
+    // }
   };
 
   const handlePutActive = () => {
@@ -140,7 +161,7 @@ function FormUserProfile() {
           )}
         </Box>
         <Box m="1rem" w="50rem">
-          <form>
+          <FormControl>
             <FormControl isDisabled={!putActive}>
               <UploadImages />
             </FormControl>
@@ -151,9 +172,10 @@ function FormUserProfile() {
               <Input
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
-                value={form.name}
                 name="name"
-                placeholder="Escribe nombre completo"
+                placeholder={
+                  !perfil.name ? "Escribe nombre completo" : perfil.name
+                }
               />
               {/* {errors.name && (
                 <FormErrorMessage>{errors.name}</FormErrorMessage>
@@ -164,14 +186,14 @@ function FormUserProfile() {
                 Apellido
               </FormLabel>
               <Input
-                value={form.last_name}
                 onChange={(e) => handleChange(e)}
                 name="last_name"
-                placeholder="Escribe apellido"
+                placeholder={
+                  !perfil.last_name
+                    ? "Escribe nombre completo"
+                    : perfil.last_name
+                }
               />
-              {/* {errors.last_name && (
-                <FormErrorMessage>{errors.last_name}</FormErrorMessage>
-              )} */}
             </FormControl>
             <FormControl isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="email">
@@ -179,26 +201,25 @@ function FormUserProfile() {
               </FormLabel>
               <Input
                 disabled
-                value={form.email}
+                value={perfil.email}
                 onChange={(e) => handleChange(e)}
                 type="email"
-                placeholder="Dirección de email"
                 name="email"
               />
-              {/* {errors.email && (
-                <FormErrorMessage>{errors.email}</FormErrorMessage>
-              )} */}
             </FormControl>
             <FormControl isDisabled={!putActive} isInvalid={errors.birthday}>
               <FormLabel m="1rem" htmlFor="birthday">
                 Fecha de nacimiento
               </FormLabel>
               <Input
-                value={form.birthday}
+                value={perfil.birthday}
                 onChange={(e) => handleChange(e)}
                 type="date"
                 max={styleDate(date)}
                 name="birthday"
+                // placeholder={
+                //   !perfil.birthday ? "Escribe nombre completo" : perfil.birthday
+                // }
               />
             </FormControl>
             <FormControl isDisabled={!putActive} isInvalid={errors.document}>
@@ -208,11 +229,13 @@ function FormUserProfile() {
               <InputGroup>
                 <InputLeftAddon children="DNI" />
                 <Input
-                  value={form.document}
+                  // value={perfil.document}
                   onChange={(e) => handleChange(e)}
                   type="number"
                   name="document"
-                  placeholder="Nro de documento"
+                  placeholder={
+                    !perfil.document ? "Nro de documento" : perfil.document
+                  }
                 />
               </InputGroup>
             </FormControl>
@@ -222,11 +245,11 @@ function FormUserProfile() {
               </FormLabel>
 
               <Input
-                value={form.phone}
+                // value={perfil.phone}
                 onChange={(e) => handleChange(e)}
                 type="tel"
                 name="phone"
-                placeholder="Nro de telefono"
+                placeholder={!perfil.phone ? "Nro de telefono" : perfil.phone}
               />
             </FormControl>
             <FormControl isDisabled={!putActive} isInvalid={errors.nationality}>
@@ -234,10 +257,12 @@ function FormUserProfile() {
                 Nacionalidad
               </FormLabel>
               <Input
-                value={form.nationality}
+                // value={perfil.nationality}
                 onChange={(e) => handleChange(e)}
                 name="nationality"
-                placeholder="Nacionalidad"
+                placeholder={
+                  !perfil.nationality ? "Nacionalidad" : perfil.nationality
+                }
               />
             </FormControl>
             <FormControl isDisabled={!putActive} isInvalid={errors.direction}>
@@ -246,10 +271,12 @@ function FormUserProfile() {
               </FormLabel>
 
               <Input
-                value={form.direction}
+                // value={perfil.direction}
                 onChange={(e) => handleChange(e)}
                 name="direction"
-                placeholder="Calle, N°, depto"
+                placeholder={
+                  !perfil.direction ? "Calle, N°, depto" : perfil.direction
+                }
               />
             </FormControl>
             <FormControl isDisabled={!putActive}>
@@ -257,21 +284,21 @@ function FormUserProfile() {
                 Obra social
               </FormLabel>
               <Select
-                value={form.prepaid_health}
+                // value={perfil.prepaid_health}
                 onChange={(e) => handleChange(e)}
                 name="prepaid_health"
               >
                 <option>Seleccionar una opción</option>
                 <option value="false">Ninguna</option>
-                <option value="galeno">Galeno</option>
-                <option value="medicus">Medicus</option>
-                <option value="medife">Medife</option>
-                <option value="osde">Osde</option>
-                <option value="parque Salud">Parque Salud</option>
-                <option value="swiss Medical">Swiss Medical</option>
+                <option value="Galeno">Galeno</option>
+                <option value="Medicus">Medicus</option>
+                <option value="Medife">Medife</option>
+                <option value="Osde">Osde</option>
+                <option value="Parque Salud">Parque Salud</option>
+                <option value="Swiss Medical">Swiss Medical</option>
               </Select>
             </FormControl>
-            {/* isDisabled={errors.name || errors.last_name || errors.email} */}
+
             <Button
               mt="1rem"
               onClick={(e) => handleSubmit(e)}
@@ -281,7 +308,7 @@ function FormUserProfile() {
             >
               Guardar
             </Button>
-          </form>
+          </FormControl>
         </Box>
 
         {

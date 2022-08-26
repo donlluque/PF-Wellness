@@ -44,6 +44,7 @@ function NavBar() {
       if (Object.keys(user).length) {
         // console.log(user, "soyu user de NavBar");
         dispatch(dateUser(user));
+        // localStorage.setItem("user", JSON.stringify(user));
       }
     }
   }, [user]);
@@ -76,7 +77,7 @@ function NavBar() {
         <Spacer />
         <Box>
           <Stack
-            spacing={4}
+            spacing={{ base: 0, sm: 0, md: 4 }}
             direction={{ base: "column", sm: "column", md: "row" }}
             align={{ sm: "center", md: "row" }}
           >
@@ -110,6 +111,7 @@ function NavBar() {
 
         <Spacer />
         <ButtonGroup
+          mt={{ base: "1rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "0" }}
           display="flex"
           flexDirection={{
             base: "row",

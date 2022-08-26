@@ -9,6 +9,8 @@ const dates = require("./dates.js");
 const checkUser = require("./checkuser");
 const work_days = require("./work_days.js");
 const hours_working = require("./hours_working.js");
+const pagos_unicos = require("./mercado_pago.js");
+const pagos_asociados = require("./mercado_asociados.js");
 
 const router = Router();
 
@@ -22,5 +24,7 @@ router.use("/hours_working", hours_working);
 router.use("/filter", filtro);
 router.use("/dates", dates);
 router.use("/checkuser", checkUser);
+router.use("/pagos",pagos_unicos);
+router.use("/asociados",pagos_asociados);
 
 module.exports = router;

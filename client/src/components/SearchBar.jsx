@@ -32,12 +32,13 @@ export default function SearchBar({
   }
 
   return (
-    <Box display="inline-flex" m="1rem">
+    <Box m="1rem" display="flex" flexDirection="row">
       <Input
         type="text"
         value={doctor}
         placeholder="Buscar Profesional"
         variant="flushed"
+        colorScheme={"teal"}
         onChange={(e) => handleChange(e)}
       />
       <IconButton

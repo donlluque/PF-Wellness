@@ -34,8 +34,8 @@ import {
   getHours,
   getPrepaidHealth,
   postDoctors,
-} from "../redux/actions.js";
-import { validateForm } from "../hooks/validateForm.js";
+} from "../../redux/actions.js";
+import { validateForm } from "../../hooks/validateForm.js";
 
 /*const doctor = {
   hours: {
@@ -223,15 +223,16 @@ function FormNewDoctor() {
 
   return (
     <>
-      <Box display={{ md: "flex" }} justifyContent="center">
+      <Box>
         <Box display="flex" flexDirection="column" alignItems="center">
           <Image
             w="200px"
             src="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
             alt=""
           />
+          <Input type="file" w="50%" />
         </Box>
-        <Box m="1rem" w="50rem">
+        <Box m="1rem" w={{}}>
           <form>
             <FormControl>
               <FormLabel m="1rem" htmlFor="name">

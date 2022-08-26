@@ -14,12 +14,8 @@ module.exports = (sequelize) => {
         primaryKey: true,
       },
 
-      hora_final: {
-        type: DataTypes.STRING,
-      },
-
       hora_inicial: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSON,
       },
 
       date: {

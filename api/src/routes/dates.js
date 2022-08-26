@@ -7,22 +7,31 @@ const {
   Doctor,
   Prepaid_health,
   Hours_working,
+  Work_days,
 } = require("../db.js");
 
 router.post("/", async (req, res, next) => {
   const { date, idHour, idMedico } = req.body;
   try {
     const doctorId = idMedico; //dato enviado desde el front
-    const patientId = "7"; //dato enviado desde el front
+    const patientId = "9"; //dato enviado desde el front
 
     const doctor = await Doctor.findOne({
       where: {
         id: doctorId,
       },
     });
+
+    // console.log("doctor")
     const patient = await Patient.findOne({
       where: {
         id: patientId,
+      },
+      include: {
+        model: Prepaid_health,
+        throught: {
+          attributes: [],
+        },
       },
     });
 
@@ -42,7 +51,7 @@ router.post("/", async (req, res, next) => {
     await turno.addPatient(patient);
     await turno.addHours_working(hoursWorking);
 
-    res.send(turno);
+    res.send(doctor);
   } catch (error) {
     next(error);
   }
@@ -54,18 +63,28 @@ router.get("/", async (req, res, next) => {
       include: [
         {
           model: Doctor,
+          include: [
+            {
+              model: Prepaid_health,
+            },
+            {
+              model: Work_days,
+            },
+          ],
           throught: {
             attributes: [],
           },
         },
         {
           model: Hours_working,
-          throught: {
-            attributes: [],
-          },
+
+          attributes: { exclude: ["id"] },
         },
         {
           model: Patient,
+          include: {
+            model: Prepaid_health,
+          },
           throught: {
             attributes: [],
           },

@@ -78,23 +78,47 @@ const { Doctor, Patient, Dates1, Prepaid_health, Work_days, Hours_working } =
 // Patient.belongsToMany(Doctor, { through: Dates });
 // Doctor.belongsToMany(Patient, { through: Dates });
 
-Doctor.belongsToMany(Prepaid_health, { through: "Doctor_Prepaid_Health" });
-Prepaid_health.belongsToMany(Doctor, { through: "Doctor_Prepaid_Health" });
+Doctor.belongsToMany(Prepaid_health, {
+  through: "Doctor_Prepaid_Health",
+  timestamps: false,
+});
+Prepaid_health.belongsToMany(Doctor, {
+  through: "Doctor_Prepaid_Health",
+  timestamps: false,
+});
 
-Dates1.belongsToMany(Doctor, { through: "Doctor_Dates1" });
-Doctor.belongsToMany(Dates1, { through: "Doctor_Dates1" });
+Dates1.belongsToMany(Doctor, { through: "Doctor_Dates1", timestamps: false });
+Doctor.belongsToMany(Dates1, { through: "Doctor_Dates1", timestamps: false });
 
-Dates1.belongsToMany(Patient, { through: "Patient_Dates1" });
-Patient.belongsToMany(Dates1, { through: "Patient_Dates1" });
+Dates1.belongsToMany(Patient, { through: "Patient_Dates1", timestamps: false });
+Patient.belongsToMany(Dates1, { through: "Patient_Dates1", timestamps: false });
 
-Dates1.belongsToMany(Hours_working, { through: "Hours_Working_Dates1" });
-Hours_working.belongsToMany(Dates1, { through: "Hours_Working_Dates1" });
+Dates1.belongsToMany(Hours_working, {
+  through: "Hours_Working_Dates1",
+  timestamps: false,
+});
+Hours_working.belongsToMany(Dates1, {
+  through: "Hours_Working_Dates1",
+  timestamps: false,
+});
 
-Patient.belongsToMany(Prepaid_health, { through: "Patient_Prepaid_Health" });
-Prepaid_health.belongsToMany(Patient, { through: "Patient_Prepaid_Health" });
+Patient.belongsToMany(Prepaid_health, {
+  through: "Patient_Prepaid_Health",
+  timestamps: false,
+});
+Prepaid_health.belongsToMany(Patient, {
+  through: "Patient_Prepaid_Health",
+  timestamps: false,
+});
 
-Doctor.belongsToMany(Work_days, { through: "Doctor_Work_Days" });
-Work_days.belongsToMany(Doctor, { through: "Doctor_Work_Days" });
+Doctor.belongsToMany(Work_days, {
+  through: "Doctor_Work_Days",
+  timestamps: false,
+});
+Work_days.belongsToMany(Doctor, {
+  through: "Doctor_Work_Days",
+  timestamps: false,
+});
 
 // Doctor.belongsToMany(Patient, { through: "doctorPatient", timestamps: false });
 // Patient.belongsToMany(Doctor, { through: "doctorPatient", timestamps: false });

@@ -25,8 +25,10 @@ export default function SearchBar({
     } else {
       alert("Por favor insertar un profesional");
     }
-    setPage(1);
-    setInput(1);
+    if (setPage && setInput) {
+      setPage(1);
+      setInput(1);
+    }
     setFilterActive(true);
     onOpen();
   }

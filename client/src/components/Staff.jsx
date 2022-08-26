@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import DoctorCard from "./DoctorCard";
 import NavStaff from "./NavStaff";
@@ -13,9 +13,16 @@ import {
   CircularProgress,
 } from "@chakra-ui/react";
 import Pagination from "./Pagination";
+import { useEffect } from "react";
+import { getHours } from "../redux/actions";
 
 function Staff() {
   const allDoctors = useSelector((state) => state.doctors);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getHours());
+  }, [dispatch]);
 
   //------------PAGINADO-------------
   const [page, setPage] = useState(1);
@@ -76,7 +83,7 @@ function Staff() {
                       name={doc.name}
                       picture={doc.picture}
                       general_area={doc.general_area}
-                      especialidades_id={doc.especialidades_id}
+                      specialty={doc.specialty}
                       id={doc.id}
                     />
                   </WrapItem>

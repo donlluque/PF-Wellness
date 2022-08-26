@@ -135,9 +135,8 @@ function FormNewDoctor() {
   };
   //seccion horas
   const handleChangeFormHours = (e) => {
-    console.log(e);
     if (e === "totalDay") {
-      setFormHours({ ...formHours, [e]: { start: "", end: "" } });
+      setFormHours({ [e]: { start: "", end: "" } });
     } else {
       setFormHours({
         [e]: {
@@ -189,7 +188,7 @@ function FormNewDoctor() {
   const handleDeleteDay = (day) => {
     setForm({
       ...form,
-      days: form.days.filter((c) => c !== day),
+      work_days: form.work_days.filter((c) => c !== day),
     });
   };
 
@@ -495,7 +494,15 @@ function FormNewDoctor() {
                 ? form.work_days.map((e) => (
                     <List>
                       <ListItem key={e}>
-                        {e}
+                        {e === "1"
+                          ? "Lunes"
+                          : e === "2"
+                          ? "Martes"
+                          : e === "3"
+                          ? "Miércoles"
+                          : e === "4"
+                          ? "Jueves"
+                          : "Viernes"}
                         <Button onClick={() => handleDeleteDay(e)}>X</Button>
                       </ListItem>
                     </List>

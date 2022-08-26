@@ -21,15 +21,18 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import DoctorDetail from "./DoctorDetail";
+import { getDetailDoctors } from "../redux/actions";
+import { useDispatch } from "react-redux";
 
 export default function DoctorCard({
   id,
   picture,
   name,
   general_area,
-  especialidades_id,
+  specialty,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -72,14 +75,17 @@ export default function DoctorCard({
               {name}
             </Heading>
             <Text h={"5rem"} textAlign="center" color={"gray.500"}>
-              {general_area} - {especialidades_id}
+              {general_area} - {specialty}
             </Text>
           </Stack>
 
           <Button
             colorScheme="teal"
             variant="solid"
-            onClick={onOpen}
+            onClick={() => {
+              dispatch(getDetailDoctors(id));
+              onOpen();
+            }}
             w={"full"}
             color={"white"}
             rounded={"md"}

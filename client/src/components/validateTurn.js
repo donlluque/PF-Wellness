@@ -11,8 +11,8 @@ const turns = [
   { idTurno: 1, fecha: "08/09/2022", idMedico: 10, idPatient: 1, idHour: "10" },
 ];
 
-export const validateRange = (hours) => {
-  let totalTurns = createAllTurns();
+export const validateRange = (hours, hoursWorking) => {
+  let totalTurns = hoursWorking;
   let availableTurns = [];
   if (hours.totalDay) {
     availableTurns = totalTurns.filter(
@@ -46,8 +46,13 @@ export const searchTurnByDate = (hours, turns, selectedDate) => {
   return turnsDate;
 };
 
-export const searchTurnsAvailable = (hours, turns, selectedDate) => {
-  let rangeTurns = validateRange(hours);
+export const searchTurnsAvailable = (
+  hours,
+  hoursWorking,
+  turns,
+  selectedDate
+) => {
+  let rangeTurns = validateRange(hours, hoursWorking);
   let dateTurns = searchTurnByDate(hours, turns, selectedDate);
   let availableTurns = rangeTurns.filter((h) => h !== dateTurns.idHora);
   return availableTurns;

@@ -9,7 +9,7 @@ function UploadImages(props) {
   const [loading, setLoading] = useState(false);
   const picture = useSelector((state) => state.user.picture);
 
-  console.log(picture, "soy una foto");
+  // console.log(picture, "soy una foto");
 
   const UploadI = async (e) => {
     const files = e.target.files;
@@ -25,7 +25,7 @@ function UploadImages(props) {
       }
     );
     const file = await res.json();
-    console.log(res);
+    // console.log(res, "res");
     setImage(file.secure_url);
     setLoading(false);
   };

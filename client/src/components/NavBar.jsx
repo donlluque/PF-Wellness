@@ -41,7 +41,7 @@ function NavBar() {
   useEffect(() => {
     if (user) {
       if (Object.keys(user).length) {
-        // console.log(user, "soyu user de NavBar");
+        console.log(user, "soyu user de NavBar");
         dispatch(dateUser(user));
         localStorage.setItem("user", JSON.stringify(user));
       }

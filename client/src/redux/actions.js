@@ -306,10 +306,10 @@ export const dateUser = (payload) => {
   return async (dispatch) => {
     try {
       let response = await axios.post(`${baseURL}/checkuser`, payload);
-      console.log(response.data, "action date user");
+      console.log(response.data.length, "action date user");
       return dispatch({
         type: "CHECK_USER",
-        payload: response.data,
+        payload: response.data.length ? response.data[0] : response.data,
       });
     } catch (error) {
       console.log(error);

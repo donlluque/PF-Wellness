@@ -32,6 +32,19 @@ import { intlFormat } from "date-fns/esm";
 
 function FormUserProfile() {
   const { id } = useParams();
+
+  const [putActive, setPutActive] = useState(false);
+  const dispatch = useDispatch();
+
+  console.log(id);
+  const { patientDetail, msgConfirm } = useSelector((state) => state);
+  const { name, last_name, email, picture } = patientDetail;
+  const [errors, setErrors] = useState({});
+  const date = new Date().toLocaleDateString().split("/").reverse();
+  const [aux, setAux] = useState({ name, last_name, email, picture });
+  const user = useSelector((state) => state.user);
+  console.log("user", user);
+
   const [form, setForm] = useState({
     id,
     name: "",
@@ -44,22 +57,12 @@ function FormUserProfile() {
     direction: "",
     prepaid_health: "",
   });
-  const [putActive, setPutActive] = useState(false);
-  const dispatch = useDispatch();
 
-  console.log(id);
-  const { patientDetail, msgConfirm } = useSelector((state) => state);
-  const { name, last_name, email, picture } = patientDetail;
-  const [errors, setErrors] = useState({});
-  const date = new Date().toLocaleDateString().split("/").reverse();
-  const [aux, setAux] = useState({ name, last_name, email, picture });
-  const user = useSelector((state) => state.user);
+  console.log("form", form);
 
-  console.log(user, "soy user ");
-
-  localStorage.setItem("user", JSON.stringify(user));
   var perfil = JSON.parse(localStorage.getItem("user"));
-
+  console.log("perfil", perfil);
+  console.log(form, "soy user ");
   const styleDate = (date) => {
     if (date[1].length === 1) {
       date[1] = "0" + date[1];
@@ -69,7 +72,6 @@ function FormUserProfile() {
 
   console.log("renderizado", name, last_name, email, picture);
   useEffect(() => {
-    console.log(patientDetail, "patientDetail");
     // if (Object.keys(user).length) {
     //   setForm({
     //     ...form,

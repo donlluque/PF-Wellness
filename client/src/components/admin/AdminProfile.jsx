@@ -1,4 +1,5 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
+import AdminDoctorPanel from "./AdminDoctorPanel";
 import AdminTurnos from "./AdminTurnos";
 import FormNewDoctor from "./FormNewDoctor";
 
@@ -27,7 +28,7 @@ function AdminProfile() {
               </Box>
             </TabPanel>
             <TabPanel>
-              <FormNewDoctor />
+              <AdminDoctorPanel />
             </TabPanel>
             <TabPanel>
               <AdminTurnos />

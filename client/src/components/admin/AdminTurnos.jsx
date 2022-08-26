@@ -8,8 +8,8 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Button,
 } from "@chakra-ui/react";
-import { Button } from "reactstrap";
 
 function AdminTurnos() {
   return (

@@ -10,12 +10,7 @@ export const createAllTurns = () => {
 const turns = [
   { idTurno: 1, fecha: "08/09/2022", idMedico: 10, idPatient: 1, idHour: "10" },
 ];
-/*totalDay: {end: "17",start: "5"}
-notTotalDay: {
-       morning: {start: "3", end:"7"}, 
-       afternoon: {start: "", end:""}
-}*/
-// [1,2,3,4,5,6,7,8,9,10]
+
 export const validateRange = (hours) => {
   let totalTurns = createAllTurns();
   let availableTurns = [];

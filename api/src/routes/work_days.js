@@ -18,4 +18,16 @@ router.get("/", async (req, res, next) => {
   } catch (error) {}
 });
 
+router.put("/", async (req, res, next) => {
+  const{id,day}=req.body
+  const modificar= await Work_days.findOne({
+    where:{
+      id:id
+    }
+  })
+
+  const nuevo = await modificar.update({day})
+  res.send(nuevo)
+})
+
 module.exports = router;

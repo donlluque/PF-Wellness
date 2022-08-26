@@ -162,6 +162,7 @@ export const getDays = () => {
 };
 //APPOINTMENT
 export const postTurn = (form) => {
+  console.log("soy post", form);
   return function (dispatch) {
     return fetch(`${baseURL}/dates`, {
       method: "POST",

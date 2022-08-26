@@ -27,15 +27,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getOnePatient } from "../redux/actions";
 import { validateForm } from "../hooks/validateForm.js";
-import UploadImages from "./UploadImages";
-import { intlFormat } from "date-fns/esm";
 
 function FormUserProfile() {
   const { id } = useParams();
-
+  const [image, setImage] = useState("");
   const [putActive, setPutActive] = useState(false);
   const dispatch = useDispatch();
-
   console.log(id);
   const { patientDetail, msgConfirm } = useSelector((state) => state);
   const { name, last_name, email, picture } = patientDetail;
@@ -56,18 +53,51 @@ function FormUserProfile() {
     nationality: "",
     direction: "",
     prepaid_health: "",
+    picture: "",
   });
 
-  console.log("form", form);
 
+  console.log(id);
+  const { patientDetail, msgConfirm } = useSelector((state) => state);
+  const { name, last_name, email, picture } = patientDetail;
+  const [errors, setErrors] = useState({});
+  const date = new Date().toLocaleDateString().split("/").reverse();
+  const [aux, setAux] = useState({ name, last_name, email, picture });
+  const user = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
+  console.log(user, "user de Form");
+
+  localStorage.setItem("user", JSON.stringify(user));
   var perfil = JSON.parse(localStorage.getItem("user"));
-  console.log("perfil", perfil);
-  console.log(form, "soy user ");
+
+  console.log(perfil, "PERFIL");
+
+
   const styleDate = (date) => {
     if (date[1].length === 1) {
       date[1] = "0" + date[1];
     }
     return date.join("-");
+  };
+
+  const UploadI = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "Wellness");
+    setLoading(true);
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dtbkiy2fk/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+    const file = await res.json();
+    console.log(file, "RESPONDER");
+    setImage(file.secure_url);
+    setLoading(false);
+    setForm({ ...form, [e.target.name]: file.secure_url });
   };
 
   console.log("renderizado", name, last_name, email, picture);
@@ -98,7 +128,7 @@ function FormUserProfile() {
 
   // useEffect(() => {
   //   return setAux(!aux);
-  // }, dispatch);
+  // }, [dispatch]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -163,7 +193,24 @@ function FormUserProfile() {
         <Box m="1rem" w="50rem">
           <FormControl>
             <FormControl isDisabled={!putActive}>
-              <UploadImages />
+              <Input
+                name="picture"
+                type="file"
+                placeholder={
+                  !perfil.picture ? "Escribe nombre completo" : perfil.picture
+                }
+                onChange={UploadI}
+              />
+              {loading ? (
+                <h3>Cargando imagen...</h3>
+              ) : (
+                <Image
+                  borderRadius="full"
+                  boxSize="150px"
+                  src={perfil.picture}
+                  fallbackSrc={user.picture}
+                />
+              )}
             </FormControl>
             <FormControl isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="name">

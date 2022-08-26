@@ -49,7 +49,6 @@ export const validateRange = (hours) => {
 export const searchTurnByDate = (hours, turns, selectedDate) => {
   let turnsDate = turns.filter((turn) => turn.fecha === selectedDate); /// [{id: 1, fecha: ...}.... {..}, {}]
   return turnsDate;
-  console.log("select", selectedDate.toLocaleDateString());
 };
 
 export const searchTurnsAvailable = (hours, turns, selectedDate) => {

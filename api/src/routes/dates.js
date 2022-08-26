@@ -1,11 +1,18 @@
 const { Router } = require("express");
 const router = Router();
-const { Dates, Doctor, Patient, Prepaid_health } = require("../db.js");
+const {
+  Dates,
+  Doctor,
+  Patient,
+  Prepaid_health,
+  Hours_working,
+} = require("../db.js");
 
 router.post("/", async (req, res, next) => {
+  const { date, idHour, idMedico } = req.body;
   try {
-    const doctorId = "100"; //dato enviado desde el front
-    const patientId = "1"; //dato enviado desde el front
+    const doctorId = idMedico; //dato enviado desde el front
+    const patientId = "7"; //dato enviado desde el front
 
     const doctor = await Doctor.findOne({
       where: {
@@ -18,20 +25,46 @@ router.post("/", async (req, res, next) => {
       },
     });
 
-    const date = await doctor.addPatient(patient);
-
-    const dateUpdate = await Dates.findOne({
+    const hoursWorking = await Hours_working.findOne({
       where: {
-        id: date[0].id,
+        id: idHour,
       },
+      attributes: ["hour"],
     });
 
-    dateUpdate.hora_inicial = "10:00";
-    dateUpdate.hora_final = "10:15";
-    dateUpdate.date = "17-08-2022";
-    dateUpdate.save();
+    console.log(hoursWorking);
+    var dates = [];
 
-    res.status(200).send(dateUpdate);
+    dates = await doctor.addPatient(patient);
+
+    if (!dates) {
+      await doctor.removePatient(patient);
+      dateUpdate = await doctor.addPatient(patient);
+      nuevoUpdate = await Dates.findOne({
+        where: {
+          id: dateUpdate[0].dataValues.id,
+        },
+      });
+      nuevoUpdate.update({
+        hora_inicial: hoursWorking,
+        date,
+      });
+
+      res.send(dateUpdate);
+    } else {
+      dateUpdate = await Dates.findOne({
+        where: {
+          id: dates[0].dataValues.id,
+        },
+      });
+
+      dateUpdate.update({
+        hora_inicial: hoursWorking,
+        date,
+      });
+
+      res.send(dateUpdate);
+    }
   } catch (error) {
     next(error);
   }
@@ -39,26 +72,9 @@ router.post("/", async (req, res, next) => {
 
 router.get("/", async (req, res, next) => {
   try {
-    const nuevo = await Doctor.findAll({
-      include: [
-        {
-          model: Prepaid_health,
-          throught: {
-            attributes: [],
-          },
-        },
-        {
-          model: Patient,
-          throught: {
-            attributes: [],
-          },
-        },
-      ],
-    });
-
     const dates = await Dates.findAll();
 
-    res.send(nuevo);
+    res.send(dates);
   } catch (error) {
     next(error);
   }

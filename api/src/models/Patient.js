@@ -14,34 +14,30 @@ module.exports = (sequelize) => {
 
       name: {
         type: DataTypes.STRING,
-        set(value) {
-          this.setDataValue("name", value[0].toUpperCase() + value.slice(1));
-        },
+        // set(value) {
+        //   this.setDataValue("name", value[0].toUpperCase() + value.slice(1));
+        // },
       },
 
       last_name: {
         type: DataTypes.STRING,
-        set(value) {
-          this.setDataValue(
-            "last_name",
-            value[0].toUpperCase() + value.slice(1)
-          );
-        },
+        // set(value) {
+        //   this.setDataValue(
+        //     "last_name",
+        //     value[0].toUpperCase() + value.slice(1)
+        //   );
+        // },
       },
 
       user_name: {
         type: DataTypes.STRING,
-        set(value) {
-          this.setDataValue("user_name", value.toLowerCase());
-        },
+        // set(value) {
+        //   this.setDataValue("user_name", value.toLowerCase());
+        // },
       },
 
       document: {
         type: DataTypes.INTEGER,
-        validate: {
-          min: 7,
-          max: 8,
-        },
       },
 
       type_document: {
@@ -50,10 +46,10 @@ module.exports = (sequelize) => {
 
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
-        set(value) {
-          this.setDataValue("email", value.toLowerCase());
-        },
+
+        // set(value) {
+        //   this.setDataValue("email", value.toLowerCase());
+        // },
       },
 
       phone: {

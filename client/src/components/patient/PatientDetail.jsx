@@ -34,7 +34,7 @@ function PatientDetail() {
             </ListItem>
             <ListItem>
               <Text as={"span"} fontWeight={"bold"}>
-                Matrícula:
+                :
               </Text>{" "}
               {}
             </ListItem>

@@ -6,7 +6,7 @@ const { Patient } = require("./Patient");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "dates",
+    "dates1",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -14,28 +14,8 @@ module.exports = (sequelize) => {
         primaryKey: true,
       },
 
-      hora_inicial: {
-        type: DataTypes.JSON,
-      },
-
       date: {
         type: DataTypes.STRING,
-      },
-
-      doctorId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: Doctor,
-          key: "id",
-        },
-      },
-
-      patientId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: Patient, // 'Movies' would also work
-          key: "id",
-        },
       },
 
       history_id: {

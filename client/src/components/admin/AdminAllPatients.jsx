@@ -6,6 +6,7 @@ import {
   Tr,
   Th,
   Td,
+  TableCaption,
   TableContainer,
   Button,
   Icon,
@@ -15,28 +16,28 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
+  Image,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { MdOutlineEditNote } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailDoctors, getDoctors, getHours } from "../../redux/actions";
-import DoctorDetail from "../DoctorDetail";
+import { getAllPatients, getOnePatient } from "../../redux/actions";
 
-function AdminAllDoctors() {
+function AdminAllPatients() {
   const dispatch = useDispatch();
-  const { doctors, doctorDetail } = useSelector((state) => state);
+  const { patients } = useSelector((state) => state);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-    dispatch(getDoctors());
-    dispatch(getHours());
+    dispatch(getAllPatients());
   }, [dispatch]);
 
   const handleClick = (id) => {
     console.log(id);
-    dispatch(getDetailDoctors(id));
+    dispatch(getOnePatient(id));
     onOpen();
   };
 
@@ -47,19 +48,28 @@ function AdminAllDoctors() {
           <Thead>
             <Tr>
               <Th isNumeric>ID</Th>
+              <Th></Th>
               <Th>Nombre</Th>
-              <Th>Área</Th>
-              <Th>Especialidad</Th>
+              <Th>Apellido</Th>
+              <Th>Email</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {doctors &&
-              doctors.map((e) => (
+            {patients &&
+              patients.map((e) => (
                 <Tr>
                   <Td isNumeric>{e.id}</Td>
+                  <Td>
+                    <Image
+                      src={e.picture}
+                      borderRadius="50%"
+                      w="2rem"
+                      h="2rem"
+                    />
+                  </Td>
                   <Td>{e.name}</Td>
-                  <Td>{e.general_area}</Td>
-                  <Td>{e.specialty}</Td>
+                  <Td>{e.last_name}</Td>
+                  <Td>{e.email}</Td>
                   <Td>
                     <Button
                       m="0.5rem"
@@ -88,7 +98,7 @@ function AdminAllDoctors() {
         </Table>
       </TableContainer>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      {/*<Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent bg="#EBF8FF">
           <ModalHeader
@@ -100,10 +110,9 @@ function AdminAllDoctors() {
             {" "}
             {doctorDetail.name}
           </ModalHeader>
-          {/* <ModalCloseButton /> */}
+          {/* <ModalCloseButton /> 
           <ModalBody>
-            {/* <Lorem count={2} /> */}
-            <DoctorDetail id={doctorDetail.id} />
+            <DoctorDetail id={patients.id} />
           </ModalBody>
 
           <ModalFooter>
@@ -112,9 +121,9 @@ function AdminAllDoctors() {
             </Button>
           </ModalFooter>
         </ModalContent>
-      </Modal>
+      </Modal>*/}
     </>
   );
 }
 
-export default AdminAllDoctors;
+export default AdminAllPatients;

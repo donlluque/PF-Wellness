@@ -5,19 +5,18 @@ import {
   ListIcon,
   Divider,
   Heading,
+  Text,
 } from "@chakra-ui/react";
-import { GrAdd } from "react-icons/gr";
+
 import { FiFilter } from "react-icons/fi";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-import FormNewDoctor from "./FormNewDoctor";
+
 import { Button } from "reactstrap";
 import { useState } from "react";
-import AdminAllDoctors from "./AdminAllDoctors";
-import NavStaff from "../NavStaff";
+import AdminAllPatients from "./AdminAllPatients";
 
-function AdminDoctorPanel() {
-  const [newDoctor, setNewDoctor] = useState(false);
-  const [listDoctors, setListDoctors] = useState(true);
+function AdminPatientPanel() {
+  const [listPatients, setListPatients] = useState(true);
   const [filter, setFilter] = useState(false);
   return (
     <>
@@ -39,30 +38,17 @@ function AdminDoctorPanel() {
             <ListItem>
               <Button
                 onClick={() => {
-                  setListDoctors(true);
-                  setNewDoctor(false);
+                  setListPatients(true);
                   setFilter(false);
                 }}
               >
-                <ListIcon as={BsFillPersonLinesFill} /> Doctores
+                <ListIcon as={BsFillPersonLinesFill} /> Pacientes
               </Button>
             </ListItem>
             <ListItem>
               <Button
                 onClick={() => {
-                  setNewDoctor(true);
-                  setListDoctors(false);
-                  setFilter(false);
-                }}
-              >
-                <ListIcon as={GrAdd} /> Nuevo registro
-              </Button>
-            </ListItem>
-            <ListItem>
-              <Button
-                onClick={() => {
-                  setNewDoctor(false);
-                  setListDoctors(true);
+                  setListPatients(true);
                   setFilter(true);
                 }}
               >
@@ -73,13 +59,13 @@ function AdminDoctorPanel() {
         </Box>
         <Divider orientation="vertical" />
         <Box w={{ xl: "70%" }}>
-          {filter && <NavStaff />}
-          {newDoctor && <FormNewDoctor />}
-          {listDoctors && <AdminAllDoctors />}
+          {filter && <Text>PROXIMAMENTE</Text>}
+
+          {listPatients && <AdminAllPatients />}
         </Box>
       </Box>
     </>
   );
 }
 
-export default AdminDoctorPanel;
+export default AdminPatientPanel;

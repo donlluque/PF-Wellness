@@ -1,5 +1,5 @@
 import React from "react";
-import { getDetail, cleanDoctor, getDetailDoctors } from "../redux/actions";
+import { cleanDoctor, getDetailDoctors, getHours } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Box, Text, List, ListItem } from "@chakra-ui/react";
@@ -9,14 +9,15 @@ export default function DoctorDetail({ id }) {
   // const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getDetailDoctors(id));
+    //dispatch(getDetailDoctors(id));
     return () => {
       dispatch(cleanDoctor());
     };
   }, [dispatch]);
 
   const doctor = useSelector((state) => state.doctorDetail);
-  // console.log("soy doctor",doctor);
+  const totalHours = useSelector((state) => state.hoursWorking);
+
   return (
     <Box>
       {doctor && doctor ? (
@@ -30,7 +31,7 @@ export default function DoctorDetail({ id }) {
                 textAlign="center"
                 fontFamily={"body"}
               >
-                {doctor.general_area} - {doctor.especialidades_id}
+                {doctor.general_area} - {doctor.specialty}
               </Text>
             </ListItem>
             <ListItem>
@@ -43,13 +44,73 @@ export default function DoctorDetail({ id }) {
               <Text as={"span"} fontWeight={"bold"}>
                 Prestaciones:
               </Text>{" "}
-              {doctor.prepaid_health?.join(", ")}
+              <Text display="inline">
+                {doctor.prepaid_healths?.map((e) => e.name).join(", ")}
+              </Text>
             </ListItem>
             <ListItem>
               <Text as={"span"} fontWeight={"bold"}>
-                Horario de atención:
-              </Text>{" "}
-              {doctor.description}
+                Horario de atención:{" "}
+              </Text>
+              <Text display="inline">
+                {doctor.work_days &&
+                  doctor.work_days.map((e) => e.day).join(", ")}
+              </Text>
+              {doctor.hours_json && doctor.hours_json.totalDay ? (
+                <Text display="inline">
+                  {" "}
+                  de{" "}
+                  {
+                    totalHours.find(
+                      (e) => e.id === parseInt(doctor.hours_json.totalDay.start)
+                    ).hour
+                  }{" "}
+                  a{" "}
+                  {
+                    totalHours.find(
+                      (e) => e.id === parseInt(doctor.hours_json.totalDay.end)
+                    ).hour
+                  }
+                </Text>
+              ) : doctor.hours_json && doctor.hours_json.notTotalDay ? (
+                <Text display="inline">
+                  {" "}
+                  de{" "}
+                  {
+                    totalHours.find(
+                      (e) =>
+                        e.id ===
+                        parseInt(doctor.hours_json.notTotalDay.morning.start)
+                    ).hour
+                  }{" "}
+                  a{" "}
+                  {
+                    totalHours.find(
+                      (e) =>
+                        e.id ===
+                        parseInt(doctor.hours_json.notTotalDay.morning.end)
+                    ).hour
+                  }{" "}
+                  y de{" "}
+                  {
+                    totalHours.find(
+                      (e) =>
+                        e.id ===
+                        parseInt(doctor.hours_json.notTotalDay.afternoon.start)
+                    ).hour
+                  }{" "}
+                  a{" "}
+                  {
+                    totalHours.find(
+                      (e) =>
+                        e.id ===
+                        parseInt(doctor.hours_json.notTotalDay.afternoon.end)
+                    ).hour
+                  }
+                </Text>
+              ) : (
+                false
+              )}
             </ListItem>
             <ListItem>
               <Text as={"span"} fontWeight={"bold"}>

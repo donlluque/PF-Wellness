@@ -69,14 +69,14 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Doctor, Patient, Dates, Prepaid_health, Work_days, Hours_working } =
+const { Doctor, Patient, Dates1, Prepaid_health, Work_days, Hours_working } =
   sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 
-// Patient.belongsToMany(Doctor, { through: Dates });
-// Doctor.belongsToMany(Patient, { through: Dates });
+// Patient.belongsToMany(Doctor, { through: Dates1 });
+// Doctor.belongsToMany(Patient, { through: Dates1 });
 
 Doctor.belongsToMany(Prepaid_health, {
   through: "Doctor_Prepaid_Health",
@@ -87,18 +87,18 @@ Prepaid_health.belongsToMany(Doctor, {
   timestamps: false,
 });
 
-Dates.belongsToMany(Doctor, { through: "Doctor_Dates", timestamps: false });
-Doctor.belongsToMany(Dates, { through: "Doctor_Dates", timestamps: false });
+Dates1.belongsToMany(Doctor, { through: "Doctor_Dates1", timestamps: false });
+Doctor.belongsToMany(Dates1, { through: "Doctor_Dates1", timestamps: false });
 
-Dates.belongsToMany(Patient, { through: "Patient_Dates", timestamps: false });
-Patient.belongsToMany(Dates, { through: "Patient_Dates", timestamps: false });
+Dates1.belongsToMany(Patient, { through: "Patient_Dates1", timestamps: false });
+Patient.belongsToMany(Dates1, { through: "Patient_Dates1", timestamps: false });
 
-Dates.belongsToMany(Hours_working, {
-  through: "Hours_Working_Dates",
+Dates1.belongsToMany(Hours_working, {
+  through: "Hours_Working_Dates1",
   timestamps: false,
 });
-Hours_working.belongsToMany(Dates, {
-  through: "Hours_Working_Dates",
+Hours_working.belongsToMany(Dates1, {
+  through: "Hours_Working_Dates1",
   timestamps: false,
 });
 

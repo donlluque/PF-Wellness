@@ -41,12 +41,15 @@ export default function rootReducer(state = initialState, action) {
         doctors: action.payload,
       };
 
-    case "POST_PATIENT": {
-      return { ...state };
-    }
     case "PUT_PATIENT": {
       return {
         ...state,
+      };
+    }
+    case "GET_PATIENTS": {
+      return {
+        ...state,
+        patients: action.payload,
       };
     }
     case "GET_ONE_PATIENT": {
@@ -55,15 +58,6 @@ export default function rootReducer(state = initialState, action) {
         patientDetail: action.payload,
       };
     }
-
-    //sirve?
-    case "ID_USER": {
-      return {
-        ...state,
-        idUserLogIn: action.payload,
-      };
-    }
-
     case "GET_HOURS": {
       return {
         ...state,
@@ -118,13 +112,12 @@ export default function rootReducer(state = initialState, action) {
       } 
      };
     case "CHECK_USER": {
-      console.log(action.payload, "reducer check_user");
+      console.log(action.payload, "soy user de REDUCER");
       return {
         ...state,
         user: action.payload,
       };
     }
-
     default:
       return {
         ...state,

@@ -23,16 +23,15 @@ function Turnos() {
   return (
     <>
       <Center
-        h="50vh"
+        h={{ base: "100vh", sm: "100vh", md: "80vh", lg: "70vh" }}
         bgRepeat="no-repeat"
         bgSize="cover"
         top={0}
         bgImage="linear-gradient(
-      rgba(230, 255, 250, 0.5),
-      rgba(230, 255, 250, 0.5)
+      rgba(230, 255, 250, 0.7),
+      rgba(230, 255, 250, 0.7)
     ),
-    url(https://www.unitecoprofesional.es/blog/wp-content/uploads/2021/09/como-hacer-una-historia-clinica.jpg)"
-        mb={2}
+    url(https://parrocchiagrumello.it/wp-content/uploads/2018/03/97079_agenda1.jpg)"
         flexDirection="column"
       >
         <Heading
@@ -40,6 +39,7 @@ function Turnos() {
           as="h1"
           fontSize={{ base: "2xl", sm: "4xl", md: "5xl", lg: "6xl" }}
           m="1rem"
+          mt={{ base: "10rem", sm: "10rem", md: "8rem", lg: "5rem" }}
         >
           Turnos Online
         </Heading>
@@ -50,7 +50,7 @@ function Turnos() {
         </Box>
       </Center>
 
-      <Box bg="#EDF2F7" mt="-2" justifyContent="center">
+      <Box bg="#fafbfd" justifyContent="center">
         <Heading as="h6" size="lg">
           1. Seleccionar profesional preferido
         </Heading>
@@ -64,26 +64,24 @@ function Turnos() {
         ) : (
           false
         )}
-        {allDoctors &&
-          allDoctors
-            .slice((page - 1) * forPage, (page - 1) * forPage + forPage)
-            .map((doc) => {
-              return (
-                <Wrap display="inline-flex" ml={"3rem"}>
+        <Wrap justify={"center"}>
+          {allDoctors &&
+            allDoctors
+              .slice((page - 1) * forPage, (page - 1) * forPage + forPage)
+              .map((doc) => {
+                return (
                   <WrapItem>
-                    <Box>
-                      <DoctorCard
-                        name={doc.name}
-                        picture={doc.picture}
-                        general_area={doc.general_area}
-                        especialidades_id={doc.especialidades_id}
-                        id={doc.id}
-                      />
-                    </Box>
+                    <DoctorCard
+                      name={doc.name}
+                      picture={doc.picture}
+                      general_area={doc.general_area}
+                      especialidades_id={doc.especialidades_id}
+                      id={doc.id}
+                    />
                   </WrapItem>
-                </Wrap>
-              );
-            })}
+                );
+              })}
+        </Wrap>
         <Pagination
           page={page}
           setPage={setPage}

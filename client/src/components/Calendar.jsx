@@ -18,23 +18,20 @@ import {
   getDetailDoctors,
   getHours,
   getTurns,
-  postAppointment,
+  postTurn,
 } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { FcCheckmark } from "react-icons/fc";
-import { searchTurnByDate, searchTurnsAvailable } from "./validateTurn";
-
-let horasPrueba = [
-  { id: 1, hour: 8 },
-  { id: 2, hour: 9 },
-  { id: 3, hour: 10 },
-  { id: 4, hour: 11 },
-];
-
-let turnoPrueba = [1, 3, 4];
+import {
+  searchTurnByDate,
+  searchTurnsAvailable,
+  validateRange,
+} from "./validateTurn";
 
 function Calendar() {
+  const history = useHistory();
+  console.log(history);
   const [form, setForm] = useState({});
   const [selectedDate, setDateChange] = useState(new Date());
   const [arrayTurns, setArrayTurns] = useState([]); //[4,5,6,7,10,11,12]
@@ -42,21 +39,22 @@ function Calendar() {
   const { idDoctor } = useParams();
   const { doctorDetail, hoursWorking, turns } = useSelector((state) => state);
   const hours = doctorDetail.hours_json;
-  console.log(idDoctor, doctorDetail);
+  const totalHours = hoursWorking;
+  const totalTurns = turns;
 
   useEffect(() => {
     dispatch(getDetailDoctors(idDoctor));
     dispatch(getHours());
     setForm({ ...form, idDoctor: idDoctor });
-    //dispatch(getTurns());
+    dispatch(getTurns());
   }, [dispatch]);
 
   //const daySelect = selectedDate.toLocaleDateString();
   //const daysNumber = doctorDetail.work_days.map((e) => e.id);
-  let array = [];
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(postAppointment(form));
+    dispatch(postTurn(form));
   };
 
   const handleChangeCalendar = (date) => {
@@ -64,7 +62,7 @@ function Calendar() {
     setDateChange(date);
     setForm({ ...form, date: date.toLocaleDateString() });
     //validaciones
-    //setArrayTurns(searchTurnsAvailable(hours, turns, date)); //[] --> renderizar
+    setArrayTurns(searchTurnsAvailable(hours, totalHours, totalTurns, date));
   };
 
   const handleClick = (e) => {
@@ -73,14 +71,24 @@ function Calendar() {
 
   return (
     <>
-      <Center bgColor="teal.50" h="50vh">
+      <Center
+        h={{ base: "100vh", sm: "100vh", md: "80vh", lg: "70vh" }}
+        //https://parrocchiagrumello.it/wp-content/uploads/2018/03/97079_agenda1.jpg
+        bgImage="linear-gradient(
+      rgba(230, 255, 250, 0.7),
+      rgba(230, 255, 250, 0.7)
+    ),
+    url(https://parrocchiagrumello.it/wp-content/uploads/2018/03/97079_agenda1.jpg)"
+        bgRepeat="no-repeat"
+      >
         <Heading
           textAlign="center"
           as="h1"
-          fontSize={{ base: "xl", sm: "3xl", md: "4xl", lg: "5xl" }}
+          fontSize={{ base: "4xl", sm: "4xl", md: "5xl", lg: "5xl" }}
           m="1rem"
+          mt={{ base: "10rem", sm: "10rem", md: "8rem", lg: "5rem" }}
         >
-          Seleccionar turno
+          Turnos Online
         </Heading>
       </Center>
       <Box
@@ -92,29 +100,35 @@ function Calendar() {
           md: "column",
           lg: "row",
         }}
-        justifyContent="space-around"
+        justifyContent={{
+          base: "center",
+          sm: "center",
+          md: "center",
+          lg: "space-around",
+        }}
         alignItems={{
           base: "center",
           sm: "center",
           md: "center",
           lg: "flex-start",
         }}
-        border="1px solid"
       >
         <Box>
           <Text fontSize="2xl">
-            1. Seleccionar Doctor <Icon ml={1} as={FcCheckmark} />
+            1. Seleccionar profesional <Icon ml={1} as={FcCheckmark} />
           </Text>
           <Box
             m="1rem"
             display="flex"
             flexDirection="column"
             alignItems="center"
-            border="1px solid gray"
             w={{ base: "90vw", sm: "50vw", md: "50vw", lg: "25vw" }}
             p="1rem"
+            boxShadow={"2xl"}
+            rounded={"md"}
+            overflow={"hidden"}
           >
-            <Heading as="h6" size="md">
+            <Heading as="h6" size="md" m="1rem">
               {doctorDetail.name}
             </Heading>
             <Text>
@@ -122,16 +136,22 @@ function Calendar() {
             </Text>
             <Text>{doctorDetail.phone}</Text>
           </Box>
-          <Text></Text>
-        </Box>
-        <Box>
-          <Text fontSize="2xl">2. Seleccionar fecha</Text>
-
-          <Box
+          <Button
+            w="90%"
+            colorScheme={"teal"}
             m="1rem"
-            w={{ base: "90vw", sm: "50vw", md: "50vw", lg: "25vw" }}
-            border="1px solid red"
+            mt="4rem"
+            onClick={() => history.goBack(-1)}
           >
+            Cambiar profesional
+          </Button>
+        </Box>
+        <Box mt={{ base: "2rem", sm: "2rem", md: "2rem", lg: "0" }}>
+          <Text fontSize="2xl">
+            2. Seleccionar fecha {form.date && <Icon ml={1} as={FcCheckmark} />}
+          </Text>
+
+          <Box m="1rem" boxShadow={"2xl"} rounded={"md"}>
             <KeyboardDatePicker
               value={selectedDate}
               onChange={(date) => handleChangeCalendar(date)}
@@ -150,39 +170,45 @@ function Calendar() {
           </Box>
         </Box>
         <Box
-          border="1px solid red"
           w={{ base: "90vw", sm: "50vw", md: "50vw", lg: "25vw" }}
+          mt={{ base: "2rem", sm: "2rem", md: "2rem", lg: "0" }}
         >
-          <Text fontSize="2xl">3. Seleccionar hora</Text>
-          <Wrap justify={"center"} mt={"1rem"}>
-            {" "}
-            {horasPrueba &&
-              turnoPrueba &&
-              turnoPrueba.forEach((t) =>
-                horasPrueba.forEach((h) => {
-                  if (h.id === t) {
-                    array.push(h);
-                  }
-                })
-              )}
-            {array.map((h) => (
-              <WrapItem>
-                <Button
-                  onClick={(e) => handleClick(e)}
-                  value={h.id}
-                  name="idHour"
-                  colorScheme={"teal"}
-                  variant="outline"
-                  m="0.5rem"
-                >
-                  {h.hour}
-                </Button>
-              </WrapItem>
-            ))}
-          </Wrap>
+          {form.date && (
+            <Text fontSize="2xl">
+              3. Seleccionar hora{" "}
+              {form.idHour && <Icon ml={1} as={FcCheckmark} />}
+            </Text>
+          )}
+          {form.date && (
+            <Wrap justify={"center"} mt={"1rem"}>
+              {/*horasPrueba &&
+                turnoPrueba &&
+                turnoPrueba.forEach((t) =>
+                  horasPrueba.forEach((h) => {
+                    if (h.id === t) {
+                      array.push(h);
+                    }
+                  })
+                )*/}
+              {arrayTurns.map((h) => (
+                <WrapItem>
+                  <Button
+                    onClick={(e) => handleClick(e)}
+                    value={h.id}
+                    name="idHour"
+                    colorScheme={"teal"}
+                    variant="outline"
+                    m="0.5rem"
+                  >
+                    {h.hour}
+                  </Button>
+                </WrapItem>
+              ))}
+            </Wrap>
+          )}
         </Box>
       </Box>
-      <Button colorScheme={"teal"} onSubmit={(e) => handleSubmit(e)}>
+      <Button m="1rem" colorScheme={"teal"} onClick={(e) => handleSubmit(e)}>
         Confirmar Turno
       </Button>
     </>

@@ -25,19 +25,22 @@ export default function SearchBar({
     } else {
       alert("Por favor insertar un profesional");
     }
-    setPage(1);
-    setInput(1);
+    if (setPage && setInput) {
+      setPage(1);
+      setInput(1);
+    }
     setFilterActive(true);
     onOpen();
   }
 
   return (
-    <Box display="inline-flex" m="1rem">
+    <Box m="1rem" display="flex" flexDirection="row">
       <Input
         type="text"
         value={doctor}
         placeholder="Buscar Profesional"
         variant="flushed"
+        colorScheme={"teal"}
         onChange={(e) => handleChange(e)}
       />
       <IconButton

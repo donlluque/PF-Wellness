@@ -32,7 +32,7 @@ export default function NavStaff({ setInput, setPage }) {
   });
   const [filterActive, setFilterActive] = useState(false);
   const msgError = useSelector((state) => state.msgError);
-  console.log(msgError.type === "search");
+
   const { prepaidHealth } = useSelector((state) => state);
 
   useEffect(() => {
@@ -43,8 +43,10 @@ export default function NavStaff({ setInput, setPage }) {
   function handleFilter(e) {
     e.preventDefault();
     setValues({ ...values, [e.target.name]: e.target.value });
-    setPage(1);
-    setInput(1);
+    if (setPage && setInput) {
+      setPage(1);
+      setInput(1);
+    }
     setFilterActive(true);
     //MENSAJE
     setOverlay(<OverlayOne />);
@@ -72,56 +74,75 @@ export default function NavStaff({ setInput, setPage }) {
   const [overlay, setOverlay] = useState(<OverlayOne />);
 
   return (
-    <Box display={"inline-flex"}>
-      <SearchBar
-        setFilterActive={setFilterActive}
-        setInput={setInput}
-        setPage={setPage}
-        onOpen={onOpen}
-      />
-      {filterActive && (
-        <IconButton
-          m="1rem"
-          onClick={(e) => handleClick(e)}
-          aria-label="Search database"
-          icon={<GiAnticlockwiseRotation />}
-        />
-      )}
-      <Box display="inline-flex">
-        <Select
-          cursor="pointer"
-          m="1rem"
-          bg={"teal.300"}
-          color="teal.700"
-          onChange={(e) => handleFilter(e)}
-          value={values.especialidad}
-          name="especialidad"
-        >
-          <option value="All">Areas Generales</option>
-          <option value="Deportología">Deportología</option>
-          <option value="Fisioterapia y kinesiología">
-            Kinesiología y Fisioterapia
-          </option>
-          <option value="Osteopatía">Osteopatía</option>
-          <option value="Quiropraxia">Quiropraxia</option>
-          <option value="Reumatología">Reumatología</option>
-          <option value="Terapia de dolor">Terapia de Dolor</option>
-          <option value="Traumatología">Traumatología</option>
-        </Select>
+    <Box w="100%">
+      <Box
+        //w={{ sm: "", md: "", lg: "100vw" }}
+        display="flex"
+        flexDirection="column"
+        alignItems={"center"}
+      >
+        <Box w={{ base: "70%", sm: "70%", lg: "50%" }}>
+          <SearchBar
+            setFilterActive={setFilterActive}
+            setInput={setInput}
+            setPage={setPage}
+            onOpen={onOpen}
+          />
+        </Box>
 
-        <Select
-          m="1rem"
-          bg={"teal.300"}
-          color="teal.700"
-          onChange={(e) => handleFilter(e)}
-          value={values.obrasocial}
-          name="obrasocial"
-          cursor="pointer"
+        <Box
+          w={{ base: "70%", sm: "70%", lg: "50%" }}
+          display="flex"
+          flexDirection={{ base: "column", sm: "column", md: "row", lg: "row" }}
+          justifyContent="space-evenly"
+          alignItems={"center"}
         >
-          <option value="All">Prestaciones</option>
-          {prepaidHealth &&
-            prepaidHealth.map((e) => <option value={e.name}>{e.name}</option>)}
-        </Select>
+          <Select
+            m="1rem"
+            cursor="pointer"
+            bg={"teal.200"}
+            color="teal.700"
+            onChange={(e) => handleFilter(e)}
+            value={values.especialidad}
+            name="especialidad"
+          >
+            <option value="All">Areas Generales</option>
+            <option value="Deportología">Deportología</option>
+            <option value="Fisioterapia y kinesiología">
+              Kinesiología y Fisioterapia
+            </option>
+            <option value="Osteopatía">Osteopatía</option>
+            <option value="Quiropraxia">Quiropraxia</option>
+            <option value="Reumatología">Reumatología</option>
+            <option value="Terapia de dolor">Terapia de Dolor</option>
+            <option value="Traumatología">Traumatología</option>
+          </Select>
+
+          <Select
+            m="1rem"
+            bg={"teal.200"}
+            color="teal.700"
+            onChange={(e) => handleFilter(e)}
+            value={values.obrasocial}
+            name="obrasocial"
+            cursor="pointer"
+          >
+            <option value="All">Prestaciones</option>
+            {prepaidHealth &&
+              prepaidHealth.map((e) => (
+                <option value={e.name}>{e.name}</option>
+              ))}
+          </Select>
+          {filterActive && (
+            <IconButton
+              w="3rem"
+              m="1rem"
+              onClick={(e) => handleClick(e)}
+              aria-label="Search database"
+              icon={<GiAnticlockwiseRotation />}
+            />
+          )}
+        </Box>
       </Box>
       {msgError.type === "filter" && (
         <Modal

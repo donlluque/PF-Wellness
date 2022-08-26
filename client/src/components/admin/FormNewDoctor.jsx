@@ -34,8 +34,8 @@ import {
   getHours,
   getPrepaidHealth,
   postDoctors,
-} from "../redux/actions.js";
-import { validateForm } from "../hooks/validateForm.js";
+} from "../../redux/actions.js";
+import { validateForm } from "../../hooks/validateForm.js";
 
 /*const doctor = {
   hours: {
@@ -135,9 +135,8 @@ function FormNewDoctor() {
   };
   //seccion horas
   const handleChangeFormHours = (e) => {
-    console.log(e);
     if (e === "totalDay") {
-      setFormHours({ ...formHours, [e]: { start: "", end: "" } });
+      setFormHours({ [e]: { start: "", end: "" } });
     } else {
       setFormHours({
         [e]: {
@@ -189,7 +188,7 @@ function FormNewDoctor() {
   const handleDeleteDay = (day) => {
     setForm({
       ...form,
-      days: form.days.filter((c) => c !== day),
+      work_days: form.work_days.filter((c) => c !== day),
     });
   };
 
@@ -223,15 +222,16 @@ function FormNewDoctor() {
 
   return (
     <>
-      <Box display={{ md: "flex" }} justifyContent="center">
+      <Box>
         <Box display="flex" flexDirection="column" alignItems="center">
           <Image
             w="200px"
             src="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
             alt=""
           />
+          <Input type="file" w="50%" />
         </Box>
-        <Box m="1rem" w="50rem">
+        <Box m="1rem" w={{}}>
           <form>
             <FormControl>
               <FormLabel m="1rem" htmlFor="name">
@@ -494,7 +494,15 @@ function FormNewDoctor() {
                 ? form.work_days.map((e) => (
                     <List>
                       <ListItem key={e}>
-                        {e}
+                        {e === "1"
+                          ? "Lunes"
+                          : e === "2"
+                          ? "Martes"
+                          : e === "3"
+                          ? "Miércoles"
+                          : e === "4"
+                          ? "Jueves"
+                          : "Viernes"}
                         <Button onClick={() => handleDeleteDay(e)}>X</Button>
                       </ListItem>
                     </List>

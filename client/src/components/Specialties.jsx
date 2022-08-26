@@ -24,7 +24,7 @@ function Specialties() {
   return (
     <>
       <Center
-        h="100vh"
+        h={{ base: "125vh", sm: "125vh", md: "100vh", lg: "100vh" }}
         top={0}
         bgRepeat="no-repeat"
         bgSize="cover"
@@ -36,7 +36,13 @@ function Specialties() {
         mb={2}
         flexDirection="column"
       >
-        <Heading textAlign="center" as="h1" size="4xl" m="1rem">
+        <Heading
+          textAlign="center"
+          as="h1"
+          size="3xl"
+          m="1rem"
+          mt={{ base: "6rem", sm: "6rem", md: "4rem", lg: "1rem" }}
+        >
           Especialidades <Spacer /> Médicas
         </Heading>
         <Box>
@@ -77,12 +83,9 @@ function Specialties() {
               </List>
             </Container>
             <Image
-              
               alt="deportologia"
               src={deportologia}
-              
               borderRadius="0.5rem"
-              
               mr="5rem"
             />
           </Box>
@@ -123,12 +126,9 @@ function Specialties() {
               </List>
             </Container>
             <Image
-             
               alt="kineyfisio"
               src={kinesiologia}
-             
               borderRadius="0.5rem"
-             
               mr="5rem"
               maxW="30rem"
             />
@@ -159,13 +159,10 @@ function Specialties() {
               </List>
             </Container>
             <Image
-            
               alt="osteopatia"
               src={osteopatia}
               maxW="30rem"
-             
               borderRadius="0.5rem"
-              
               mr="5rem"
             />
           </Box>
@@ -207,13 +204,10 @@ function Specialties() {
               </List>
             </Container>
             <Image
-              
               alt="quiropraxia"
               src={quiropraxia}
-             
               borderRadius="0.5rem"
               minW="25rem"
-              
               mr="5rem"
             />
           </Box>

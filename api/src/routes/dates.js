@@ -1,37 +1,57 @@
 const { Router } = require("express");
 const router = Router();
-const { Dates, Doctor, Patient, Prepaid_health } = require("../db.js");
+const {
+  Dates1,
+  turno,
+  Patient,
+  Doctor,
+  Prepaid_health,
+  Hours_working,
+  Work_days,
+} = require("../db.js");
 
 router.post("/", async (req, res, next) => {
+  const { date, idHour, idMedico } = req.body;
   try {
-    const doctorId = "100"; //dato enviado desde el front
-    const patientId = "1"; //dato enviado desde el front
+    const doctorId = idMedico; //dato enviado desde el front
+    const patientId = "9"; //dato enviado desde el front
 
     const doctor = await Doctor.findOne({
       where: {
         id: doctorId,
       },
     });
+
+    // console.log("doctor")
     const patient = await Patient.findOne({
       where: {
         id: patientId,
       },
-    });
-
-    const date = await doctor.addPatient(patient);
-
-    const dateUpdate = await Dates.findOne({
-      where: {
-        id: date[0].id,
+      include: {
+        model: Prepaid_health,
+        throught: {
+          attributes: [],
+        },
       },
     });
 
-    dateUpdate.hora_inicial = "10:00";
-    dateUpdate.hora_final = "10:15";
-    dateUpdate.date = "17-08-2022";
-    dateUpdate.save();
+    const hoursWorking = await Hours_working.findOne({
+      where: {
+        id: idHour,
+      },
+    });
 
-    res.status(200).send(dateUpdate);
+    console.log(hoursWorking);
+
+    const turno = await Dates1.create({
+      date,
+    });
+
+    await turno.addDoctor(doctor);
+    await turno.addPatient(patient);
+    await turno.addHours_working(hoursWorking);
+
+    res.send(doctor);
   } catch (error) {
     next(error);
   }
@@ -39,16 +59,32 @@ router.post("/", async (req, res, next) => {
 
 router.get("/", async (req, res, next) => {
   try {
-    const nuevo = await Doctor.findAll({
+    const dates = await Dates1.findAll({
       include: [
         {
-          model: Prepaid_health,
+          model: Doctor,
+          include: [
+            {
+              model: Prepaid_health,
+            },
+            {
+              model: Work_days,
+            },
+          ],
           throught: {
             attributes: [],
           },
         },
         {
+          model: Hours_working,
+
+          attributes: { exclude: ["id"] },
+        },
+        {
           model: Patient,
+          include: {
+            model: Prepaid_health,
+          },
           throught: {
             attributes: [],
           },
@@ -56,9 +92,7 @@ router.get("/", async (req, res, next) => {
       ],
     });
 
-    const dates = await Dates.findAll();
-
-    res.send(nuevo);
+    res.send(dates);
   } catch (error) {
     next(error);
   }

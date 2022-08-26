@@ -161,7 +161,7 @@ export const getDays = () => {
   };
 };
 //APPOINTMENT
-export const postAppointment = (form) => {
+export const postTurn = (form) => {
   return function (dispatch) {
     return fetch(`${baseURL}/dates`, {
       method: "POST",
@@ -186,7 +186,7 @@ export const postAppointment = (form) => {
 
 export const getTurns = () => {
   return function (dispatch) {
-    fetch(`${baseURL}/`)
+    fetch(`${baseURL}/dates`)
       .then((res) => res.json())
       .then((data) => {
         dispatch({
@@ -216,6 +216,22 @@ export const getOnePatient = (id) => {
   };
 };
 
+export const getAllPatients = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/patients`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch({
+          type: "GET_PATIENTS",
+          payload: json,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 //POST PATIENT
 export const postPatient = (form) => {
   return function (dispatch) {
@@ -235,8 +251,6 @@ export const postPatient = (form) => {
       )
       .then((data) => {
         dispatch({ type: "CONFIRM_ACTION", payload: data });
-        dispatch({ type: "LOG_IN" });
-        dispatch({ type: "ID_USER", payload: data.id });
       })
       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
   };
@@ -269,47 +283,15 @@ export const putPatient = (data) => {
   };
 };
 
-//export const logOut = () => ({ type: "LOG_OUT" });
-
-//export const logIn = () => ({ type: "LOG_IN" });
-
-//sirve??
-/*export const getByUserName = (userName) => {
-  return function (dispatch) {
-    fetch(`${baseURL}/patients/user?userName=${userName}`)
-      .then((res) =>
-        res.ok
-          ? res.json()
-          : Promise.reject({
-              err: true,
-              status: res.status || "00",
-              statusText: `El nombre de usuario ${userName} no se encuentra registrado`,
-            })
-      )
-      .then((json) => {
-        dispatch({
-          type: "ID_USER",
-          payload: json.id,
-        });
-        dispatch({ type: "LOG_IN" });
-
-        dispatch({ type: "CONFIRM_ACTION", payload: json });
-      })
-      .catch((error) => {
-        dispatch({ type: "HANDLE_ERROR", payload: error });
-      });
-  };
-};*/
-
 export const dateUser = (payload) => {
   console.log(payload, "payloaaaaaaaaad");
   return async (dispatch) => {
     try {
       let response = await axios.post(`${baseURL}/checkuser`, payload);
-      console.log(response.data, "action date user");
+      console.log(response.data.length, "action date user");
       return dispatch({
         type: "CHECK_USER",
-        payload: response.data,
+        payload: response.data.length ? response.data[0] : response.data,
       });
     } catch (error) {
       console.log(error);
@@ -357,6 +339,7 @@ export const makePayment = (payload) => {
 //       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
 //   };
 // };
+
 
 export const cleanError = () => ({ type: "CLEAN_ERROR" });
 export const cleanConfirm = () => ({ type: "CLEAN_MSG" });

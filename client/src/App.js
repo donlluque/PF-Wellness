@@ -12,7 +12,7 @@ import UserProfile from "./components/UserProfile";
 import Turnos from "./components/Turnos";
 import Calendar from "./components/Calendar";
 
-import AdminProfile from "./components/AdminProfile";
+import AdminProfile from "./components/admin/AdminProfile";
 
 export default function App() {
   const { pathname } = useLocation();

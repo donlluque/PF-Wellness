@@ -24,7 +24,6 @@ router.use("/hours_working", hours_working);
 router.use("/filter", filtro);
 router.use("/dates", dates);
 router.use("/checkuser", checkUser);
-router.use("/pagos",pagos_unicos);
-router.use("/asociados",pagos_asociados);
-
+router.use("/pagos", pagos_unicos);
+router.use("/asociados", pagos_asociados);
 module.exports = router;

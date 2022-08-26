@@ -40,6 +40,7 @@ function FormUserProfile() {
   const date = new Date().toLocaleDateString().split("/").reverse();
   const [aux, setAux] = useState({ name, last_name, email, picture });
   const user = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
   console.log("user", user);
 
   const [form, setForm] = useState({

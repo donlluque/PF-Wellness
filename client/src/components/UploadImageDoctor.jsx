@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Image } from "@chakra-ui/react";
 
 
-function UploadImages(props) {
+function UploadImageDoctor(props) {
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
   
@@ -54,4 +54,4 @@ function UploadImages(props) {
   );
 }
 
-export default UploadImages;
+export default UploadImageDoctor;

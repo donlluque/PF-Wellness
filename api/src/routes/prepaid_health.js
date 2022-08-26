@@ -55,5 +55,17 @@ router.get("/:id", async (req, res, next) => {
     res.status(404).send("Error en el catch de prepaidID", error);
   }
 });
+
+router.put("/", async (req, res, next) => {
+  const{id,name}=req.body
+  const modificar= await Prepaid_health.findOne({
+    where:{
+      id:id
+    }
+  })
+
+  const nuevo = await modificar.update({name})
+  res.send(nuevo)
+})
 module.exports = router;
 

@@ -161,7 +161,7 @@ export const getDays = () => {
   };
 };
 //APPOINTMENT
-export const postAppointment = (form) => {
+export const postTurn = (form) => {
   return function (dispatch) {
     return fetch(`${baseURL}/dates`, {
       method: "POST",
@@ -186,7 +186,7 @@ export const postAppointment = (form) => {
 
 export const getTurns = () => {
   return function (dispatch) {
-    fetch(`${baseURL}/`)
+    fetch(`${baseURL}/dates`)
       .then((res) => res.json())
       .then((data) => {
         dispatch({

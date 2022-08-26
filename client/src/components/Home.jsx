@@ -20,7 +20,7 @@ function Home() {
   return (
     <>
       <Center
-        h="100vh"
+        h={{ base: "125vh", sm: "125vh", md: "100vh", lg: "100vh" }}
         bgRepeat="no-repeat"
         bgSize="cover"
         top={0}
@@ -37,6 +37,7 @@ function Home() {
           as="h1"
           fontSize={{ base: "2xl", sm: "4xl", md: "5xl", lg: "6xl" }}
           m="1rem"
+          mt={{ base: "6rem", sm: "6rem", md: "4rem", lg: "1rem" }}
         >
           Clínica de fisioterapia y
           <Spacer /> rehabilitación física

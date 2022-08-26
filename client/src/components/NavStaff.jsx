@@ -72,56 +72,77 @@ export default function NavStaff({ setInput, setPage }) {
   const [overlay, setOverlay] = useState(<OverlayOne />);
 
   return (
-    <Box display={"inline-flex"}>
-      <SearchBar
-        setFilterActive={setFilterActive}
-        setInput={setInput}
-        setPage={setPage}
-        onOpen={onOpen}
-      />
-      {filterActive && (
-        <IconButton
-          m="1rem"
-          onClick={(e) => handleClick(e)}
-          aria-label="Search database"
-          icon={<GiAnticlockwiseRotation />}
-        />
-      )}
-      <Box display="inline-flex">
-        <Select
-          cursor="pointer"
-          m="1rem"
-          bg={"teal.300"}
-          color="teal.700"
-          onChange={(e) => handleFilter(e)}
-          value={values.especialidad}
-          name="especialidad"
-        >
-          <option value="All">Areas Generales</option>
-          <option value="Deportología">Deportología</option>
-          <option value="Fisioterapia y kinesiología">
-            Kinesiología y Fisioterapia
-          </option>
-          <option value="Osteopatía">Osteopatía</option>
-          <option value="Quiropraxia">Quiropraxia</option>
-          <option value="Reumatología">Reumatología</option>
-          <option value="Terapia de dolor">Terapia de Dolor</option>
-          <option value="Traumatología">Traumatología</option>
-        </Select>
+    <Box>
+      <Box
+        w="100vw"
+        display="flex"
+        flexDirection="column"
+        alignItems={"center"}
+      >
+        <Box w={{ base: "80%", lg: "50%" }}>
+          <SearchBar
+            setFilterActive={setFilterActive}
+            setInput={setInput}
+            setPage={setPage}
+            onOpen={onOpen}
+          />
+        </Box>
 
-        <Select
-          m="1rem"
-          bg={"teal.300"}
-          color="teal.700"
-          onChange={(e) => handleFilter(e)}
-          value={values.obrasocial}
-          name="obrasocial"
-          cursor="pointer"
+        <Box
+          w={{ sm: "70%", lg: "50%" }}
+          display="flex"
+          flexDirection={{ base: "column", sm: "column", md: "row", lg: "row" }}
+          justifyContent="space-evenly"
+          alignItems={"center"}
         >
-          <option value="All">Prestaciones</option>
-          {prepaidHealth &&
-            prepaidHealth.map((e) => <option value={e.name}>{e.name}</option>)}
-        </Select>
+          <Select
+            m="1rem"
+            ml={{ sm: 0 }}
+            cursor="pointer"
+            bg={"teal.200"}
+            color="teal.700"
+            onChange={(e) => handleFilter(e)}
+            value={values.especialidad}
+            name="especialidad"
+          >
+            <option value="All">Areas Generales</option>
+            <option value="Deportología">Deportología</option>
+            <option value="Fisioterapia y kinesiología">
+              Kinesiología y Fisioterapia
+            </option>
+            <option value="Osteopatía">Osteopatía</option>
+            <option value="Quiropraxia">Quiropraxia</option>
+            <option value="Reumatología">Reumatología</option>
+            <option value="Terapia de dolor">Terapia de Dolor</option>
+            <option value="Traumatología">Traumatología</option>
+          </Select>
+
+          <Select
+            m="1rem"
+            ml={{ sm: 0 }}
+            bg={"teal.200"}
+            color="teal.700"
+            onChange={(e) => handleFilter(e)}
+            value={values.obrasocial}
+            name="obrasocial"
+            cursor="pointer"
+          >
+            <option value="All">Prestaciones</option>
+            {prepaidHealth &&
+              prepaidHealth.map((e) => (
+                <option value={e.name}>{e.name}</option>
+              ))}
+          </Select>
+          {filterActive && (
+            <IconButton
+              w="3rem"
+              m="1rem"
+              onClick={(e) => handleClick(e)}
+              aria-label="Search database"
+              icon={<GiAnticlockwiseRotation />}
+            />
+          )}
+        </Box>
       </Box>
       {msgError.type === "filter" && (
         <Modal

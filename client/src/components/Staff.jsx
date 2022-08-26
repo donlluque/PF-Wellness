@@ -26,23 +26,26 @@ function Staff() {
   return (
     <>
       <Center
-        h="100vh"
+        h={{ base: "125vh", sm: "125vh", md: "100vh", lg: "100vh" }}
         top={0}
-        bgColor="teal.50"
-        pb={2}
         bgRepeat="no-repeat"
         bgSize="cover"
         bgImage="linear-gradient(
-   rgba(230, 255, 250, 0.5),
-   rgba(230, 255, 250, 0.5)
+   rgba(230, 255, 250, 0.8),
+   rgba(230, 255, 250, 0.8)
  ),
  url(https://st.depositphotos.com/1518767/1415/i/450/depositphotos_14150393-stock-photo-doctors-with-nurses-with-arms.jpg)"
         flexDirection="column"
       >
-        <Heading as="h1" size="4xl" m="1rem">
+        <Heading
+          as="h1"
+          size="4xl"
+          m="1rem"
+          mt={{ base: "6rem", sm: "6rem", md: "4rem", lg: "1rem" }}
+        >
           Staff
         </Heading>
-        <Box>
+        <Box w={{ base: "75%", sm: "75%", md: "60%" }} textAlign="center">
           <Text as="i" fontSize="xl">
             "El bienestar y la salud son un deber, de otra manera no podriamos
             mantener nuestra mente fuerte y clara"
@@ -50,7 +53,7 @@ function Staff() {
         </Box>
       </Center>
 
-      <Box bg="#EDF2F7" justifyContent="center">
+      <Box bg="#fafbfd" justifyContent="center">
         <Center>
           <NavStaff setInput={setInput} setPage={setPage} />
         </Center>
@@ -62,26 +65,24 @@ function Staff() {
         ) : (
           false
         )}
-        {allDoctors &&
-          allDoctors
-            .slice((page - 1) * forPage, (page - 1) * forPage + forPage)
-            .map((doc) => {
-              return (
-                <Wrap display="inline-flex" ml={"3rem"}>
+        <Wrap justify={"center"}>
+          {allDoctors &&
+            allDoctors
+              .slice((page - 1) * forPage, (page - 1) * forPage + forPage)
+              .map((doc) => {
+                return (
                   <WrapItem>
-                    <Box>
-                      <DoctorCard
-                        name={doc.name}
-                        picture={doc.picture}
-                        general_area={doc.general_area}
-                        especialidades_id={doc.especialidades_id}
-                        id={doc.id}
-                      />
-                    </Box>
+                    <DoctorCard
+                      name={doc.name}
+                      picture={doc.picture}
+                      general_area={doc.general_area}
+                      especialidades_id={doc.especialidades_id}
+                      id={doc.id}
+                    />
                   </WrapItem>
-                </Wrap>
-              );
-            })}
+                );
+              })}
+        </Wrap>
         <Pagination
           page={page}
           setPage={setPage}

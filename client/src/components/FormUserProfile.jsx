@@ -60,8 +60,8 @@ function FormUserProfile() {
 
   console.log("form", form);
 
-  var perfil = JSON.parse(localStorage.getItem("user"));
-  console.log("perfil", perfil);
+ // var perfil = JSON.parse(window.localStorage.getItem("user"));
+ // console.log("perfil", perfil);
   console.log(form, "soy user ");
   const styleDate = (date) => {
     if (date[1].length === 1) {
@@ -112,7 +112,7 @@ function FormUserProfile() {
     //   return alert("Completa los campos");
     // } else {
     // localStorage.removeItem("user");
-    localStorage.setItem("user", JSON.stringify(form));
+    window.localStorage.setItem("user", JSON.stringify(form));
     dispatch(putPatient(form));
     setOverlay(<OverlayOne />);
     onOpen();
@@ -174,7 +174,7 @@ function FormUserProfile() {
                 onBlur={(e) => handleBlur(e)}
                 name="name"
                 placeholder={
-                  !perfil.name ? "Escribe nombre completo" : perfil.name
+                  !form.name ? "Escribe nombre completo" : form.name
                 }
               />
               {/* {errors.name && (
@@ -189,9 +189,9 @@ function FormUserProfile() {
                 onChange={(e) => handleChange(e)}
                 name="last_name"
                 placeholder={
-                  !perfil.last_name
+                  !form.last_name
                     ? "Escribe nombre completo"
-                    : perfil.last_name
+                    : form.last_name
                 }
               />
             </FormControl>
@@ -201,7 +201,7 @@ function FormUserProfile() {
               </FormLabel>
               <Input
                 disabled
-                value={perfil.email}
+                value={form.email}
                 onChange={(e) => handleChange(e)}
                 type="email"
                 name="email"
@@ -212,13 +212,13 @@ function FormUserProfile() {
                 Fecha de nacimiento
               </FormLabel>
               <Input
-                value={perfil.birthday}
+                value={form.birthday}
                 onChange={(e) => handleChange(e)}
                 type="date"
                 max={styleDate(date)}
                 name="birthday"
                 // placeholder={
-                //   !perfil.birthday ? "Escribe nombre completo" : perfil.birthday
+                //   !form.birthday ? "Escribe nombre completo" : form.birthday
                 // }
               />
             </FormControl>
@@ -229,12 +229,12 @@ function FormUserProfile() {
               <InputGroup>
                 <InputLeftAddon children="DNI" />
                 <Input
-                  // value={perfil.document}
+                  // value={form.document}
                   onChange={(e) => handleChange(e)}
                   type="number"
                   name="document"
                   placeholder={
-                    !perfil.document ? "Nro de documento" : perfil.document
+                    !form.document ? "Nro de documento" : form.document
                   }
                 />
               </InputGroup>
@@ -245,11 +245,11 @@ function FormUserProfile() {
               </FormLabel>
 
               <Input
-                // value={perfil.phone}
+                // value={form.phone}
                 onChange={(e) => handleChange(e)}
                 type="tel"
                 name="phone"
-                placeholder={!perfil.phone ? "Nro de telefono" : perfil.phone}
+                placeholder={!form.phone ? "Nro de telefono" : form.phone}
               />
             </FormControl>
             <FormControl isDisabled={!putActive} isInvalid={errors.nationality}>
@@ -257,11 +257,11 @@ function FormUserProfile() {
                 Nacionalidad
               </FormLabel>
               <Input
-                // value={perfil.nationality}
+                // value={form.nationality}
                 onChange={(e) => handleChange(e)}
                 name="nationality"
                 placeholder={
-                  !perfil.nationality ? "Nacionalidad" : perfil.nationality
+                  !form.nationality ? "Nacionalidad" : form.nationality
                 }
               />
             </FormControl>
@@ -271,11 +271,11 @@ function FormUserProfile() {
               </FormLabel>
 
               <Input
-                // value={perfil.direction}
+                // value={form.direction}
                 onChange={(e) => handleChange(e)}
                 name="direction"
                 placeholder={
-                  !perfil.direction ? "Calle, N°, depto" : perfil.direction
+                  !form.direction ? "Calle, N°, depto" : form.direction
                 }
               />
             </FormControl>
@@ -284,7 +284,7 @@ function FormUserProfile() {
                 Obra social
               </FormLabel>
               <Select
-                // value={perfil.prepaid_health}
+                // value={form.prepaid_health}
                 onChange={(e) => handleChange(e)}
                 name="prepaid_health"
               >
@@ -321,7 +321,7 @@ function FormUserProfile() {
             >
               {overlay}
               <ModalContent bgColor="green.50">
-                <ModalHeader color="teal.600">Perfil actualizado</ModalHeader>
+                <ModalHeader color="teal.600">form actualizado</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                   <Text color="teal.600">

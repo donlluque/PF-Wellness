@@ -10,14 +10,16 @@ mercadopago.configure({
 
 router.post("/", async (req, res, next) => {
 
+	console.log(req.body)
+
 	let preference = {
 		items: [	// Array de Objetos, cada objeto 1 producto que se compra.
 			{
 				title: req.body.title,
 				quantity: 1,
 				currency_id: "ARS",
-				unit_price: parseInt(req.body.price), //viene desde el front como "price"
-				//unit_price: parseInt(req.body.price), TIENE QUE SER UN NUMERO por eso arriba esta el parseInt por si viene un STRING
+				//unit_price: req.body.price, //viene desde el front como "price"
+				unit_price: parseInt(req.body.price), //TIENE QUE SER UN NUMERO por eso arriba esta el parseInt por si viene un STRING
 			},
 		],
 		back_urls: {
@@ -30,8 +32,9 @@ router.post("/", async (req, res, next) => {
 	mercadopago.preferences.create(preference)
     .then(function(response){
 
-        res.redirect(response.body.init_point);	// REDIRECCIONA a la pagina de MP para pagar
+        res.status(200).json(response.body.init_point);	// REDIRECCIONA a la pagina de MP para pagar
 		console.log(response.body.init_point)
+		//console.log(response)
 
     }).catch(function(error){
         console.log(error);

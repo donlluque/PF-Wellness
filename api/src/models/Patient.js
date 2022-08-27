@@ -37,7 +37,7 @@ module.exports = (sequelize) => {
       },
 
       document: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
       },
 
       type_document: {

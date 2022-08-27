@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import UserProfile from "./components/UserProfile";
 import Turnos from "./components/Turnos";
 import Calendar from "./components/Calendar";
+import MakePayments from "./components/MakePayments";
 
 import AdminProfile from "./components/admin/AdminProfile";
 
@@ -51,6 +52,9 @@ export default function App() {
         <Route exact path="/admin">
           <AdminProfile />
         </Route>
+        <Route exact path="/payments">
+          <MakePayments />
+         </Route>
         <Route exact path="*">
           <Error />
         </Route>

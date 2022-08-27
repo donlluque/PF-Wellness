@@ -36,6 +36,7 @@ import {
   postDoctors,
 } from "../../redux/actions.js";
 import { validateForm } from "../../hooks/validateForm.js";
+import UploadImageDoctor from "../UploadImageDoctor";
 
 /*const doctor = {
   hours: {
@@ -224,12 +225,13 @@ function FormNewDoctor() {
     <>
       <Box>
         <Box display="flex" flexDirection="column" alignItems="center">
-          <Image
+          <UploadImageDoctor />
+          {/* <Image
             w="200px"
             src="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
             alt=""
           />
-          <Input type="file" w="50%" />
+          <Input type="file" w="50%" /> */}
         </Box>
         <Box m="1rem" w={{}}>
           <form>

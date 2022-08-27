@@ -13,10 +13,13 @@ import {
   import { useDispatch} from "react-redux";
   import { useState } from "react";
   import {makePayment} from "../redux/actions";
+  import axios from "axios";
+  import { baseURL } from "../index.js";
 
 
 
  function MakePayments(){
+
     const dispatch = useDispatch();
     const [input, setInput] = useState([{
         title: "",
@@ -25,14 +28,27 @@ import {
         price: "", 
       }]);
     console.log(input)
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        dispatch(makePayment(input));
-      };
+
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+   
+      try {
+          const generarLink = await axios.post(`${baseURL}/pagos`, input);
+
+          window.location.href=generarLink.data
+      }
+      catch (error){
+      console.log(error)
+      }
+    }
+
     const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
 
-      };
+    };
+
+
     return(
         <>
       <Center

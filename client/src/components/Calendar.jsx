@@ -19,6 +19,7 @@ import {
   getHours,
   getTurns,
   postTurn,
+  makePayment
 } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";

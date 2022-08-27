@@ -301,7 +301,7 @@ export const dateUser = (payload) => {
 };
 
 export const makePayment = (payload) => {
- 
+ console.log(payload, "soy el payload makePayment")
   return async (dispatch) => {
     try {
       let response = await axios.post(`${baseURL}/pagos`, payload);

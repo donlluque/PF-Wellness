@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Patient } = require("../db.js");
+const { Patient, Prepaid_health } = require("../db.js");
 
 router.post("/", async (req, res, next) => {
   // try {
@@ -9,6 +9,9 @@ router.post("/", async (req, res, next) => {
 
   const patient = await Patient.findOne({
     where: { email: email },
+    include: {
+      model: Prepaid_health,
+    },
   });
 
   console.log(patient, "soy patient");

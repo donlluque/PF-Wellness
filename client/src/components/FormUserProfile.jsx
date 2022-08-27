@@ -33,6 +33,7 @@ function FormUserProfile() {
   const [image, setImage] = useState("");
   const [putActive, setPutActive] = useState(false);
   const dispatch = useDispatch();
+
   console.log(id);
   const { patientDetail, msgConfirm } = useSelector((state) => state);
   const { name, last_name, email, picture } = patientDetail;
@@ -43,6 +44,7 @@ function FormUserProfile() {
   const [loading, setLoading] = useState(false);
   localStorage.setItem("user", JSON.stringify(user));
   var perfil = JSON.parse(localStorage.getItem("user"));
+
 
   const [form, setForm] = useState({
     id,

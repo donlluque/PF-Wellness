@@ -40,7 +40,9 @@ function FormUserProfile() {
   const date = new Date().toLocaleDateString().split("/").reverse();
   const [aux, setAux] = useState({ name, last_name, email, picture });
   const user = useSelector((state) => state.user);
-  console.log("user", user);
+  const [loading, setLoading] = useState(false);
+  localStorage.setItem("user", JSON.stringify(user));
+  var perfil = JSON.parse(localStorage.getItem("user"));
 
   const [form, setForm] = useState({
     id,
@@ -56,23 +58,6 @@ function FormUserProfile() {
     picture: "",
   });
 
-
-//   console.log(id);
-//   const { patientDetail, msgConfirm } = useSelector((state) => state);
-//   const { name, last_name, email, picture } = patientDetail;
-//   const [errors, setErrors] = useState({});
-//   const date = new Date().toLocaleDateString().split("/").reverse();
-//   const [aux, setAux] = useState({ name, last_name, email, picture });
-//   const user = useSelector((state) => state.user);
-//   const [loading, setLoading] = useState(false);
-//   console.log(user, "user de Form");
-
-  localStorage.setItem("user", JSON.stringify(user));
-  var perfil = JSON.parse(localStorage.getItem("user"));
-
-  console.log(perfil, "PERFIL");
-
-
   const styleDate = (date) => {
     if (date[1].length === 1) {
       date[1] = "0" + date[1];
@@ -80,27 +65,26 @@ function FormUserProfile() {
     return date.join("-");
   };
 
-  const UploadI = async (e) => {
-    const files = e.target.files;
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "Wellness");
-    setLoading(true);
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dtbkiy2fk/image/upload",
-      {
-        method: "POST",
-        body: data,
-      }
-    );
-    const file = await res.json();
-    console.log(file, "RESPONDER");
-    setImage(file.secure_url);
-    setLoading(false);
-    setForm({ ...form, [e.target.name]: file.secure_url });
-  };
+  // const UploadI = async (e) => {
+  //   const files = e.target.files;
+  //   const data = new FormData();
+  //   data.append("file", files[0]);
+  //   data.append("upload_preset", "Wellness");
+  //   setLoading(true);
+  //   const res = await fetch(
+  //     "https://api.cloudinary.com/v1_1/dtbkiy2fk/image/upload",
+  //     {
+  //       method: "POST",
+  //       body: data,
+  //     }
+  //   );
+  //   const file = await res.json();
+  //   console.log(file, "RESPONDER");
+  //   setImage(file.secure_url);
+  //   setLoading(false);
+  //   setForm({ ...form, [e.target.name]: file.secure_url });
+  // };
 
-  console.log("renderizado", name, last_name, email, picture);
   useEffect(() => {
     // if (Object.keys(user).length) {
     //   setForm({
@@ -122,6 +106,7 @@ function FormUserProfile() {
     // } else {
     //   setForm({ ...form, name, last_name, email, id });
     // }
+
     dispatch(getOnePatient(id));
     // setAux(!aux);
   }, [dispatch]);
@@ -151,6 +136,21 @@ function FormUserProfile() {
   };
 
   const handlePutActive = () => {
+    setForm({
+      ...form,
+      email: perfil.email,
+      name: perfil.name,
+      last_name: perfil.last_name,
+      birthday: perfil.birthday,
+      document: perfil.document,
+      phone: perfil.phone,
+      nationality: perfil.nationality,
+      direction: perfil.direction,
+      // prepaid_health: patientDetail.prepaid_healths[0].name,
+      picture: perfil.picture,
+    });
+    console.log(patientDetail.prepaid_healths[0].name, "obra social");
+    console.log(form, "form");
     setPutActive(true);
   };
 
@@ -192,7 +192,7 @@ function FormUserProfile() {
         </Box>
         <Box m="1rem" w="50rem">
           <FormControl>
-            <FormControl isDisabled={!putActive}>
+            {/* <FormControl isDisabled={!putActive}>
               <Input
                 name="picture"
                 type="file"
@@ -208,15 +208,16 @@ function FormUserProfile() {
                   borderRadius="full"
                   boxSize="150px"
                   src={perfil.picture}
-                  fallbackSrc={user.picture}
+                  // fallbackSrc={user.picture}
                 />
               )}
-            </FormControl>
+            </FormControl> */}
             <FormControl isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="name">
                 Nombre
               </FormLabel>
               <Input
+                value={form.name}
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
                 name="name"
@@ -235,10 +236,9 @@ function FormUserProfile() {
               <Input
                 onChange={(e) => handleChange(e)}
                 name="last_name"
+                value={form.last_name}
                 placeholder={
-                  !perfil.last_name
-                    ? "Escribe nombre completo"
-                    : perfil.last_name
+                  !perfil.last_name ? "Escribe apellidos" : perfil.last_name
                 }
               />
             </FormControl>
@@ -259,14 +259,11 @@ function FormUserProfile() {
                 Fecha de nacimiento
               </FormLabel>
               <Input
-                value={perfil.birthday}
+                value={form.birthday}
                 onChange={(e) => handleChange(e)}
                 type="date"
                 max={styleDate(date)}
                 name="birthday"
-                // placeholder={
-                //   !perfil.birthday ? "Escribe nombre completo" : perfil.birthday
-                // }
               />
             </FormControl>
             <FormControl isDisabled={!putActive} isInvalid={errors.document}>
@@ -276,7 +273,7 @@ function FormUserProfile() {
               <InputGroup>
                 <InputLeftAddon children="DNI" />
                 <Input
-                  // value={perfil.document}
+                  value={form.document}
                   onChange={(e) => handleChange(e)}
                   type="number"
                   name="document"
@@ -292,7 +289,7 @@ function FormUserProfile() {
               </FormLabel>
 
               <Input
-                // value={perfil.phone}
+                value={form.phone}
                 onChange={(e) => handleChange(e)}
                 type="tel"
                 name="phone"
@@ -304,7 +301,7 @@ function FormUserProfile() {
                 Nacionalidad
               </FormLabel>
               <Input
-                // value={perfil.nationality}
+                value={form.nationality}
                 onChange={(e) => handleChange(e)}
                 name="nationality"
                 placeholder={
@@ -318,7 +315,7 @@ function FormUserProfile() {
               </FormLabel>
 
               <Input
-                // value={perfil.direction}
+                value={form.direction}
                 onChange={(e) => handleChange(e)}
                 name="direction"
                 placeholder={
@@ -331,7 +328,7 @@ function FormUserProfile() {
                 Obra social
               </FormLabel>
               <Select
-                // value={perfil.prepaid_health}
+                value={form.prepaid_health}
                 onChange={(e) => handleChange(e)}
                 name="prepaid_health"
               >

@@ -9,12 +9,20 @@ import {
 } from "@chakra-ui/react";
 import NavStaff from "./NavStaff";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Pagination from "./Pagination";
 import DoctorCard from "./DoctorCard";
+import { useEffect } from "react";
+import { getHours } from "../redux/actions";
 
 function Turnos() {
   const allDoctors = useSelector((state) => state.doctors);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getHours());
+  }, [dispatch]);
+
   //PAGINADO
   const [page, setPage] = useState(1);
   const [forPage] = useState(6);

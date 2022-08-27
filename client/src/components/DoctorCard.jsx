@@ -98,6 +98,7 @@ export default function DoctorCard({
           </Button>
           <Link to={`/calendar/${id}`}>
             <Button
+              onClick={() => dispatch(getDetailDoctors(id))}
               mt={"1rem"}
               colorScheme="teal"
               variant="solid"

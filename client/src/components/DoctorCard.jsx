@@ -21,7 +21,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import DoctorDetail from "./DoctorDetail";
-import { getDetailDoctors } from "../redux/actions";
+import { getActiveDate, getDetailDoctors } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
 export default function DoctorCard({
@@ -98,7 +98,10 @@ export default function DoctorCard({
           </Button>
           <Link to={`/calendar/${id}`}>
             <Button
-              onClick={() => dispatch(getDetailDoctors(id))}
+              onClick={() => {
+                dispatch(getDetailDoctors(id));
+                //dispatch(getActiveDate(id));
+              }}
               mt={"1rem"}
               colorScheme="teal"
               variant="solid"
@@ -115,7 +118,7 @@ export default function DoctorCard({
           </Link>
         </Box>
       </Box>
-
+      {/*Modal details doctor*/}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent bg="#EBF8FF">

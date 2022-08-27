@@ -19,13 +19,14 @@ import {
   getHours,
   getTurns,
   postTurn,
-  makePayment
+  makePayment,
+  getActiveDate,
 } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { FcCheckmark } from "react-icons/fc";
 import { searchTurnsAvailable } from "./validateTurn";
-import { addDays, isWeekend } from "date-fns";
+import { addDays, isWeekend, setDate } from "date-fns";
 
 function Calendar() {
   const history = useHistory();
@@ -35,10 +36,12 @@ function Calendar() {
   const dispatch = useDispatch();
   const { idDoctor } = useParams();
   const { doctorDetail, hoursWorking, turns } = useSelector((state) => state);
+  //const activeDate = useSelector((state) => state.activeDate);
   const hours = doctorDetail.hours_json;
   const totalHours = hoursWorking;
   const totalTurns = turns;
   const dias = doctorDetail.work_days?.map((e) => parseInt(e.id));
+  const [selectedDate, setDateChange] = useState(new Date());
 
   //array auxiliar que cambia segun dias del medico
   let aux = [0, 1, 2, 3, 4, 5, null];
@@ -56,7 +59,7 @@ function Calendar() {
     }
   };
 
-  const dia = initialDate(aux);
+  //const dia = initialDate(aux);
 
   //funcion que suma un dia a la fecha que se le pasa como parametro
   function addDaysToDate(date) {
@@ -70,9 +73,6 @@ function Calendar() {
     setForm({ ...form, idDoctor: idDoctor });
     dispatch(getTurns());
   }, [dispatch]);
-
-  const [selectedDate, setDateChange] = useState(dia);
-  console.log("fecha", selectedDate);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -180,7 +180,7 @@ function Calendar() {
                 value={selectedDate}
                 onChange={(date) => handleChangeCalendar(date)}
                 disablePast
-                autoOk
+                autoOk="false"
                 variant="static"
                 openTo="date"
                 shouldDisableDate={(date) =>

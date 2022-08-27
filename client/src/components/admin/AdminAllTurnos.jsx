@@ -6,7 +6,6 @@ import {
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   Button,
   Icon,
@@ -23,22 +22,21 @@ import { useEffect } from "react";
 import { MdOutlineEditNote } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPatients, getOnePatient } from "../../redux/actions";
-import PatientDetail from "../patient/PatientDetail";
+import { getTurns } from "../../redux/actions";
 
-function AdminAllPatients() {
+function AdminAllTurnos() {
   const dispatch = useDispatch();
-  const { patients } = useSelector((state) => state);
+  const { turns } = useSelector((state) => state);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-    dispatch(getAllPatients());
+    dispatch(getTurns());
   }, [dispatch]);
 
   const handleClick = (id) => {
     console.log(id);
-    dispatch(getOnePatient(id));
+    //dispatch(getOnePatient(id));
     onOpen();
   };
 
@@ -48,24 +46,22 @@ function AdminAllPatients() {
         <Table size="sm">
           <Thead>
             <Tr>
-              <Th isNumeric>ID</Th>
-              <Th></Th>
-              <Th>Nombre</Th>
-              <Th>Apellido</Th>
-              <Th>Email</Th>
+              <Th>Id</Th>
+              <Th>Fecha</Th>
+              <Th>Hora</Th>
+              <Th>Doctor</Th>
+              <Th>Paciente</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {patients &&
-              patients.map((e) => (
+            {turns &&
+              turns.map((e) => (
                 <Tr>
                   <Td isNumeric>{e.id}</Td>
-                  <Td>
-                    <Image src={e.picture} w="3rem" h="3rem" rounded={"50%"} />
-                  </Td>
-                  <Td>{e.name}</Td>
-                  <Td>{e.last_name}</Td>
-                  <Td>{e.email}</Td>
+                  <Td>{e.date}</Td>
+                  <Td>{e.hours_workings[0].hour}</Td>
+                  <Td>{e.doctors[0].name}</Td>
+                  <Td>paciente</Td>
                   <Td>
                     <Button
                       m="0.5rem"
@@ -107,7 +103,8 @@ function AdminAllPatients() {
           </ModalHeader>
 
           <ModalBody>
-            <PatientDetail id={patients.id} />
+            PROXIMAMENTE
+            {/*<PatientDetail id={patients.id} />*/}
           </ModalBody>
 
           <ModalFooter>
@@ -121,4 +118,4 @@ function AdminAllPatients() {
   );
 }
 
-export default AdminAllPatients;
+export default AdminAllTurnos;

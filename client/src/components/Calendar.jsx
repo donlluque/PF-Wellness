@@ -1,7 +1,7 @@
 //import ReactDatePicker from "react-datepicker";
 //import "react-datepicker/dist/react-datepicker.css";
 import React, { Fragment, useEffect, useState } from "react";
-import { KeyboardDatePicker } from "@material-ui/pickers";
+import { DatePicker } from "@material-ui/pickers";
 //import { createTheme } from "@material-ui/core/styles";
 //import { ThemeProvider } from "@material-ui/styles";
 import {
@@ -24,25 +24,45 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { FcCheckmark } from "react-icons/fc";
-import {
-  searchTurnByDate,
-  searchTurnsAvailable,
-  validateRange,
-} from "./validateTurn";
+import { searchTurnsAvailable } from "./validateTurn";
+import { addDays, isWeekend } from "date-fns";
 
 function Calendar() {
   const history = useHistory();
-  console.log(history);
+
   const [form, setForm] = useState({});
-  const [selectedDate, setDateChange] = useState(new Date());
-  const [arrayTurns, setArrayTurns] = useState([]); //[4,5,6,7,10,11,12]
+  const [arrayTurns, setArrayTurns] = useState([]);
   const dispatch = useDispatch();
   const { idDoctor } = useParams();
   const { doctorDetail, hoursWorking, turns } = useSelector((state) => state);
   const hours = doctorDetail.hours_json;
   const totalHours = hoursWorking;
   const totalTurns = turns;
-  const dias = doctorDetail.work_days?.map((e) => e.id);
+  const dias = doctorDetail.work_days?.map((e) => parseInt(e.id));
+
+  //array auxiliar que cambia segun dias del medico
+  let aux = [0, 1, 2, 3, 4, 5, null];
+  dias?.forEach((e) => (aux[e] = null)); //--> define como null si el medico trabaja
+
+  //funcion que evalua si el dia actual esta deshabilitado --> retorna el dia proxima habilitado
+  const initialDate = (aux) => {
+    let date = new Date();
+    for (let i = 0; i < aux.length; i++) {
+      if (aux[date.getDay()] === null) {
+        return date;
+      } else {
+        date = addDaysToDate(date);
+      }
+    }
+  };
+
+  const dia = initialDate(aux);
+
+  //funcion que suma un dia a la fecha que se le pasa como parametro
+  function addDaysToDate(date) {
+    date.setDate(date.getDate() + 1);
+    return date;
+  }
 
   useEffect(() => {
     dispatch(getDetailDoctors(idDoctor));
@@ -51,9 +71,9 @@ function Calendar() {
     dispatch(getTurns());
   }, [dispatch]);
 
-  //const daySelect = selectedDate.toLocaleDateString();
+  const [selectedDate, setDateChange] = useState(dia);
+  console.log("fecha", selectedDate);
 
-  console.log("diaq", dias);
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postTurn(form));
@@ -148,73 +168,65 @@ function Calendar() {
             Cambiar profesional
           </Button>
         </Box>
-        <Box mt={{ base: "2rem", sm: "2rem", md: "2rem", lg: "0" }}>
-          <Text fontSize="2xl">
-            2. Seleccionar fecha {form.date && <Icon ml={1} as={FcCheckmark} />}
-          </Text>
-
-          <Box m="1rem" boxShadow={"2xl"} rounded={"md"}>
-            <KeyboardDatePicker
-              value={selectedDate}
-              onChange={(date) => handleChangeCalendar(date)}
-              disablePast
-              autoOk
-              variant="static"
-              openTo="date"
-              shouldDisableDate={(date) => {
-                for (let i = 0; i < dias?.length; i++) {
-                  if (date.getDay() !== dias[i]) {
-                    return true;
-                  }
-                }
-              }}
-
-              /*date.getDay() !== 1 &&
-                date.getDay() !== 2 &&
-                date.getDay() !== 3 &&
-                date.getDay() !== 4 &&
-                date.getDay() !== 5*/
-            />
-          </Box>
-        </Box>
-        <Box
-          w={{ base: "90vw", sm: "50vw", md: "50vw", lg: "25vw" }}
-          mt={{ base: "2rem", sm: "2rem", md: "2rem", lg: "0" }}
-        >
-          {form.date && (
+        {true && (
+          <Box mt={{ base: "2rem", sm: "2rem", md: "2rem", lg: "0" }}>
             <Text fontSize="2xl">
-              3. Seleccionar hora{" "}
-              {form.idHour && <Icon ml={1} as={FcCheckmark} />}
+              2. Seleccionar fecha{" "}
+              {form.date && <Icon ml={1} as={FcCheckmark} />}
             </Text>
-          )}
-          {form.date && (
-            <Wrap justify={"center"} mt={"1rem"}>
-              {/*horasPrueba &&
-                turnoPrueba &&
-                turnoPrueba.forEach((t) =>
-                  horasPrueba.forEach((h) => {
-                    if (h.id === t) {
-                      array.push(h);
-                    }
-                  })
-                )*/}
-              {arrayTurns.map((h) => (
-                <WrapItem>
-                  <Button
-                    onClick={(e) => handleClick(e)}
-                    value={h.id}
-                    name="idHour"
-                    colorScheme={"teal"}
-                    variant="outline"
-                    m="0.5rem"
-                  >
-                    {h.hour}
-                  </Button>
-                </WrapItem>
-              ))}
-            </Wrap>
-          )}
-        </Box>
+
+            <Box m="1rem" boxShadow={"2xl"} rounded={"md"}>
+              <DatePicker
+                value={selectedDate}
+                onChange={(date) => handleChangeCalendar(date)}
+                disablePast
+                autoOk
+                variant="static"
+                openTo="date"
+                shouldDisableDate={(date) =>
+                  date.getDay() === aux?.[0] ||
+                  date.getDay() === aux?.[1] ||
+                  date.getDay() === aux?.[2] ||
+                  date.getDay() === aux?.[3] ||
+                  date.getDay() === aux?.[4] ||
+                  date.getDay() === aux?.[5] ||
+                  date.getDay() === aux?.[6]
+                }
+              />
+            </Box>
+          </Box>
+        )}
+        {true && (
+          <Box
+            w={{ base: "90vw", sm: "50vw", md: "50vw", lg: "25vw" }}
+            mt={{ base: "2rem", sm: "2rem", md: "2rem", lg: "0" }}
+          >
+            {form.date && (
+              <Text fontSize="2xl">
+                3. Seleccionar hora{" "}
+                {form.idHour && <Icon ml={1} as={FcCheckmark} />}
+              </Text>
+            )}
+            {form.date && (
+              <Wrap justify={"center"} mt={"1rem"}>
+                {arrayTurns.map((h) => (
+                  <WrapItem>
+                    <Button
+                      onClick={(e) => handleClick(e)}
+                      value={h.id}
+                      name="idHour"
+                      colorScheme={"teal"}
+                      variant="outline"
+                      m="0.5rem"
+                    >
+                      {h.hour}
+                    </Button>
+                  </WrapItem>
+                ))}
+              </Wrap>
+            )}
+          </Box>
+        )}
       </Box>
       <Button m="1rem" colorScheme={"teal"} onClick={(e) => handleSubmit(e)}>
         Confirmar Turno

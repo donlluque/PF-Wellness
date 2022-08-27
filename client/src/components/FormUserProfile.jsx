@@ -33,20 +33,14 @@ function FormUserProfile() {
   const [image, setImage] = useState("");
   const [putActive, setPutActive] = useState(false);
   const dispatch = useDispatch();
-
-  console.log(id);
-
   const { patientDetail, msgConfirm } = useSelector((state) => state);
-  const { name, last_name, email, picture } = patientDetail;
   const [errors, setErrors] = useState({});
   const date = new Date().toLocaleDateString().split("/").reverse();
-  const [aux, setAux] = useState({ name, last_name, email, picture });
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
-  localStorage.setItem("user", JSON.stringify(user));
+
+  localStorage.setItem("user", JSON.stringify(patientDetail));
   var perfil = JSON.parse(localStorage.getItem("user"));
-
-
 
   const [form, setForm] = useState({
     id,
@@ -62,7 +56,6 @@ function FormUserProfile() {
     picture: "",
   });
 
-
   const styleDate = (date) => {
     if (date[1].length === 1) {
       date[1] = "0" + date[1];
@@ -70,55 +63,30 @@ function FormUserProfile() {
     return date.join("-");
   };
 
-  // const UploadI = async (e) => {
-  //   const files = e.target.files;
-  //   const data = new FormData();
-  //   data.append("file", files[0]);
-  //   data.append("upload_preset", "Wellness");
-  //   setLoading(true);
-  //   const res = await fetch(
-  //     "https://api.cloudinary.com/v1_1/dtbkiy2fk/image/upload",
-  //     {
-  //       method: "POST",
-  //       body: data,
-  //     }
-  //   );
-  //   const file = await res.json();
-  //   console.log(file, "RESPONDER");
-  //   setImage(file.secure_url);
-  //   setLoading(false);
-  //   setForm({ ...form, [e.target.name]: file.secure_url });
-  // };
+  const UploadI = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "Wellness");
+    setLoading(true);
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dtbkiy2fk/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+    const file = await res.json();
+
+    setImage(file.secure_url);
+    setLoading(false);
+    setForm({ ...form, [e.target.name]: file.secure_url });
+  };
 
   useEffect(() => {
-    // if (Object.keys(user).length) {
-    //   setForm({
-    //     ...form,
-    //     name: user.name,
-    //     last_name: user.last_name,
-    //     email: user.email,
-    //     user_name: user.nickname,
-    //     birthday: user.birthday,
-    //     direction: user.direction,
-    //     document: user.document,
-    //     nationality: user.nationality,
-    //     phone: user.phone,
-    //     picture: user.picture,
-    //     prepaid_health: user.prepaid_health,
-    //     id: user.id,
-    //   });
-    //   // const este = localStorage.setItem("prueba", JSON.stringify(user));
-    // } else {
-    //   setForm({ ...form, name, last_name, email, id });
-    // }
-
     dispatch(getOnePatient(id));
     // setAux(!aux);
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   return setAux(!aux);
-  // }, [dispatch]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -151,7 +119,7 @@ function FormUserProfile() {
       phone: perfil.phone,
       nationality: perfil.nationality,
       direction: perfil.direction,
-      // prepaid_health: patientDetail.prepaid_healths[0].name,
+      prepaid_health: perfil.prepaid_healths[0].name,
       picture: perfil.picture,
     });
     console.log(patientDetail.prepaid_healths[0].name, "obra social");
@@ -178,12 +146,6 @@ function FormUserProfile() {
     <>
       <Box display={{ md: "flex" }} justifyContent="center">
         <Box display="flex" flexDirection="column" alignItems="center">
-          {/* <Image
-            w="200px"
-            src="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
-            alt=""
-          /> */}
-
           {!putActive && (
             <Button
               m="2rem"
@@ -197,7 +159,7 @@ function FormUserProfile() {
         </Box>
         <Box m="1rem" w="50rem">
           <FormControl>
-            {/* <FormControl isDisabled={!putActive}>
+            <FormControl isDisabled={!putActive}>
               <Input
                 name="picture"
                 type="file"
@@ -212,11 +174,11 @@ function FormUserProfile() {
                 <Image
                   borderRadius="full"
                   boxSize="150px"
-                  src={perfil.picture}
-                  // fallbackSrc={user.picture}
+                  src={form.picture}
+                  fallbackSrc="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
                 />
               )}
-            </FormControl> */}
+            </FormControl>
             <FormControl isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="name">
                 Nombre

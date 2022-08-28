@@ -66,7 +66,7 @@ router.get("/:id", async (req, res, next) => {
       res.status(400).send("the doctor is not enable");
     }
   } catch (error) {
-    res.status(404).send("Error en el catch de doctorID", error);
+    res.status(404).send("Error en el catch de doctorID");
   }
 });
 

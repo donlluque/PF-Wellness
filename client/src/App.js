@@ -54,7 +54,7 @@ export default function App() {
         </Route>
         <Route exact path="/payments">
           <MakePayments />
-         </Route>
+        </Route>
         <Route exact path="*">
           <Error />
         </Route>

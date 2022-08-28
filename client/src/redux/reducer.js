@@ -10,7 +10,8 @@ const initialState = {
   days: [],
   user: {},
   turns: [],
-  payments: {}
+  payments: {},
+  activeDate: "",
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -83,6 +84,7 @@ export default function rootReducer(state = initialState, action) {
         prepaidHealth: action.payload,
       };
     }
+
     case "HANDLE_ERROR":
       return {
         ...state,
@@ -107,10 +109,10 @@ export default function rootReducer(state = initialState, action) {
     }
     case "MAKE_PAYMENT": {
       return {
-       ...state,
-       payments: action.payload
+        ...state,
+        payments: action.payload,
       };
-     }
+    }
     case "CHECK_USER": {
       console.log(action.payload, "soy user de REDUCER");
       return {

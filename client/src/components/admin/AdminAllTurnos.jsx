@@ -15,28 +15,28 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
+  Image,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { MdOutlineEditNote } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailDoctors, getDoctors, getHours } from "../../redux/actions";
-import DoctorDetail from "../DoctorDetail";
+import { getTurns } from "../../redux/actions";
 
-function AdminAllDoctors() {
+function AdminAllTurnos() {
   const dispatch = useDispatch();
-  const { doctors, doctorDetail } = useSelector((state) => state);
+  const { turns } = useSelector((state) => state);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-    dispatch(getDoctors());
-    dispatch(getHours());
+    dispatch(getTurns());
   }, [dispatch]);
 
   const handleClick = (id) => {
     console.log(id);
-    dispatch(getDetailDoctors(id));
+    //dispatch(getOnePatient(id));
     onOpen();
   };
 
@@ -46,20 +46,22 @@ function AdminAllDoctors() {
         <Table size="sm">
           <Thead>
             <Tr>
-              <Th isNumeric>ID</Th>
-              <Th>Nombre</Th>
-              <Th>Área</Th>
-              <Th>Especialidad</Th>
+              <Th>Id</Th>
+              <Th>Fecha</Th>
+              <Th>Hora</Th>
+              <Th>Doctor</Th>
+              <Th>Paciente</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {doctors &&
-              doctors.map((e) => (
-                <Tr key={e.id}>
+            {turns &&
+              turns.map((e) => (
+                <Tr>
                   <Td isNumeric>{e.id}</Td>
-                  <Td>{e.name}</Td>
-                  <Td>{e.general_area}</Td>
-                  <Td>{e.specialty}</Td>
+                  <Td>{e.date}</Td>
+                  <Td>{e.hours_workings[0].hour}</Td>
+                  <Td>{e.doctors[0].name}</Td>
+                  <Td>paciente</Td>
                   <Td>
                     <Button
                       m="0.5rem"
@@ -98,12 +100,11 @@ function AdminAllDoctors() {
             fontFamily={"body"}
           >
             {" "}
-            {doctorDetail.name}
           </ModalHeader>
-          {/* <ModalCloseButton /> */}
+
           <ModalBody>
-            {/* <Lorem count={2} /> */}
-            <DoctorDetail id={doctorDetail.id} />
+            PROXIMAMENTE
+            {/*<PatientDetail id={patients.id} />*/}
           </ModalBody>
 
           <ModalFooter>
@@ -117,4 +118,4 @@ function AdminAllDoctors() {
   );
 }
 
-export default AdminAllDoctors;
+export default AdminAllTurnos;

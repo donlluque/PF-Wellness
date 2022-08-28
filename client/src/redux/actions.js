@@ -200,7 +200,30 @@ export const getTurns = () => {
       });
   };
 };
+
 //PATIENT
+export const searchPatientByName = (patient) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/doctors?name=${patient}`)
+      .then((res) =>
+        res.ok
+          ? res.json()
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              type: "search",
+              statusText: `No se encuentra ningún usuario con el nombre "${patient.name}" `,
+            })
+      )
+      .then((data) => {
+        dispatch({ type: "SEARCH_DOCTOR_BY_NAME", payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: "HANDLE_ERROR", payload: err });
+      });
+  };
+};
+
 export const getOnePatient = (id) => {
   return function (dispatch) {
     fetch(`${baseURL}/patients/${id}`)
@@ -301,7 +324,7 @@ export const dateUser = (payload) => {
 };
 
 export const makePayment = (payload) => {
- console.log(payload, "soy el payload makePayment")
+  console.log(payload, "soy el payload makePayment");
   return async (dispatch) => {
     try {
       let response = await axios.post(`${baseURL}/pagos`, payload);
@@ -340,7 +363,6 @@ export const makePayment = (payload) => {
 //       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
 //   };
 // };
-
 
 export const cleanError = () => ({ type: "CLEAN_ERROR" });
 export const cleanConfirm = () => ({ type: "CLEAN_MSG" });

@@ -53,15 +53,12 @@ function Turnos() {
         </Heading>
         <Box w={{ base: "75%", sm: "75%", md: "60%" }} textAlign="center">
           <Text as="i" fontSize="xl">
-            "ver"
+            "Selecciona el profesional con el que deseas consultar"
           </Text>
         </Box>
       </Center>
 
       <Box bg="#fafbfd" justifyContent="center">
-        <Heading as="h6" size="lg">
-          1. Seleccionar profesional preferido
-        </Heading>
         <Center>
           <NavStaff setInput={setInput} setPage={setPage} />
         </Center>
@@ -78,12 +75,12 @@ function Turnos() {
               .slice((page - 1) * forPage, (page - 1) * forPage + forPage)
               .map((doc) => {
                 return (
-                  <WrapItem>
+                  <WrapItem key={doc.id}>
                     <DoctorCard
                       name={doc.name}
                       picture={doc.picture}
                       general_area={doc.general_area}
-                      especialidades_id={doc.especialidades_id}
+                      specialty={doc.specialty}
                       id={doc.id}
                     />
                   </WrapItem>

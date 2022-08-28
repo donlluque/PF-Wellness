@@ -1,14 +1,30 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
 import AdminDoctorPanel from "./AdminDoctorPanel";
 import AdminPatientPanel from "./AdminPatientPanel";
-import AdminTurnos from "./AdminTurnos";
+import AdminTurnos from "./AdminAllTurnos";
+import AdminTurnsPanel from "./AdminTurnsPanel";
 
 function AdminProfile() {
   return (
     <>
       <Box bgColor="teal.50">
-        <Tabs pt="6rem" size="md" variant="enclosed" ml="4rem" mr="4rem">
-          <TabList whiteSpace>
+        <Tabs
+          pt={{ base: "23rem", sm: "23rem", md: "15rem", lg: "8rem" }}
+          size="md"
+          variant="enclosed"
+          ml="4rem"
+          mr="4rem"
+        >
+          <TabList
+            whiteSpace
+            display={"flex"}
+            flexDirection={{
+              base: "column",
+              sm: "column",
+              md: "row",
+              lg: "row",
+            }}
+          >
             <Tab
               _selected={{ color: "white", bg: "teal.500" }}
               bgColor="white"
@@ -52,7 +68,7 @@ function AdminProfile() {
               <AdminPatientPanel />
             </TabPanel>
             <TabPanel>
-              <AdminTurnos />
+              <AdminTurnsPanel />
             </TabPanel>
           </TabPanels>
         </Tabs>

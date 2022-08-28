@@ -10,6 +10,15 @@ import {
   MenuList,
   MenuItem,
   Icon,
+  Modal,
+  Text,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  ModalOverlay,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Logo from "../assets/logoPf.jpeg";
@@ -47,6 +56,22 @@ function NavBar() {
       }
     }
   }, [user]);
+
+  const OverlayOne = () => (
+    <ModalOverlay
+      bg="blackAlpha.300"
+      backdropFilter="blur(10px) hue-rotate(90deg)"
+    />
+  );
+  const [overlay, setOverlay] = useState(<OverlayOne />);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // const mostrar = () => {
+  //   return (
+
+  //   );
+  // };
 
   return (
     <Box position="absolute" w="100%">
@@ -119,11 +144,35 @@ function NavBar() {
             lg: "row",
           }}
         >
-          <Link to="/turnos">
-            <Button colorScheme="teal" variant="solid">
+          {isAuthenticated ? (
+            <Link to="/turnos">
+              <Button colorScheme="teal" variant="solid">
+                Turnos Online
+              </Button>
+            </Link>
+          ) : (
+            <Button colorScheme="teal" variant="solid" onClick={onOpen}>
               Turnos Online
+              <Modal
+                isCentered
+                isOpen={isOpen}
+                onClose={onClose}
+                colorScheme="teal"
+              >
+                {overlay}
+                <ModalContent bgColor="green.50">
+                  <ModalHeader color="#C53030">Ups!!</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <Text color="#C53030">Debes estar registrado</Text>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Spacer />
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
             </Button>
-          </Link>
+)}
           <Link to="/admin">
             <Button colorScheme="teal" variant="solid">
               Acceso admin

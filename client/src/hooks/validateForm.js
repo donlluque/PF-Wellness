@@ -10,7 +10,8 @@ export const validateForm = (form) => {
   };
   let regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/; //letras y numeros, puntos, guiones,arroba
   let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚú\s]+$/; //acepta letras y espacios, caracteres ajenos al ingles como la ñ
-
+  let regexPhone =
+    /(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})/;
   if (!form.name) {
     errors.name = "Requerido";
   } else if (!regexName.test(form.name)) {
@@ -20,6 +21,14 @@ export const validateForm = (form) => {
     errors.last_name = "Requerido";
   } else if (!regexName.test(form.last_name)) {
     errors.last_name = "Solo se aceptan letras y espacios en blanco";
+  }
+
+  // if (form.document.length > 9) {
+  //   errors.document = "Maximo de numeros ingresados es 9";
+  // }
+
+  if (!regexPhone.test(form.phone)) {
+    errors.phone = "Ingresa un numero de telefono valido";
   }
 
   // if (!form.email) {
@@ -44,10 +53,6 @@ export const validateForm = (form) => {
   //     errors.passwordLetters =
   //       "Se requiere un mínimo de 6 caracteres y un máximo de 10 ";
   //   }
-  // }
-
-  // if (Object.keys(form.document).length > 9) {
-  //   errors.document = "Maximo de numeros ingresados es 9";
   // }
 
   return errors;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Modal,
@@ -8,6 +8,7 @@ import {
   ModalFooter,
   ModalBody,
   Button,
+  ModalCloseButton,
   Box,
   Wrap,
   Image,
@@ -15,12 +16,14 @@ import {
   useDisclosure,
   Heading,
   Avatar,
+  Spacer,
   Center,
   Flex,
   Stack,
   useColorModeValue,
 } from "@chakra-ui/react";
 import DoctorDetail from "./DoctorDetail";
+import { useAuth0 } from "@auth0/auth0-react";
 import { getActiveDate, getDetailDoctors } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
@@ -31,8 +34,33 @@ export default function DoctorCard({
   general_area,
   specialty,
 }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
+
+  const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
+
+  const OverlayOne = () => (
+    <ModalOverlay
+      bg="blackAlpha.300"
+      backdropFilter="blur(10px) hue-rotate(90deg)"
+    />
+  );
+
+  const OverlayTwo = () => (
+    <ModalOverlay
+      bg="blackAlpha.300"
+      backdropFilter="blur(10px) hue-rotate(90deg)"
+    />
+  );
+
+  const [overlay, setOverlay] = useState(<OverlayOne />);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const {
+    isOpen: isEditOpen,
+    onOpen: onEditOpen,
+    onClose: onEditClose,
+  } = useDisclosure();
 
   return (
     <>
@@ -84,7 +112,7 @@ export default function DoctorCard({
             variant="solid"
             onClick={() => {
               dispatch(getDetailDoctors(id));
-              onOpen();
+              onEditOpen();
             }}
             w={"full"}
             color={"white"}
@@ -96,14 +124,31 @@ export default function DoctorCard({
           >
             Leer más
           </Button>
-          <Link to={`/calendar/${id}`}>
+
+          {isAuthenticated ? (
+            <Link to={`/calendar/${id}`}>
+              <Button
+                onClick={() => dispatch(getDetailDoctors(id))}
+                mt={"1rem"}
+                colorScheme="teal"
+                variant="solid"
+                w={"full"}
+                color={"white"}
+                rounded={"md"}
+                _hover={{
+                  transform: "translateY(-2px)",
+                  boxShadow: "lg",
+                }}
+              >
+                Pedir turno
+              </Button>
+            </Link>
+          ) : (
             <Button
-              onClick={() => {
-                //dispatch(getDetailDoctors(id));
-              }}
-              mt={"1rem"}
               colorScheme="teal"
               variant="solid"
+              onClick={onOpen}
+              mt={"1rem"}
               w={"full"}
               color={"white"}
               rounded={"md"}
@@ -113,12 +158,31 @@ export default function DoctorCard({
               }}
             >
               Pedir turno
+              <Modal
+                isCentered
+                isOpen={isOpen}
+                onClose={onClose}
+                colorScheme="teal"
+              >
+                {overlay}
+                <ModalContent bgColor="green.50">
+                  <ModalHeader color="#C53030">Ups!!</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <Text color="#C53030">Debes estar registrado</Text>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Spacer />
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
             </Button>
-          </Link>
+          )}
         </Box>
       </Box>
-      {/*Modal details doctor*/}
-      <Modal isOpen={isOpen} onClose={onClose}>
+
+      <Modal isOpen={isEditOpen} onClose={onEditClose}>
+
         <ModalOverlay />
         <ModalContent bg="#EBF8FF">
           <ModalHeader
@@ -137,7 +201,7 @@ export default function DoctorCard({
           </ModalBody>
 
           <ModalFooter>
-            <Button bg="#2C7A7B" color="white" mr={3} onClick={onClose}>
+            <Button bg="#2C7A7B" color="white" mr={3} onClick={onEditClose}>
               Close
             </Button>
           </ModalFooter>

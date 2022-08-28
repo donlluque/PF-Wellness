@@ -43,7 +43,7 @@ function PatientDetail() {
               <Text as={"span"} fontWeight={"bold"}>
                 Fecha de nacimiento:
               </Text>{" "}
-              {patient.birthday.split("-").reverse().join("/")}
+              {patient.birthday?.split("-").reverse().join("/")}
             </ListItem>
             <ListItem>
               <Text as={"span"} fontWeight={"bold"}>

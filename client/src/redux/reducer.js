@@ -84,16 +84,7 @@ export default function rootReducer(state = initialState, action) {
         prepaidHealth: action.payload,
       };
     }
-    case "ACTIVE_DATE": {
-      let fecha = new Date();
-      let fechita = fecha.setDate(fecha.getDate() + 2);
-      console.log("fechita", fechita);
-      return {
-        ...state,
-        doctorDetail: action.payload,
-        activeDate: new Date(fechita),
-      };
-    }
+
     case "HANDLE_ERROR":
       return {
         ...state,

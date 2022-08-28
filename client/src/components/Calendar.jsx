@@ -1,6 +1,6 @@
 //import ReactDatePicker from "react-datepicker";
 //import "react-datepicker/dist/react-datepicker.css";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DatePicker } from "@material-ui/pickers";
 //import { createTheme } from "@material-ui/core/styles";
 //import { ThemeProvider } from "@material-ui/styles";
@@ -13,6 +13,9 @@ import {
   Icon,
   Wrap,
   WrapItem,
+  Alert,
+  AlertIcon,
+  AlertDescription,
 } from "@chakra-ui/react";
 import {
   getDetailDoctors,
@@ -20,31 +23,30 @@ import {
   getTurns,
   postTurn,
   makePayment,
-  getActiveDate,
 } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { FcCheckmark } from "react-icons/fc";
 import { searchTurnsAvailable } from "./validateTurn";
-import { addDays, isWeekend, setDate } from "date-fns";
 
 function Calendar() {
+  const dispatch = useDispatch();
   const history = useHistory();
-
+  const [selectedDate, setDateChange] = useState("");
   const [form, setForm] = useState({});
   const [arrayTurns, setArrayTurns] = useState([]);
-  const dispatch = useDispatch();
   const { idDoctor } = useParams();
-  const { doctorDetail, hoursWorking, turns } = useSelector((state) => state);
-  //const activeDate = useSelector((state) => state.activeDate);
+  const { hoursWorking, turns } = useSelector((state) => state);
+  const doctorDetail = useSelector((state) => state.doctorDetail);
   const hours = doctorDetail.hours_json;
+
   const totalHours = hoursWorking;
   const totalTurns = turns;
   const dias = doctorDetail.work_days?.map((e) => parseInt(e.id));
-  const [selectedDate, setDateChange] = useState(new Date());
 
+  //////////////////CALENDARIO///////////////////
   //array auxiliar que cambia segun dias del medico
-  let aux = [0, 1, 2, 3, 4, 5, null];
+  let aux = [0, 1, 2, 3, 4, 5, 6];
   dias?.forEach((e) => (aux[e] = null)); //--> define como null si el medico trabaja
 
   //funcion que evalua si el dia actual esta deshabilitado --> retorna el dia proxima habilitado
@@ -58,14 +60,12 @@ function Calendar() {
       }
     }
   };
-
-  //const dia = initialDate(aux);
-
   //funcion que suma un dia a la fecha que se le pasa como parametro
   function addDaysToDate(date) {
     date.setDate(date.getDate() + 1);
     return date;
   }
+  //////////////////////////////////////////
 
   useEffect(() => {
     dispatch(getDetailDoctors(idDoctor));
@@ -113,90 +113,91 @@ function Calendar() {
           Turnos Online
         </Heading>
       </Center>
-      <Box
-        pt={"1.5rem"}
-        display="flex"
-        flexDirection={{
-          base: "column",
-          sm: "column",
-          md: "column",
-          lg: "row",
-        }}
-        justifyContent={{
-          base: "center",
-          sm: "center",
-          md: "center",
-          lg: "space-around",
-        }}
-        alignItems={{
-          base: "center",
-          sm: "center",
-          md: "center",
-          lg: "flex-start",
-        }}
-      >
-        <Box>
-          <Text fontSize="2xl">
-            1. Seleccionar profesional <Icon ml={1} as={FcCheckmark} />
-          </Text>
-          <Box
-            m="1rem"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            w={{ base: "90vw", sm: "50vw", md: "50vw", lg: "25vw" }}
-            p="1rem"
-            boxShadow={"2xl"}
-            rounded={"md"}
-            overflow={"hidden"}
-          >
-            <Heading as="h6" size="md" m="1rem">
-              {doctorDetail.name}
-            </Heading>
-            <Text>
-              {doctorDetail.general_area} - {doctorDetail.specialty}
-            </Text>
-            <Text>{doctorDetail.phone}</Text>
-          </Box>
-          <Button
-            w="90%"
-            colorScheme={"teal"}
-            m="1rem"
-            mt="4rem"
-            onClick={() => history.goBack(-1)}
-          >
-            Cambiar profesional
-          </Button>
-        </Box>
-        {true && (
-          <Box mt={{ base: "2rem", sm: "2rem", md: "2rem", lg: "0" }}>
+      {hours && (
+        <Box
+          pt={"1.5rem"}
+          display="flex"
+          flexDirection={{
+            base: "column",
+            sm: "column",
+            md: "column",
+            lg: "row",
+          }}
+          justifyContent={{
+            base: "center",
+            sm: "center",
+            md: "center",
+            lg: "space-around",
+          }}
+          alignItems={{
+            base: "center",
+            sm: "center",
+            md: "center",
+            lg: "flex-start",
+          }}
+        >
+          <Box>
             <Text fontSize="2xl">
-              2. Seleccionar fecha{" "}
-              {form.date && <Icon ml={1} as={FcCheckmark} />}
+              1. Seleccionar profesional <Icon ml={1} as={FcCheckmark} />
             </Text>
-
-            <Box m="1rem" boxShadow={"2xl"} rounded={"md"}>
-              <DatePicker
-                value={selectedDate}
-                onChange={(date) => handleChangeCalendar(date)}
-                disablePast
-                autoOk="false"
-                variant="static"
-                openTo="date"
-                shouldDisableDate={(date) =>
-                  date.getDay() === aux?.[0] ||
-                  date.getDay() === aux?.[1] ||
-                  date.getDay() === aux?.[2] ||
-                  date.getDay() === aux?.[3] ||
-                  date.getDay() === aux?.[4] ||
-                  date.getDay() === aux?.[5] ||
-                  date.getDay() === aux?.[6]
-                }
-              />
+            <Box
+              m="1rem"
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              w={{ base: "90vw", sm: "50vw", md: "50vw", lg: "25vw" }}
+              p="1rem"
+              boxShadow={"2xl"}
+              rounded={"md"}
+              overflow={"hidden"}
+            >
+              <Heading as="h6" size="md" m="1rem">
+                {doctorDetail.name}
+              </Heading>
+              <Text>
+                {doctorDetail.general_area} - {doctorDetail.specialty}
+              </Text>
+              <Text>{doctorDetail.phone}</Text>
             </Box>
+            <Button
+              w="90%"
+              colorScheme={"teal"}
+              m="1rem"
+              mt="4rem"
+              onClick={() => history.goBack(-1)}
+            >
+              Cambiar profesional
+            </Button>
           </Box>
-        )}
-        {true && (
+          {true && (
+            <Box mt={{ base: "2rem", sm: "2rem", md: "2rem", lg: "0" }}>
+              <Text fontSize="2xl">
+                2. Seleccionar fecha{" "}
+                {form.date && <Icon ml={1} as={FcCheckmark} />}
+              </Text>
+
+              <Box m="1rem" boxShadow={"2xl"} rounded={"md"}>
+                <DatePicker
+                  value={selectedDate}
+                  onChange={(date) => handleChangeCalendar(date)}
+                  disablePast
+                  autoOk
+                  variant="static"
+                  initialFocusedDate={initialDate(aux)}
+                  shouldDisableDate={(date) =>
+                    date.getDay() === aux?.[0] ||
+                    date.getDay() === aux?.[1] ||
+                    date.getDay() === aux?.[2] ||
+                    date.getDay() === aux?.[3] ||
+                    date.getDay() === aux?.[4] ||
+                    date.getDay() === aux?.[5] ||
+                    date.getDay() === aux?.[6]
+                  }
+                />
+              </Box>
+            </Box>
+          )}
+
           <Box
             w={{ base: "90vw", sm: "50vw", md: "50vw", lg: "25vw" }}
             mt={{ base: "2rem", sm: "2rem", md: "2rem", lg: "0" }}
@@ -207,7 +208,7 @@ function Calendar() {
                 {form.idHour && <Icon ml={1} as={FcCheckmark} />}
               </Text>
             )}
-            {form.date && (
+            {form.date && arrayTurns.length ? (
               <Wrap justify={"center"} mt={"1rem"}>
                 {arrayTurns.map((h) => (
                   <WrapItem>
@@ -224,13 +225,32 @@ function Calendar() {
                   </WrapItem>
                 ))}
               </Wrap>
+            ) : (
+              false
+            )}
+            {form.date && arrayTurns.length === 0 ? (
+              <Alert status="error">
+                <AlertIcon />
+                <AlertDescription>
+                  No hay turnos disponibles para el día {form.date}
+                </AlertDescription>
+              </Alert>
+            ) : (
+              false
             )}
           </Box>
-        )}
+        </Box>
+      )}
+      <Box display={"flex"} justifyContent="end" mr="3rem">
+        <Button
+          isDisabled={!form.idHour}
+          m="1rem"
+          colorScheme={"teal"}
+          onClick={(e) => handleSubmit(e)}
+        >
+          Confirmar Turno
+        </Button>
       </Box>
-      <Button m="1rem" colorScheme={"teal"} onClick={(e) => handleSubmit(e)}>
-        Confirmar Turno
-      </Button>
     </>
   );
 }

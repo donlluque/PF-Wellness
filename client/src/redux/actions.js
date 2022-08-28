@@ -201,23 +201,6 @@ export const getTurns = () => {
   };
 };
 
-//CALENDAR
-export const getActiveDate = (id) => {
-  return function (dispatch) {
-    fetch(`${baseURL}/doctors/${id}`)
-      .then((res) => res.json())
-      .then((json) => {
-        dispatch({
-          type: "ACTIVE_DATE",
-          payload: json,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
-
 //PATIENT
 export const searchPatientByName = (patient) => {
   return function (dispatch) {

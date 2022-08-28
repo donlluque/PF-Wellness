@@ -99,8 +99,7 @@ export default function DoctorCard({
           <Link to={`/calendar/${id}`}>
             <Button
               onClick={() => {
-                dispatch(getDetailDoctors(id));
-                //dispatch(getActiveDate(id));
+                //dispatch(getDetailDoctors(id));
               }}
               mt={"1rem"}
               colorScheme="teal"

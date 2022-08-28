@@ -9,7 +9,7 @@ export const createAllTurns = () => {
 
 export const validateRange = (hours, totalHours) => {
   let totalTurns = totalHours;
-
+  console.log(hours, "funcion");
   let availableTurns = [];
   if (hours.totalDay) {
     availableTurns = totalTurns.filter(

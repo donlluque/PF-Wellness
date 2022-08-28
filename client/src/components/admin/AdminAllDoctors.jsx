@@ -55,7 +55,7 @@ function AdminAllDoctors() {
           <Tbody>
             {doctors &&
               doctors.map((e) => (
-                <Tr>
+                <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
                   <Td>{e.name}</Td>
                   <Td>{e.general_area}</Td>

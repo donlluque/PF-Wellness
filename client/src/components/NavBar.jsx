@@ -125,7 +125,7 @@ function NavBar() {
                 Prestaciones
               </Button>
             </Link>
-            <Link to="staff">
+            <Link to="/staff">
               <Button colorScheme="teal" variant="ghost">
                 Staff
               </Button>

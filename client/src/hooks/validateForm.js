@@ -12,6 +12,8 @@ export const validateForm = (form) => {
   let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚú\s]+$/; //acepta letras y espacios, caracteres ajenos al ingles como la ñ
   let regexPhone =
     /(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})/;
+  let regexDocument = /^(8?)\d{8}$/;
+
   if (!form.name) {
     errors.name = "Requerido";
   } else if (!regexName.test(form.name)) {
@@ -23,14 +25,17 @@ export const validateForm = (form) => {
     errors.last_name = "Solo se aceptan letras y espacios en blanco";
   }
 
-  // if (form.document.length > 9) {
-  //   errors.document = "Maximo de numeros ingresados es 9";
-  // }
+  if (!regexDocument.test(form.document)) {
+    errors.document = "Debe contener 8 digitos";
+  }
 
   if (!regexPhone.test(form.phone)) {
     errors.phone = "Ingresa un numero de telefono valido";
   }
 
+  if (!form.prepaid_health.length) {
+    errors.prepaid_health = "Debe ingresar una obra social";
+  }
   // if (!form.email) {
   //   errors.email = "Requerido";
   // } else if (!regexEmail.test(form.email)) {

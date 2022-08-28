@@ -23,9 +23,9 @@ import {
     const dispatch = useDispatch();
     const [input, setInput] = useState([{
         title: "",
-        quantity: 0,
-        currency_id: "",
-        price: "", 
+        quantity: 1,
+        currency_id: "ARS",
+        price: "20000", 
       }]);
     console.log(input)
 
@@ -35,8 +35,9 @@ import {
    
       try {
           const generarLink = await axios.post(`${baseURL}/pagos`, input);
-
+        
           window.location.href=generarLink.data
+          
       }
       catch (error){
       console.log(error)
@@ -93,47 +94,49 @@ import {
           lg: "flex-start",
         }}
       ></Box>
-<Box>
+      
+<Box maxW='sm' borderWidth="1px" borderRadius="0.5rem" ml='30rem' p="1rem" mb="2rem" boxShadow="2xl">
         <FormControl>
-        {/* <Select placeholder="Especialidad"  onChange={(e) => {handleChange(e)}}>
-                <option value='quiropraxia'>Quiropraxia</option>
-                <option value='traumatología'>Traumatología</option>
-                </Select> */}
-<FormLabel m="1rem">
+         {/* <Select placeholder="Especialidad" onChange={(e) => {handleChange(e)}}>
+                <option value={input.title}>Quiropraxia </option>
+                <option value={input.title}>Traumatología</option>
+        </Select>  */}
+ <FormLabel m="1rem">
                Especialidad
               </FormLabel>
               <Input
+               
                 name="title"
                 value={input.title}
                 placeholder="Especialidad"
-                onChange={(e) => handleChange(e)}/>
+                onChange={(e) => handleChange(e)}/> 
 
-                {/* <Select placeholder='Cantidad' onChange={(e) => {handleChange(e)}}>
-              <option value='uno'>1</option>
-              </Select> */}
+                
 <FormLabel m="1rem">
                Cantidad
               </FormLabel>
               <Input
+               
                 name="quantity"
                 type="number"
                 value={input.quantity}
-                placeholder="Cantidad"
+                placeholder="1"
                 onChange={(e) => handleChange(e)}/>
 <FormLabel m="1rem">
                Precio
               </FormLabel>
               <Input
+              
                 type="number"
                 name="price"
                 value={input.price}
-                placeholder="precio" 
+                placeholder="$20000" 
                 onChange={(e) => handleChange(e)}/>
  <FormLabel m="1rem">
                ARS
               </FormLabel>
               <Input
-               
+              
                 name="currency_id"
                 value={input.currency_id}
                 placeholder="ARS" 
@@ -142,11 +145,12 @@ import {
               {/* <Select placeholder="ARS"  onChange={(e) => {handleChange(e)}}>
                 <option value='ars'>ARS</option>
                 </Select> */}
-<Button m="1rem" colorScheme={"teal"} onClick={(e) => handleSubmit(e)}>
+<Button m="1rem" ml="5.5rem" mt="2rem" colorScheme={"teal"} onClick={(e) => handleSubmit(e)}>
   Confirmar pago
 </Button>
   </FormControl>
   </Box>
+  
   </>
     )
  

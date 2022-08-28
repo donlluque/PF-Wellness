@@ -2,6 +2,7 @@
 //import "react-datepicker/dist/react-datepicker.css";
 import React, { useEffect, useState } from "react";
 import { DatePicker } from "@material-ui/pickers";
+import { Link } from "react-router-dom";
 //import { createTheme } from "@material-ui/core/styles";
 //import { ThemeProvider } from "@material-ui/styles";
 import {
@@ -250,6 +251,11 @@ function Calendar() {
         >
           Confirmar Turno
         </Button>
+        <Link to="/payments">
+          <Button isDisabled={!form.idHour} m="1rem"
+          colorScheme={"teal"}
+          > Pagar </Button>
+          </Link>
       </Box>
     </>
   );

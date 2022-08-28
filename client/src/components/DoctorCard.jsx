@@ -24,7 +24,6 @@ import {
 } from "@chakra-ui/react";
 import DoctorDetail from "./DoctorDetail";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getDetailDoctors } from "../redux/actions";
 import { getActiveDate, getDetailDoctors } from "../redux/actions";
 import { useDispatch } from "react-redux";
 

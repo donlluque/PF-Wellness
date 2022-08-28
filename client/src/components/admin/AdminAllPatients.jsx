@@ -24,6 +24,7 @@ import { MdOutlineEditNote } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPatients, getOnePatient } from "../../redux/actions";
+import PatientDetail from "../patient/PatientDetail";
 
 function AdminAllPatients() {
   const dispatch = useDispatch();
@@ -60,12 +61,7 @@ function AdminAllPatients() {
                 <Tr>
                   <Td isNumeric>{e.id}</Td>
                   <Td>
-                    <Image
-                      src={e.picture}
-                      borderRadius="50%"
-                      w="2rem"
-                      h="2rem"
-                    />
+                    <Image src={e.picture} w="3rem" h="3rem" rounded={"50%"} />
                   </Td>
                   <Td>{e.name}</Td>
                   <Td>{e.last_name}</Td>
@@ -98,7 +94,7 @@ function AdminAllPatients() {
         </Table>
       </TableContainer>
 
-      {/*<Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent bg="#EBF8FF">
           <ModalHeader
@@ -108,11 +104,10 @@ function AdminAllPatients() {
             fontFamily={"body"}
           >
             {" "}
-            {doctorDetail.name}
           </ModalHeader>
-          {/* <ModalCloseButton /> 
+
           <ModalBody>
-            <DoctorDetail id={patients.id} />
+            <PatientDetail id={patients.id} />
           </ModalBody>
 
           <ModalFooter>
@@ -121,7 +116,7 @@ function AdminAllPatients() {
             </Button>
           </ModalFooter>
         </ModalContent>
-      </Modal>*/}
+      </Modal>
     </>
   );
 }

@@ -7,17 +7,16 @@ import {
   Heading,
   Text,
 } from "@chakra-ui/react";
+import { Button } from "reactstrap";
 
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-
-import { Button } from "reactstrap";
 import { useState } from "react";
-import AdminAllPatients from "./AdminAllPatients";
-import SearchBarPatient from "../patient/SearchBarPatient";
 
-function AdminPatientPanel() {
-  const [listPatients, setListPatients] = useState(true);
+import AdminAllTurnos from "./AdminAllTurnos";
+
+function AdminTurnsPanel() {
+  const [listTurns, setListTurns] = useState(true);
   const [filter, setFilter] = useState(false);
   return (
     <>
@@ -39,17 +38,17 @@ function AdminPatientPanel() {
             <ListItem>
               <Button
                 onClick={() => {
-                  setListPatients(true);
+                  setListTurns(true);
                   setFilter(false);
                 }}
               >
-                <ListIcon as={BsFillPersonLinesFill} /> Pacientes
+                <ListIcon as={BsFillPersonLinesFill} /> Turnos
               </Button>
             </ListItem>
             <ListItem>
               <Button
                 onClick={() => {
-                  setListPatients(true);
+                  setListTurns(true);
                   setFilter(true);
                 }}
               >
@@ -60,13 +59,13 @@ function AdminPatientPanel() {
         </Box>
         <Divider orientation="vertical" />
         <Box w={{ xl: "75%" }}>
-          {filter && <SearchBarPatient />}
+          {filter && <Text>PROXIMAMENTE</Text>}
 
-          {listPatients && <AdminAllPatients />}
+          {listTurns && <AdminAllTurnos />}
         </Box>
       </Box>
     </>
   );
 }
 
-export default AdminPatientPanel;
+export default AdminTurnsPanel;

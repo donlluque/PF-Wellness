@@ -1,8 +1,8 @@
 import React from "react";
-import { cleanDoctor } from "../redux/actions";
+//import { cleanDoctor } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Box, Text, List, ListItem } from "@chakra-ui/react";
+import { Box, Text, List, ListItem, Image } from "@chakra-ui/react";
 
 function PatientDetail() {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ function PatientDetail() {
   useEffect(() => {
     //dispatch(getDetailDoctors(id));
     return () => {
-      dispatch(cleanDoctor());
+      //dispatch(cleanDoctor());
     };
   }, [dispatch]);
 
@@ -20,33 +20,43 @@ function PatientDetail() {
     <Box>
       {patient && patient ? (
         <Box>
-          <List spacing={2}>
-            <ListItem>
-              {" "}
+          <List spacing={2} m="1rem">
+            <ListItem justifyContent={"center"}></ListItem>
+            <ListItem display="flex" justifyContent={"center"} mb="1rem">
+              <Image src={patient.picture} w="5rem" rounded={"50%"} />
               <Text
-                fontSize={"lg"}
+                fontSize={"2xl"}
+                fontWeight="bold"
                 color="#2C7A7B"
                 textAlign="center"
-                fontFamily={"body"}
               >
-                {patient.general_area} - {patient.specialty}
+                {patient.name} {patient.last_name}
               </Text>
             </ListItem>
             <ListItem>
               <Text as={"span"} fontWeight={"bold"}>
-                :
+                DNI:
               </Text>{" "}
-              {}
+              {patient.document}
             </ListItem>
             <ListItem>
               <Text as={"span"} fontWeight={"bold"}>
-                Prestaciones:
+                Fecha de nacimiento:
               </Text>{" "}
-              <Text display="inline">
-                {patient.prepaid_healths?.map((e) => e.name).join(", ")}
-              </Text>
+              {patient.birthday?.split("-").reverse().join("/")}
             </ListItem>
-
+            <ListItem>
+              <Text as={"span"} fontWeight={"bold"}>
+                Email:
+              </Text>{" "}
+              {patient.email}
+            </ListItem>
+            <ListItem>
+              <Text as={"span"} fontWeight={"bold"}>
+                Usuario Wellness:
+              </Text>{" "}
+              {patient.user_name}
+            </ListItem>
             <ListItem>
               <Text as={"span"} fontWeight={"bold"}>
                 Tel:
@@ -55,9 +65,11 @@ function PatientDetail() {
             </ListItem>
             <ListItem>
               <Text as={"span"} fontWeight={"bold"}>
-                Email:
+                Obra Social:
               </Text>{" "}
-              {patient.email}
+              <Text display="inline">
+                {patient.prepaid_healths?.map((e) => e.name).join(", ")}
+              </Text>
             </ListItem>
           </List>
         </Box>

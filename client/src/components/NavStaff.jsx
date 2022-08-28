@@ -130,7 +130,9 @@ export default function NavStaff({ setInput, setPage }) {
             <option value="All">Prestaciones</option>
             {prepaidHealth &&
               prepaidHealth.map((e) => (
-                <option value={e.name}>{e.name}</option>
+                <option key={e.id} value={e.name}>
+                  {e.name}
+                </option>
               ))}
           </Select>
           {filterActive && (

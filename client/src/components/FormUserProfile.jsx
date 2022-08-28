@@ -38,9 +38,10 @@ function FormUserProfile() {
   const date = new Date().toLocaleDateString().split("/").reverse();
   // const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
-
   localStorage.setItem("user", JSON.stringify(patientDetail));
   var perfil = JSON.parse(localStorage.getItem("user"));
+
+  console.log(errors, "errors");
 
   const [form, setForm] = useState({
     id,
@@ -95,17 +96,11 @@ function FormUserProfile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors(validateForm(form));
-    // if (errors) {
-    //   return alert("Completa los campos");
-    // } else {
-    // localStorage.removeItem("user");
     localStorage.setItem("user", JSON.stringify(form));
     dispatch(putPatient(form));
     setOverlay(<OverlayOne />);
     onOpen();
     setPutActive(false);
-    // }
   };
 
   const handlePutActive = () => {
@@ -119,11 +114,15 @@ function FormUserProfile() {
       phone: perfil.phone,
       nationality: perfil.nationality,
       direction: perfil.direction,
-      prepaid_health: perfil.prepaid_healths[0].name,
       picture: perfil.picture,
     });
-    console.log(patientDetail.prepaid_healths[0].name, "obra social");
-    console.log(form, "form");
+
+    if (perfil.prepaid_healths) {
+      setForm({
+        ...form,
+        prepaid_health: perfil.prepaid_healths[0].name,
+      });
+    }
     setPutActive(true);
   };
 
@@ -179,7 +178,7 @@ function FormUserProfile() {
                 />
               )}
             </FormControl>
-            <FormControl isDisabled={!putActive}>
+            <FormControl isDisabled={!putActive} isInvalid={errors.name}>
               <FormLabel m="1rem" htmlFor="name">
                 Nombre
               </FormLabel>
@@ -192,11 +191,11 @@ function FormUserProfile() {
                   !perfil.name ? "Escribe nombre completo" : perfil.name
                 }
               />
-              {/* {errors.name && (
+              {errors.name && (
                 <FormErrorMessage>{errors.name}</FormErrorMessage>
-              )} */}
+              )}
             </FormControl>
-            <FormControl isDisabled={!putActive}>
+            <FormControl isDisabled={!putActive} isInvalid={errors.last_name}>
               <FormLabel m="1rem" htmlFor="last_name">
                 Apellido
               </FormLabel>
@@ -208,6 +207,9 @@ function FormUserProfile() {
                   !perfil.last_name ? "Escribe apellidos" : perfil.last_name
                 }
               />
+              {errors.last_name && (
+                <FormErrorMessage>{errors.last_name}</FormErrorMessage>
+              )}
             </FormControl>
             <FormControl isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="email">
@@ -248,6 +250,9 @@ function FormUserProfile() {
                     !perfil.document ? "Nro de documento" : perfil.document
                   }
                 />
+                {errors.document && (
+                  <FormErrorMessage>{errors.document}</FormErrorMessage>
+                )}
               </InputGroup>
             </FormControl>
             <FormControl isDisabled={!putActive} isInvalid={errors.phone}>
@@ -262,6 +267,9 @@ function FormUserProfile() {
                 name="phone"
                 placeholder={!perfil.phone ? "Nro de telefono" : perfil.phone}
               />
+              {errors.phone && (
+                <FormErrorMessage>{errors.phone}</FormErrorMessage>
+              )}
             </FormControl>
             <FormControl isDisabled={!putActive} isInvalid={errors.nationality}>
               <FormLabel m="1rem" htmlFor="nationality">
@@ -316,6 +324,7 @@ function FormUserProfile() {
               type="submit"
               colorScheme="teal"
               variant="solid"
+              disabled={Object.keys(errors).length}
             >
               Guardar
             </Button>

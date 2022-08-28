@@ -23,7 +23,7 @@ router.post("/", async (req, res, next) => {
 			},
 		],
 		back_urls: {
-			success: "https://www.google.com",	// redireccionar de nuevo a Wellness componente de PAGO EXITOSO
+			success: "https://pf-wellness.vercel.app/" || "http://localhost:3000/",	// redireccionar de nuevo a Wellness componente de PAGO EXITOSO
 			failure: "http://www.failure.com",	//no la vamos a usar, por si falla el pago con tarjeta
 			pending: "http://www.pending.com"	//no la vamos a usar, para pagos en efectivo o pedido de autorizacion de tarjeta
 		},
@@ -32,7 +32,7 @@ router.post("/", async (req, res, next) => {
 	mercadopago.preferences.create(preference)
     .then(function(response){
 
-        res.status(200).json(response.body.init_point);	// REDIRECCIONA a la pagina de MP para pagar
+        res.status(200).json(response.body.init_point);	// envia el enlace de pago al FRONT
 		console.log(response.body.init_point)
 		//console.log(response)
 

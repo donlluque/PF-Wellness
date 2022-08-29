@@ -8,7 +8,7 @@ router.get("/", async (req, res, next) => {
   const allWorkDays = await getAllWorkDays();
 
   const workDaysDb = await Work_days.findAll();
-  const ordenado =workDaysDb.sort(function (a, b) {
+  const ordenado = workDaysDb.sort(function (a, b) {
     if (a.id > b.id) {
       return 1;
     }

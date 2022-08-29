@@ -138,7 +138,7 @@ router.put("/", async (req, res, next) => {
   const modificar = await Doctor.findOne({
     where:{id}
   })
-  const nuevo = await modificar.update({
+  const nuevoDoc = await modificar.update({
     name,
     medic_id,
     general_area,
@@ -153,7 +153,7 @@ router.put("/", async (req, res, next) => {
     const dataPrepaidHealth = await Prepaid_health.findAll({
       where: { name: prepaid_healths },
     });
-    await nuevo.addPrepaid_health(dataPrepaidHealth);
+    await nuevoDoc.addPrepaid_health(dataPrepaidHealth);
   }
   if(work_days){
     const dataWorkDays = await Work_days.findAll({
@@ -161,9 +161,9 @@ router.put("/", async (req, res, next) => {
         id: work_days,
       },
     });
-    await nuevo.addWork_days(dataWorkDays);
+    await nuevoDoc.addWork_days(dataWorkDays);
   }
-  res.send(nuevo)
+  res.send(nuevoDoc)
 })
 
 module.exports = router;

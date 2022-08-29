@@ -119,7 +119,7 @@ function FormUserProfile() {
       phone: perfil.phone,
       nationality: perfil.nationality,
       direction: perfil.direction,
-      prepaid_health: perfil.prepaid_healths[0].name,
+      // prepaid_health: perfil.prepaid_healths[0].name,
       picture: perfil.picture,
     });
     console.log(patientDetail.prepaid_healths[0].name, "obra social");

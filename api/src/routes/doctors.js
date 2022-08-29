@@ -120,5 +120,50 @@ router.post("/", async (req, res, next) => {
     res.status(400).send("Ya existe un doctor con este email");
   }
 });
+router.put("/", async (req, res, next) => {
+  const {
+    id,
+    name,
+    medic_id,
+    general_area,
+    specialty,
+    phone,
+    email,
+    birthday,
+    document,
+    prepaid_healths,
+    hours_json,
+    work_days,
+  } = req.body;
+  const modificar = await Doctor.findOne({
+    where:{id}
+  })
+  const nuevo = await modificar.update({
+    name,
+    medic_id,
+    general_area,
+    specialty,
+    phone,
+    email,
+    birthday,
+    document,
+    hours_json,
+  })
+  if(prepaid_healths){
+    const dataPrepaidHealth = await Prepaid_health.findAll({
+      where: { name: prepaid_healths },
+    });
+    await nuevo.addPrepaid_health(dataPrepaidHealth);
+  }
+  if(work_days){
+    const dataWorkDays = await Work_days.findAll({
+      where: {
+        id: work_days,
+      },
+    });
+    await nuevo.addWork_days(dataWorkDays);
+  }
+  res.send(nuevo)
+})
 
 module.exports = router;

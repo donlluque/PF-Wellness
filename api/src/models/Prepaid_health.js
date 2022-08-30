@@ -31,9 +31,9 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      // percentage: {
-      //   type: DataTypes.FLOAT,
-      // },
+      percentage: {
+        type: DataTypes.FLOAT,
+      },
     },
     { timestamps: false }
   );

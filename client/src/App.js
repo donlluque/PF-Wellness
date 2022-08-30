@@ -12,6 +12,10 @@ import UserProfile from "./components/UserProfile";
 import Turnos from "./components/pages/Turnos";
 import Calendar from "./components/Calendar";
 import MakePayments from "./components/MakePayments";
+import PrivateRouteAdmin from "./components/private/PrivateRouteAdmin";
+import PrivateRoutePerfil from "./components/private/PrivateRoutePerfil";
+import PrivateRouterPago from "./components/private/PrivateRoutePago";
+import PrivateRouterCalendario from "./components/private/PrivateRouterCalendario";
 
 import AdminProfile from "./components/admin/AdminProfile";
 import DoctorProfile from "./components/doctor/DoctorProfile";
@@ -40,29 +44,24 @@ export default function App() {
         <Route exact path="/staff">
           <Staff />
         </Route>
-        {/*PROTEGER*/}
-        <Route exact path="/turnos">
+        <PrivateRouterCalendario exact path="/turnos">
           <Turnos />
-        </Route>
-        {/*PROTEGER*/}
-        <Route exact path="/userProfile/:id">
+        </PrivateRouterCalendario>
+        <PrivateRoutePerfil exact path="/userProfile/:id">
           <UserProfile />
-        </Route>
-        <Route exact path="/calendar/:idDoctor">
+        </PrivateRoutePerfil>
+        <PrivateRouterCalendario exact path="/calendar/:idDoctor">
           <Calendar />
-        </Route>
-        {/*PROTEGER*/}
-        <Route exact path="/admin">
+        </PrivateRouterCalendario>
+        <PrivateRouteAdmin exact path="/admin">
           <AdminProfile />
-        </Route>
-        {/*PROTEGER*/}
+        </PrivateRouteAdmin>
         <Route exact path="/doctor">
           <DoctorProfile />
         </Route>
-        {/*PROTEGER*/}
-        <Route exact path="/payments">
+        <PrivateRouterPago exact path="/payments">
           <MakePayments />
-        </Route>
+        </PrivateRouterPago>
         <Route exact path="*">
           <Error />
         </Route>

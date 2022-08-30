@@ -12,6 +12,10 @@ import UserProfile from "./components/UserProfile";
 import Turnos from "./components/Turnos";
 import Calendar from "./components/Calendar";
 import MakePayments from "./components/MakePayments";
+import PrivateRouteAdmin from "./components/private/PrivateRouteAdmin";
+import PrivateRoutePerfil from "./components/private/PrivateRoutePerfil";
+import PrivateRouterPago from "./components/private/PrivateRoutePago";
+import PrivateRouterCalendario from "./components/private/PrivateRouterCalendario";
 
 import AdminProfile from "./components/admin/AdminProfile";
 
@@ -39,22 +43,21 @@ export default function App() {
         <Route exact path="/staff">
           <Staff />
         </Route>
-        <Route exact path="/turnos">
+        <PrivateRouterCalendario exact path="/turnos">
           <Turnos />
-        </Route>
-
-        <Route exact path="/userProfile/:id">
+        </PrivateRouterCalendario>
+        <PrivateRoutePerfil exact path="/userProfile/:id">
           <UserProfile />
-        </Route>
-        <Route exact path="/calendar/:idDoctor">
+        </PrivateRoutePerfil>
+        <PrivateRouterCalendario exact path="/calendar/:idDoctor">
           <Calendar />
-        </Route>
-        <Route exact path="/admin">
+        </PrivateRouterCalendario>
+        <PrivateRouteAdmin exact path="/admin">
           <AdminProfile />
-        </Route>
-        <Route exact path="/payments">
+        </PrivateRouteAdmin>
+        <PrivateRouterPago exact path="/payments">
           <MakePayments />
-        </Route>
+        </PrivateRouterPago>
         <Route exact path="*">
           <Error />
         </Route>

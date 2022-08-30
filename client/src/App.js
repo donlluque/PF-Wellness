@@ -13,13 +13,11 @@ import UserProfile from "./components/UserProfile";
 import Turnos from "./components/pages/Turnos";
 import Calendar from "./components/Calendar";
 import MakePayments from "./components/MakePayments";
-
-
 import PrivateRouteAdmin from "./components/private/PrivateRouteAdmin";
 import PrivateRoutePerfil from "./components/private/PrivateRoutePerfil";
 import PrivateRouterPago from "./components/private/PrivateRoutePago";
 import PrivateRouterCalendario from "./components/private/PrivateRouterCalendario";
-
+import PrivateRoute from "./components/private/PrivateRoute";
 import AdminProfile from "./components/admin/AdminProfile";
 import DoctorProfile from "./components/doctor/DoctorProfile";
 import FormTestimonial from "./components/FormTestimonal";
@@ -37,9 +35,9 @@ export default function App() {
         {mostrar && <NavBar />}
       </Route>
       <Switch>
-        <Route exact path="/">
+        <PrivateRoute exact path="/">
           <Home />
-        </Route>
+        </PrivateRoute>
         <Route exact path="/about">
           <About />
         </Route>
@@ -69,12 +67,10 @@ export default function App() {
         </Route>
         <PrivateRouterPago exact path="/payments">
           <MakePayments />
-        </Route>
+        </PrivateRouterPago>
         <Route exact path="/testimonials">
           <FormTestimonial />
         </Route>
-        </PrivateRouterPago>
-
         <Route exact path="*">
           <Error />
         </Route>

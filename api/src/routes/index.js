@@ -12,6 +12,11 @@ const hours_working = require("./hours_working.js");
 const pagos_unicos = require("./mercado_pago.js");
 const pagos_asociados = require("./mercado_asociados.js");
 
+const review = require("./review.js");
+
+const absence = require("./absence.js");
+
+
 const router = Router();
 
 // Configurar los routers
@@ -21,9 +26,11 @@ router.use("/patients", patients);
 router.use("/prepaid_health", prepaid_health);
 router.use("/work_days", work_days);
 router.use("/hours_working", hours_working);
+router.use("/absence", absence);
 router.use("/filter", filtro);
 router.use("/dates", dates);
 router.use("/checkuser", checkUser);
 router.use("/pagos", pagos_unicos);
 router.use("/asociados", pagos_asociados);
+router.use("/review", review);
 module.exports = router;

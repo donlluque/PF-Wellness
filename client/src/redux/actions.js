@@ -201,6 +201,62 @@ export const getTurns = () => {
   };
 };
 
+export const getTurnsByDoctor = (idCurrentDoctor) => {
+  return function (dispatch) {
+    fetch(`${baseURL}/dates`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("holis");
+        dispatch({
+          type: "GET_TURNS_BY_DOCTOR",
+          payload: { data, idCurrentDoctor },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const getTurnsByPatient = (idCurrentPatient) => {
+  return function (dispatch) {
+    fetch(`${baseURL}/dates`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_TURNS_BY_DOCTOR",
+          payload: { data, idCurrentPatient },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const deleteTurn = (id) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/dates/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? Promise.resolve({
+              status: res.status || "00",
+              statusText: `Turno eliminado con exito`,
+            })
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: "No se ha podido eliminar correctamente el turno",
+            })
+      )
+      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+      .catch((err) => console.log(err));
+  };
+};
+
 //PATIENT
 export const searchPatientByName = (patient) => {
   return function (dispatch) {

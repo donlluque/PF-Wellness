@@ -1,11 +1,11 @@
 import React from "react";
-import deportologia from "../img/deportologia.jpg";
-import kinesiologia from "../img/kine.jpg";
-import osteopatia from "../img/osteo.jpg";
-import quiropraxia from "../img/quiropraxia.jpg";
-import reumatologia from "../img/reumato.jpg";
-import terapiaDeDolor from "../img/terapiadedolor.jpeg";
-import traumatologia from "../img/traumato.webp";
+import deportologia from "../../img/deportologia.jpg";
+import kinesiologia from "../../img/kine.jpg";
+import osteopatia from "../../img/osteo.jpg";
+import quiropraxia from "../../img/quiropraxia.jpg";
+import reumatologia from "../../img/reumato.jpg";
+import terapiaDeDolor from "../../img/terapiadedolor.jpeg";
+import traumatologia from "../../img/traumato.webp";
 import {
   Stack,
   Center,

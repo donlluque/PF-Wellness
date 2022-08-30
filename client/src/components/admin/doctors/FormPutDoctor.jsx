@@ -1,5 +1,4 @@
 import {
-  Image,
   FormLabel,
   Input,
   InputGroup,
@@ -25,6 +24,7 @@ import {
   RadioGroup,
   Stack,
   Heading,
+  Icon,
 } from "@chakra-ui/react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -34,50 +34,12 @@ import {
   getHours,
   getPrepaidHealth,
   postDoctors,
-} from "../../redux/actions.js";
-import { validateForm } from "../../hooks/validateForm.js";
-import UploadImageDoctor from "../UploadImageDoctor";
+} from "../../../redux/actions.js";
+import { validateForm } from "../../../hooks/validateForm.js";
+import UploadImageDoctor from "../../UploadImageDoctor";
+import { AiOutlineClose } from "react-icons/ai";
+import { useLocation } from "react-router-dom";
 
-/*const doctor = {
-  hours: {
-    mañana: { inicio: "9:00", fin: "12:00" },
-    tarde: { inicio: "15:00", fin: "20:00" },
-    todoeldia: {inicio:'9:00', fin:'20:00'}
-  },
-};
-//  HORAS  (8:00 a 20:00hs)
-// idhora   /   hora
-//   1      / 8:00
-//    2     / 8:30
-//   3     / 9:00
-//    4     / 9:30
-
-//DIAS --> doctor (N:N)     --> idDoctor / id Dia
-// idDia   /   dia                1     /   1
-//   1      / lunes               1     /   3
-//    2     / martes              2     /   2
-//   3     / miercoles
-//    4     / jueves
-//    5    / viernes
-
-
-//TURNOS
-//idturno / fecha /idMedico /idPaciente /idHora
-
-//USUARIO ---> idMedico, FECHA
-
-//horas disponibles = [1,2,3,4,5,6,7,8,9,.....] de 8:00 a 20:00
-
-//getDoctors (idMedico) ---> hours --> comparar inicio/fin de mañana y tarde
-//-----> horas disponibles dentro de rango horario de doctor X  --> horad disponibles = [1,2,3,4,.....] mañana: { inicio: "9:00", fin: "12:00" },
-    //tarde: { inicio: "15:00", fin: "20:00" },
-
-
-//getTurnos(fecha, idMedico) --> fecha --> buscar registros que coincidan con la fecha seleecionada del usuario
-//horas disponibles --> eliminar horas que coincidan con los turnos 
-// idHora en tabla turnos con horas en horas disponibles ---> filtrar en horas disponibles aquellas que coincidan, o sea que esten ocupadas
-//horas disponibles = [1,2] --> turnos disponibles que se renderizan: no estan ocupadas y corresponden al rango de atencion del medico
-*/
 const initialForm = {
   name: "",
   document: "",
@@ -91,13 +53,15 @@ const initialForm = {
   hours_json: {},
   prepaid_healths: [],
 };
-function FormNewDoctor() {
+function FormPutDoctor({ setPutDoctor, setListDoctors }) {
+  const { pathname } = useLocation();
   const [form, setForm] = useState(initialForm);
   const [formHours, setFormHours] = useState({});
   const dispatch = useDispatch();
   const { msgConfirm, prepaidHealth, hoursWorking, days } = useSelector(
     (state) => state
   );
+  console.log(pathname);
 
   const [errors, setErrors] = useState({});
   const date = new Date().toLocaleDateString().split("/").reverse();
@@ -123,11 +87,17 @@ function FormNewDoctor() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     form.hours_json = formHours;
     //setErrors(validateForm(form));
-    dispatch(postDoctors(form));
+
+    //dispatch(putDoctor(form));
     setOverlay(<OverlayOne />);
     onOpen();
+    if (pathname === "/admin") {
+      setPutDoctor(false);
+      setListDoctors(true);
+    }
     setForm(initialForm);
   };
 
@@ -224,18 +194,14 @@ function FormNewDoctor() {
   return (
     <>
       <Box>
-        <Box display="flex" flexDirection="column" alignItems="center">
-          <UploadImageDoctor />
-          {/* <Image
-            w="200px"
-            src="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
-            alt=""
-          />
-          <Input type="file" w="50%" /> */}
-        </Box>
-        <Box m="1rem" w={{}}>
-          <form>
-            <FormControl>
+        <UploadImageDoctor />
+
+        <Box display="flex" flexDirection="column" alignItems="center" w="100%">
+          <form border="3px solid green">
+            <FormControl
+              w={{ md: "30rem", xl: "40rem" }}
+              isInvalid={errors.name}
+            >
               <FormLabel m="1rem" htmlFor="name">
                 Nombre completo
               </FormLabel>
@@ -252,7 +218,7 @@ function FormNewDoctor() {
             </FormControl>
             <FormControl isInvalid={errors.document}>
               <FormLabel m="1rem" htmlFor="document">
-                Cédula de identificación
+                Documento
               </FormLabel>
               <InputGroup>
                 <InputLeftAddon children="DNI" />
@@ -264,8 +230,11 @@ function FormNewDoctor() {
                   placeholder="Nro de documento"
                 />
               </InputGroup>
+              {errors.document && (
+                <FormErrorMessage>{errors.document}</FormErrorMessage>
+              )}
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={errors.medic_id}>
               <FormLabel m="1rem" htmlFor="medic_id">
                 Matrícula
               </FormLabel>
@@ -291,8 +260,11 @@ function FormNewDoctor() {
                 name="phone"
                 placeholder="Nro de telefono"
               />
+              {errors.phone && (
+                <FormErrorMessage>{errors.phone}</FormErrorMessage>
+              )}
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={errors.email}>
               <FormLabel m="1rem" htmlFor="email">
                 Email
               </FormLabel>
@@ -319,7 +291,7 @@ function FormNewDoctor() {
                 name="birthday"
               />
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={errors.general_area}>
               <FormLabel m="1rem" htmlFor="general_area">
                 Área general
               </FormLabel>
@@ -344,7 +316,7 @@ function FormNewDoctor() {
               )}
             </FormControl>
 
-            <FormControl>
+            <FormControl isInvalid={errors.specialty}>
               {form.general_area && (
                 <FormLabel m="1rem" htmlFor="specialty">
                   Especialidad
@@ -443,9 +415,12 @@ function FormNewDoctor() {
                   <option value="Hombro">Hombro</option>
                 </Select>
               )}
+              {errors.specialty && form.general_area && (
+                <FormErrorMessage>{errors.specialty}</FormErrorMessage>
+              )}
             </FormControl>
 
-            <FormControl>
+            <FormControl isInvalid={errors.prepaid_healths}>
               <FormLabel m="1rem" htmlFor="prepaid_healths">
                 Prestaciones asociadas
               </FormLabel>
@@ -458,20 +433,32 @@ function FormNewDoctor() {
                 <option value="Particular">Particular</option>
                 {prepaidHealth &&
                   prepaidHealth.map((e) => (
-                    <option value={e.name}>{e.name}</option>
+                    <option key={e.id} value={e.name}>
+                      {e.name}
+                    </option>
                   ))}
               </Select>
+              {errors.prepaid_healths && (
+                <FormErrorMessage>{errors.prepaid_healths}</FormErrorMessage>
+              )}
             </FormControl>
-            {form.prepaid_healths.length
-              ? form.prepaid_healths.map((e) => (
-                  <List>
-                    <ListItem key={e}>
+            <List display="inline-flex" flexDirection={"row"} flexWrap="wrap">
+              {form.prepaid_healths.length
+                ? form.prepaid_healths.map((e) => (
+                    <ListItem m="1rem" key={e}>
                       {e}
-                      <Button onClick={() => handleDeletePrepaid(e)}>X</Button>
+                      <Button
+                        colorScheme={"teal"}
+                        variant={"ghost"}
+                        cursor="pointer"
+                        onClick={() => handleDeletePrepaid(e)}
+                      >
+                        <Icon as={AiOutlineClose} />
+                      </Button>
                     </ListItem>
-                  </List>
-                ))
-              : []}
+                  ))
+                : []}
+            </List>
             <FormControl>
               <Heading textAlign="center" m="1rem" as="h6" size="lg">
                 Días y horarios de atención
@@ -492,10 +479,10 @@ function FormNewDoctor() {
                     </option>
                   ))}
               </Select>
-              {form.work_days.length
-                ? form.work_days.map((e) => (
-                    <List>
-                      <ListItem key={e}>
+              <List display="inline-flex" flexDirection={"row"} flexWrap="wrap">
+                {form.work_days.length
+                  ? form.work_days.map((e) => (
+                      <ListItem m="1rem" key={e}>
                         {e === "1"
                           ? "Lunes"
                           : e === "2"
@@ -505,159 +492,202 @@ function FormNewDoctor() {
                           : e === "4"
                           ? "Jueves"
                           : "Viernes"}
-                        <Button onClick={() => handleDeleteDay(e)}>X</Button>
+                        <Button
+                          colorScheme={"teal"}
+                          variant={"ghost"}
+                          onClick={() => handleDeleteDay(e)}
+                          cursor="pointer"
+                        >
+                          <Icon as={AiOutlineClose} />
+                        </Button>
                       </ListItem>
-                    </List>
-                  ))
-                : []}
-              <FormLabel m="1rem" htmlFor="hours">
-                Rango horario
-              </FormLabel>
-              <RadioGroup
-                name="prueba"
-                onChange={(value) => handleChangeFormHours(value)}
-              >
-                <Stack direction="row">
-                  <Radio name="totalDay" value="totalDay">
-                    Horario Corrido
-                  </Radio>
-                  <Radio name="notTotalDay" value="notTotalDay">
-                    Horario cortado
-                  </Radio>
-                </Stack>
-              </RadioGroup>
-              {formHours.totalDay ? (
-                <FormControl>
-                  <FormLabel m="1rem" htmlFor="start">
-                    Inicio
-                  </FormLabel>
-                  <Select
-                    name="start"
-                    onChange={(e) => handleChangeFormHoursTotalDay(e)}
-                  >
-                    <option>Seleccionar horario</option>
-                    {hoursWorking &&
-                      hoursWorking.map((h) => (
-                        <option key={h.id} value={h.id}>
-                          {h.hour}
-                        </option>
-                      ))}
-                  </Select>
-                  <FormLabel m="1rem" htmlFor="end">
-                    Fin
-                  </FormLabel>
-                  <Select
-                    name="end"
-                    onChange={(e) => handleChangeFormHoursTotalDay(e)}
-                  >
-                    <option>Seleccionar horario</option>
-                    {hoursWorking &&
-                      hoursWorking
-                        .filter((h) => h.id > formHours.totalDay.start)
-                        .map((h) => (
-                          <option value={h.id} key={h.id}>
-                            {h.hour}
-                          </option>
-                        ))}
-                  </Select>
-                </FormControl>
-              ) : (
-                false
-              )}
-              {formHours.notTotalDay ? (
-                <FormControl>
-                  <FormLabel m="1rem" htmlFor="">
-                    Rango horario 1
-                  </FormLabel>
-                  <FormLabel m="1rem" htmlFor="start">
-                    Inicio
-                  </FormLabel>
-                  <Select
-                    name="start"
-                    onChange={(e) => handleChangeFormHoursMorning(e)}
-                  >
-                    <option>Seleccionar horario</option>
-                    {hoursWorking &&
-                      hoursWorking.map((h) => (
-                        <option value={h.id} key={h.id}>
-                          {h.hour}
-                        </option>
-                      ))}
-                  </Select>
-                  <FormLabel m="1rem" htmlFor="end">
-                    Fin
-                  </FormLabel>
-                  <Select
-                    name="end"
-                    onChange={(e) => handleChangeFormHoursMorning(e)}
-                  >
-                    <option>Seleccionar horario</option>
-                    {hoursWorking &&
-                      hoursWorking
-                        .filter(
-                          (h) => h.id > formHours.notTotalDay.morning.start
-                        )
-                        .map((h) => (
-                          <option value={h.id} key={h.id}>
-                            {h.hour}
-                          </option>
-                        ))}
-                  </Select>
-                  <FormLabel m="1rem" htmlFor="hours">
-                    Rango horario 2
-                  </FormLabel>
-                  <FormLabel m="1rem" htmlFor="start">
-                    Inicio
-                  </FormLabel>
-                  <Select
-                    name="start"
-                    onChange={(e) => handleChangeFormHoursAfternoon(e)}
-                  >
-                    <option>Seleccionar horario</option>
-                    {hoursWorking &&
-                      hoursWorking
-                        .filter((h) => h.id > formHours.notTotalDay.morning.end)
-                        .map((h) => (
-                          <option value={h.id} key={h.id}>
-                            {h.hour}
-                          </option>
-                        ))}
-                  </Select>
-                  <FormLabel m="1rem" htmlFor="end">
-                    Fin
-                  </FormLabel>
-                  <Select
-                    name="end"
-                    onChange={(e) => handleChangeFormHoursAfternoon(e)}
-                  >
-                    <option>Seleccionar horario</option>
-                    {hoursWorking &&
-                      hoursWorking
-                        .filter(
-                          (h) => h.id > formHours.notTotalDay.afternoon.start
-                        )
-                        .map((h) => (
-                          <option value={h.id} key={h.id}>
-                            {h.hour}
-                          </option>
-                        ))}
-                  </Select>
-                </FormControl>
-              ) : (
-                false
-              )}
+                    ))
+                  : []}
+              </List>
+              <Box>
+                <FormLabel m="1rem" htmlFor="hours">
+                  Rango horario
+                </FormLabel>
+                <RadioGroup
+                  name="prueba"
+                  onChange={(value) => handleChangeFormHours(value)}
+                >
+                  <Stack direction="row">
+                    <Radio name="totalDay" value="totalDay">
+                      Horario Corrido
+                    </Radio>
+                    <Radio name="notTotalDay" value="notTotalDay">
+                      Horario cortado
+                    </Radio>
+                  </Stack>
+                </RadioGroup>
+                {formHours.totalDay ? (
+                  <FormControl>
+                    <Box
+                      display="flex"
+                      flexDirection="row"
+                      justifyContent={"space-around"}
+                    >
+                      <Box display="flex" flexDirection="column">
+                        <FormLabel m="1rem" htmlFor="start">
+                          Inicio
+                        </FormLabel>
+                        <Select
+                          name="start"
+                          onChange={(e) => handleChangeFormHoursTotalDay(e)}
+                        >
+                          <option>Seleccionar horario</option>
+                          {hoursWorking &&
+                            hoursWorking.map((h) => (
+                              <option key={h.id} value={h.id}>
+                                {h.hour}
+                              </option>
+                            ))}
+                        </Select>
+                      </Box>
+                      <Box display="flex" flexDirection="column">
+                        <FormLabel m="1rem" htmlFor="end">
+                          Fin
+                        </FormLabel>
+                        <Select
+                          name="end"
+                          onChange={(e) => handleChangeFormHoursTotalDay(e)}
+                        >
+                          <option>Seleccionar horario</option>
+                          {hoursWorking &&
+                            hoursWorking
+                              .filter((h) => h.id > formHours.totalDay.start)
+                              .map((h) => (
+                                <option value={h.id} key={h.id}>
+                                  {h.hour}
+                                </option>
+                              ))}
+                        </Select>
+                      </Box>
+                    </Box>
+                  </FormControl>
+                ) : (
+                  false
+                )}
+                {formHours.notTotalDay ? (
+                  <FormControl>
+                    <FormLabel m="1rem" htmlFor="">
+                      Rango horario 1
+                    </FormLabel>
+                    <Box
+                      display="flex"
+                      flexDirection="row"
+                      justifyContent={"space-around"}
+                    >
+                      <Box display="flex" flexDirection="column">
+                        <FormLabel m="1rem" htmlFor="start">
+                          Inicio
+                        </FormLabel>
+                        <Select
+                          name="start"
+                          onChange={(e) => handleChangeFormHoursMorning(e)}
+                        >
+                          <option>Seleccionar horario</option>
+                          {hoursWorking &&
+                            hoursWorking.map((h) => (
+                              <option value={h.id} key={h.id}>
+                                {h.hour}
+                              </option>
+                            ))}
+                        </Select>
+                      </Box>
+                      <Box display="flex" flexDirection="column">
+                        <FormLabel m="1rem" htmlFor="end">
+                          Fin
+                        </FormLabel>
+                        <Select
+                          name="end"
+                          onChange={(e) => handleChangeFormHoursMorning(e)}
+                        >
+                          <option>Seleccionar horario</option>
+                          {hoursWorking &&
+                            hoursWorking
+                              .filter(
+                                (h) =>
+                                  h.id > formHours.notTotalDay.morning.start
+                              )
+                              .map((h) => (
+                                <option value={h.id} key={h.id}>
+                                  {h.hour}
+                                </option>
+                              ))}
+                        </Select>
+                      </Box>
+                    </Box>
+                    <FormLabel m="1rem" htmlFor="hours">
+                      Rango horario 2
+                    </FormLabel>
+                    <Box
+                      display="flex"
+                      flexDirection="row"
+                      justifyContent={"space-around"}
+                    >
+                      <Box display="flex" flexDirection="column">
+                        <FormLabel m="1rem" htmlFor="start">
+                          Inicio
+                        </FormLabel>
+                        <Select
+                          name="start"
+                          onChange={(e) => handleChangeFormHoursAfternoon(e)}
+                        >
+                          <option>Seleccionar horario</option>
+                          {hoursWorking &&
+                            hoursWorking
+                              .filter(
+                                (h) => h.id > formHours.notTotalDay.morning.end
+                              )
+                              .map((h) => (
+                                <option value={h.id} key={h.id}>
+                                  {h.hour}
+                                </option>
+                              ))}
+                        </Select>
+                      </Box>
+                      <Box display="flex" flexDirection="column">
+                        <FormLabel m="1rem" htmlFor="end">
+                          Fin
+                        </FormLabel>
+                        <Select
+                          name="end"
+                          onChange={(e) => handleChangeFormHoursAfternoon(e)}
+                        >
+                          <option>Seleccionar horario</option>
+                          {hoursWorking &&
+                            hoursWorking
+                              .filter(
+                                (h) =>
+                                  h.id > formHours.notTotalDay.afternoon.start
+                              )
+                              .map((h) => (
+                                <option value={h.id} key={h.id}>
+                                  {h.hour}
+                                </option>
+                              ))}
+                        </Select>
+                      </Box>
+                    </Box>
+                  </FormControl>
+                ) : (
+                  false
+                )}
+              </Box>
             </FormControl>
-
-            <Button
-              mt="1rem"
-              onClick={(e) => handleSubmit(e)}
-              type="submit"
-              colorScheme="teal"
-              variant="solid"
-            >
-              Crear doctor
-            </Button>
           </form>
+
+          <Button
+            mt="1rem"
+            onClick={(e) => handleSubmit(e)}
+            type="submit"
+            colorScheme="teal"
+            variant="solid"
+          >
+            Modificar datos
+          </Button>
         </Box>
 
         {
@@ -673,9 +703,15 @@ function FormNewDoctor() {
                 <ModalHeader color="teal.600">Registro Existoso!</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                  <Text color="teal.600">
-                    Los datos fueron cargados exitosamente!
-                  </Text>
+                  {pathname === "/admin" ? (
+                    <Text color="teal.600">
+                      Los datos fueron cargados exitosamente!
+                    </Text>
+                  ) : (
+                    <Text color="teal.600">
+                      Los datos fueron modificados exitosamente!
+                    </Text>
+                  )}
                 </ModalBody>
                 <ModalFooter>
                   <Spacer />
@@ -689,4 +725,4 @@ function FormNewDoctor() {
   );
 }
 
-export default FormNewDoctor;
+export default FormPutDoctor;

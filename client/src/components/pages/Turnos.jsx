@@ -1,22 +1,21 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import DoctorCard from "./DoctorCard";
-import NavStaff from "./NavStaff";
 import {
   Box,
-  Center,
   Heading,
+  Center,
+  Text,
   Wrap,
   WrapItem,
-  Text,
   CircularProgress,
 } from "@chakra-ui/react";
-import Pagination from "./Pagination";
+import NavStaff from "../NavStaff";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Pagination from "../Pagination";
+import DoctorCard from "../DoctorCard";
 import { useEffect } from "react";
-import { getHours } from "../redux/actions";
+import { getHours } from "../../redux/actions";
 
-function Staff() {
+function Turnos() {
   const allDoctors = useSelector((state) => state.doctors);
   const dispatch = useDispatch();
 
@@ -24,38 +23,37 @@ function Staff() {
     dispatch(getHours());
   }, [dispatch]);
 
-  //------------PAGINADO-------------
+  //PAGINADO
   const [page, setPage] = useState(1);
   const [forPage] = useState(6);
   const [input, setInput] = useState(1);
   const max = Math.ceil(allDoctors.length / forPage);
-
   return (
     <>
       <Center
-        h={{ base: "125vh", sm: "125vh", md: "100vh", lg: "100vh" }}
-        top={0}
+        h={{ base: "100vh", sm: "100vh", md: "80vh", lg: "70vh" }}
         bgRepeat="no-repeat"
         bgSize="cover"
+        top={0}
         bgImage="linear-gradient(
-   rgba(230, 255, 250, 0.8),
-   rgba(230, 255, 250, 0.8)
- ),
- url(https://st.depositphotos.com/1518767/1415/i/450/depositphotos_14150393-stock-photo-doctors-with-nurses-with-arms.jpg)"
+      rgba(230, 255, 250, 0.7),
+      rgba(230, 255, 250, 0.7)
+    ),
+    url(https://parrocchiagrumello.it/wp-content/uploads/2018/03/97079_agenda1.jpg)"
         flexDirection="column"
       >
         <Heading
+          textAlign="center"
           as="h1"
-          size="4xl"
+          fontSize={{ base: "2xl", sm: "4xl", md: "5xl", lg: "6xl" }}
           m="1rem"
-          mt={{ base: "6rem", sm: "6rem", md: "4rem", lg: "1rem" }}
+          mt={{ base: "10rem", sm: "10rem", md: "8rem", lg: "5rem" }}
         >
-          Staff
+          Turnos Online
         </Heading>
         <Box w={{ base: "75%", sm: "75%", md: "60%" }} textAlign="center">
           <Text as="i" fontSize="xl">
-            "El bienestar y la salud son un deber, de otra manera no podriamos
-            mantener nuestra mente fuerte y clara"
+            "Selecciona el profesional con el que deseas consultar"
           </Text>
         </Box>
       </Center>
@@ -64,9 +62,8 @@ function Staff() {
         <Center>
           <NavStaff setInput={setInput} setPage={setPage} />
         </Center>
-
         {!allDoctors.length ? (
-          <Center m="8rem">
+          <Center m="10rem">
             <CircularProgress isIndeterminate color="teal.500" size="100px" />
           </Center>
         ) : (
@@ -78,7 +75,7 @@ function Staff() {
               .slice((page - 1) * forPage, (page - 1) * forPage + forPage)
               .map((doc) => {
                 return (
-                  <WrapItem>
+                  <WrapItem key={doc.id}>
                     <DoctorCard
                       name={doc.name}
                       picture={doc.picture}
@@ -102,4 +99,4 @@ function Staff() {
   );
 }
 
-export default Staff;
+export default Turnos;

@@ -1,15 +1,15 @@
 import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
-import About from "./components/About";
-import Staff from "./components/Staff";
-import Error from "./components/Error";
-import Home from "./components/Home";
-import Specialties from "./components/Specialties";
-import Prepaid from "./components/Prepaid";
+import About from "./components/pages/About";
+import Staff from "./components/pages/Staff";
+import Error from "./components/pages/Error";
+import Home from "./components/pages/Home";
+import Specialties from "./components/pages/Specialties";
+import Prepaid from "./components/pages/Prepaid";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import UserProfile from "./components/UserProfile";
-import Turnos from "./components/Turnos";
+import Turnos from "./components/pages/Turnos";
 import Calendar from "./components/Calendar";
 import MakePayments from "./components/MakePayments";
 import PrivateRouteAdmin from "./components/private/PrivateRouteAdmin";
@@ -18,6 +18,7 @@ import PrivateRouterPago from "./components/private/PrivateRoutePago";
 import PrivateRouterCalendario from "./components/private/PrivateRouterCalendario";
 
 import AdminProfile from "./components/admin/AdminProfile";
+import DoctorProfile from "./components/doctor/DoctorProfile";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -55,6 +56,9 @@ export default function App() {
         <PrivateRouteAdmin exact path="/admin">
           <AdminProfile />
         </PrivateRouteAdmin>
+        <Route exact path="/doctor">
+          <DoctorProfile />
+        </Route>
         <PrivateRouterPago exact path="/payments">
           <MakePayments />
         </PrivateRouterPago>

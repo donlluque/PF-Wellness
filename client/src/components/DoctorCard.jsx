@@ -24,6 +24,7 @@ import {
 } from "@chakra-ui/react";
 import DoctorDetail from "./DoctorDetail";
 import { useAuth0 } from "@auth0/auth0-react";
+
 import { getActiveDate, getDetailDoctors } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
@@ -182,7 +183,6 @@ export default function DoctorCard({
       </Box>
 
       <Modal isOpen={isEditOpen} onClose={onEditClose}>
-
         <ModalOverlay />
         <ModalContent bg="#EBF8FF">
           <ModalHeader

@@ -1,7 +1,7 @@
-import { Container, Heading, Box, Button } from "@chakra-ui/react";
+import { Heading, Box } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { baseURL } from "../index.js";
+
+import { baseURL } from "../../index.js";
 
 function Error() {
   const { pathname } = useLocation();

@@ -1,10 +1,7 @@
-//import ReactDatePicker from "react-datepicker";
-//import "react-datepicker/dist/react-datepicker.css";
 import React, { useEffect, useState } from "react";
 import { DatePicker } from "@material-ui/pickers";
 import { Link } from "react-router-dom";
-//import { createTheme } from "@material-ui/core/styles";
-//import { ThemeProvider } from "@material-ui/styles";
+
 import {
   Box,
   Center,
@@ -17,6 +14,16 @@ import {
   Alert,
   AlertIcon,
   AlertDescription,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  List,
+  ListItem,
 } from "@chakra-ui/react";
 import {
   getDetailDoctors,
@@ -33,17 +40,18 @@ import { searchTurnsAvailable } from "./validateTurn";
 function Calendar() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [selectedDate, setDateChange] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure(); //modal confirmacion de turno
+  const [selectedDate, setDateChange] = useState(""); //cambia fecha en calendario
   const [form, setForm] = useState({});
-  const [arrayTurns, setArrayTurns] = useState([]);
+  const [arrayTurns, setArrayTurns] = useState([]); //horas disponibles a renderizar
   const { idDoctor } = useParams();
   const { hoursWorking, turns } = useSelector((state) => state);
   const doctorDetail = useSelector((state) => state.doctorDetail);
-  const hours = doctorDetail.hours_json;
-
+  //copia de estado global
   const totalHours = hoursWorking;
   const totalTurns = turns;
   const dias = doctorDetail.work_days?.map((e) => parseInt(e.id));
+  const hours = doctorDetail.hours_json;
 
   //////////////////CALENDARIO///////////////////
   //array auxiliar que cambia segun dias del medico
@@ -78,13 +86,14 @@ function Calendar() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postTurn(form));
+    onOpen();
   };
 
   const handleChangeCalendar = (date) => {
     //cambio fecha
     setDateChange(date);
     setForm({ ...form, date: date.toLocaleDateString() });
-    //validaciones
+    //validaciones horas disponibles
     setArrayTurns(searchTurnsAvailable(hours, totalHours, totalTurns, date));
   };
 
@@ -252,11 +261,35 @@ function Calendar() {
           Confirmar Turno
         </Button>
         <Link to="/payments">
-          <Button isDisabled={!form.idHour} m="1rem"
-          colorScheme={"teal"}
-          > Pagar </Button>
-          </Link>
+          <Button isDisabled={!form.idHour} m="1rem" colorScheme={"teal"}>
+            {" "}
+            Pagar{" "}
+          </Button>
+        </Link>
       </Box>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Confirmar turno</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <List>
+              <ListItem>Doctor: </ListItem>
+              <ListItem>Fecha: {form.date}</ListItem>
+              <ListItem>Hora: </ListItem>
+              <ListItem>Costo consulta: </ListItem>
+              <ListItem>Descuento por obra social: </ListItem>
+            </List>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant="ghost">Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

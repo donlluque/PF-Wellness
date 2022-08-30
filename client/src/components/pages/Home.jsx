@@ -20,6 +20,7 @@ function Home() {
   return (
     <>
       <Center
+        border="1px solid red"
         h={{ base: "125vh", sm: "125vh", md: "100vh", lg: "100vh" }}
         bgRepeat="no-repeat"
         bgSize="cover"
@@ -48,7 +49,7 @@ function Home() {
           </Text>
         </Box>
       </Center>
-      <Container maxW="100vw" centerContent>
+      <Container maxW="100%" centerContent border="1px solid red">
         <Flex
           direction={{ base: "column", sm: "column", md: "column", lg: "row" }}
           m={5}
@@ -153,7 +154,8 @@ function Home() {
         </Link>
       </Container>
       <Container
-        maxW="100vw"
+        border="1px solid red"
+        maxW="100%"
         centerContent
         bgColor="teal.50"
         pb="2rem"
@@ -163,6 +165,7 @@ function Home() {
           Especialidades médicas destacadas
         </Heading>
         <SimpleGrid
+          border="1px solid red"
           columns={{ base: 1, sm: 1, md: 2 }}
           spacing={20}
           alignItems="center"

@@ -2,7 +2,7 @@ import React from "react";
 import { cleanDoctor, getDetailDoctors, getHours } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Box, Text, List, ListItem } from "@chakra-ui/react";
+import { Box, Text, List, ListItem, Image } from "@chakra-ui/react";
 
 export default function DoctorDetail({ id }) {
   const dispatch = useDispatch();
@@ -23,6 +23,9 @@ export default function DoctorDetail({ id }) {
       {doctor && doctor ? (
         <Box>
           <List spacing={2}>
+            <ListItem display="flex" justifyContent={"center"} mb="1rem">
+              <Image src={doctor.picture} w="5rem" rounded={"50%"} />
+            </ListItem>
             <ListItem>
               {" "}
               <Text

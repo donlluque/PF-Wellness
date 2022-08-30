@@ -98,4 +98,16 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.delete("/", async (req, res, next) => {
+  // try {
+
+  const { dateId } = req.body;
+
+  await Dates1.destroy({ where: { id: dateId } });
+  res.send("enviar");
+  // } catch (error) {
+  //   next(error);
+  // }
+});
+
 module.exports = router;

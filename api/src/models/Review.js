@@ -4,36 +4,23 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
-    "prepaid_health",
+    "review",
     {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-
+      review: {
+        type: DataTypes.STRING,
+      },
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
-        set(value) {
-          this.setDataValue("name", value[0].toUpperCase() + value.slice(1));
-        },
       },
-      address: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      rating:{
+        type: DataTypes.INTEGER
       },
-      phone: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      logo: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      // percentage: {
-      //   type: DataTypes.FLOAT,
-      // },
+
     },
     { timestamps: false }
   );

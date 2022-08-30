@@ -50,7 +50,7 @@ function NavBar() {
   useEffect(() => {
     if (user) {
       if (Object.keys(user).length) {
-        console.log(user, "soyu user de NavBar");
+        // console.log(user.localhost[0], "soyu user de NavBar");
         dispatch(dateUser(user));
         // localStorage.setItem("user", JSON.stringify(user));
       }
@@ -74,11 +74,12 @@ function NavBar() {
   // };
 
   return (
-    <Box position="absolute" w="100%">
+    <Box position="absolute" w="100%" border="1px solid red">
       <Box
         display="flex"
         m={2}
         flexDirection={{
+          base: "column",
           sm: "column",
           md: "column",
           lg: "column",
@@ -103,7 +104,7 @@ function NavBar() {
           <Stack
             spacing={{ base: 0, sm: 0, md: 4 }}
             direction={{ base: "column", sm: "column", md: "row" }}
-            align={{ sm: "center", md: "row" }}
+            align={{ base: "center", sm: "center", md: "row" }}
           >
             <Link to="/">
               <Button colorScheme="teal" variant="ghost">
@@ -125,7 +126,7 @@ function NavBar() {
                 Prestaciones
               </Button>
             </Link>
-            <Link to="staff">
+            <Link to="/staff">
               <Button colorScheme="teal" variant="ghost">
                 Staff
               </Button>
@@ -135,6 +136,7 @@ function NavBar() {
 
         <Spacer />
         <ButtonGroup
+          border="1px solid red"
           mt={{ base: "1rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "0" }}
           display="flex"
           flexDirection={{
@@ -153,26 +155,8 @@ function NavBar() {
           ) : (
             <Button colorScheme="teal" variant="solid" onClick={onOpen}>
               Turnos Online
-              <Modal
-                isCentered
-                isOpen={isOpen}
-                onClose={onClose}
-                colorScheme="teal"
-              >
-                {overlay}
-                <ModalContent bgColor="green.50">
-                  <ModalHeader color="#C53030">Ups!!</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    <Text color="#C53030">Debes estar registrado</Text>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Spacer />
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
             </Button>
-)}
+          )}
           <Link to="/admin">
             <Button colorScheme="teal" variant="solid">
               Acceso admin
@@ -225,6 +209,26 @@ function NavBar() {
           )}
         </ButtonGroup>
       </Box>
+
+      <Modal
+        isCentered
+        isOpen={isOpen}
+        onClose={onClose}
+        colorScheme="teal"
+        w="100%"
+      >
+        {overlay}
+        <ModalContent bgColor="green.50" border="1px solid red" w="80%">
+          <ModalHeader color="#C53030">Ups!!</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text color="#C53030">Debes estar registrado</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Spacer />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }

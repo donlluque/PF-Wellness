@@ -15,16 +15,17 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
+  Image,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { MdOutlineEditNote } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailDoctors, getDoctors, getHours } from "../../redux/actions";
-import DoctorDetail from "../DoctorDetail";
+import { getDetailDoctors, getDoctors, getHours } from "../../../redux/actions";
+import DoctorDetail from "../../DoctorDetail";
 
-function AdminAllDoctors() {
+function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
   const dispatch = useDispatch();
   const { doctors, doctorDetail } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,6 +48,7 @@ function AdminAllDoctors() {
           <Thead>
             <Tr>
               <Th isNumeric>ID</Th>
+              <Th></Th>
               <Th>Nombre</Th>
               <Th>Área</Th>
               <Th>Especialidad</Th>
@@ -57,6 +59,9 @@ function AdminAllDoctors() {
               doctors.map((e) => (
                 <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
+                  <Td>
+                    <Image src={e.picture} w="3rem" h="3rem" rounded={"50%"} />
+                  </Td>
                   <Td>{e.name}</Td>
                   <Td>{e.general_area}</Td>
                   <Td>{e.specialty}</Td>
@@ -69,7 +74,15 @@ function AdminAllDoctors() {
                     >
                       Detalle
                     </Button>
-                    <Button m="0.5rem" colorScheme={"teal"} variant="ghost">
+                    <Button
+                      m="0.5rem"
+                      colorScheme={"teal"}
+                      variant="ghost"
+                      onClick={() => {
+                        setListDoctors(false);
+                        setPutDoctor(true);
+                      }}
+                    >
                       <Icon w={4} h={4} as={MdOutlineEditNote} />
                     </Button>
                     <Button

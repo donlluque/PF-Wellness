@@ -1,15 +1,11 @@
 import React from "react";
 import { FormGroup, Input } from "reactstrap";
 import { useState } from "react";
-import { Image } from "@chakra-ui/react";
-
+import { Image, Box } from "@chakra-ui/react";
 
 function UploadImageDoctor(props) {
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
-  
-
-  
 
   const UploadI = async (e) => {
     const files = e.target.files;
@@ -31,26 +27,28 @@ function UploadImageDoctor(props) {
   };
 
   return (
-    <div>
+    <Box>
       <FormGroup>
-        <Input
-          name="file"
-          type="file"
-          placeholder="Sube tu imagen aquí"
-          onChange={UploadI}
-        />
-        {loading ? (
-          <h3>Cargando imagen...</h3>
-        ) : (
-          <Image
-            borderRadius="full"
-            boxSize="150px"
-            src={image}
-            fallbackSrc="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
+        <Box display="flex" flexDirection="column" alignItems="center">
+          {loading ? (
+            <h3>Cargando imagen...</h3>
+          ) : (
+            <Image
+              borderRadius="full"
+              boxSize="150px"
+              src={image}
+              fallbackSrc="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
+            />
+          )}
+          <Input
+            name="file"
+            type="file"
+            placeholder="Sube tu imagen aquí"
+            onChange={UploadI}
           />
-        )}
+        </Box>
       </FormGroup>
-    </div>
+    </Box>
   );
 }
 

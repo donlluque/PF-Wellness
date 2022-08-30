@@ -1,21 +1,30 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
-import About from "./components/About";
-import Staff from "./components/Staff";
-import Error from "./components/Error";
-import Home from "./components/Home";
-import Specialties from "./components/Specialties";
-import Prepaid from "./components/Prepaid";
+import About from "./components/pages/About";
+import Staff from "./components/pages/Staff";
+import Error from "./components/pages/Error";
+import Home from "./components/pages/Home";
+import Specialties from "./components/pages/Specialties";
+import Prepaid from "./components/pages/Prepaid";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import UserProfile from "./components/UserProfile";
-import Turnos from "./components/Turnos";
+import Turnos from "./components/pages/Turnos";
 import Calendar from "./components/Calendar";
 import MakePayments from "./components/MakePayments";
-import FormTestimonial from "./components/FormTestimonal";
+
+
+import PrivateRouteAdmin from "./components/private/PrivateRouteAdmin";
+import PrivateRoutePerfil from "./components/private/PrivateRoutePerfil";
+import PrivateRouterPago from "./components/private/PrivateRoutePago";
+import PrivateRouterCalendario from "./components/private/PrivateRouterCalendario";
+
 import AdminProfile from "./components/admin/AdminProfile";
+import DoctorProfile from "./components/doctor/DoctorProfile";
+import FormTestimonial from "./components/FormTestimonal";
 import { Context } from "./components/Context";
+
 
 export default function App() {
   const { pathname } = useLocation();
@@ -43,25 +52,29 @@ export default function App() {
         <Route exact path="/staff">
           <Staff />
         </Route>
-        <Route exact path="/turnos">
+        <PrivateRouterCalendario exact path="/turnos">
           <Turnos />
-        </Route>
-
-        <Route exact path="/userProfile/:id">
+        </PrivateRouterCalendario>
+        <PrivateRoutePerfil exact path="/userProfile/:id">
           <UserProfile />
-        </Route>
-        <Route exact path="/calendar/:idDoctor">
+        </PrivateRoutePerfil>
+        <PrivateRouterCalendario exact path="/calendar/:idDoctor">
           <Calendar />
-        </Route>
-        <Route exact path="/admin">
+        </PrivateRouterCalendario>
+        <PrivateRouteAdmin exact path="/admin">
           <AdminProfile />
+        </PrivateRouteAdmin>
+        <Route exact path="/doctor">
+          <DoctorProfile />
         </Route>
-        <Route exact path="/payments">
+        <PrivateRouterPago exact path="/payments">
           <MakePayments />
         </Route>
         <Route exact path="/testimonials">
           <FormTestimonial />
         </Route>
+        </PrivateRouterPago>
+
         <Route exact path="*">
           <Error />
         </Route>

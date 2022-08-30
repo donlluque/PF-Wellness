@@ -13,7 +13,10 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import esLocale from "date-fns/locale/es";
+// import { useAuth0 } from "@auth0/auth0-react";
+// const { user } = useAuth0();
 
+// console.log(user, "user");
 dotenv.config();
 
 export let baseURL = process.env.REACT_APP_API || "http://localhost:3001";
@@ -21,10 +24,10 @@ export let baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 ReactDOM.render(
   <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
     <Auth0Provider
-      domain="clinicaawellness.us.auth0.com"
-      clientId="fNRrwqrUHnHTj3YZ4dOK55sPLJcK57bj"
+      domain="dev-zqmpe2rk.us.auth0.com"
+      clientId="fY7Jrp1tLWX3hLk4bmger0CK1huTGPOj"
       // redirectUri={window.location.origin}
-      redirectUri="http://localhost:3000"
+      redirectUri="http://localhost:3000/"
     >
       <React.StrictMode>
         <BrowserRouter>

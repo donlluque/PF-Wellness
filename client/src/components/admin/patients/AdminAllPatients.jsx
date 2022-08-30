@@ -6,7 +6,6 @@ import {
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   Button,
   Icon,
@@ -23,8 +22,8 @@ import { useEffect } from "react";
 import { MdOutlineEditNote } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPatients, getOnePatient } from "../../redux/actions";
-import PatientDetail from "../patient/PatientDetail";
+import { getAllPatients, getOnePatient } from "../../../redux/actions";
+import PatientDetail from "../../patient/PatientDetail";
 
 function AdminAllPatients() {
   const dispatch = useDispatch();
@@ -58,7 +57,7 @@ function AdminAllPatients() {
           <Tbody>
             {patients &&
               patients.map((e) => (
-                <Tr>
+                <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
                   <Td>
                     <Image src={e.picture} w="3rem" h="3rem" rounded={"50%"} />

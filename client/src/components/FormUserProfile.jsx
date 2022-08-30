@@ -34,7 +34,7 @@ function FormUserProfile() {
   const [putActive, setPutActive] = useState(false);
   const dispatch = useDispatch();
   const { patientDetail, msgConfirm } = useSelector((state) => state);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({ flag: false });
   const date = new Date().toLocaleDateString().split("/").reverse();
   // const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
@@ -56,6 +56,8 @@ function FormUserProfile() {
     prepaid_health: "",
     picture: "",
   });
+
+  console.log(form, "form");
 
   const styleDate = (date) => {
     if (date[1].length === 1) {
@@ -104,25 +106,35 @@ function FormUserProfile() {
   };
 
   const handlePutActive = () => {
-    setForm({
-      ...form,
-      email: perfil.email,
-      name: perfil.name,
-      last_name: perfil.last_name,
-      birthday: perfil.birthday,
-      document: perfil.document,
-      phone: perfil.phone,
-      nationality: perfil.nationality,
-      direction: perfil.direction,
-      picture: perfil.picture,
-    });
-
-    if (perfil.prepaid_healths) {
+    if (perfil.prepaid_healths.length > 0) {
       setForm({
         ...form,
+        email: perfil.email,
+        name: perfil.name,
+        last_name: perfil.last_name,
+        birthday: perfil.birthday,
+        document: perfil.document,
+        phone: perfil.phone,
+        nationality: perfil.nationality,
+        direction: perfil.direction,
+        picture: perfil.picture,
         prepaid_health: perfil.prepaid_healths[0].name,
       });
+    } else {
+      setForm({
+        ...form,
+        email: perfil.email,
+        name: perfil.name,
+        last_name: perfil.last_name,
+        birthday: perfil.birthday,
+        document: perfil.document,
+        phone: perfil.phone,
+        nationality: perfil.nationality,
+        direction: perfil.direction,
+        picture: perfil.picture,
+      });
     }
+
     setPutActive(true);
   };
 
@@ -250,10 +262,11 @@ function FormUserProfile() {
                     !perfil.document ? "Nro de documento" : perfil.document
                   }
                 />
-                {errors.document && (
-                  <FormErrorMessage>{errors.document}</FormErrorMessage>
-                )}
               </InputGroup>
+
+              {errors.document && (
+                <FormErrorMessage>{errors.document}</FormErrorMessage>
+              )}
             </FormControl>
             <FormControl isDisabled={!putActive} isInvalid={errors.phone}>
               <FormLabel m="1rem" htmlFor="phone">
@@ -298,7 +311,10 @@ function FormUserProfile() {
                 }
               />
             </FormControl>
-            <FormControl isDisabled={!putActive}>
+            <FormControl
+              isDisabled={!putActive}
+              isInvalid={errors.prepaid_health}
+            >
               <FormLabel m="1rem" htmlFor="prepaid">
                 Obra social
               </FormLabel>
@@ -307,7 +323,7 @@ function FormUserProfile() {
                 onChange={(e) => handleChange(e)}
                 name="prepaid_health"
               >
-                <option>Seleccionar una opción</option>
+                <option value="">Seleccionar una opción</option>
                 <option value="false">Ninguna</option>
                 <option value="Galeno">Galeno</option>
                 <option value="Medicus">Medicus</option>
@@ -316,6 +332,10 @@ function FormUserProfile() {
                 <option value="Parque Salud">Parque Salud</option>
                 <option value="Swiss Medical">Swiss Medical</option>
               </Select>
+
+              {errors.prepaid_health && (
+                <FormErrorMessage>{errors.prepaid_health}</FormErrorMessage>
+              )}
             </FormControl>
 
             <Button

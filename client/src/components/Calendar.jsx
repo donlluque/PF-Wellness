@@ -47,6 +47,8 @@ function Calendar() {
   const { idDoctor } = useParams();
   const { hoursWorking, turns } = useSelector((state) => state);
   const doctorDetail = useSelector((state) => state.doctorDetail);
+  const usuario = useSelector((state) => state.user);
+  console.log(usuario, "usuario");
   //copia de estado global
   const totalHours = hoursWorking;
   const totalTurns = turns;
@@ -79,12 +81,15 @@ function Calendar() {
   useEffect(() => {
     dispatch(getDetailDoctors(idDoctor));
     dispatch(getHours());
+
     setForm({ ...form, idDoctor: idDoctor });
     dispatch(getTurns());
   }, [dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    form.idPatient = usuario.id;
+    console.log(form);
     dispatch(postTurn(form));
     onOpen();
   };

@@ -13,10 +13,12 @@ import FormNewDoctor from "./FormNewDoctor";
 import { Button } from "reactstrap";
 import { useState } from "react";
 import AdminAllDoctors from "./AdminAllDoctors";
-import NavStaff from "../NavStaff";
+import NavStaff from "../../NavStaff";
+import FormPutDoctor from "./FormPutDoctor";
 
 function AdminDoctorPanel() {
   const [newDoctor, setNewDoctor] = useState(false);
+  const [putDoctor, setPutDoctor] = useState(false);
   const [listDoctors, setListDoctors] = useState(true);
   const [filter, setFilter] = useState(false);
   return (
@@ -75,7 +77,18 @@ function AdminDoctorPanel() {
         <Box w={{ xl: "70%" }}>
           {filter && <NavStaff />}
           {newDoctor && <FormNewDoctor />}
-          {listDoctors && <AdminAllDoctors />}
+          {listDoctors && (
+            <AdminAllDoctors
+              setListDoctors={setListDoctors}
+              setPutDoctor={setPutDoctor}
+            />
+          )}
+          {putDoctor && (
+            <FormPutDoctor
+              setListDoctors={setListDoctors}
+              setPutDoctor={setPutDoctor}
+            />
+          )}
         </Box>
       </Box>
     </>

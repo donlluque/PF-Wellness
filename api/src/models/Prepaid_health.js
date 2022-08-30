@@ -19,21 +19,21 @@ module.exports = (sequelize) => {
           this.setDataValue("name", value[0].toUpperCase() + value.slice(1));
         },
       },
-
       address: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-
       phone: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-
       logo: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      // percentage: {
+      //   type: DataTypes.FLOAT,
+      // },
     },
     { timestamps: false }
   );

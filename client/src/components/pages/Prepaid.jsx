@@ -4,7 +4,6 @@ import {
   Heading,
   Image,
   Wrap,
-  Container,
   Text,
   Box,
   ListIcon,

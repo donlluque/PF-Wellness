@@ -18,6 +18,7 @@ import Logo from "../assets/logoPf.jpeg";
 function Footer() {
   return (
     <Box
+      border="1px solid red"
       display="flex"
       flexDirection={{ base: "column", sm: "column", md: "column", lg: "row" }}
       alignItems={{ base: "center", sm: "center", md: "center" }}
@@ -96,43 +97,42 @@ function Footer() {
           </List>
         </Box>
         <Box mt="1rem">
-          <List
-            spacing={{ base: 0, sm: 0, md: 3 }}
+          <Box
             display="flex"
             flexDirection={{ base: "row", sm: "row", md: "column" }}
             flexWrap={{ base: "wrap", sm: "wrap" }}
-            justifyItems={{ base: "center", sm: "center" }}
+            justifyContent={{ base: "center", sm: "center" }}
           >
-            <ListItem>
+            <Box m="0.5rem">
               <Link to={"/about"}>
                 <button>
                   <Text fontWeight="semibold">Nosotros</Text>
                 </button>
               </Link>
-            </ListItem>
-            <ListItem pl={{ base: "1rem", sm: "1.5rem", md: 0 }}>
+            </Box>
+            <Box m="0.5rem">
               <Link to={"/especialidades"}>
                 <button>
                   <Text fontWeight="semibold">Especialidades</Text>
                 </button>
               </Link>
-            </ListItem>
+            </Box>
             {/* You can also use custom icons from react-icons */}
-            <ListItem pl={{ base: "1rem", sm: "1.5rem", md: 0 }}>
+            <Box m="0.5rem">
               <Link to={"/prestaciones"}>
                 <button>
                   <Text fontWeight="semibold">Prestaciones</Text>
                 </button>
               </Link>
-            </ListItem>
-            <ListItem pl={{ base: "1rem", sm: "1.5rem", md: 0 }}>
+            </Box>
+            <Box m="0.5rem">
               <Link to={"/staff"}>
                 <button>
                   <Text fontWeight="semibold">Staff</Text>
                 </button>
               </Link>
-            </ListItem>
-          </List>
+            </Box>
+          </Box>
         </Box>
       </Box>
     </Box>

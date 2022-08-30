@@ -11,7 +11,8 @@ const initialState = {
   user: {},
   turns: [],
   payments: {},
-  activeDate: "",
+  turnsByPatient: [],
+  turnsByDoctor: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -47,6 +48,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       };
     }
+    case "DELETE_TURN": {
+      return {
+        ...state,
+      };
+    }
     case "GET_PATIENTS": {
       return {
         ...state,
@@ -75,6 +81,24 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         turns: action.payload,
+      };
+    }
+    case "GET_TURNS_BY_DOCTOR": {
+      let turnsDoctor = action.payload.data.filter(
+        (e) => e.doctors[0].id === action.payload.idCurrentDoctor
+      );
+      return {
+        ...state,
+        turnsByDoctor: turnsDoctor,
+      };
+    }
+    case "GET_TURNS_BY_PATIENT": {
+      let turnsPatient = action.payload.data.filter(
+        (e) => e.patient[0].id === action.payload.idCurrentPatient
+      );
+      return {
+        ...state,
+        turnsByPatient: turnsPatient,
       };
     }
 

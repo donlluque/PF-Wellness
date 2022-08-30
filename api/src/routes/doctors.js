@@ -1,7 +1,13 @@
 const { Router } = require("express");
 const { Op } = require("sequelize");
 const router = Router();
-const { Doctor, Patient, Prepaid_health, Work_days } = require("../db.js");
+const {
+  Doctor,
+  Patient,
+  Prepaid_health,
+  Work_days,
+  Absence,
+} = require("../db.js");
 const { getAllDoctor } = require("../controllers/index");
 
 // PRUEBA DE FUNCIONAMIENTO DE RUTA
@@ -17,6 +23,12 @@ router.get("/", async (req, res, next) => {
       },
       {
         model: Work_days,
+        throught: {
+          attributes: [],
+        },
+      },
+      {
+        model: Absence,
         throught: {
           attributes: [],
         },
@@ -53,6 +65,12 @@ router.get("/:id", async (req, res, next) => {
         },
         {
           model: Work_days,
+          throught: {
+            attributes: [],
+          },
+        },
+        {
+          model: Absence,
           throught: {
             attributes: [],
           },
@@ -135,9 +153,10 @@ router.put("/", async (req, res, next) => {
     hours_json,
     work_days,
   } = req.body;
+
   const modificar = await Doctor.findOne({
-    where:{id}
-  })
+    where: { id },
+  });
   const nuevoDoc = await modificar.update({
     name,
     medic_id,
@@ -148,21 +167,32 @@ router.put("/", async (req, res, next) => {
     birthday,
     document,
     hours_json,
-  })
-  if(prepaid_healths){
+  });
+
+  if (prepaid_healths) {
     const dataPrepaidHealth = await Prepaid_health.findAll({
       where: { name: prepaid_healths },
     });
-    await nuevoDoc.addPrepaid_health(dataPrepaidHealth);
+    await nuevoDoc.setPrepaid_healths([]);
+    await nuevoDoc.addPrepaid_healths(dataPrepaidHealth);
   }
-  if(work_days){
+  if (work_days) {
     const dataWorkDays = await Work_days.findAll({
       where: {
         id: work_days,
       },
     });
+    await nuevoDoc.setWork_days([]);
     await nuevoDoc.addWork_days(dataWorkDays);
   }
-  res.send(nuevoDoc)
-})
+  res.send(nuevoDoc);
+});
+
+// router.patch("/", async (req, res, next) => {
+//   const { doctoId } = req.body
+
+//   await D
+
+// });
+
 module.exports = router;

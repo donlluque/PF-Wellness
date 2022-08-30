@@ -15,20 +15,34 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  Image,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { MdOutlineEditNote } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
-import { getTurns } from "../../redux/actions";
 
-function AdminAllTurnos() {
+import { TbCalendarOff } from "react-icons/tb";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteTurn, getTurns } from "../../../redux/actions";
+
+function AdminAllTurnos({ prevTurns, nextTurns }) {
   const dispatch = useDispatch();
   const { turns } = useSelector((state) => state);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  let aux = turns;
+  aux.forEach((e) => {
+    let array = e.date.split("/");
+    e.newDate = new Date(
+      parseInt(array[2]),
+      parseInt(array[1] - 1),
+      parseInt(array[0])
+    );
+  });
+
+  let visibleTurns = nextTurns
+    ? aux.filter((e) => e.newDate.getTime() > new Date().getTime())
+    : prevTurns
+    ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
+    : turns;
 
   useEffect(() => {
     dispatch(getTurns());
@@ -54,9 +68,9 @@ function AdminAllTurnos() {
             </Tr>
           </Thead>
           <Tbody>
-            {turns &&
-              turns.map((e) => (
-                <Tr>
+            {visibleTurns &&
+              visibleTurns.map((e) => (
+                <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
                   <Td>{e.date}</Td>
                   <Td>{e.hours_workings[0].hour}</Td>
@@ -71,16 +85,15 @@ function AdminAllTurnos() {
                     >
                       Detalle
                     </Button>
-                    <Button m="0.5rem" colorScheme={"teal"} variant="ghost">
-                      <Icon w={4} h={4} as={MdOutlineEditNote} />
-                    </Button>
+
                     <Button
                       m="0.5rem"
                       colorScheme={"teal"}
                       variant="ghost"
                       fontSize="xs"
+                      onClick={() => dispatch(deleteTurn(e.id))}
                     >
-                      <Icon w={4} h={4} as={RiDeleteBin6Line} />
+                      <Icon w={4} h={4} as={TbCalendarOff} />
                     </Button>
                   </Td>
                 </Tr>

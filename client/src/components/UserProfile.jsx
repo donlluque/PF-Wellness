@@ -1,13 +1,21 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
 
 import FormUserProfile from "./FormUserProfile";
+import PatientTurnsPanel from "./patient/turns/PatientTurnsPanel";
+import PatientDoctorPanel from "./patient/doctors/PatientDoctorPanel";
 
 function UserProfile() {
   return (
     <>
       <Box bgColor="teal.50">
         <Tabs
-          pt="6rem"
+          pt={{
+            base: "23rem",
+            sm: "23rem",
+            md: "15rem",
+            lg: "15rem",
+            xl: "9rem",
+          }}
           size="md"
           variant="enclosed"
           colorScheme="teal"
@@ -17,6 +25,8 @@ function UserProfile() {
           <TabList>
             <Tab bgColor="white">Datos Personales</Tab>
             <Tab bgColor="white">Mis turnos</Tab>
+            <Tab bgColor="white">Doctores</Tab>
+            <Tab bgColor="white">Mis pagos</Tab>
           </TabList>
 
           <TabPanels bgColor="white">
@@ -24,7 +34,10 @@ function UserProfile() {
               <FormUserProfile />
             </TabPanel>
             <TabPanel>
-              <Box w='20rem' h='30rem'>No hay turnos reservados</Box>
+              <PatientTurnsPanel />
+            </TabPanel>
+            <TabPanel>
+              <PatientDoctorPanel />
             </TabPanel>
           </TabPanels>
         </Tabs>

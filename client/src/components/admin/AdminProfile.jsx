@@ -1,19 +1,36 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
-import AdminDoctorPanel from "./AdminDoctorPanel";
-import AdminPatientPanel from "./AdminPatientPanel";
-import AdminTurnos from "./AdminAllTurnos";
-import AdminTurnsPanel from "./AdminTurnsPanel";
+import AdminDoctorPanel from "./doctors/AdminDoctorPanel";
+import AdminPatientPanel from "./patients/AdminPatientPanel";
+import AdminTurnsPanel from "./turns/AdminTurnsPanel";
 
 function AdminProfile() {
   return (
     <>
-      <Box bgColor="teal.50">
+      <Box bgColor="teal.50" w="100vw">
         <Tabs
-          pt={{ base: "23rem", sm: "23rem", md: "15rem", lg: "8rem" }}
+          pt={{
+            base: "23rem",
+            sm: "23rem",
+            md: "15rem",
+            lg: "15rem",
+            xl: "9rem",
+          }}
           size="md"
           variant="enclosed"
-          ml="4rem"
-          mr="4rem"
+          ml={{
+            base: "1.5rem",
+            sm: "1.5rem",
+            md: "3rem",
+            lg: "4rem",
+            xl: "4rem",
+          }}
+          mr={{
+            base: "1.5rem",
+            sm: "1.5rem",
+            md: "3rem",
+            lg: "4rem",
+            xl: "4rem",
+          }}
         >
           <TabList
             whiteSpace

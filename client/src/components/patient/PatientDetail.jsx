@@ -21,8 +21,7 @@ function PatientDetail() {
       {patient && patient ? (
         <Box>
           <List spacing={2} m="1rem">
-            <ListItem justifyContent={"center"}></ListItem>
-            <ListItem display="flex" justifyContent={"center"} mb="1rem">
+            <ListItem display="flex" justifyContent={"space-around"} mb="1rem">
               <Image src={patient.picture} w="5rem" rounded={"50%"} />
               <Text
                 fontSize={"2xl"}

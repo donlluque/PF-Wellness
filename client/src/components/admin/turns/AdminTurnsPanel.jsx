@@ -10,13 +10,16 @@ import {
 import { Button } from "reactstrap";
 
 import { AiOutlineSearch } from "react-icons/ai";
-import { BsFillPersonLinesFill } from "react-icons/bs";
+import { BsCalendarCheck, BsCalendar3, BsCalendarEvent } from "react-icons/bs";
+
 import { useState } from "react";
 
 import AdminAllTurnos from "./AdminAllTurnos";
 
 function AdminTurnsPanel() {
-  const [listTurns, setListTurns] = useState(true);
+  const [nextTurns, setNextTurns] = useState(true);
+  const [prevTurns, setPrevTurns] = useState(false);
+  //const [listTurns, setListTurns] = useState(true);
   const [filter, setFilter] = useState(false);
   return (
     <>
@@ -38,21 +41,43 @@ function AdminTurnsPanel() {
             <ListItem>
               <Button
                 onClick={() => {
-                  setListTurns(true);
+                  setNextTurns(true);
+                  setPrevTurns(false);
                   setFilter(false);
                 }}
               >
-                <ListIcon as={BsFillPersonLinesFill} /> Turnos
+                <ListIcon as={BsCalendarEvent} /> Próximos Turnos
               </Button>
             </ListItem>
             <ListItem>
               <Button
                 onClick={() => {
-                  setListTurns(true);
+                  setNextTurns(false);
+                  setPrevTurns(true);
                   setFilter(true);
                 }}
               >
-                <ListIcon as={AiOutlineSearch} /> Buscar
+                <ListIcon as={BsCalendarCheck} /> Historial
+              </Button>
+            </ListItem>
+            <ListItem>
+              <Button
+                onClick={() => {
+                  setNextTurns(false);
+                  setPrevTurns(false);
+                  setFilter(true);
+                }}
+              >
+                <ListIcon as={BsCalendar3} /> Ver todos
+              </Button>
+            </ListItem>
+            <ListItem>
+              <Button
+                onClick={() => {
+                  setFilter(true);
+                }}
+              >
+                <ListIcon as={AiOutlineSearch} /> Filtrar
               </Button>
             </ListItem>
           </List>
@@ -61,7 +86,7 @@ function AdminTurnsPanel() {
         <Box w={{ xl: "75%" }}>
           {filter && <Text>PROXIMAMENTE</Text>}
 
-          {listTurns && <AdminAllTurnos />}
+          <AdminAllTurnos nextTurns={nextTurns} prevTurns={prevTurns} />
         </Box>
       </Box>
     </>

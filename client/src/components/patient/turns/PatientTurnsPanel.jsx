@@ -5,19 +5,16 @@ import {
   ListIcon,
   Divider,
   Heading,
-  Text,
 } from "@chakra-ui/react";
-
-import { AiOutlineSearch } from "react-icons/ai";
-import { BsFillPersonLinesFill } from "react-icons/bs";
-
 import { Button } from "reactstrap";
+import { BsCalendarCheck, BsCalendar3, BsCalendarEvent } from "react-icons/bs";
 import { useState } from "react";
-import AdminAllPatients from "./AdminAllPatients";
-import SearchBarPatient from "../patient/SearchBarPatient";
+import PatientAllTurns from "./PatientAllTurns";
 
-function AdminPatientPanel() {
-  const [listPatients, setListPatients] = useState(true);
+function PatientTurnsPanel() {
+  const [nextTurns, setNextTurns] = useState(true);
+  const [prevTurns, setPrevTurns] = useState(false);
+  //const [listTurns, setListTurns] = useState(GiTruce);
   const [filter, setFilter] = useState(false);
   return (
     <>
@@ -39,34 +36,45 @@ function AdminPatientPanel() {
             <ListItem>
               <Button
                 onClick={() => {
-                  setListPatients(true);
+                  setNextTurns(true);
+                  setPrevTurns(false);
                   setFilter(false);
                 }}
               >
-                <ListIcon as={BsFillPersonLinesFill} /> Pacientes
+                <ListIcon as={BsCalendarEvent} /> Próximos turnos
               </Button>
             </ListItem>
             <ListItem>
               <Button
                 onClick={() => {
-                  setListPatients(true);
-                  setFilter(true);
+                  setNextTurns(false);
+                  setPrevTurns(true);
+                  setFilter(false);
                 }}
               >
-                <ListIcon as={AiOutlineSearch} /> Buscar
+                <ListIcon as={BsCalendarCheck} /> Historial
+              </Button>
+            </ListItem>
+            <ListItem>
+              <Button
+                onClick={() => {
+                  setNextTurns(false);
+                  setPrevTurns(false);
+                  setFilter(false);
+                }}
+              >
+                <ListIcon as={BsCalendar3} /> Ver todos
               </Button>
             </ListItem>
           </List>
         </Box>
         <Divider orientation="vertical" />
         <Box w={{ xl: "75%" }}>
-          {filter && <SearchBarPatient />}
-
-          {listPatients && <AdminAllPatients />}
+          <PatientAllTurns nextTurns={nextTurns} prevTurns={prevTurns} />
         </Box>
       </Box>
     </>
   );
 }
 
-export default AdminPatientPanel;
+export default PatientTurnsPanel;

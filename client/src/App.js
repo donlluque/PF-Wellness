@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
 import About from "./components/About";
@@ -12,16 +13,19 @@ import UserProfile from "./components/UserProfile";
 import Turnos from "./components/Turnos";
 import Calendar from "./components/Calendar";
 import MakePayments from "./components/MakePayments";
-
+import FormTestimonial from "./components/FormTestimonal";
 import AdminProfile from "./components/admin/AdminProfile";
+import { Context } from "./components/Context";
 
 export default function App() {
   const { pathname } = useLocation();
   console.log(pathname);
+  const [mostrar, setMostrar] = React.useState(true);
   return (
     <BrowserRouter>
+    <Context.Provider value={{mostrar, setMostrar}}>
       <Route path="/">
-        <NavBar />
+        {mostrar && <NavBar />}
       </Route>
       <Switch>
         <Route exact path="/">
@@ -55,11 +59,15 @@ export default function App() {
         <Route exact path="/payments">
           <MakePayments />
         </Route>
+        <Route exact path="/testimonials">
+          <FormTestimonial />
+        </Route>
         <Route exact path="*">
           <Error />
         </Route>
       </Switch>
       <Footer />
+      </Context.Provider>
     </BrowserRouter>
   );
 }

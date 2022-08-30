@@ -14,7 +14,7 @@ import Calendar from "./components/Calendar";
 import MakePayments from "./components/MakePayments";
 import PrivateRouteAdmin from "./components/private/PrivateRouteAdmin";
 import PrivateRoutePerfil from "./components/private/PrivateRoutePerfil";
-import PrivateRouterPago from "./components/private/PrivateRoutePago";
+// import PrivateRouterPago from "./components/private/PrivateRoutePago";
 import PrivateRouterCalendario from "./components/private/PrivateRouterCalendario";
 import PrivateRoute from "./components/private/PrivateRoute";
 
@@ -60,9 +60,9 @@ export default function App() {
         <Route exact path="/doctor">
           <DoctorProfile />
         </Route>
-        <PrivateRouterPago exact path="/payments">
+        <Route exact path="/payments">
           <MakePayments />
-        </PrivateRouterPago>
+        </Route>
         <Route exact path="*">
           <Error />
         </Route>

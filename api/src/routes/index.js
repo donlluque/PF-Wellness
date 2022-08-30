@@ -11,11 +11,10 @@ const work_days = require("./work_days.js");
 const hours_working = require("./hours_working.js");
 const pagos_unicos = require("./mercado_pago.js");
 const pagos_asociados = require("./mercado_asociados.js");
-
 const review = require("./review.js");
-
 const absence = require("./absence.js");
-
+const mail_form = require("./mail/mail_form.js");
+const mail_pago = require("./mail/mail_pago.js");
 
 const router = Router();
 
@@ -33,4 +32,7 @@ router.use("/checkuser", checkUser);
 router.use("/pagos", pagos_unicos);
 router.use("/asociados", pagos_asociados);
 router.use("/review", review);
+router.use("/mail_form", mail_form);
+router.use("/mail_pago", mail_pago);
+
 module.exports = router;

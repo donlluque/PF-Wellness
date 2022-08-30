@@ -16,6 +16,7 @@ import PrivateRouteAdmin from "./components/private/PrivateRouteAdmin";
 import PrivateRoutePerfil from "./components/private/PrivateRoutePerfil";
 import PrivateRouterPago from "./components/private/PrivateRoutePago";
 import PrivateRouterCalendario from "./components/private/PrivateRouterCalendario";
+import PrivateRoute from "./components/private/PrivateRoute";
 
 import AdminProfile from "./components/admin/AdminProfile";
 import DoctorProfile from "./components/doctor/DoctorProfile";
@@ -29,9 +30,9 @@ export default function App() {
         <NavBar />
       </Route>
       <Switch>
-        <Route exact path="/">
+        <PrivateRoute exact path="/">
           <Home />
-        </Route>
+        </PrivateRoute>
         <Route exact path="/about">
           <About />
         </Route>

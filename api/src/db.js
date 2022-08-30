@@ -3,6 +3,7 @@ const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 
+
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
 let sequelize =
@@ -69,6 +70,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
+odels;
+=======
 const {
   Doctor,
   Patient,
@@ -78,13 +81,17 @@ const {
   Hours_working,
   General_area,
   Absence,
+  Review
 } = sequelize.models;
+
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 
 // Patient.belongsToMany(Doctor, { through: Dates1 });
 // Doctor.belongsToMany(Patient, { through: Dates1 });
+Doctor.belongsToMany(Review,{through:"Review_Doctor",timestamps:false,})
+Review.belongsToMany(Doctor,{through:"Review_Doctor",timestamps:false,})
 
 // General_area.hasMany(Doctor, {
 //   foreignKey: "Doctor_General_Area",

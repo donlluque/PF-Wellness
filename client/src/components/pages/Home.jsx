@@ -260,10 +260,12 @@ function Home() {
         <Heading as="h2" size="xl" m={8}>
           Lo que opinan nuestros pacientes
         </Heading>
-        
-          
           <Testimonios />
-            
+          <Link to="/opiniones">
+                <Button colorScheme="teal" m={4}>
+                  Leer más
+                </Button>
+              </Link>
          
           
        

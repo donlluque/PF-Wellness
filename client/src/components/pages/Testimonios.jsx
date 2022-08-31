@@ -4,16 +4,21 @@ import {
     Text,
     Flex,
     Wrap,
-    WrapItem
+    WrapItem,
+    Center,
+    Icon,
+    Spacer
   } from "@chakra-ui/react";
   import { useEffect } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { getReviews } from "../../redux/actions";
   import ReactStars from "react-rating-stars-component";
+  import {ImQuotesLeft, ImQuotesRight } from "react-icons/im";
 
 function Reviews(){
     const dispatch = useDispatch();
     const { reviews } = useSelector((state) => state);
+    
 
 
     useEffect(() => {
@@ -24,30 +29,26 @@ function Reviews(){
         <>
         <Wrap>
 
-      {reviews && reviews.map((e) => (
+      {reviews && reviews.slice(0,3).map((e) => (
           <WrapItem p={4} borderRadius="0.5rem"
-        //   justify="center"
-        //   boxShadow={'lg'}
-        //   maxW={'640px'}
-        //   width={'full'}
-        //   rounded={'xl'}
-        //   p={10}
-        //   justifyContent={'space-between'}
-        //   position={'relative'}
           >
-        <Box p={3} boxShadow="2xl" borderRadius="0.5rem" w="15rem" 
-            h="10rem"
-        // direction={'column'}
-        // justifyContent={'space-between'}
+        <Box pt={8} boxShadow="2xl" borderRadius="0.5rem" w="20rem" 
+            h="15rem"
         >
+        <Icon ml={3} as={ImQuotesLeft} color="teal.600"/>
+        <Spacer />
         <Text
+        color="teal.600"
+        align="center"
           m="1rem"
           fontSize={'15px'}
           pb={4}
           as='cite'>
           {e.review}
         </Text>
-        <Box ml="1rem" mr="1rem" >
+        <Spacer />
+        <Icon ml={20} as={ImQuotesRight} color="teal.600" />
+        <Box ml="4.5rem"  w="10.5rem">
         <ReactStars
                 value={e.rating}
                 count={5}
@@ -56,9 +57,11 @@ function Reviews(){
                 edit={false}
                 />
         </Box>
-        <Text fontSize={14} as='b'>
+        
+        <Text fontSize={14} as='b' color="teal.400">
           {e.name}
         </Text>
+        
       </Box>
       </WrapItem>
       )) }

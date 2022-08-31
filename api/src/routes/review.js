@@ -25,9 +25,9 @@ router.post("/", async (req, res, next) => {
 
 router.get("/", async (req, res, next) => {
     const { doctorId } = req.query;
-    const reviewDB = await Review.findAll({
+    const reviewDB = await Review.findAll(
       
-    });
+    );
   
     if (doctorId) {
       const iddoc = await reviewDB.filter((e) =>e.doctorId==doctorId

@@ -8,6 +8,7 @@ const {
   Work_days,
   Absence,
   General_area,
+  Review,
 } = require("../db.js");
 const { getAllDoctor } = require("../controllers/index");
 
@@ -18,10 +19,8 @@ router.get("/", async (req, res, next) => {
   const doctorsDb = await Doctor.findAll({
     include: [
       {
-        model: Prepaid_health,
-        throught: {
-          attributes: [],
-        },
+        model: Prepaid_health,      
+        attributes: ['id','name'],
       },
       {
         model: Work_days,
@@ -31,6 +30,19 @@ router.get("/", async (req, res, next) => {
       },
       {
         model: Absence,
+        throught: {
+          attributes: [],
+        },
+      },
+      {
+        model: General_area,
+        throught: {
+          attributes: [],
+        },
+        
+      },
+      {
+        model: Review,
         throught: {
           attributes: [],
         },
@@ -66,10 +78,9 @@ router.get("/:id", async (req, res, next) => {
           },
         },
         {
-          model: Prepaid_health,
-          throught: {
-            attributes: [],
-          },
+          model: Prepaid_health,      
+          attributes: ['id','name'],
+
         },
         {
           model: Work_days,
@@ -79,6 +90,12 @@ router.get("/:id", async (req, res, next) => {
         },
         {
           model: Absence,
+          throught: {
+            attributes: [],
+          },
+        },
+        {
+          model: Review,
           throught: {
             attributes: [],
           },
@@ -116,16 +133,7 @@ router.post("/", async (req, res, next) => {
   });
 
   if (!doctor) {
-    const newDoctor = await Doctor.create({
-      name,
-      medic_id,
-      specialty,
-      phone,
-      email,
-      birthday,
-      document,
-      hours_json,
-    });
+ 
 
     const dataPrepaidHealth = await Prepaid_health.findAll({
       where: { name: prepaid_healths },
@@ -141,6 +149,19 @@ router.post("/", async (req, res, next) => {
         name: general_area
       }
     })
+    const areaId = dataGeneralArea.dataValues.id
+    console.log(areaId)
+    const newDoctor = await Doctor.create({
+      name,
+      medic_id,
+      specialty,
+      phone,
+      email,
+      birthday,
+      document,
+      hours_json,
+      areaId,
+    });
 
     await newDoctor.addPrepaid_health(dataPrepaidHealth);
     await newDoctor.addWork_days(dataWorkDays);
@@ -173,7 +194,6 @@ router.put("/", async (req, res, next) => {
   const nuevoDoc = await modificar.update({
     name,
     medic_id,
-    general_area,
     specialty,
     phone,
     email,
@@ -181,11 +201,19 @@ router.put("/", async (req, res, next) => {
     document,
     hours_json,
   });
-
+  // ver PUT para update areaId
+  if(general_area){
+    const dataGeneral_area= await General_area.findOne({
+      where:{name:general_area}
+    })
+    
+  }
   if (prepaid_healths) {
     const dataPrepaidHealth = await Prepaid_health.findAll({
       where: { name: prepaid_healths },
+      
     });
+
     await nuevoDoc.setPrepaid_healths([]);
     await nuevoDoc.addPrepaid_healths(dataPrepaidHealth);
   }

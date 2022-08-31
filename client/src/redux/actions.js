@@ -380,7 +380,7 @@ export const dateUser = (payload) => {
 };
 
 export const makePayment = (payload) => {
-  console.log(payload, "soy el payload makePayment");
+  
   return async (dispatch) => {
     try {
       let response = await axios.post(`${baseURL}/pagos`, payload);
@@ -391,6 +391,37 @@ export const makePayment = (payload) => {
     } catch (error) {
       console.log(error);
     }
+  };
+};
+
+export const addReview = (payload) => {
+  console.log(payload, "SOY LA FUCKING REVIEW")
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(`${baseURL}/review`, payload);
+      return dispatch({
+        type: "ADD_REVIEW",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getReviews = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/review`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch({
+          type: "GET_REVIEWS",
+          payload: json,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };
 // export const dateUser = (payload) => {

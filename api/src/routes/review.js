@@ -3,10 +3,10 @@ const router = Router();
 const { Review , Doctor} = require("../db.js");
 
 router.post("/", async (req, res, next) => {
-    const {name,review,rating,doctorId}= req.body
+    const {name,review,rating,doctors}= req.body;
     try {
         const doctor = await Doctor.findOne({
-            where: { id : doctorId },
+            where: { id : doctors },
           });
       
         let newReview = await Review.create({

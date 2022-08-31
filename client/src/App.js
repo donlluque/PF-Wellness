@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
 import About from "./components/pages/About";
@@ -14,20 +15,25 @@ import Calendar from "./components/Calendar";
 import MakePayments from "./components/MakePayments";
 import PrivateRouteAdmin from "./components/private/PrivateRouteAdmin";
 import PrivateRoutePerfil from "./components/private/PrivateRoutePerfil";
-import PrivateRouterPago from "./components/private/PrivateRoutePago";
+// import PrivateRouterPago from "./components/private/PrivateRoutePago";
 import PrivateRouterCalendario from "./components/private/PrivateRouterCalendario";
 import PrivateRoute from "./components/private/PrivateRoute";
 
 import AdminProfile from "./components/admin/AdminProfile";
 import DoctorProfile from "./components/doctor/DoctorProfile";
+import FormTestimonial from "./components/FormTestimonal";
+import { Context } from "./components/Context";
+
 
 export default function App() {
   const { pathname } = useLocation();
   console.log(pathname);
+  const [mostrar, setMostrar] = React.useState(true);
   return (
     <BrowserRouter>
+    <Context.Provider value={{mostrar, setMostrar}}>
       <Route path="/">
-        <NavBar />
+        {mostrar && <NavBar />}
       </Route>
       <Switch>
         <PrivateRoute exact path="/">
@@ -60,14 +66,18 @@ export default function App() {
         <Route exact path="/doctor">
           <DoctorProfile />
         </Route>
-        <PrivateRouterPago exact path="/payments">
+        <Route exact path="/payments">
           <MakePayments />
         </PrivateRouterPago>
+        <Route exact path="/testimonials">
+          <FormTestimonial />
+        </Route>
         <Route exact path="*">
           <Error />
         </Route>
       </Switch>
       <Footer />
+      </Context.Provider>
     </BrowserRouter>
   );
 }

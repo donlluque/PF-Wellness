@@ -67,5 +67,12 @@ router.put("/", async (req, res, next) => {
   const nuevo = await modificar.update({name})
   res.send(nuevo)
 })
+router.post("/", async (req, res, next) => {
+ const {name,address,phone,logo,percentage} = req.body
+ const prepaidCreate = await Prepaid_health.create({
+  name,address,phone,logo,percentage
+ })
+ res.send(prepaidCreate)
+})
 module.exports = router;
 

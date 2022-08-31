@@ -12,15 +12,14 @@ const {
 } = require("../db.js");
 const { getAllDoctor } = require("../controllers/index");
 
-
 // PRUEBA DE FUNCIONAMIENTO DE RUTA
 router.get("/", async (req, res, next) => {
   const { name } = req.query;
   const doctorsDb = await Doctor.findAll({
     include: [
       {
-        model: Prepaid_health,      
-        attributes: ['id','name'],
+        model: Prepaid_health,
+        attributes: ["id", "name"],
       },
       {
         model: Work_days,
@@ -39,7 +38,6 @@ router.get("/", async (req, res, next) => {
         throught: {
           attributes: [],
         },
-        
       },
       {
         model: Review,
@@ -78,9 +76,8 @@ router.get("/:id", async (req, res, next) => {
           },
         },
         {
-          model: Prepaid_health,      
-          attributes: ['id','name'],
-
+          model: Prepaid_health,
+          attributes: ["id", "name"],
         },
         {
           model: Work_days,
@@ -133,8 +130,6 @@ router.post("/", async (req, res, next) => {
   });
 
   if (!doctor) {
- 
-
     const dataPrepaidHealth = await Prepaid_health.findAll({
       where: { name: prepaid_healths },
     });
@@ -145,12 +140,12 @@ router.post("/", async (req, res, next) => {
       },
     });
     const dataGeneralArea = await General_area.findOne({
-      where:{
-        name: general_area
-      }
-    })
-    const areaId = dataGeneralArea.dataValues.id
-    console.log(areaId)
+      where: {
+        name: general_area,
+      },
+    });
+    const areaId = dataGeneralArea.dataValues.id;
+    console.log(areaId);
     const newDoctor = await Doctor.create({
       name,
       medic_id,
@@ -165,7 +160,6 @@ router.post("/", async (req, res, next) => {
 
     await newDoctor.addPrepaid_health(dataPrepaidHealth);
     await newDoctor.addWork_days(dataWorkDays);
-    // await dataGeneralArea.addDoctor(newDoctor);
 
     res.status(200).send(newDoctor);
   } else {
@@ -191,6 +185,16 @@ router.put("/", async (req, res, next) => {
   const modificar = await Doctor.findOne({
     where: { id },
   });
+
+  let areaId = null;
+
+  if (general_area) {
+    const dataGeneral_area = await General_area.findOne({
+      where: { name: general_area },
+    });
+    areaId = dataGeneral_area.dataValues.id;
+  }
+
   const nuevoDoc = await modificar.update({
     name,
     medic_id,
@@ -200,18 +204,12 @@ router.put("/", async (req, res, next) => {
     birthday,
     document,
     hours_json,
+    areaId,
   });
-  // ver PUT para update areaId
-  if(general_area){
-    const dataGeneral_area= await General_area.findOne({
-      where:{name:general_area}
-    })
-    
-  }
+
   if (prepaid_healths) {
     const dataPrepaidHealth = await Prepaid_health.findAll({
       where: { name: prepaid_healths },
-      
     });
 
     await nuevoDoc.setPrepaid_healths([]);
@@ -229,11 +227,17 @@ router.put("/", async (req, res, next) => {
   res.send(nuevoDoc);
 });
 
-// router.patch("/", async (req, res, next) => {
-//   const { doctoId } = req.body
+router.patch("/", async (req, res, next) => {
+  const { doctorId } = req.body;
 
-//   await D
+  const doctor = await Doctor.findOne({ where: { id: doctorId } });
 
-// });
+  let state = null;
+
+  if (doctor.dataValues.activo) state = false;
+  else state = true;
+  await doctor.update({ activo: state });
+  res.send("cambiado");
+});
 
 module.exports = router;

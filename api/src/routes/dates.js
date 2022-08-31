@@ -11,10 +11,10 @@ const {
 } = require("../db.js");
 
 router.post("/", async (req, res, next) => {
-  const { date, idHour, idDoctor } = req.body;
+  const { date, idHour, idDoctor, idPatient } = req.body;
   try {
     const doctorId = idDoctor; //dato enviado desde el front
-    const patientId = "9"; //dato enviado desde el front
+    const patientId = idPatient; //dato enviado desde el front
 
     const doctor = await Doctor.findOne({
       where: {

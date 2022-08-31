@@ -276,7 +276,7 @@ export const getAllAreas = () => {
 //PATIENT
 export const searchPatientByName = (patient) => {
   return function (dispatch) {
-    return fetch(`${baseURL}/doctors?name=${patient}`)
+    return fetch(`${baseURL}/patients?name=${patient}`)
       .then((res) =>
         res.ok
           ? res.json()

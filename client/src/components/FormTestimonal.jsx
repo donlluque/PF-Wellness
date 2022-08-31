@@ -17,6 +17,7 @@ import {
   import { useDispatch, useSelector } from "react-redux";
   import { useEffect} from "react";
   import { Link } from "react-router-dom";
+  import {addReview} from "../redux/actions";
 
 
  function MakeReviews(){
@@ -34,13 +35,14 @@ import {
         name: "",
         review: "", 
         doctors: "All",
-        rating: 1
+        rating: 0
       }]);
    console.log(input, "SOY EL INPUT")
 
    const [rating, setRating] = useState(0);
     const handleSubmit = async (e) => {
       e.preventDefault();
+      dispatch(addReview(input))
    
     }
     const handleChange = (e) => {
@@ -71,7 +73,7 @@ import {
           m="1rem"
           mt={{ base: "10rem", sm: "10rem", md: "8rem", lg: "5rem" }}
         >
-          Nos interesa conocer tu experiencia
+          Tu opinión nos importa
         </Heading>
       </Center>
       <Box
@@ -126,7 +128,7 @@ import {
                 <option value="All">Profesional que te atendió</option>
                 {doctors &&
                   doctors.map((e) => (
-                    <option value={e.name}>{e.name}</option>
+                    <option value={e.id}>{e.name}</option>
                   ))}
               </Select>
               {/* <Rating name="half-rating" defaultValue={2.5} value={input.rating} precision={0.5} /> */}

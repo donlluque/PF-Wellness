@@ -30,6 +30,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
+  getAllAreas,
   getDays,
   getHours,
   getPrepaidHealth,
@@ -58,7 +59,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
   const [form, setForm] = useState(initialForm);
   const [formHours, setFormHours] = useState({});
   const dispatch = useDispatch();
-  const { msgConfirm, prepaidHealth, hoursWorking, days } = useSelector(
+  const { msgConfirm, prepaidHealth, hoursWorking, days, areas } = useSelector(
     (state) => state
   );
   console.log(pathname);
@@ -70,6 +71,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
     dispatch(getPrepaidHealth());
     dispatch(getHours());
     dispatch(getDays());
+    dispatch(getAllAreas());
   }, [dispatch]);
 
   //Define formato fecha actual calendario
@@ -301,15 +303,12 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                 name="general_area"
               >
                 <option>Seleccionar una opción</option>
-                <option value="Deportología">Deportología</option>
-                <option value="Fisioterapia y kinesiología">
-                  Kinesiología y Fisioterapia
-                </option>
-                <option value="Osteopatía">Osteopatía</option>
-                <option value="Quiropraxia">Quiropraxia</option>
-                <option value="Reumatología">Reumatología</option>
-                <option value="Terapia de dolor">Terapia de Dolor</option>
-                <option value="Traumatología">Traumatología</option>
+                {areas &&
+                  areas.map((e) => (
+                    <option key={e.id} value={e.name}>
+                      {e.name}
+                    </option>
+                  ))}
               </Select>
               {errors.general_area && (
                 <FormErrorMessage>{errors.general_area}</FormErrorMessage>

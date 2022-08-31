@@ -15,15 +15,11 @@ import {
   AlertIcon,
   AlertDescription,
   useDisclosure,
-  List,
-  ListItem,
 } from "@chakra-ui/react";
 import {
   getDetailDoctors,
   getHours,
   getTurns,
-  postTurn,
-  makePayment,
   getOnePatient,
 } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,7 +27,6 @@ import { useHistory, useParams } from "react-router-dom";
 import { FcCheckmark } from "react-icons/fc";
 import { searchTurnsAvailable } from "./validateTurn";
 import Payments from "./Payments";
-import { VscDebugStackframeActive } from "react-icons/vsc";
 
 function Calendar() {
   const dispatch = useDispatch();
@@ -169,7 +164,7 @@ function Calendar() {
                 {doctorDetail.name}
               </Heading>
               <Text>
-                {doctorDetail.general_area} - {doctorDetail.specialty}
+                {doctorDetail.general_area?.name} - {doctorDetail.specialty}
               </Text>
               <Text>{doctorDetail.phone}</Text>
             </Box>
@@ -264,12 +259,6 @@ function Calendar() {
         >
           Continuar
         </Button>
-        <Link to="/payments">
-          <Button isDisabled={!form.idHour} m="1rem" colorScheme={"teal"}>
-            {" "}
-            Pagar{" "}
-          </Button>
-        </Link>
       </Box>
       <Payments
         active={active}

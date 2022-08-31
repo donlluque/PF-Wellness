@@ -34,7 +34,7 @@ export default function DoctorDetail({ id }) {
                 textAlign="center"
                 fontFamily={"body"}
               >
-                {doctor.general_area} - {doctor.specialty}
+                {doctor.general_area?.name} - {doctor.specialty}
               </Text>
             </ListItem>
             <ListItem>

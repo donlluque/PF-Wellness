@@ -22,10 +22,10 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      general_area: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      // general_area: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      // },
 
       specialty: {
         type: DataTypes.STRING,

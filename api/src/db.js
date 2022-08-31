@@ -94,10 +94,10 @@ Review.belongsToMany(Doctor, { through: "Review_Doctor", timestamps: false });
 //   foreignKey: "Doctor_General_Area",
 //   timestamps: false,
 // });
-// Doctor.belongsTo(General_area, {
-//   foreignKey: "Doctor_General_Area",
-//   timestamps: false,
-// });
+General_area.hasMany(Doctor, {
+  foreignKey: 'areaId'
+});
+Doctor.belongsTo(General_area, {foreignKey: 'areaId'});
 
 Doctor.belongsToMany(Absence, {
   through: "Doctor_Absence",

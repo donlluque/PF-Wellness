@@ -35,6 +35,12 @@ router.get("/", async (req, res, next) => {
           attributes: [],
         },
       },
+      {
+        model: General_area,
+        throught: {
+          attributes: [],
+        },
+      },
     ],
   });
 
@@ -116,16 +122,7 @@ router.post("/", async (req, res, next) => {
   });
 
   if (!doctor) {
-    const newDoctor = await Doctor.create({
-      name,
-      medic_id,
-      specialty,
-      phone,
-      email,
-      birthday,
-      document,
-      hours_json,
-    });
+ 
 
     const dataPrepaidHealth = await Prepaid_health.findAll({
       where: { name: prepaid_healths },
@@ -141,6 +138,19 @@ router.post("/", async (req, res, next) => {
         name: general_area
       }
     })
+    const areaId = dataGeneralArea.dataValues.id
+    console.log(areaId)
+    const newDoctor = await Doctor.create({
+      name,
+      medic_id,
+      specialty,
+      phone,
+      email,
+      birthday,
+      document,
+      hours_json,
+      areaId,
+    });
 
     await newDoctor.addPrepaid_health(dataPrepaidHealth);
     await newDoctor.addWork_days(dataWorkDays);

@@ -19,8 +19,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { MdOutlineEditNote } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
+
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTurn, getTurns, getTurnsByDoctor } from "../../../redux/actions";
 import { TbCalendarOff } from "react-icons/tb";
@@ -36,8 +35,12 @@ import { TbCalendarOff } from "react-icons/tb";
 
 function DoctorAllTurns({ nextTurns, prevTurns }) {
   const dispatch = useDispatch();
-  const { turnsByDoctor } = useSelector((state) => state);
+  const { turnsByDoctor, user } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const idDoctor = user.id;
+
+  console.log(user);
 
   let aux = turnsByDoctor;
   aux.forEach((e) => {

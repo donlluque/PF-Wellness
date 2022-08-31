@@ -14,13 +14,6 @@ import {
   Alert,
   AlertIcon,
   AlertDescription,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   useDisclosure,
   List,
   ListItem,
@@ -31,11 +24,14 @@ import {
   getTurns,
   postTurn,
   makePayment,
+  getOnePatient,
 } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { FcCheckmark } from "react-icons/fc";
 import { searchTurnsAvailable } from "./validateTurn";
+import Payments from "./Payments";
+import { VscDebugStackframeActive } from "react-icons/vsc";
 
 function Calendar() {
   const dispatch = useDispatch();
@@ -47,6 +43,9 @@ function Calendar() {
   const { idDoctor } = useParams();
   const { hoursWorking, turns } = useSelector((state) => state);
   const doctorDetail = useSelector((state) => state.doctorDetail);
+  const usuario = useSelector((state) => state.user);
+  const [active, setActive] = useState(false);
+  console.log(usuario, "usuario");
   //copia de estado global
   const totalHours = hoursWorking;
   const totalTurns = turns;
@@ -79,14 +78,19 @@ function Calendar() {
   useEffect(() => {
     dispatch(getDetailDoctors(idDoctor));
     dispatch(getHours());
+    dispatch(getOnePatient(usuario.id));
+
     setForm({ ...form, idDoctor: idDoctor });
     dispatch(getTurns());
   }, [dispatch]);
 
-  const handleSubmit = (e) => {
+  const handleConfirm = (e) => {
     e.preventDefault();
-    dispatch(postTurn(form));
+    form.idPatient = usuario.id;
+
+    //dispatch(postTurn(form));
     onOpen();
+    setActive(true);
   };
 
   const handleChangeCalendar = (date) => {
@@ -253,12 +257,12 @@ function Calendar() {
       )}
       <Box display={"flex"} justifyContent="end" mr="3rem">
         <Button
-          isDisabled={!form.idHour}
+          //isDisabled={!form.idHour}
           m="1rem"
           colorScheme={"teal"}
-          onClick={(e) => handleSubmit(e)}
+          onClick={(e) => handleConfirm(e)}
         >
-          Confirmar Turno
+          Continuar
         </Button>
         <Link to="/payments">
           <Button isDisabled={!form.idHour} m="1rem" colorScheme={"teal"}>
@@ -267,29 +271,13 @@ function Calendar() {
           </Button>
         </Link>
       </Box>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Confirmar turno</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <List>
-              <ListItem>Doctor: </ListItem>
-              <ListItem>Fecha: {form.date}</ListItem>
-              <ListItem>Hora: </ListItem>
-              <ListItem>Costo consulta: </ListItem>
-              <ListItem>Descuento por obra social: </ListItem>
-            </List>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <Payments
+        active={active}
+        onClose={onClose}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        form={form}
+      />
     </>
   );
 }

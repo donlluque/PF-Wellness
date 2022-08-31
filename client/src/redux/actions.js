@@ -257,6 +257,22 @@ export const deleteTurn = (id) => {
   };
 };
 
+export const getAllAreas = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/general_area`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch({
+          type: "GET_AREAS",
+          payload: json,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 //PATIENT
 export const searchPatientByName = (patient) => {
   return function (dispatch) {
@@ -380,7 +396,6 @@ export const dateUser = (payload) => {
 };
 
 export const makePayment = (payload) => {
-  
   return async (dispatch) => {
     try {
       let response = await axios.post(`${baseURL}/pagos`, payload);
@@ -395,7 +410,7 @@ export const makePayment = (payload) => {
 };
 
 export const addReview = (payload) => {
-  console.log(payload, "SOY LA FUCKING REVIEW")
+  console.log(payload, "SOY LA FUCKING REVIEW");
   return async (dispatch) => {
     try {
       let response = await axios.post(`${baseURL}/review`, payload);

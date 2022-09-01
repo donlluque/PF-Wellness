@@ -10,18 +10,23 @@ model: ausencias
 /* id  / name / discount 
                 0.5*/
 
-import { Radio, RadioGroup, Stack, Box } from "@chakra-ui/react";
+import { Radio, RadioGroup, Stack, Box, Select,List, ListItem, Button, Icon } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getHours } from "../../../redux/actions";
-import { DatePicker } from "@material-ui/pickers";
+import { KeyboardDatePicker } from "@material-ui/pickers";
+import { AiOutlineClose } from "react-icons/ai";
+
 function DoctorFormAbsent() {
   const [form, setForm] = useState({});
   const dispatch = useDispatch();
   const { hoursWorking } = useSelector((state) => state);
   let aux = [0, 1, 2, 3, 4, 5, 6];
-  const [selectedDate, setDateChange] = useState(""); //cambia fecha en calendario
+  const [selectedDateStart, setSelectedDateStart] = useState(new Date()); //cambia fecha en calendario
+  const [selectedDateEnd, setSelectedDateEnd] = useState(selectedDateStart);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedNotTotalDay, setSelectedNotTotalDay] = useState(new Date());
 
   useEffect(() => {
     dispatch(getHours());
@@ -29,9 +34,9 @@ function DoctorFormAbsent() {
 
   const handleChange = (e) => {
     if (e === "totalDay") {
-      setForm({ [e]: { fecha: "" } });
+      setForm({ [e]: { date: "" } });
     } else if (e === "notTotalDay") {
-      setForm({ [e]: { fecha: "", hours: [] } });
+      setForm({ [e]: { date: "", hours: [] } });
     } else if (e === "extended") {
       setForm({ [e]: { start: "", end: "" } });
     }
@@ -47,14 +52,51 @@ function DoctorFormAbsent() {
 //     }
 //   }
 // };
-  
+
+  const handleChangeCalendarStart = (date) => {
+    //cambio fecha
+    setSelectedDateStart(date);
+    setForm({ ...form, extended: {...form.extended, start: date.toLocaleDateString()}});
+    
+  };
+
+  const handleChangeCalendarEnd = (date) => {
+    //cambio fecha
+    setSelectedDateEnd(date);
+    setForm({ ...form, extended: {...form.extended, end: date.toLocaleDateString()}});
+  };
+
   const handleChangeCalendar = (date) => {
     //cambio fecha
-    setDateChange(date);
-    setForm({ ...form, date: date.toLocaleDateString() });
-    //validaciones horas disponibles
-    //setArrayTurns(searchTurnsAvailable(hours, totalHours, totalTurns, date));
+    setSelectedDate(date);
+    setForm({ ...form, totalDay: {...form.totalDay, date: date.toLocaleDateString()}});
   };
+
+  const handleChangeCalendarNotTotalDay = (date) => {
+    //cambio fecha
+    setSelectedNotTotalDay(date);
+    setForm({ ...form, notTotalDay: {...form.notTotalDay, date: date.toLocaleDateString()}});
+  };
+
+  const handleDeleteHour = (hour) => {
+    setForm({
+      ...form,
+      notTotalDay: { hours: form.notTotalDay.hours?.filter((c) => c !== hour)},
+    });
+  };
+
+  const handleChangeList = (e) => {
+    let search = form.notTotalDay.hours?.find(
+      (element) => element === e.target.value
+    );
+    if (!search && e.target.value !== "") {
+      setForm({
+        ...form,
+        notTotalDay: {...form.notTotalDay,hours:[...form.notTotalDay.hours, e.target.value]},
+      });
+    }
+  };
+
   return (
     <>
       <RadioGroup onChange={(value) => handleChange(value)}>
@@ -71,22 +113,92 @@ function DoctorFormAbsent() {
         </Stack>
       </RadioGroup>
       {form.extended &&
-          <Box m="1rem" boxShadow={"2xl"} rounded={"md"}>
-                <DatePicker
-                  value={selectedDate}
-                  onChange={(date) => handleChangeCalendar(date)}
-                  disablePast
-                  autoOk
-                  variant="static"
-                  shouldDisableDate={(date) =>
-                    date.getDay() !== 1 &&
-                    date.getDay() !== 2 &&
-                    date.getDay() !== 3 &&
-                    date.getDay() !== 4 &&
-                    date.getDay() !== 5
-                  }
-                />
-              </Box>}
+      <>
+        <Box m="1rem" boxShadow={"2xl"} rounded={"md"}>
+           <KeyboardDatePicker
+             clearable
+             value={selectedDateStart}
+             placeholder="INICIO"
+             disablePast
+             onChange={date => handleChangeCalendarStart(date)}
+             minDate={new Date()}
+             format="dd/MM/yyyy"
+             variant="inline" 
+             autoOk
+      />
+      </Box>
+      <Box m="1rem" boxShadow={"2xl"} rounded={"md"}>
+        <KeyboardDatePicker
+         clearable
+         value={selectedDateEnd}
+         placeholder="FIN"
+         disablePast
+         onChange={date => handleChangeCalendarEnd(date)}
+         format="dd/MM/yyyy"
+         variant="inline"
+         autoOk
+         minDate={selectedDateStart}
+       />
+       </Box>
+   </>
+  }
+  {
+    form.totalDay &&
+    <Box m="1rem" boxShadow={"2xl"} rounded={"md"}>
+           <KeyboardDatePicker
+             clearable
+             value={selectedDate}
+             disablePast
+             onChange={date => handleChangeCalendar(date)}
+             format="dd/MM/yyyy"
+             variant="static" 
+             autoOk
+      />
+      </Box>
+  }
+  {
+    form.notTotalDay &&
+    <Box m="1rem" boxShadow={"2xl"} rounded={"md"}>
+           <KeyboardDatePicker
+             clearable
+             value={selectedNotTotalDay}
+             disablePast
+             onChange={date => handleChangeCalendarNotTotalDay(date)}
+             format="dd/MM/yyyy"
+             variant="static" 
+             autoOk
+           />
+          <Select
+            name="hours"
+            onChange={(e) => handleChangeList(e)}
+          >
+                          <option>Seleccionar horario</option>
+                          {hoursWorking &&
+                            hoursWorking.map((h) => (
+                              <option key={h.id} value={h.hour}>
+                                {h.hour}
+                              </option>
+                            ))}
+          </Select> 
+          <List display="inline-flex" flexDirection={"row"} flexWrap="wrap">
+              {form.notTotalDay.hours?.length
+                ? form.notTotalDay.hours.map((e) => (
+                    <ListItem m="1rem" key={e}>
+                      {e}
+                      <Button
+                        colorScheme={"teal"}
+                        variant={"ghost"}
+                        cursor="pointer"
+                        onClick={() => handleDeleteHour(e)}
+                      >
+                        <Icon as={AiOutlineClose} />
+                      </Button>
+                    </ListItem>
+                  ))
+                : []}
+            </List>
+      </Box>
+  }
     </>
   );
 }

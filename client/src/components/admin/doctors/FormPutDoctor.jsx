@@ -34,35 +34,65 @@ import {
   getDays,
   getHours,
   getPrepaidHealth,
-  postDoctors,
+  putDoctor,
 } from "../../../redux/actions.js";
 import { validateForm } from "../../../hooks/validateForm.js";
 import UploadImageDoctor from "../../UploadImageDoctor";
 import { AiOutlineClose } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
 
-const initialForm = {
-  name: "",
-  document: "",
-  medic_id: "",
-  phone: "",
-  email: "",
-  birthday: "",
-  general_area: "",
-  specialty: "",
-  work_days: [],
-  hours_json: {},
-  prepaid_healths: [],
-};
 function FormPutDoctor({ setPutDoctor, setListDoctors }) {
   const { pathname } = useLocation();
-  const [form, setForm] = useState(initialForm);
   const [formHours, setFormHours] = useState({});
   const dispatch = useDispatch();
+  const [putActive, setPutActive] = useState(false);
+  const { doctors, doctorDetail } = useSelector((state) => state);
   const { msgConfirm, prepaidHealth, hoursWorking, days, areas } = useSelector(
     (state) => state
   );
-  console.log(pathname);
+
+  let lpm = {};
+  doctors.find((e) => {
+    return e.id === doctorDetail.id
+      ? (lpm = {
+          id: e.id,
+          name: e.name,
+          document: e.document,
+          medic_id: e.medic_id,
+          phone: e.phone,
+          email: e.email,
+          birthday: e.birthday,
+          general_area: e.general_area,
+          specialty: e.specialty,
+          work_days: e.work_days,
+          hours_json: e.hours_json,
+          prepaid_healths: e.prepaid_healths,
+        })
+      : null;
+  });
+  console.log(lpm, "doctorId");
+
+  localStorage.setItem("doctorId", JSON.stringify(lpm));
+  const perfil = localStorage.getItem("doctorId");
+  const dotor = JSON.parse(localStorage.getItem("doctorId"));
+
+  console.log(perfil, "dotor");
+
+  const initialForm = {
+    id: "",
+    name: "",
+    document: "",
+    medic_id: "",
+    phone: "",
+    email: "",
+    birthday: "",
+    general_area: "",
+    specialty: "",
+    work_days: [],
+    hours_json: {},
+    prepaid_healths: [],
+  };
+  const [form, setForm] = useState(initialForm);
 
   const [errors, setErrors] = useState({});
   const date = new Date().toLocaleDateString().split("/").reverse();
@@ -100,7 +130,46 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
       setPutDoctor(false);
       setListDoctors(true);
     }
-    setForm(initialForm);
+    localStorage.setItem("doctorId", JSON.stringify(form));
+    dispatch(putDoctor(form));
+    // setForm(initialForm);
+  };
+
+  const handlePutDoctor = () => {
+    if (dotor) {
+      setForm({
+        ...form,
+        id: dotor.id,
+        name: dotor.name,
+        document: dotor.document,
+        medic_id: dotor.medic_id,
+        phone: dotor.phone,
+        email: dotor.email,
+        birthday: dotor.birthday,
+        general_area: dotor.general_area,
+        specialty: dotor.specialty,
+        work_days: dotor.work_days,
+        hours_json: dotor.hours_json,
+        prepaid_healths: dotor.prepaid_healths,
+      });
+    } else {
+      setForm({
+        ...form,
+        name: "",
+        document: "",
+        medic_id: "",
+        phone: "",
+        email: "",
+        birthday: "",
+        general_area: "",
+        specialty: "",
+        work_days: [],
+        hours_json: {},
+        prepaid_healths: [],
+      });
+    }
+
+    setPutActive(true);
   };
 
   const handleBlur = (e) => {
@@ -192,17 +261,27 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
     />
   );
   const [overlay, setOverlay] = useState(<OverlayOne />);
-
   return (
     <>
       <Box>
         <UploadImageDoctor />
 
         <Box display="flex" flexDirection="column" alignItems="center" w="100%">
+          {!putActive && (
+            <Button
+              m="2rem"
+              onClick={handlePutDoctor}
+              colorScheme="teal"
+              variant="solid"
+            >
+              Modificar datos
+            </Button>
+          )}
           <form border="3px solid green">
             <FormControl
               w={{ md: "30rem", xl: "40rem" }}
               isInvalid={errors.name}
+              isDisabled={!putActive}
             >
               <FormLabel m="1rem" htmlFor="name">
                 Nombre completo
@@ -218,7 +297,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                 <FormErrorMessage>{errors.name}</FormErrorMessage>
               )}
             </FormControl>
-            <FormControl isInvalid={errors.document}>
+            <FormControl isInvalid={errors.document} isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="document">
                 Documento
               </FormLabel>
@@ -236,7 +315,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                 <FormErrorMessage>{errors.document}</FormErrorMessage>
               )}
             </FormControl>
-            <FormControl isInvalid={errors.medic_id}>
+            <FormControl isInvalid={errors.medic_id} isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="medic_id">
                 Matrícula
               </FormLabel>
@@ -250,7 +329,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                 <FormErrorMessage>{errors.medic_id}</FormErrorMessage>
               )}
             </FormControl>
-            <FormControl isInvalid={errors.phone}>
+            <FormControl isInvalid={errors.phone} isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="phone">
                 Tel/Cel
               </FormLabel>
@@ -266,7 +345,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                 <FormErrorMessage>{errors.phone}</FormErrorMessage>
               )}
             </FormControl>
-            <FormControl isInvalid={errors.email}>
+            <FormControl isInvalid={errors.email} isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="email">
                 Email
               </FormLabel>
@@ -281,7 +360,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                 <FormErrorMessage>{errors.email}</FormErrorMessage>
               )}
             </FormControl>
-            <FormControl isInvalid={errors.birthday}>
+            <FormControl isInvalid={errors.birthday} isDisabled={!putActive}>
               <FormLabel m="1rem" htmlFor="birthday">
                 Fecha de nacimiento
               </FormLabel>
@@ -293,7 +372,10 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                 name="birthday"
               />
             </FormControl>
-            <FormControl isInvalid={errors.general_area}>
+            <FormControl
+              isInvalid={errors.general_area}
+              isDisabled={!putActive}
+            >
               <FormLabel m="1rem" htmlFor="general_area">
                 Área general
               </FormLabel>
@@ -315,7 +397,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
               )}
             </FormControl>
 
-            <FormControl isInvalid={errors.specialty}>
+            <FormControl isInvalid={errors.specialty} isDisabled={!putActive}>
               {form.general_area && (
                 <FormLabel m="1rem" htmlFor="specialty">
                   Especialidad
@@ -419,7 +501,10 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
               )}
             </FormControl>
 
-            <FormControl isInvalid={errors.prepaid_healths}>
+            <FormControl
+              isInvalid={errors.prepaid_healths}
+              isDisabled={!putActive}
+            >
               <FormLabel m="1rem" htmlFor="prepaid_healths">
                 Prestaciones asociadas
               </FormLabel>
@@ -445,7 +530,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
               {form.prepaid_healths.length
                 ? form.prepaid_healths.map((e) => (
                     <ListItem m="1rem" key={e}>
-                      {e}
+                      {e.name}
                       <Button
                         colorScheme={"teal"}
                         variant={"ghost"}
@@ -458,7 +543,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                   ))
                 : []}
             </List>
-            <FormControl>
+            <FormControl isDisabled={!putActive}>
               <Heading textAlign="center" m="1rem" as="h6" size="lg">
                 Días y horarios de atención
               </Heading>
@@ -521,7 +606,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                   </Stack>
                 </RadioGroup>
                 {formHours.totalDay ? (
-                  <FormControl>
+                  <FormControl isDisabled={!putActive}>
                     <Box
                       display="flex"
                       flexDirection="row"
@@ -569,7 +654,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                   false
                 )}
                 {formHours.notTotalDay ? (
-                  <FormControl>
+                  <FormControl isDisabled={!putActive}>
                     <FormLabel m="1rem" htmlFor="">
                       Rango horario 1
                     </FormLabel>

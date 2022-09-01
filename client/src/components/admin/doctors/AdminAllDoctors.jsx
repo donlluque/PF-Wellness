@@ -29,14 +29,16 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
   const dispatch = useDispatch();
   const { doctors, doctorDetail } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // const [id, setId] = useState("");
 
+  // localStorage.setItem("doctor", JSON.stringify(doctors));
   useEffect(() => {
     dispatch(getDoctors());
     dispatch(getHours());
   }, [dispatch]);
 
   const handleClick = (id) => {
-    console.log(id);
+    console.log(id, "detalles");
     dispatch(getDetailDoctors(id));
     onOpen();
   };
@@ -81,6 +83,7 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
                       onClick={() => {
                         setListDoctors(false);
                         setPutDoctor(true);
+                        handleClick(e.id);
                       }}
                     >
                       <Icon w={4} h={4} as={MdOutlineEditNote} />

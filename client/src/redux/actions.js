@@ -64,6 +64,32 @@ export function filterDoctors(filter) {
   };
 }
 
+export const putDoctor = (data) => {
+  console.log("data actions", data);
+  return function (dispatch) {
+    return fetch(`${baseURL}/doctors`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? Promise.resolve({
+              name: data.name,
+              status: res.status || "00",
+              statusText: `Datos guardados con exito`,
+            })
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: res.statusText,
+            })
+      )
+      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  };
+};
+
 //SEARCH BAR
 export function searchDoctorByName(input) {
   return function (dispatch) {

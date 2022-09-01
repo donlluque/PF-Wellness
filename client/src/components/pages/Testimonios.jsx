@@ -2,7 +2,6 @@ import React from 'react';
 import {
     Box,
     Text,
-    Flex,
     Wrap,
     WrapItem,
     Center,

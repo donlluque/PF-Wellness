@@ -6,6 +6,7 @@ const {
   Work_days,
   Hours_working,
   Patient,
+  General_area,
 } = require("../db");
 
 const getAllDoctor = async () => {
@@ -19,6 +20,12 @@ const getAllDoctor = async () => {
       },
       {
         model: Work_days,
+        throught: {
+          attributes: [],
+        },
+      },
+      {
+        model: General_area,
         throught: {
           attributes: [],
         },

@@ -13,6 +13,8 @@ const initialState = {
   payments: {},
   turnsByPatient: [],
   turnsByDoctor: [],
+  reviews: [],
+  areas: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -135,6 +137,18 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         payments: action.payload,
+      };
+    }
+    case "GET_REVIEWS": {
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+    }
+    case "GET_AREAS": {
+      return {
+        ...state,
+        areas: action.payload,
       };
     }
     case "CHECK_USER": {

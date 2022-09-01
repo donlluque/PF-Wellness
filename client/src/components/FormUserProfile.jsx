@@ -324,7 +324,7 @@ function FormUserProfile() {
                 name="prepaid_health"
               >
                 <option value="">Seleccionar una opción</option>
-                <option value="false">Ninguna</option>
+                <option value="Particular">Particular</option>
                 <option value="Galeno">Galeno</option>
                 <option value="Medicus">Medicus</option>
                 <option value="Medife">Medife</option>

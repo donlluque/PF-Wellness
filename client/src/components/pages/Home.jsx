@@ -12,11 +12,22 @@ import {
   SimpleGrid,
   Spacer,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FcNext } from "react-icons/fc";
+import Testimonios from "./Testimonios";
 
 function Home() {
+  //-----Estilos para modo oscuro----//
+  const colorLetra = useColorModeValue("#1a202c", "#4A5568");
+  const bg = useColorModeValue("#e6fffa", "#E2E8F0");
+  const color = useColorModeValue("#285E61", "#4A5568");
+  const colorL = useColorModeValue("#38B2AC", "black");
+  const botonBg = useColorModeValue("#319795", "#718096");
+  const colorBt = useColorModeValue("white", "white");
+  //---------------------------------//
+
   return (
     <>
       <Center
@@ -39,12 +50,13 @@ function Home() {
           fontSize={{ base: "2xl", sm: "4xl", md: "5xl", lg: "6xl" }}
           m="1rem"
           mt={{ base: "6rem", sm: "6rem", md: "4rem", lg: "1rem" }}
+          color={colorLetra}
         >
           Clínica de fisioterapia y
           <Spacer /> rehabilitación física
         </Heading>
         <Box w={{ base: "75%", sm: "75%", md: "60%" }} textAlign="center">
-          <Text as="i" fontSize="xl">
+          <Text as="i" fontSize="xl" color={colorLetra}>
             "Cuida tu cuerpo. Es el único lugar que tienes para vivir"
           </Text>
         </Box>
@@ -148,7 +160,7 @@ function Home() {
           />
         </Flex>
         <Link to="/about">
-          <Button colorScheme="teal" m={4}>
+          <Button colorScheme="teal" m={4} bg={botonBg} color={colorBt}>
             Leer más
           </Button>
         </Link>
@@ -157,7 +169,8 @@ function Home() {
         border="1px solid red"
         maxW="100%"
         centerContent
-        bgColor="teal.50"
+        bg={bg}
+        color={color}
         pb="2rem"
         textAlign="center"
       >
@@ -183,7 +196,7 @@ function Home() {
                 Traumatología
               </Heading>
               <Link to="/especialidades">
-                <Button colorScheme="teal" variant="ghost">
+                <Button colorScheme="teal" variant="ghost" color={colorL}>
                   Leer más &gt;&gt;
                 </Button>
               </Link>
@@ -202,7 +215,7 @@ function Home() {
                 Kinesiología
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost" colorScheme="teal">
+                <Button variant="ghost" colorScheme="teal" color={colorL}>
                   Leer más &gt;&gt;
                 </Button>
               </Link>
@@ -221,7 +234,7 @@ function Home() {
                 Osteopatía
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost" colorScheme="teal">
+                <Button variant="ghost" colorScheme="teal" color={colorL}>
                   Leer más &gt;&gt;
                 </Button>
               </Link>
@@ -240,13 +253,32 @@ function Home() {
                 Deportología
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost" colorScheme="teal">
+                <Button variant="ghost" colorScheme="teal" color={colorL}>
                   Leer más &gt;&gt;
                 </Button>
               </Link>
             </Box>
           </Box>
         </SimpleGrid>
+      </Container>
+      <Container
+        border="1px solid red"
+        maxW="100%"
+        centerContent
+        bgColor="white"
+        pb="2rem"
+        textAlign="center"
+      >
+        <Heading as="h2" size="xl" m={8} color={colorL}>
+          Lo que opinan nuestros pacientes
+        </Heading>
+
+          <Testimonios />
+          <Link to="/opiniones">
+                <Button colorScheme="teal" m={4}>
+                  Leer más
+                </Button>
+              </Link>
       </Container>
     </>
   );

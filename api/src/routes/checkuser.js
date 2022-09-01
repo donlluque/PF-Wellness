@@ -1,6 +1,14 @@
 const { Router } = require("express");
 const router = Router();
-const { Patient, Prepaid_health, Doctor } = require("../db.js");
+const {
+  Patient,
+  Prepaid_health,
+  Doctor,
+  Work_days,
+  Absence,
+  General_area,
+  Review,
+} = require("../db.js");
 
 router.post("/", async (req, res, next) => {
   // try {

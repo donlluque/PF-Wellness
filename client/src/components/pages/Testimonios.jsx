@@ -14,6 +14,7 @@ import {
   import ReactStars from "react-rating-stars-component";
   import {ImQuotesLeft, ImQuotesRight } from "react-icons/im";
 
+  //valee agusccue  LCDLLLLLLLLLLL
 function Reviews(){
     const dispatch = useDispatch();
     const { reviews } = useSelector((state) => state);

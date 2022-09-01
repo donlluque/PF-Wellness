@@ -17,10 +17,12 @@ import {
   ModalBody,
   Image,
   useDisclosure,
+  Tooltip,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { MdOutlineEditNote } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { MdPersonAddDisabled } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPatients, getOnePatient } from "../../../redux/actions";
 import PatientDetail from "../../patient/PatientDetail";
@@ -55,7 +57,7 @@ function AdminAllPatients() {
             </Tr>
           </Thead>
           <Tbody>
-            {patients &&
+            {patients ? (
               patients.map((e) => (
                 <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
@@ -74,20 +76,26 @@ function AdminAllPatients() {
                     >
                       Detalle
                     </Button>
-                    <Button m="0.5rem" colorScheme={"teal"} variant="ghost">
-                      <Icon w={4} h={4} as={MdOutlineEditNote} />
-                    </Button>
-                    <Button
-                      m="0.5rem"
-                      colorScheme={"teal"}
-                      variant="ghost"
-                      fontSize="xs"
-                    >
-                      <Icon w={4} h={4} as={RiDeleteBin6Line} />
-                    </Button>
+
+                    <Tooltip label="Deshabilitar">
+                      <Button
+                        m="0.5rem"
+                        colorScheme={"teal"}
+                        variant="ghost"
+                        fontSize="xs"
+                      >
+                        <Icon w={4} h={4} as={MdPersonAddDisabled} />
+                      </Button>
+                    </Tooltip>
                   </Td>
                 </Tr>
-              ))}
+              ))
+            ) : (
+              <Alert status="warning">
+                <AlertIcon />
+                No existen pacientes registrados
+              </Alert>
+            )}
           </Tbody>
           <Tfoot></Tfoot>
         </Table>

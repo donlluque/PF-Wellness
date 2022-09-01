@@ -40,7 +40,7 @@ function Calendar() {
   const doctorDetail = useSelector((state) => state.doctorDetail);
   const usuario = useSelector((state) => state.user);
   const [active, setActive] = useState(false);
-  console.log(usuario, "usuario");
+
   //copia de estado global
   const totalHours = hoursWorking;
   const totalTurns = turns;

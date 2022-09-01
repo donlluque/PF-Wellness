@@ -17,7 +17,6 @@ export function getDoctors() {
       });
   };
 }
-
 export function getDetailDoctors(id) {
   return function (dispatch) {
     fetch(`${baseURL}/doctors/${id}`)
@@ -66,6 +65,7 @@ export function filterDoctors(filter) {
 
 export const putDoctor = (data) => {
   console.log("data actions", data);
+
   return function (dispatch) {
     return fetch(`${baseURL}/doctors`, {
       method: "PUT",
@@ -91,6 +91,7 @@ export const putDoctor = (data) => {
 };
 
 //SEARCH BAR
+
 export function searchDoctorByName(input) {
   return function (dispatch) {
     return fetch(`${baseURL}/doctors/?name=${input}`)
@@ -112,7 +113,7 @@ export function searchDoctorByName(input) {
       });
   };
 }
-//post doctors
+//POST DOCTORS
 export const postDoctors = (form) => {
   console.log("soy form", form);
   return function (dispatch) {
@@ -137,6 +138,51 @@ export const postDoctors = (form) => {
   };
 };
 
+export const disableDoctor = (doctorId) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/doctors`, {
+      method: "PATCH",
+      body: JSON.stringify({ doctorId }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? Promise.resolve({
+              status: res.status || "00",
+              statusText: `El doctor fue deshabilitado con exito!`,
+            })
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: "No es posible deshabilitar el doctor seleccionado",
+            })
+      )
+      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  };
+};
+export const postAbsentDoctor = (form) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/absence`, {
+      method: "POST",
+      body: JSON.stringify(form),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? res.json()
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: `VER ERROR`,
+            })
+      )
+      .then((data) => {
+        dispatch({ type: "CONFIRM_ACTION", payload: data });
+      })
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  };
+};
 //PREPAID HEALTH
 export const getPrepaidHealth = () => {
   return function (dispatch) {
@@ -186,7 +232,7 @@ export const getDays = () => {
       });
   };
 };
-//APPOINTMENT
+//TURNS
 export const postTurn = (form) => {
   console.log("soy post", form);
   return function (dispatch) {
@@ -262,8 +308,9 @@ export const getTurnsByPatient = (idCurrentPatient) => {
 
 export const deleteTurn = (id) => {
   return function (dispatch) {
-    return fetch(`${baseURL}/dates/${id}`, {
+    return fetch(`${baseURL}/dates`, {
       method: "DELETE",
+      body: JSON.stringify({ dateId: id }),
       headers: { "Content-Type": "application/json" },
     })
       .then((res) =>
@@ -282,7 +329,7 @@ export const deleteTurn = (id) => {
       .catch((err) => console.log(err));
   };
 };
-
+//AREAS GENERALES
 export const getAllAreas = () => {
   return function (dispatch) {
     fetch(`${baseURL}/general_area`)
@@ -353,7 +400,21 @@ export const getAllPatients = () => {
       });
   };
 };
-
+export const getPatientsByDoctor = (idCurrentDoctor) => {
+  return function (dispatch) {
+    fetch(`${baseURL}/dates`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_PATIENTS_BY_DOCTOR",
+          payload: { data, idCurrentDoctor },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 //POST PATIENT
 export const postPatient = (form) => {
   return function (dispatch) {
@@ -492,6 +553,7 @@ export const getReviews = () => {
 //   };
 // };
 
+//CLEAN MSG
 export const cleanError = () => ({ type: "CLEAN_ERROR" });
 export const cleanConfirm = () => ({ type: "CLEAN_MSG" });
 

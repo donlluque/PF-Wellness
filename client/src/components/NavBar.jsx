@@ -102,7 +102,7 @@ function NavBar() {
         <Spacer />
         <Box>
           <Stack
-            spacing={{ base: 0, sm: 0, md: 0 }}
+            spacing={{ base: 0, sm: 0, md: 2 }}
             direction={{ base: "column", sm: "column", md: "row" }}
             align={{ base: "center", sm: "center", md: "row" }}
           >
@@ -114,11 +114,6 @@ function NavBar() {
             <Link to="/about">
               <Button colorScheme="teal" variant="ghost">
                 Nosotros
-              </Button>
-            </Link>
-            <Link to="/opiniones">
-              <Button colorScheme="teal" variant="ghost">
-                Opiniones
               </Button>
             </Link>
             <Link to="/especialidades">

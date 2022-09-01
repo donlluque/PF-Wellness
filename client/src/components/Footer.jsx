@@ -7,6 +7,7 @@ import {
   ListIcon,
   Container,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -16,6 +17,11 @@ import { MdAlternateEmail, MdOutlinePlace } from "react-icons/md";
 import Logo from "../assets/logoPf.jpeg";
 
 function Footer() {
+  //-----Estilos para modo oscuro----//
+  const bg = useColorModeValue("#319795", "#747d8c");
+
+  //---------------------------------//
+
   return (
     <Box
       border="1px solid red"
@@ -24,7 +30,7 @@ function Footer() {
       alignItems={{ base: "center", sm: "center", md: "center" }}
       justifyContent="space-evenly"
       p="2rem"
-      bgColor="teal.400"
+      bgColor={bg}
     >
       <Box
         display="flex"

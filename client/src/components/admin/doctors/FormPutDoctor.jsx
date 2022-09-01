@@ -35,6 +35,7 @@ import {
   getHours,
   getPrepaidHealth,
   postDoctors,
+  putDoctor,
 } from "../../../redux/actions.js";
 import { validateForm } from "../../../hooks/validateForm.js";
 import UploadImageDoctor from "../../UploadImageDoctor";
@@ -62,7 +63,6 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
   const { msgConfirm, prepaidHealth, hoursWorking, days, areas } = useSelector(
     (state) => state
   );
-  console.log(pathname);
 
   const [errors, setErrors] = useState({});
   const date = new Date().toLocaleDateString().split("/").reverse();
@@ -93,7 +93,8 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
     form.hours_json = formHours;
     //setErrors(validateForm(form));
 
-    //dispatch(putDoctor(form));
+    dispatch(putDoctor(form));
+    setPutDoctor(false);
     setOverlay(<OverlayOne />);
     onOpen();
     if (pathname === "/admin") {

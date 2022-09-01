@@ -162,11 +162,6 @@ function NavBar() {
               Turnos Online
             </Button>
           )}
-          <Link to="/admin">
-            <Button colorScheme="teal" variant="solid">
-              Acceso admin
-            </Button>
-          </Link>
 
           {!isAuthenticated && (
             <Button

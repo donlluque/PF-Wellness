@@ -17,23 +17,36 @@ import {
   ModalBody,
   Image,
   useDisclosure,
+  Tooltip,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { useEffect } from "react";
-import { MdOutlineEditNote } from "react-icons/md";
+import { MdOutlineEditNote, MdPersonAddDisabled } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailDoctors, getDoctors, getHours } from "../../../redux/actions";
+import {
+  disableDoctor,
+  getDetailDoctors,
+  getDoctors,
+  getHours,
+} from "../../../redux/actions";
 import DoctorDetail from "../../DoctorDetail";
+import ConfirmDisable from "./ConfirmDisable";
 
 function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
   const dispatch = useDispatch();
-  const { doctors, doctorDetail } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { doctors, doctorDetail } = useSelector((state) => state);
+  const modal2 = useDisclosure();
+  const [aux, setAux] = useState(true);
+  const visibleDoctors = doctors.filter((e) => e.activo === true);
 
   useEffect(() => {
     dispatch(getDoctors());
     dispatch(getHours());
-  }, [dispatch]);
+  }, [dispatch, aux]);
 
   const handleClick = (id) => {
     console.log(id);
@@ -45,18 +58,22 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
     <>
       <TableContainer>
         <Table size="sm">
-          <Thead>
-            <Tr>
-              <Th isNumeric>ID</Th>
-              <Th></Th>
-              <Th>Nombre</Th>
-              <Th>Área</Th>
-              <Th>Especialidad</Th>
-            </Tr>
-          </Thead>
+          {visibleDoctors.length ? (
+            <Thead>
+              <Tr>
+                <Th isNumeric>ID</Th>
+                <Th></Th>
+                <Th>Nombre</Th>
+                <Th>Área</Th>
+                <Th>Especialidad</Th>
+              </Tr>
+            </Thead>
+          ) : (
+            false
+          )}
           <Tbody>
-            {doctors &&
-              doctors.map((e) => (
+            {visibleDoctors.length ? (
+              visibleDoctors.map((e) => (
                 <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
                   <Td>
@@ -74,33 +91,54 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
                     >
                       Detalle
                     </Button>
-                    <Button
-                      m="0.5rem"
-                      colorScheme={"teal"}
-                      variant="ghost"
-                      onClick={() => {
-                        setListDoctors(false);
-                        setPutDoctor(true);
-                      }}
-                    >
-                      <Icon w={4} h={4} as={MdOutlineEditNote} />
-                    </Button>
-                    <Button
-                      m="0.5rem"
-                      colorScheme={"teal"}
-                      variant="ghost"
-                      fontSize="xs"
-                    >
-                      <Icon w={4} h={4} as={RiDeleteBin6Line} />
-                    </Button>
+                    <Tooltip label="Editar">
+                      <Button
+                        m="0.5rem"
+                        colorScheme={"teal"}
+                        variant="ghost"
+                        onClick={() => {
+                          setListDoctors(false);
+                          setPutDoctor(true);
+                        }}
+                      >
+                        <Icon w={4} h={4} as={MdOutlineEditNote} />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip label="Deshabilitar">
+                      <Button
+                        m="0.5rem"
+                        colorScheme={"teal"}
+                        variant="ghost"
+                        fontSize="xs"
+                        onClick={() => modal2.onOpen()}
+                      >
+                        <ConfirmDisable
+                          idDoctor={e.id}
+                          onClose={modal2.onClose}
+                          isOpen={modal2.isOpen}
+                          setAux={setAux}
+                          aux={aux}
+                          user="doctor"
+                          name={e.name}
+                        />
+                        <Icon w={4} h={4} as={MdPersonAddDisabled} />
+                      </Button>
+                    </Tooltip>
                   </Td>
                 </Tr>
-              ))}
+              ))
+            ) : (
+              <Alert status="warning">
+                <AlertIcon />
+                No existen doctores registrados
+              </Alert>
+            )}
           </Tbody>
           <Tfoot></Tfoot>
         </Table>
       </TableContainer>
 
+      {/*MODAL DETAIL*/}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent bg="#EBF8FF">
@@ -113,9 +151,8 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
             {" "}
             {doctorDetail.name}
           </ModalHeader>
-          {/* <ModalCloseButton /> */}
+
           <ModalBody>
-            {/* <Lorem count={2} /> */}
             <DoctorDetail id={doctorDetail.id} />
           </ModalBody>
 

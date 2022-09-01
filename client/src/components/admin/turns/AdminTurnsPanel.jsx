@@ -19,7 +19,7 @@ import AdminAllTurnos from "./AdminAllTurnos";
 function AdminTurnsPanel() {
   const [nextTurns, setNextTurns] = useState(true);
   const [prevTurns, setPrevTurns] = useState(false);
-  //const [listTurns, setListTurns] = useState(true);
+
   const [filter, setFilter] = useState(false);
   return (
     <>

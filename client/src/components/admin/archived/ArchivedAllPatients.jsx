@@ -15,31 +15,44 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
+  Image,
   useDisclosure,
+  Tooltip,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { FaUserCheck } from "react-icons/fa";
 
-import { AiOutlineComment } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailDoctors, getDoctors, getHours } from "../../../redux/actions";
+import {
+  getAllPatients,
+  getDetailDoctors,
+  getDoctors,
+  getHours,
+  getOnePatient,
+} from "../../../redux/actions";
 import DoctorDetail from "../../DoctorDetail";
 
-//BUSCAR EN EL HISTORIAL DE TURNOS, LOS MEDICOS CON LOS QUE ALGUNA VEZ SE ATENDIO
-function PatientAllDoctors() {
+import ConfirmEnable from "./ConfirmEnable";
+
+function ArchivedAllPatients() {
   const dispatch = useDispatch();
-  const { doctors, doctorDetail } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { patients, patientDetail } = useSelector((state) => state);
+  const modal2 = useDisclosure();
+  const [aux, setAux] = useState(true);
+
+  const visiblePatients = patients; /*.filter((e) => e.activo === false);*/
 
   useEffect(() => {
-    dispatch(getDoctors());
-    //dispatch(getDoctorsByPatient(id))
+    dispatch(getAllPatients());
     dispatch(getHours());
-  }, [dispatch]);
+  }, [dispatch, aux]);
 
   const handleClick = (id) => {
-    console.log(id);
-    dispatch(getDetailDoctors(id));
+    dispatch(getOnePatient(id));
     onOpen();
   };
 
@@ -47,19 +60,27 @@ function PatientAllDoctors() {
     <>
       <TableContainer>
         <Table size="sm">
-          <Thead>
-            <Tr>
-              <Th isNumeric>ID</Th>
-              <Th>Nombre</Th>
-              <Th>Área</Th>
-              <Th>Especialidad</Th>
-            </Tr>
-          </Thead>
+          {visiblePatients.length ? (
+            <Thead>
+              <Tr>
+                <Th isNumeric>ID</Th>
+                <Th></Th>
+                <Th>Nombre</Th>
+                <Th>Área</Th>
+                <Th>Especialidad</Th>
+              </Tr>
+            </Thead>
+          ) : (
+            false
+          )}
           <Tbody>
-            {doctors &&
-              doctors.map((e) => (
+            {visiblePatients.length ? (
+              visiblePatients.map((e) => (
                 <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
+                  <Td>
+                    <Image src={e.picture} w="3rem" h="3rem" rounded={"50%"} />
+                  </Td>
                   <Td>{e.name}</Td>
                   <Td>{e.general_area?.name}</Td>
                   <Td>{e.specialty}</Td>
@@ -72,24 +93,42 @@ function PatientAllDoctors() {
                     >
                       Detalle
                     </Button>
-                    <Link to="/testimonials">
+
+                    <Tooltip label="Habilitar">
                       <Button
                         m="0.5rem"
                         colorScheme={"teal"}
                         variant="ghost"
                         fontSize="xs"
+                        onClick={() => modal2.onOpen()}
                       >
-                        <Icon w={4} h={4} as={AiOutlineComment} />
+                        <ConfirmEnable
+                          aux={aux}
+                          setAux={setAux}
+                          idDoctor={e.id}
+                          onClose={modal2.onClose}
+                          isOpen={modal2.isOpen}
+                          name={e.name}
+                          user="paciente"
+                        />
+                        <Icon w={4} h={4} as={FaUserCheck} />
                       </Button>
-                    </Link>
+                    </Tooltip>
                   </Td>
                 </Tr>
-              ))}
+              ))
+            ) : (
+              <Alert status="warning">
+                <AlertIcon />
+                No existen pacientes deshabilitados
+              </Alert>
+            )}
           </Tbody>
           <Tfoot></Tfoot>
         </Table>
       </TableContainer>
 
+      {/*MODAL DETAIL*/}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent bg="#EBF8FF">
@@ -100,12 +139,11 @@ function PatientAllDoctors() {
             fontFamily={"body"}
           >
             {" "}
-            {doctorDetail.name}
+            {patientDetail.name}
           </ModalHeader>
-          {/* <ModalCloseButton /> */}
+
           <ModalBody>
-            {/* <Lorem count={2} /> */}
-            <DoctorDetail id={doctorDetail.id} />
+            <DoctorDetail id={patientDetail.id} />
           </ModalBody>
 
           <ModalFooter>
@@ -119,4 +157,4 @@ function PatientAllDoctors() {
   );
 }
 
-export default PatientAllDoctors;
+export default ArchivedAllPatients;

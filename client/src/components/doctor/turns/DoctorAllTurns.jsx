@@ -21,7 +21,12 @@ import {
 import { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTurn, getTurns, getTurnsByDoctor } from "../../../redux/actions";
+import {
+  deleteTurn,
+  getOnePatient,
+  getTurns,
+  getTurnsByDoctor,
+} from "../../../redux/actions";
 import { TbCalendarOff } from "react-icons/tb";
 
 /*
@@ -40,8 +45,6 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
 
   const idDoctor = user.id;
 
-  console.log(user);
-
   let aux = turnsByDoctor;
   aux.forEach((e) => {
     let array = e.date.split("/");
@@ -59,13 +62,12 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
     : turnsByDoctor;
 
   useEffect(() => {
-    dispatch(getTurnsByDoctor(1));
-    // dispatch(getTurns());
+    dispatch(getTurnsByDoctor(idDoctor));
   }, [dispatch]);
 
   const handleClick = (id) => {
     console.log(id);
-    //dispatch(getOnePatient(id));
+    //dispatch(getTurnDetail(id)); --> ahcer
     onOpen();
   };
 
@@ -88,8 +90,7 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
                   <Td isNumeric>{e.id}</Td>
                   <Td>{e.date}</Td>
                   <Td>{e.hours_workings[0].hour}</Td>
-
-                  <Td>paciente</Td>
+                  <Td>{e.patient[0].name}</Td>
                   <Td>
                     <Button
                       m="0.5rem"
@@ -130,7 +131,7 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
           </ModalHeader>
 
           <ModalBody>
-            PROXIMAMENTE
+            PROXIMAMENTE TURN DETAIL
             {/*<PatientDetail id={patients.id} />*/}
           </ModalBody>
 

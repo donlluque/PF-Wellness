@@ -24,6 +24,7 @@ import DoctorProfile from "./components/doctor/DoctorProfile";
 import FormTestimonial from "./components/FormTestimonal";
 import { Context } from "./components/Context";
 import Opiniones from "./components/pages/Opiniones";
+import WellnessAsociados from "./components/WellnessAsociado";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -67,8 +68,8 @@ export default function App() {
           <Route exact path="/doctor">
             <DoctorProfile />
           </Route>
-          <Route exact path="/payments">
-            <MakePayments />
+          <Route exact path="/wellnessPrepaid">
+            <WellnessAsociados />
           </Route>
           <Route exact path="/testimonials">
             <FormTestimonial />

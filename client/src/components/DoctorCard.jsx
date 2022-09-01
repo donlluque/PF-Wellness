@@ -63,6 +63,13 @@ export default function DoctorCard({
     onClose: onEditClose,
   } = useDisclosure();
 
+  //-----Estilos para modo oscuro----//
+
+  const bgselec = useColorModeValue("#319795", "#A0AEC0");
+  const colorLetra = useColorModeValue("white", "#000000");
+
+  //---------------------------------//
+
   return (
     <>
       <Box
@@ -116,12 +123,13 @@ export default function DoctorCard({
               onEditOpen();
             }}
             w={"full"}
-            color={"white"}
+            color={colorLetra}
             rounded={"md"}
             _hover={{
               transform: "translateY(-2px)",
               boxShadow: "lg",
             }}
+            bg={bgselec}
           >
             Leer más
           </Button>
@@ -134,12 +142,13 @@ export default function DoctorCard({
                 colorScheme="teal"
                 variant="solid"
                 w={"full"}
-                color={"white"}
                 rounded={"md"}
                 _hover={{
                   transform: "translateY(-2px)",
                   boxShadow: "lg",
                 }}
+                color={colorLetra}
+                bg={bgselec}
               >
                 Pedir turno
               </Button>
@@ -151,12 +160,13 @@ export default function DoctorCard({
               onClick={onOpen}
               mt={"1rem"}
               w={"full"}
-              color={"white"}
               rounded={"md"}
               _hover={{
                 transform: "translateY(-2px)",
                 boxShadow: "lg",
               }}
+              color={colorLetra}
+              bg={bgselec}
             >
               Pedir turno
               <Modal

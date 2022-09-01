@@ -20,21 +20,24 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { MdOutlineEditNote } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
+
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPatients, getOnePatient } from "../../../redux/actions";
+import {
+  getAllPatients,
+  getOnePatient,
+  getPatientsByDoctor,
+} from "../../../redux/actions";
 import PatientDetail from "../../patient/PatientDetail";
 
 function DoctorAllPatients() {
   const dispatch = useDispatch();
-  const { patients } = useSelector((state) => state);
-
+  const { patients, patientsByDoctor } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const doctorId = useSelector((state) => state.user.id);
 
   useEffect(() => {
     dispatch(getAllPatients());
-    //dispatch(getPatientsByDoctor(id));
+    dispatch(getPatientsByDoctor(doctorId));
   }, [dispatch]);
 
   const handleClick = (id) => {

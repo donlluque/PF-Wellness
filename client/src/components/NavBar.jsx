@@ -176,6 +176,7 @@ function NavBar() {
               Turnos Online
             </Button>
           )}
+
           <Button
             onClick={toggleColorMode}
             colorScheme={modo}
@@ -188,11 +189,6 @@ function NavBar() {
               <Icon as={BsFillSunFill} />
             )}
           </Button>
-          <Link to="/admin">
-            <Button colorScheme={modo} bg={botonBg} color={colorBt}>
-              Acceso admin
-            </Button>
-          </Link>
 
           {!isAuthenticated && (
             <Button

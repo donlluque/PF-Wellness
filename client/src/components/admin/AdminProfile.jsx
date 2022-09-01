@@ -1,4 +1,5 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
+import ArchivedPanel from "./archived/ArchivedPanel";
 import AdminDoctorPanel from "./doctors/AdminDoctorPanel";
 import AdminPatientPanel from "./patients/AdminPatientPanel";
 import AdminTurnsPanel from "./turns/AdminTurnsPanel";
@@ -70,6 +71,13 @@ function AdminProfile() {
             >
               Turnos
             </Tab>
+            <Tab
+              bgColor="white"
+              mr="0.3rem"
+              _selected={{ color: "white", bg: "teal.500" }}
+            >
+              Usuarios Archivados
+            </Tab>
           </TabList>
 
           <TabPanels bgColor="white">
@@ -86,6 +94,9 @@ function AdminProfile() {
             </TabPanel>
             <TabPanel>
               <AdminTurnsPanel />
+            </TabPanel>
+            <TabPanel>
+              <ArchivedPanel />
             </TabPanel>
           </TabPanels>
         </Tabs>

@@ -123,7 +123,8 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
     form.hours_json = formHours;
     //setErrors(validateForm(form));
 
-    //dispatch(putDoctor(form));
+    dispatch(putDoctor(form));
+    setPutDoctor(false);
     setOverlay(<OverlayOne />);
     onOpen();
     if (pathname === "/admin") {

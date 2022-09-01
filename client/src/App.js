@@ -13,7 +13,7 @@ import UserProfile from "./components/UserProfile";
 import Turnos from "./components/pages/Turnos";
 import Calendar from "./components/Calendar";
 import MakePayments from "./components/MakePayments";
-// import PrivateRouteAdmin from "./components/private/PrivateRouteAdmin";
+import PrivateRouteAdmin from "./components/private/PrivateRouteAdmin";
 import PrivateRoutePerfil from "./components/private/PrivateRoutePerfil";
 // import PrivateRouterPago from "./components/private/PrivateRoutePago";
 import PrivateRouterCalendario from "./components/private/PrivateRouterCalendario";
@@ -61,9 +61,9 @@ export default function App() {
           <Route exact path="/calendar/:idDoctor">
             <Calendar />
           </Route>
-          <Route exact path="/admin">
+          <PrivateRouteAdmin exact path="/admin">
             <AdminProfile />
-          </Route>
+          </PrivateRouteAdmin>
           <Route exact path="/doctor">
             <DoctorProfile />
           </Route>

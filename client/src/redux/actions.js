@@ -62,7 +62,10 @@ export function filterDoctors(filter) {
       });
   };
 }
+
 export const putDoctor = (data) => {
+  console.log("data actions", data);
+
   return function (dispatch) {
     return fetch(`${baseURL}/doctors`, {
       method: "PUT",
@@ -86,7 +89,9 @@ export const putDoctor = (data) => {
       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
   };
 };
-//SEARCH BAR DOCTOR
+
+//SEARCH BAR
+
 export function searchDoctorByName(input) {
   return function (dispatch) {
     return fetch(`${baseURL}/doctors/?name=${input}`)

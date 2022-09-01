@@ -38,18 +38,22 @@ import ConfirmDisable from "./ConfirmDisable";
 function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const { doctors, doctorDetail } = useSelector((state) => state);
   const modal2 = useDisclosure();
   const [aux, setAux] = useState(true);
   const visibleDoctors = doctors.filter((e) => e.activo === true);
 
+  const [id, setId] = useState("");
+
+  // localStorage.setItem("doctor", JSON.stringify(doctors));
   useEffect(() => {
     dispatch(getDoctors());
     dispatch(getHours());
   }, [dispatch, aux]);
 
   const handleClick = (id) => {
-    console.log(id);
+    console.log(id, "detalles");
     dispatch(getDetailDoctors(id));
     onOpen();
   };
@@ -91,6 +95,7 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
                     >
                       Detalle
                     </Button>
+
                     <Tooltip label="Editar">
                       <Button
                         m="0.5rem"
@@ -113,7 +118,7 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
                         onClick={() => modal2.onOpen()}
                       >
                         <ConfirmDisable
-                          idDoctor={e.id}
+                          idDoctor={id}
                           onClose={modal2.onClose}
                           isOpen={modal2.isOpen}
                           setAux={setAux}
@@ -124,6 +129,27 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
                         <Icon w={4} h={4} as={MdPersonAddDisabled} />
                       </Button>
                     </Tooltip>
+
+                    <Button
+                      m="0.5rem"
+                      colorScheme={"teal"}
+                      variant="ghost"
+                      onClick={() => {
+                        setListDoctors(false);
+                        setPutDoctor(true);
+                        handleClick(e.id);
+                      }}
+                    >
+                      <Icon w={4} h={4} as={MdOutlineEditNote} />
+                    </Button>
+                    <Button
+                      m="0.5rem"
+                      colorScheme={"teal"}
+                      variant="ghost"
+                      fontSize="xs"
+                    >
+                      <Icon w={4} h={4} as={RiDeleteBin6Line} />
+                    </Button>
                   </Td>
                 </Tr>
               ))

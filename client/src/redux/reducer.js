@@ -35,6 +35,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         detail: {},
       };
+    case "PUT_DOCTORS": {
+      return {
+        ...state,
+      };
+    }
     case "FILTER_DOCTORS":
       return {
         ...state,

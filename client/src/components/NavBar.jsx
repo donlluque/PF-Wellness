@@ -93,7 +93,7 @@ function NavBar() {
         }}
       >
         <Image
-          w={{ base: 150, sm: 150, md: 300, lg: 300 }}
+          w={{ base: 150, sm: 150, md: 280, lg: 280 }}
           ml="0.5rem"
           objectFit="cover"
           src={Logo}
@@ -102,7 +102,7 @@ function NavBar() {
         <Spacer />
         <Box>
           <Stack
-            spacing={{ base: 0, sm: 0, md: 4 }}
+            spacing={{ base: 0, sm: 0, md: 0 }}
             direction={{ base: "column", sm: "column", md: "row" }}
             align={{ base: "center", sm: "center", md: "row" }}
           >
@@ -114,6 +114,11 @@ function NavBar() {
             <Link to="/about">
               <Button colorScheme="teal" variant="ghost">
                 Nosotros
+              </Button>
+            </Link>
+            <Link to="/opiniones">
+              <Button colorScheme="teal" variant="ghost">
+                Opiniones
               </Button>
             </Link>
             <Link to="/especialidades">

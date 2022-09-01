@@ -257,10 +257,26 @@ export const deleteTurn = (id) => {
   };
 };
 
+export const getAllAreas = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/general_area`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch({
+          type: "GET_AREAS",
+          payload: json,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 //PATIENT
 export const searchPatientByName = (patient) => {
   return function (dispatch) {
-    return fetch(`${baseURL}/doctors?name=${patient}`)
+    return fetch(`${baseURL}/patients?name=${patient}`)
       .then((res) =>
         res.ok
           ? res.json()
@@ -380,7 +396,6 @@ export const dateUser = (payload) => {
 };
 
 export const makePayment = (payload) => {
-  console.log(payload, "soy el payload makePayment");
   return async (dispatch) => {
     try {
       let response = await axios.post(`${baseURL}/pagos`, payload);
@@ -391,6 +406,37 @@ export const makePayment = (payload) => {
     } catch (error) {
       console.log(error);
     }
+  };
+};
+
+export const addReview = (payload) => {
+  console.log(payload, "SOY LA FUCKING REVIEW");
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(`${baseURL}/review`, payload);
+      return dispatch({
+        type: "ADD_REVIEW",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getReviews = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/review`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch({
+          type: "GET_REVIEWS",
+          payload: json,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };
 // export const dateUser = (payload) => {

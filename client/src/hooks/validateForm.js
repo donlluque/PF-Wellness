@@ -29,24 +29,22 @@ export const validateForm = (form) => {
     errors.phone = "Ingresa un numero de telefono valido";
   }
 
-  if (!form.prepaid_healths.length) {
-    errors.prepaid_healths = "Debe seleccionar al menos una opción";
-  }
-  if (!form.general_area) {
-    errors.general_area = "Requerido";
-  }
-  if (!form.specialty) {
-    errors.specialty = "Requerido";
-  }
-  if (!form.medic_id) {
-    errors.medic_id = "Requerido";
-  }
+  // Es necesario crear un validate para el doctor
+  // if (!form.general_area) {
+  //   errors.general_area = "Requerido";
+  // }
+  // if (!form.specialty) {
+  //   errors.specialty = "Requerido";
+  // }
+  // if (!form.medic_id) {
+  //   errors.medic_id = "Requerido";
+  // }
 
-  if (!form.email) {
-    errors.email = "Requerido";
-  } else if (!regexEmail.test(form.email)) {
-    errors.email = "Ingresar un email válido";
-  }
+  // if (!form.email) {
+  //   errors.email = "Requerido";
+  // } else if (!regexEmail.test(form.email)) {
+  //   errors.email = "Ingresar un email válido";
+  // }
 
   return errors;
 };

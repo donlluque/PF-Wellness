@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FcNext } from "react-icons/fc";
+import Testimonios from "./Testimonios";
 
 function Home() {
   return (
@@ -248,6 +249,28 @@ function Home() {
           </Box>
         </SimpleGrid>
       </Container>
+      <Container
+        border="1px solid red"
+        maxW="100%"
+        centerContent
+        bgColor="white"
+        pb="2rem"
+        textAlign="center"
+      >
+        <Heading as="h2" size="xl" m={8}>
+          Lo que opinan nuestros pacientes
+        </Heading>
+          <Testimonios />
+          <Link to="/opiniones">
+                <Button colorScheme="teal" m={4}>
+                  Leer más
+                </Button>
+              </Link>
+         
+          
+       
+      </Container>
+     
     </>
   );
 }

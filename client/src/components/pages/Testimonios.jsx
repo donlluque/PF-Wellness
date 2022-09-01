@@ -3,7 +3,6 @@ import {
 
     Box,
     Text,
-    Flex,
     Wrap,
     WrapItem,
     Center,

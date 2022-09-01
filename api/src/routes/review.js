@@ -22,20 +22,26 @@ router.post("/", async (req, res, next) => {
 });
 
 router.get("/", async (req, res, next) => {
-  const { doctorId } = req.query;
-  const reviewDB = await Review.findAll();
 
-  if (doctorId) {
-    const iddoc = await reviewDB.filter((e) => e.doctorId == doctorId);
-    iddoc.length
-      ? res.status(200).send(iddoc)
-      : res.status(400).send("Not exist");
-  } else if (!reviewDB.length) {
-    res.status(400).send("No existe info en la Base de datos");
-  } else {
-    res.send(reviewDB);
-  }
-});
+    const { doctorId } = req.query;
+    const reviewDB = await Review.findAll(
+      
+    );
+  
+    if (doctorId) {
+      const iddoc = await reviewDB.filter((e) =>e.doctorId==doctorId
+        )
+      ;
+      iddoc.length
+        ? res.status(200).send(iddoc)
+        : res.status(400).send("Not exist");
+    } else if (!reviewDB.length) {
+      res.status(400).send("No existe info en la Base de datos");
+    } else {
+      res.send(reviewDB);
+    }
+  });
+
 // router.get("/:doctorId", async (req, res, next) => {
 //     const { doctorId } = req.params;
 

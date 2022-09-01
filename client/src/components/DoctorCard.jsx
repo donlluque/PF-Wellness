@@ -25,7 +25,7 @@ import {
 import DoctorDetail from "./DoctorDetail";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { getActiveDate, getDetailDoctors } from "../redux/actions";
+import { getDetailDoctors } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
 export default function DoctorCard({
@@ -36,7 +36,7 @@ export default function DoctorCard({
   specialty,
 }) {
   const dispatch = useDispatch();
-
+  console.log(general_area);
   const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
 
   const OverlayOne = () => (

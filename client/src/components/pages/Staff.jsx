@@ -82,7 +82,7 @@ function Staff() {
                     <DoctorCard
                       name={doc.name}
                       picture={doc.picture}
-                      general_area={doc.general_area}
+                      general_area={doc.general_area?.name}
                       specialty={doc.specialty}
                       id={doc.id}
                     />

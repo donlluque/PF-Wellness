@@ -25,7 +25,7 @@ export default function SearchBarPatient() {
   function handleClick(e) {
     if (patient) {
       dispatch(searchPatientByName(patient));
-      setPatient("patient");
+      setPatient("");
     } else {
       setEmpty(true);
     }

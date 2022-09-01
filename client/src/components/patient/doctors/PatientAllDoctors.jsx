@@ -60,7 +60,7 @@ function PatientAllDoctors() {
                 <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
                   <Td>{e.name}</Td>
-                  <Td>{e.general_area}</Td>
+                  <Td>{e.general_area?.name}</Td>
                   <Td>{e.specialty}</Td>
                   <Td>
                     <Button

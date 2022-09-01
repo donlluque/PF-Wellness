@@ -23,6 +23,7 @@ import AdminProfile from "./components/admin/AdminProfile";
 import DoctorProfile from "./components/doctor/DoctorProfile";
 import FormTestimonial from "./components/FormTestimonal";
 import { Context } from "./components/Context";
+import Opiniones from "./components/pages/Opiniones";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -38,6 +39,9 @@ export default function App() {
           </PrivateRoute>
           <Route exact path="/about">
             <About />
+          </Route>
+          <Route exact path="/opiniones">
+            <Opiniones />
           </Route>
           <Route exact path="/especialidades">
             <Specialties />

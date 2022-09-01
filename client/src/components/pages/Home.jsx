@@ -273,7 +273,12 @@ function Home() {
           Lo que opinan nuestros pacientes
         </Heading>
 
-        <Testimonios />
+          <Testimonios />
+          <Link to="/opiniones">
+                <Button colorScheme="teal" m={4}>
+                  Leer más
+                </Button>
+              </Link>
       </Container>
     </>
   );

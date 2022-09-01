@@ -19,6 +19,7 @@ import { getHours } from "../../redux/actions";
 function Turnos() {
   const allDoctors = useSelector((state) => state.doctors);
   const dispatch = useDispatch();
+  console.log(allDoctors, "doc");
 
   //-----Estilos para modo oscuro----//
 
@@ -88,7 +89,7 @@ function Turnos() {
                     <DoctorCard
                       name={doc.name}
                       picture={doc.picture}
-                      general_area={doc.general_area}
+                      general_area={doc.general_area?.name}
                       specialty={doc.specialty}
                       id={doc.id}
                     />

@@ -6,6 +6,7 @@ import {
   Wrap,
   WrapItem,
   CircularProgress,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import NavStaff from "../NavStaff";
 import { useState } from "react";
@@ -18,6 +19,14 @@ import { getHours } from "../../redux/actions";
 function Turnos() {
   const allDoctors = useSelector((state) => state.doctors);
   const dispatch = useDispatch();
+  console.log(allDoctors, "doc");
+
+  //-----Estilos para modo oscuro----//
+
+  const bgselec = useColorModeValue("white", "#2D3748");
+  const colorLetra = useColorModeValue("#1a202c", "#4A5568");
+
+  //---------------------------------//
 
   useEffect(() => {
     dispatch(getHours());
@@ -47,18 +56,19 @@ function Turnos() {
           as="h1"
           fontSize={{ base: "2xl", sm: "4xl", md: "5xl", lg: "6xl" }}
           m="1rem"
+          color={colorLetra}
           mt={{ base: "10rem", sm: "10rem", md: "8rem", lg: "5rem" }}
         >
           Turnos Online
         </Heading>
         <Box w={{ base: "75%", sm: "75%", md: "60%" }} textAlign="center">
-          <Text as="i" fontSize="xl">
+          <Text as="i" fontSize="xl" color={colorLetra}>
             "Selecciona el profesional con el que deseas consultar"
           </Text>
         </Box>
       </Center>
 
-      <Box bg="#fafbfd" justifyContent="center">
+      <Box bg={bgselec} justifyContent="center">
         <Center>
           <NavStaff setInput={setInput} setPage={setPage} />
         </Center>
@@ -79,7 +89,7 @@ function Turnos() {
                     <DoctorCard
                       name={doc.name}
                       picture={doc.picture}
-                      general_area={doc.general_area}
+                      general_area={doc.general_area?.name}
                       specialty={doc.specialty}
                       id={doc.id}
                     />

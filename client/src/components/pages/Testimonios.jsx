@@ -1,5 +1,6 @@
-import React from 'react';
+import React from "react";
 import {
+
     Box,
     Text,
     Wrap,
@@ -20,13 +21,12 @@ function Reviews(){
     
 
 
-    useEffect(() => {
-      dispatch(getReviews());
+  //-----Estilos para modo oscuro----//
 
-    }, [dispatch]);
-    return(
-        <>
-        <Wrap>
+  const bg = useColorModeValue("white", "#2D3748");
+  const color = useColorModeValue("black", "white");
+
+  //---------------------------------//
 
       {reviews && reviews.slice(0,3).map((e) => (
           <WrapItem p={4} borderRadius="0.5rem"

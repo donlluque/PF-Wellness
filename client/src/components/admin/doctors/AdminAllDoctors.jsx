@@ -63,7 +63,7 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
                     <Image src={e.picture} w="3rem" h="3rem" rounded={"50%"} />
                   </Td>
                   <Td>{e.name}</Td>
-                  <Td>{e.general_area}</Td>
+                  <Td>{e.general_area?.name}</Td>
                   <Td>{e.specialty}</Td>
                   <Td>
                     <Button

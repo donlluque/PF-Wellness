@@ -5,7 +5,7 @@ const { getAllPatient } = require("../controllers/index.js");
 
 // PRUEBA DE FUNCIONAMIENTO DE RUTA
 router.get("/", async (req, res, next) => {
-  const { name, last_name } = req.query;
+  const { name } = req.query;
   // try {
   const patientDb = await Patient.findAll({
     include: {
@@ -15,31 +15,16 @@ router.get("/", async (req, res, next) => {
       },
     },
   });
+  console.log("dbbbb00", patientDb);
 
-  if (name && last_name) {
-    const nombre = await patientDb.filter(
-      (e) =>
-        e.name.toLowerCase().includes(name.toLowerCase()) &&
-        e.last_name.toLowerCase().includes(last_name.toLowerCase())
+  if (name) {
+    const nombre = await patientDb.filter((e) =>
+      e.fullName.toLowerCase().includes(name.toLowerCase())
     );
 
     nombre.length
       ? res.status(200).send(nombre)
       : res.status(400).send("Not exist");
-  } else if (name) {
-    const nombre = await patientDb.filter((e) =>
-      e.name.toLowerCase().includes(name.toLowerCase())
-    );
-    nombre.length
-      ? res.status(200).send(nombre)
-      : res.send("it is not exist this name");
-  } else if (last_name) {
-    const apellido = await patientDb.filter((e) =>
-      e.last_name.toLowerCase().includes(last_name.toLowerCase())
-    );
-    apellido.length
-      ? res.status(200).send(apellido)
-      : res.send("it is not exist this name");
   } else if (!patientDb.length) {
     res.status(200).send("No existe info en la base de datos");
   } else {
@@ -49,7 +34,58 @@ router.get("/", async (req, res, next) => {
     res.status(404).send("Error en el catch getPetients", error);
   }*/
 });
+/*
+router.get("/", async (req, res, next) => {
+  const { name } = req.query;
+  const doctorsDb = await Doctor.findAll({
+    include: [
+      {
+        model: Prepaid_health,
+        attributes: ["id", "name"],
+      },
+      {
+        model: Work_days,
+        throught: {
+          attributes: [],
+        },
+      },
+      {
+        model: Absence,
+        throught: {
+          attributes: [],
+        },
+      },
+      {
+        model: General_area,
+        throught: {
+          attributes: [],
+        },
+      },
+      {
+        model: Review,
+        throught: {
+          attributes: [],
+        },
+      },
+    ],
+  });
 
+  if (name) {
+    const nombre = await doctorsDb.filter((e) =>
+      e.name.toLowerCase().includes(name.toLowerCase())
+    );
+    nombre.length
+      ? res.status(200).send(nombre)
+      : res.status(400).send("Not exist");
+  } else if (!doctorsDb.length) {
+    res.status(400).send("No existe info en la Base de datos");
+  } else {
+    res.send(doctorsDb);
+  }
+});
+
+
+*/
 router.get("/user", async (req, res, next) => {
   const { userName } = req.query;
 

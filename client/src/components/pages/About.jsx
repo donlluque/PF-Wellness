@@ -15,12 +15,18 @@ import {
   ListItem,
   Text,
   Flex,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { BsTelephone } from "react-icons/bs";
 import { ImMobile } from "react-icons/im";
 import { MdAlternateEmail, MdOutlinePlace } from "react-icons/md";
 import { VscCheckAll, VscQuote } from "react-icons/vsc";
 function About() {
+  //-----Estilos para modo oscuro----//
+  const bg = useColorModeValue("#319795", "#CBD5E0");
+  const color = useColorModeValue("white", "black");
+  const colorLetra = useColorModeValue("#1a202c", "#4A5568");
+  //---------------------------------//
   return (
     <>
       <Center
@@ -37,6 +43,7 @@ function About() {
         mb={2}
       >
         <Heading
+          color={colorLetra}
           textAlign="center"
           as="h1"
           size="4xl"
@@ -47,7 +54,11 @@ function About() {
           Nosotros
         </Heading>
         <Box w={{ base: "75%", sm: "75%", md: "60%" }} textAlign="center">
-          <Text as="i" fontSize={{ base: "md", sm: "xl", md: "xl" }}>
+          <Text
+            color={colorLetra}
+            as="i"
+            fontSize={{ base: "md", sm: "xl", md: "xl" }}
+          >
             "Estamos justo donde nos necesitas. Experiencia. Servicio.
             Integridad"
           </Text>
@@ -88,11 +99,12 @@ function About() {
           />
         </Flex>
         <Box
-          bgColor="teal.50"
+          color={color}
           w="100%"
           display="flex"
           flexDirection="column"
           alignItems="center"
+          bg={bg}
         >
           <Heading as="h2" size="xl" m={5} textAlign="center">
             ¿Por qué nosotros?

@@ -19,6 +19,8 @@ import {
   ModalCloseButton,
   useDisclosure,
   ModalOverlay,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Logo from "../assets/logoPf.jpeg";
@@ -27,6 +29,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { dateUser } from "../redux/actions";
 import { FaUserCircle } from "react-icons/fa";
+import { BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 
@@ -63,15 +66,20 @@ function NavBar() {
       backdropFilter="blur(10px) hue-rotate(90deg)"
     />
   );
+
+  //-----Estilos para modo oscuro----//
   const [overlay, setOverlay] = useState(<OverlayOne />);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  // const mostrar = () => {
-  //   return (
-
-  //   );
-  // };
+  const { colorMode, toggleColorMode } = useColorMode();
+  const colorLetra = useColorModeValue("#2c7a7b", "#2D3748");
+  const botonBg = useColorModeValue("#319795", "#1A202C");
+  const colorBt = useColorModeValue("white", "white");
+  const schemeBt = useColorModeValue("teal", "black");
+  const modo = useColorModeValue("transparent", "transparent");
+  const modoColor = useColorModeValue("white", "#D69E2E");
+  const modoUser = useColorModeValue("#319795", "#1A202C");
+  const bgUser = useColorModeValue("white", "white");
+  //----------------------------------//
 
   return (
     <Box position="absolute" w="100%" border="1px solid red">
@@ -107,12 +115,12 @@ function NavBar() {
             align={{ base: "center", sm: "center", md: "row" }}
           >
             <Link to="/">
-              <Button colorScheme="teal" variant="ghost">
+              <Button colorScheme="teal" variant="ghost" color={colorLetra}>
                 Home
               </Button>
             </Link>
             <Link to="/about">
-              <Button colorScheme="teal" variant="ghost">
+              <Button colorScheme="teal" variant="ghost" color={colorLetra}>
                 Nosotros
               </Button>
             </Link>
@@ -122,17 +130,17 @@ function NavBar() {
               </Button>
             </Link>
             <Link to="/especialidades">
-              <Button colorScheme="teal" variant="ghost">
+              <Button colorScheme="teal" variant="ghost" color={colorLetra}>
                 Especialidades Médicas
               </Button>
             </Link>
             <Link to="/prestaciones">
-              <Button colorScheme="teal" variant="ghost">
+              <Button colorScheme="teal" variant="ghost" color={colorLetra}>
                 Prestaciones
               </Button>
             </Link>
             <Link to="/staff">
-              <Button colorScheme="teal" variant="ghost">
+              <Button colorScheme="teal" variant="ghost" color={colorLetra}>
                 Staff
               </Button>
             </Link>
@@ -153,17 +161,40 @@ function NavBar() {
         >
           {isAuthenticated ? (
             <Link to="/turnos">
-              <Button colorScheme="teal" variant="solid">
+              <Button
+                colorScheme={schemeBt}
+                variant="solid"
+                bg={botonBg}
+                color={colorBt}
+              >
                 Turnos Online
               </Button>
             </Link>
           ) : (
-            <Button colorScheme="teal" variant="solid" onClick={onOpen}>
+            <Button
+              colorScheme={schemeBt}
+              variant="solid"
+              onClick={onOpen}
+              bg={botonBg}
+              color={colorBt}
+            >
               Turnos Online
             </Button>
           )}
+          <Button
+            onClick={toggleColorMode}
+            colorScheme={modo}
+            bg={modo}
+            color={modoColor}
+          >
+            {colorMode === "light" ? (
+              <Icon as={BsFillMoonFill} />
+            ) : (
+              <Icon as={BsFillSunFill} />
+            )}
+          </Button>
           <Link to="/admin">
-            <Button colorScheme="teal" variant="solid">
+            <Button colorScheme={modo} bg={botonBg} color={colorBt}>
               Acceso admin
             </Button>
           </Link>
@@ -172,6 +203,7 @@ function NavBar() {
             <Button
               colorScheme="teal"
               variant="outline"
+              color={modoUser}
               onClick={() => {
                 loginWithRedirect();
               }}
@@ -183,11 +215,16 @@ function NavBar() {
             <Menu>
               {({ isOpen }) => (
                 <>
-                  <MenuButton isActive={isOpen} as={Button}>
+                  <MenuButton
+                    isActive={isOpen}
+                    as={Button}
+                    bg={modoUser}
+                    colorScheme={schemeBt}
+                  >
                     {isOpen ? (
-                      <Icon boxSize={7} as={FaUserCircle} />
+                      <Icon boxSize={7} as={FaUserCircle} color={bgUser} />
                     ) : (
-                      <Icon boxSize={7} as={FaUserCircle} />
+                      <Icon boxSize={7} as={FaUserCircle} color={bgUser} />
                     )}
                   </MenuButton>
                   <MenuList>

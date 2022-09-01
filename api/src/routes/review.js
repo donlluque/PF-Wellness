@@ -1,29 +1,28 @@
 const { Router } = require("express");
 const router = Router();
-const { Review , Doctor} = require("../db.js");
+const { Review, Doctor } = require("../db.js");
 
 router.post("/", async (req, res, next) => {
-    const {name,review,rating,doctors}= req.body;
-    try {
-        const doctor = await Doctor.findOne({
-            where: { id : doctors },
-          });
-      
-        let newReview = await Review.create({
-            name,
-            review,
-            rating,
-          });
-        await newReview.addDoctor(doctor)
-          res.status(200).json(newReview);
-        
-    } catch (error) {
-        next(error)
-    }
+  const { name, review, rating, doctors } = req.body;
+  try {
+    const doctor = await Doctor.findOne({
+      where: { id: doctors },
+    });
 
-})
+    let newReview = await Review.create({
+      name,
+      review,
+      rating,
+    });
+    await newReview.addDoctor(doctor);
+    res.status(200).json(newReview);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get("/", async (req, res, next) => {
+
     const { doctorId } = req.query;
     const reviewDB = await Review.findAll(
       
@@ -42,14 +41,15 @@ router.get("/", async (req, res, next) => {
       res.send(reviewDB);
     }
   });
+
 // router.get("/:doctorId", async (req, res, next) => {
 //     const { doctorId } = req.params;
-  
+
 //     try {
 //       const review = await Review.findAll({
 //         where: { doctorId },
 //       });
-  
+
 //       if (doctorId) {
 //         res.status(200).send(review);
 //       } else {

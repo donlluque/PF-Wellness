@@ -528,7 +528,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
               )}
             </FormControl>
             <List display="inline-flex" flexDirection={"row"} flexWrap="wrap">
-              {form.prepaid_healths.length
+              {form.prepaid_healths?.length
                 ? form.prepaid_healths.map((e) => (
                     <ListItem m="1rem" key={e}>
                       {e.name}
@@ -565,7 +565,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                   ))}
               </Select>
               <List display="inline-flex" flexDirection={"row"} flexWrap="wrap">
-                {form.work_days.length
+                {form.work_days?.length
                   ? form.work_days.map((e) => (
                       <ListItem m="1rem" key={e}>
                         {e === "1"

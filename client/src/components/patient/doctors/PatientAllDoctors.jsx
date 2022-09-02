@@ -22,18 +22,28 @@ import { Link } from "react-router-dom";
 
 import { AiOutlineComment } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailDoctors, getDoctors, getHours } from "../../../redux/actions";
+import {
+  getDetailDoctors,
+  getDoctors,
+  getHours,
+  getTurnsByPatient,
+} from "../../../redux/actions";
 import DoctorDetail from "../../DoctorDetail";
 
 //BUSCAR EN EL HISTORIAL DE TURNOS, LOS MEDICOS CON LOS QUE ALGUNA VEZ SE ATENDIO
 function PatientAllDoctors() {
   const dispatch = useDispatch();
-  const { doctors, doctorDetail } = useSelector((state) => state);
+  const { doctors, doctorDetail, turnsByPatient, user } = useSelector(
+    (state) => state
+  );
   const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log(user.id);
+
+  //const visiblePatients = turnsByPatient.filter(e => )
 
   useEffect(() => {
     dispatch(getDoctors());
-    //dispatch(getDoctorsByPatient(id))
+    dispatch(getTurnsByPatient(user.id));
     dispatch(getHours());
   }, [dispatch]);
 

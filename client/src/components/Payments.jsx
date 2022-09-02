@@ -242,7 +242,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
               )}
             </Box>
 
-            {prepaid === "Wellness" && (
+            {prepaid !== "Wellness" && (
               <Alert status="info" display={"flex"} flexDirection="column">
                 <Box display={"flex"} flexDirection="row">
                   <AlertIcon />

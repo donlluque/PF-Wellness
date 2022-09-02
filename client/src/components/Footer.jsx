@@ -24,7 +24,6 @@ function Footer() {
 
   return (
     <Box
-      border="1px solid red"
       display="flex"
       flexDirection={{ base: "column", sm: "column", md: "column", lg: "row" }}
       alignItems={{ base: "center", sm: "center", md: "center" }}

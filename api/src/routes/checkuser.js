@@ -13,7 +13,7 @@ const {
 router.post("/", async (req, res, next) => {
   // try {
   const { given_name, email, family_name, nickname, picture } = req.body;
-  console.log(req.body, "ruta back checkuser");
+  // console.log(req.body, "ruta back checkuser");
 
   const patient = await Patient.findOne({
     where: { email: email },

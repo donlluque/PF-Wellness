@@ -3,7 +3,6 @@ import { cleanDoctor, getDetailDoctors, getHours } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Box, Text, List, ListItem, Image, Button } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 
 export default function DoctorDetail({ id }) {
   const dispatch = useDispatch();
@@ -129,11 +128,6 @@ export default function DoctorDetail({ id }) {
               {doctor.email}
             </ListItem>
           </List>
-          <Link to="/testimonials">
-            <Button colorScheme={"teal"} variant="ghost">
-              Ver comentarios
-            </Button>
-          </Link>
         </Box>
       ) : (
         <Text>no se encontró</Text>

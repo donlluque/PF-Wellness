@@ -69,7 +69,9 @@ function NavBar() {
 
   //-----Estilos para modo oscuro----//
   const [overlay, setOverlay] = useState(<OverlayOne />);
+  const notPrepaidModal = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const notAuthenticatedModal = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const colorLetra = useColorModeValue("#2c7a7b", "#2D3748");
   const botonBg = useColorModeValue("#319795", "#1A202C");
@@ -82,7 +84,7 @@ function NavBar() {
   //----------------------------------//
 
   return (
-    <Box position="absolute" w="100%" border="1px solid red">
+    <Box position="absolute" w="100%">
       <Box
         display="flex"
         m={2}
@@ -144,7 +146,6 @@ function NavBar() {
 
         <Spacer />
         <ButtonGroup
-          border="1px solid red"
           mt={{ base: "1rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "0" }}
           display="flex"
           flexDirection={{
@@ -154,6 +155,18 @@ function NavBar() {
             lg: "row",
           }}
         >
+          <Button
+            onClick={toggleColorMode}
+            colorScheme={modo}
+            bg={modo}
+            color={modoColor}
+          >
+            {colorMode === "light" ? (
+              <Icon as={BsFillMoonFill} />
+            ) : (
+              <Icon as={BsFillSunFill} />
+            )}
+          </Button>
           {isAuthenticated ? (
             <Link to="/turnos">
               <Button
@@ -169,26 +182,15 @@ function NavBar() {
             <Button
               colorScheme={schemeBt}
               variant="solid"
-              onClick={onOpen}
+              onClick={() =>
+                isAuthenticated ? true : notAuthenticatedModal.onOpen()
+              }
               bg={botonBg}
               color={colorBt}
             >
               Turnos Online
             </Button>
           )}
-
-          <Button
-            onClick={toggleColorMode}
-            colorScheme={modo}
-            bg={modo}
-            color={modoColor}
-          >
-            {colorMode === "light" ? (
-              <Icon as={BsFillMoonFill} />
-            ) : (
-              <Icon as={BsFillSunFill} />
-            )}
-          </Button>
 
           {!isAuthenticated && (
             <Button
@@ -245,13 +247,13 @@ function NavBar() {
 
       <Modal
         isCentered
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={notAuthenticatedModal.isOpen}
+        onClose={notAuthenticatedModal.onClose}
         colorScheme="teal"
         w="100%"
       >
         {overlay}
-        <ModalContent bgColor="green.50" border="1px solid red" w="80%">
+        <ModalContent bgColor="green.50" w="80%">
           <ModalHeader color="#C53030">Ups!!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

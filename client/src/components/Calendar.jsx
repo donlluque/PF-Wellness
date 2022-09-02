@@ -14,7 +14,14 @@ import {
   Alert,
   AlertIcon,
   AlertDescription,
+  ModalOverlay,
+  ModalHeader,
+  ModalContent,
   useDisclosure,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  CircularProgress,
 } from "@chakra-ui/react";
 import {
   getDetailDoctors,
@@ -32,6 +39,7 @@ function Calendar() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure(); //modal confirmacion de turno
+  const dataIncompleteModal = useDisclosure();
   const [selectedDate, setDateChange] = useState(""); //cambia fecha en calendario
   const [form, setForm] = useState({});
   const [arrayTurns, setArrayTurns] = useState([]); //horas disponibles a renderizar
@@ -74,7 +82,6 @@ function Calendar() {
     dispatch(getDetailDoctors(idDoctor));
     dispatch(getHours());
     dispatch(getOnePatient(usuario.id));
-
     setForm({ ...form, idDoctor: idDoctor });
     dispatch(getTurns());
   }, [dispatch]);
@@ -122,6 +129,11 @@ function Calendar() {
           Turnos Online
         </Heading>
       </Center>
+      {!hours && (
+        <Center m="8rem">
+          <CircularProgress isIndeterminate color="teal.500" size="100px" />
+        </Center>
+      )}
       {hours && (
         <Box
           pt={"1.5rem"}
@@ -252,7 +264,7 @@ function Calendar() {
       )}
       <Box display={"flex"} justifyContent="end" mr="3rem">
         <Button
-          //isDisabled={!form.idHour}
+          isDisabled={!form.idHour}
           m="1rem"
           colorScheme={"teal"}
           onClick={(e) => handleConfirm(e)}
@@ -267,6 +279,40 @@ function Calendar() {
         onOpen={onOpen}
         form={form}
       />
+      {usuario && !usuario.prepaid_healths?.length ? (
+        <Modal
+          blockScrollOnMount={false}
+          isOpen
+          onClose={dataIncompleteModal.onClose}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Datos personales incompletos</ModalHeader>
+            <ModalBody>
+              <Text fontWeight="bold" mb="1rem">
+                Para poder solicitar un turno, tus datos personales obligatorios
+                deben estar completos.
+              </Text>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button
+                colorScheme="teal"
+                variant="ghost"
+                mr={3}
+                onClick={() => history.goBack(-1)}
+              >
+                Cancelar
+              </Button>
+              <Link to={`/userProfile/${usuario.id}`}>
+                <Button colorScheme={"teal"}>Ir al perfil</Button>
+              </Link>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      ) : (
+        false
+      )}
     </>
   );
 }

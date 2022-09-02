@@ -27,7 +27,7 @@ import Logo from "../assets/logoPf.jpeg";
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { dateUser } from "../redux/actions";
+import { dateUser, getDetailDoctors } from "../redux/actions";
 import { FaUserCircle } from "react-icons/fa";
 import { BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -167,29 +167,34 @@ function NavBar() {
               <Icon as={BsFillSunFill} />
             )}
           </Button>
-          {isAuthenticated ? (
-            <Link to="/turnos">
-              <Button
-                colorScheme={schemeBt}
-                variant="solid"
-                bg={botonBg}
-                color={colorBt}
-              >
-                Turnos Online
-              </Button>
-            </Link>
-          ) : (
-            <Button
-              colorScheme={schemeBt}
-              variant="solid"
-              onClick={() =>
-                isAuthenticated ? true : notAuthenticatedModal.onOpen()
-              }
-              bg={botonBg}
-              color={colorBt}
-            >
-              Turnos Online
-            </Button>
+
+          {user && user.tipoRol?.[0] === "user" && (
+            <>
+              {isAuthenticated ? (
+                <Link to="/turnos">
+                  <Button
+                    colorScheme={schemeBt}
+                    variant="solid"
+                    bg={botonBg}
+                    color={colorBt}
+                  >
+                    Turnos Online
+                  </Button>
+                </Link>
+              ) : (
+                <Button
+                  colorScheme={schemeBt}
+                  variant="solid"
+                  onClick={() =>
+                    isAuthenticated ? true : notAuthenticatedModal.onOpen()
+                  }
+                  bg={botonBg}
+                  color={colorBt}
+                >
+                  Turnos Online
+                </Button>
+              )}
+            </>
           )}
 
           {!isAuthenticated && (
@@ -204,7 +209,49 @@ function NavBar() {
               Acceder
             </Button>
           )}
-          {isAuthenticated && (
+          {isAuthenticated && user.tipoRol?.[0] === "Doctor" && (
+            <Menu>
+              {({ isOpen }) => (
+                <>
+                  <MenuButton
+                    isActive={isOpen}
+                    as={Button}
+                    bg={modoUser}
+                    colorScheme={schemeBt}
+                  >
+                    {isOpen ? (
+                      <Icon boxSize={7} as={FaUserCircle} color={bgUser} />
+                    ) : (
+                      <Icon boxSize={7} as={FaUserCircle} color={bgUser} />
+                    )}
+                  </MenuButton>
+                  <MenuList>
+                    <Link
+                      to={
+                        usuario.length
+                          ? `/doctor/${usuario[0].id}`
+                          : `/doctor/${usuario.id}`
+                      }
+                    >
+                      <MenuItem
+                        onClick={() => dispatch(getDetailDoctors(usuario.id))}
+                      >
+                        Ver perfil
+                      </MenuItem>
+                    </Link>
+                    <MenuItem
+                      onClick={() =>
+                        logout({ returnTo: window.location.origin })
+                      }
+                    >
+                      Cerrar Sesión
+                    </MenuItem>
+                  </MenuList>
+                </>
+              )}
+            </Menu>
+          )}
+          {isAuthenticated && user.tipoRol?.[0] === "user" && (
             <Menu>
               {({ isOpen }) => (
                 <>

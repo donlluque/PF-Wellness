@@ -6,10 +6,8 @@ import {
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   Button,
-  Icon,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -24,10 +22,10 @@ import {
 import { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import {
   getAllPatients,
   getOnePatient,
-  getPatientsByDoctor,
   getTurnsByDoctor,
 } from "../../../redux/actions";
 import PatientDetail from "../../patient/PatientDetail";
@@ -36,11 +34,11 @@ function DoctorAllPatients() {
   const dispatch = useDispatch();
   const { patients, turnsByDoctor } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const doctorId = useSelector((state) => state.user.id);
+  const { id } = useParams();
 
   useEffect(() => {
     dispatch(getAllPatients());
-    dispatch(getTurnsByDoctor(1));
+    dispatch(getTurnsByDoctor(id));
   }, [dispatch]);
 
   let visiblePatients = turnsByDoctor.map((e) => e.patients);

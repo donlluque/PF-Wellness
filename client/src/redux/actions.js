@@ -294,7 +294,7 @@ export const getTurnsByPatient = (idCurrentPatient) => {
       .then((res) => res.json())
       .then((data) => {
         dispatch({
-          type: "GET_TURNS_BY_DOCTOR",
+          type: "GET_TURNS_BY_PATIENT",
           payload: { data, idCurrentPatient },
         });
       })

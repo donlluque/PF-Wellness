@@ -64,8 +64,13 @@ export default function App() {
           </Route>
           <Route exact path="/admin">
             <AdminProfile />
-          </Route>
-          <Route exact path="/doctor">
+
+          </PrivateRouteAdmin>
+          <Route exact path="/doctor/:id">
+
+          
+          
+
             <DoctorProfile />
           </Route>
           <Route exact path="/wellnessPrepaid">

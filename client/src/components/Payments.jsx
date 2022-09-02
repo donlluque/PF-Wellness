@@ -15,19 +15,26 @@ import {
   List,
   ListItem,
   AlertTitle,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOnePatient, getPrepaidHealth, postTurn } from "../redux/actions";
+import {
+  getHours,
+  getOnePatient,
+  getPrepaidHealth,
+  postTurn,
+} from "../redux/actions";
 import axios from "axios";
 import { baseURL } from "../index.js";
+import { Link } from "react-router-dom";
 
 function Payments({ onClose, isOpen, onOpen, form, active }) {
   const dispatch = useDispatch();
-  const { doctorDetail, patientDetail, prepaidHealth } = useSelector(
-    (state) => state
-  );
+  const { doctorDetail, patientDetail, prepaidHealth, hoursWorking } =
+    useSelector((state) => state);
+  const confirmModal = useDisclosure();
   const [wellnessPrepaid, setWellnessPrepaid] = useState(false);
   const [withoutPrepaid, setWithoutPrepaid] = useState(false);
   const [link, setLink] = useState();
@@ -40,11 +47,12 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
     price: 0,
   });
 
-  console.log(link, "link");
+  let auxHour = hoursWorking?.find((e) => e.id === parseInt(form.idHour));
 
   useEffect(() => {
     dispatch(getOnePatient(form.idPatient));
     dispatch(getPrepaidHealth());
+    dispatch(getHours());
     setPrepaid(handlePrepaid());
   }, [active]);
 
@@ -185,7 +193,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
                   <Text fontWeight="semibold" display="inline">
                     Hora:
                   </Text>{" "}
-                  {form.idHour}
+                  {auxHour && auxHour.hour}
                 </ListItem>
               </List>
               <List spacing={3} m="1rem">
@@ -238,7 +246,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
               <Alert status="info" display={"flex"} flexDirection="column">
                 <Box display={"flex"} flexDirection="row">
                   <AlertIcon />
-                  <AlertTitle>Wellness PRO!</AlertTitle>
+                  <AlertTitle>Wellness Asociados!</AlertTitle>
                 </Box>
                 <Box
                   display={"flex"}
@@ -250,7 +258,9 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
                     Suscribite a nuestro programa y obtené una cobertura del
                     100% en nuestros servicios
                   </AlertDescription>
-                  <Button mt={"0.5rem"}>Suscribirse</Button>
+                  <Link to="/wellnessPrepaid">
+                    <Button mt={"0.5rem"}>Suscribirse</Button>
+                  </Link>
                 </Box>
               </Alert>
             )}
@@ -285,9 +295,12 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
                 colorScheme="teal"
                 variant="ghost"
                 mr={3}
-                onClick={onClose}
+                onClick={() => {
+                  onClose();
+                  confirmModal.onOpen();
+                }}
               >
-                Close
+                Finalizar
               </Button>
             )}
             {prepaid === "Wellness" && (
@@ -297,14 +310,42 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
             )}
             {prepaid !== "Wellness" && !payActive && (
               <Button colorScheme={"teal"} onClick={() => handleSubmitPay()}>
-                Ir a Pagar
+                Pagar
               </Button>
             )}
-            {!payActive && (
-              <Button colorScheme={"teal"} onClick={() => handleSubmitPay()}>
-                Ir a Pagar
-              </Button>
-            )}
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      {/*MODAL CONFIRM TURNO*/}
+      <Modal
+        blockScrollOnMount={false}
+        isOpen={confirmModal.isOpen}
+        onClose={confirmModal.onClose}
+      >
+        <ModalOverlay />
+        <ModalContent bg={"teal.50"} colorScheme="teal">
+          <ModalHeader colorScheme="teal" textAlign={"center"} fontSize="2xl">
+            Turno confirmado!
+          </ModalHeader>
+          <ModalBody colorScheme="teal" textAlign={"center"}>
+            <Text mb="1rem">
+              Hemos enviado un mail con la confirmación del turno. Por favor
+              revisa tu correo electronico.
+            </Text>
+            <Text
+              colorScheme="teal"
+              fontWeight="semibold"
+              m="1rem"
+              mb="0"
+              fontSize={"lg"}
+            >
+              Gracias por confiar en nosotros!
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Link to="/">
+              <Button colorScheme="teal">Cerrar</Button>
+            </Link>
           </ModalFooter>
         </ModalContent>
       </Modal>

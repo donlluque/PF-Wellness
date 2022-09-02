@@ -109,15 +109,6 @@ export default function rootReducer(state = initialState, action) {
         turnsByPatient: turnsPatient,
       };
     }
-    case "GET_PATIENTS_BY_DOCTOR": {
-      let patientDoctor = action.payload.data.filter(
-        (e) => e.doctors[0].id === action.payload.idCurrentDoctor
-      );
-      return {
-        ...state,
-        patientsByDoctor: patientDoctor,
-      };
-    }
 
     case "GET_PREPAID_HEALTH": {
       return {

@@ -36,7 +36,7 @@ export default function DoctorCard({
   specialty,
 }) {
   const dispatch = useDispatch();
-  console.log(general_area);
+
   const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
 
   const OverlayOne = () => (
@@ -204,13 +204,17 @@ export default function DoctorCard({
             {" "}
             {name}
           </ModalHeader>
-          {/* <ModalCloseButton /> */}
+
           <ModalBody>
-            {/* <Lorem count={2} /> */}
             <DoctorDetail id={id} />
           </ModalBody>
 
           <ModalFooter>
+            <Link to="/opiniones">
+              <Button colorScheme={"teal"} variant="ghost">
+                Ver comentarios
+              </Button>
+            </Link>
             <Button bg="#2C7A7B" color="white" mr={3} onClick={onEditClose}>
               Close
             </Button>

@@ -17,6 +17,8 @@ import {
   ModalFooter,
   ModalBody,
   Image,
+  Alert,
+  AlertIcon,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
@@ -26,19 +28,22 @@ import {
   getAllPatients,
   getOnePatient,
   getPatientsByDoctor,
+  getTurnsByDoctor,
 } from "../../../redux/actions";
 import PatientDetail from "../../patient/PatientDetail";
 
 function DoctorAllPatients() {
   const dispatch = useDispatch();
-  const { patients, patientsByDoctor } = useSelector((state) => state);
+  const { patients, turnsByDoctor } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const doctorId = useSelector((state) => state.user.id);
 
   useEffect(() => {
     dispatch(getAllPatients());
-    dispatch(getPatientsByDoctor(doctorId));
+    dispatch(getTurnsByDoctor(1));
   }, [dispatch]);
+
+  let visiblePatients = turnsByDoctor.map((e) => e.patients);
 
   const handleClick = (id) => {
     console.log(id);
@@ -50,19 +55,23 @@ function DoctorAllPatients() {
       <>
         <TableContainer>
           <Table size="sm">
-            <Thead>
-              <Tr>
-                <Th isNumeric>ID</Th>
-                <Th></Th>
-                <Th>Nombre</Th>
-                <Th>Apellido</Th>
-                <Th>Email</Th>
-                <Th></Th>
-              </Tr>
-            </Thead>
+            {visiblePatients?.length ? (
+              <Thead>
+                <Tr>
+                  <Th isNumeric>ID</Th>
+                  <Th></Th>
+                  <Th>Nombre</Th>
+                  <Th>Apellido</Th>
+                  <Th>Email</Th>
+                  <Th></Th>
+                </Tr>
+              </Thead>
+            ) : (
+              false
+            )}
             <Tbody>
-              {patients &&
-                patients.map((e) => (
+              {visiblePatients?.length ? (
+                visiblePatients.map((e) => (
                   <Tr key={e.id}>
                     <Td isNumeric>{e.id}</Td>
                     <Td>
@@ -87,7 +96,13 @@ function DoctorAllPatients() {
                       </Button>
                     </Td>
                   </Tr>
-                ))}
+                ))
+              ) : (
+                <Alert status="warning">
+                  <AlertIcon />
+                  Aun no contiene pacientes registrados
+                </Alert>
+              )}
             </Tbody>
             <Tfoot></Tfoot>
           </Table>

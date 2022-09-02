@@ -62,7 +62,6 @@ export function filterDoctors(filter) {
       });
   };
 }
-
 export const putDoctor = (data) => {
   console.log("data actions", data);
 
@@ -91,7 +90,6 @@ export const putDoctor = (data) => {
 };
 
 //SEARCH BAR
-
 export function searchDoctorByName(input) {
   return function (dispatch) {
     return fetch(`${baseURL}/doctors/?name=${input}`)

@@ -182,6 +182,8 @@ router.put("/", async (req, res, next) => {
     work_days,
   } = req.body;
 
+  // const obrasSociales = prepaid_healths.map((el) => el.name);
+
   const modificar = await Doctor.findOne({
     where: { id },
   });
@@ -190,7 +192,7 @@ router.put("/", async (req, res, next) => {
 
   if (general_area) {
     const dataGeneral_area = await General_area.findOne({
-      where: { name: general_area },
+      where: { name: general_area.name },
     });
     areaId = dataGeneral_area.dataValues.id;
   }

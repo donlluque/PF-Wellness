@@ -59,9 +59,9 @@ export default function App() {
           <PrivateRoutePerfil exact path="/userProfile/:id">
             <UserProfile />
           </PrivateRoutePerfil>
-          <Route exact path="/calendar/:idDoctor">
+          <PrivateRouterCalendario exact path="/calendar/:idDoctor">
             <Calendar />
-          </Route>
+          </PrivateRouterCalendario>
           <PrivateRouteAdmin exact path="/admin">
             <AdminProfile />
           </PrivateRouteAdmin>

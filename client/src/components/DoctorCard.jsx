@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { Link } from "react-router-dom";
 import {
   Modal,
@@ -26,7 +27,7 @@ import DoctorDetail from "./DoctorDetail";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import { getDetailDoctors } from "../redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function DoctorCard({
   id,
@@ -38,6 +39,7 @@ export default function DoctorCard({
   const dispatch = useDispatch();
 
   const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
+  const usuario = useSelector((state) => state.user);
 
   const OverlayOne = () => (
     <ModalOverlay
@@ -57,6 +59,7 @@ export default function DoctorCard({
 
   const notVerificadeModal = useDisclosure();
   const notAuthenticatedModal = useDisclosure();
+  const notInfoComplete = useDisclosure();
   const modal = useDisclosure();
 
   //-----Estilos para modo oscuro----//
@@ -130,7 +133,9 @@ export default function DoctorCard({
             Leer más
           </Button>
 
-          {isAuthenticated && user.email_verified ? (
+          {isAuthenticated &&
+          user.email_verified &&
+          usuario.prepaid_healths?.length > 0 ? (
             <Link to={`/calendar/${id}`}>
               <Button
                 onClick={() => dispatch(getDetailDoctors(id))}
@@ -156,7 +161,9 @@ export default function DoctorCard({
               onClick={() =>
                 isAuthenticated
                   ? user.email_verified
-                    ? true
+                    ? usuario.prepaid_healths?.length
+                      ? true
+                      : notInfoComplete.onOpen()
                     : notVerificadeModal.onOpen()
                   : notAuthenticatedModal.onOpen()
               }
@@ -175,6 +182,73 @@ export default function DoctorCard({
           )}
         </Box>
       </Box>
+
+      {/*       
+      <Modal
+         
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Datos personales incompletos</ModalHeader>
+            <ModalBody>
+              <Text fontWeight="bold" mb="1rem">
+                Para poder solicitar un turno, tus datos personales obligatorios
+                deben estar completos.
+              </Text>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                colorScheme="teal"
+                variant="ghost"
+                mr={3}
+                onClick={() => history.goBack(-1)}
+              >
+                Cancelar
+              </Button>
+              <Link to={`/userProfile/${usuario.id}`}>
+                <Button colorScheme={"teal"}>Ir al perfil</Button>
+              </Link>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      ) 
+    </Modal> */}
+
+      <Modal
+        isCentered
+        isOpen={notInfoComplete.isOpen}
+        onClose={notInfoComplete.onClose}
+        colorScheme="teal"
+        w="100%"
+      >
+        {overlay}
+        <ModalContent bgColor="green.50" w="80%">
+          <ModalHeader color="#C53030">
+            Datos personales incompletos
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text fontWeight="bold" mb="1rem">
+              Para poder solicitar un turno, tus datos personales obligatorios
+              deben estar completos.
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              mr={3}
+              // onClick={() => notInfoComplete.onClose}
+            >
+              Cancelar
+            </Button>
+            <Link to={`/userProfile/${usuario.id}`}>
+              <Button colorScheme={"teal"}>Ir al perfil</Button>
+            </Link>
+            <Spacer />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
 
       <Modal
         isCentered

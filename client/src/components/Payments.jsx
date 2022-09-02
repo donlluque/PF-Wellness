@@ -75,8 +75,8 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
           setWithoutPrepaid(true);
           result = "Particular";
         } else {
-          let prepaidPatient = patientDetail.prepaid_healths
-            ? patientDetail.prepaid_healths[0].name
+          let prepaidPatient = patientDetail?.prepaid_healths
+            ? patientDetail?.prepaid_healths[0].name
             : false;
           let selectPrepaid = doctorDetail.prepaid_healths?.find(
             (e) => e.name === prepaidPatient

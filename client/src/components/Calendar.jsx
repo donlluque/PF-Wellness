@@ -272,6 +272,7 @@ function Calendar() {
           Continuar
         </Button>
       </Box>
+
       <Payments
         active={active}
         onClose={onClose}

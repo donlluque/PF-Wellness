@@ -8,6 +8,7 @@ const {
   Prepaid_health,
   Hours_working,
   Work_days,
+  General_area,
 } = require("../db.js");
 
 router.post("/", async (req, res, next) => {
@@ -19,6 +20,12 @@ router.post("/", async (req, res, next) => {
     const doctor = await Doctor.findOne({
       where: {
         id: doctorId,
+      },
+      include: {
+        model: General_area,
+        throught: {
+          attributes: [],
+        },
       },
     });
 
@@ -70,6 +77,7 @@ router.get("/", async (req, res, next) => {
             {
               model: Work_days,
             },
+            { model: General_area },
           ],
           throught: {
             attributes: [],

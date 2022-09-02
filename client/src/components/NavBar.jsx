@@ -60,15 +60,8 @@ function NavBar() {
     }
   }, [user]);
 
-  const OverlayOne = () => (
-    <ModalOverlay
-      bg="blackAlpha.300"
-      backdropFilter="blur(10px) hue-rotate(90deg)"
-    />
-  );
-
   //-----Estilos para modo oscuro----//
-  const [overlay, setOverlay] = useState(<OverlayOne />);
+
   const notPrepaidModal = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const notVerificadeModal = useDisclosure();
@@ -169,38 +162,39 @@ function NavBar() {
             )}
           </Button>
 
-          {user && user.tipoRol?.[0] === "user" && (
-            <>
-              {isAuthenticated && user.email_verified ? (
-                <Link to="/turnos">
-                  <Button
-                    colorScheme={schemeBt}
-                    variant="solid"
-                    bg={botonBg}
-                    color={colorBt}
-                  >
-                    Turnos Online
-                  </Button>
-                </Link>
-              ) : (
+          <>
+            {isAuthenticated &&
+            user.email_verified &&
+            user &&
+            user.tipoRol?.[0] === "user" ? (
+              <Link to="/turnos">
                 <Button
                   colorScheme={schemeBt}
                   variant="solid"
-                  onClick={() =>
-                    isAuthenticated
-                      ? user.email_verified
-                        ? true
-                        : notVerificadeModal.onOpen()
-                      : notAuthenticatedModal.onOpen()
-                  }
                   bg={botonBg}
                   color={colorBt}
                 >
                   Turnos Online
                 </Button>
-              )}
-            </>
-          )}
+              </Link>
+            ) : (
+              <Button
+                colorScheme={schemeBt}
+                variant="solid"
+                onClick={() =>
+                  isAuthenticated
+                    ? user.email_verified
+                      ? true
+                      : notVerificadeModal.onOpen()
+                    : notAuthenticatedModal.onOpen()
+                }
+                bg={botonBg}
+                color={colorBt}
+              >
+                Turnos Online
+              </Button>
+            )}
+          </>
 
           {!isAuthenticated && (
             <Button
@@ -302,9 +296,9 @@ function NavBar() {
         isOpen={notVerificadeModal.isOpen}
         onClose={notVerificadeModal.onClose}
         colorScheme="teal"
-        w="100%"
+        size="xs"
       >
-        {overlay}
+        <ModalOverlay size="xs" />
         <ModalContent bgColor="green.50" w="80%">
           <ModalHeader color="#C53030">Ups!!</ModalHeader>
           <ModalCloseButton />
@@ -322,10 +316,10 @@ function NavBar() {
         isOpen={notAuthenticatedModal.isOpen}
         onClose={notAuthenticatedModal.onClose}
         colorScheme="teal"
-        w="100%"
+        size="xs"
       >
-        {overlay}
-        <ModalContent bgColor="green.50" w="80%">
+        <ModalOverlay size="xs" />
+        <ModalContent bgColor="green.50">
           <ModalHeader color="#C53030">Ups!!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

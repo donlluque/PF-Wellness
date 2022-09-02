@@ -13,7 +13,7 @@ import {
   import React from 'react';
   import {Context} from "./Context";
   import { useState } from "react";
-  import { getDoctors } from "../redux/actions";
+  import { getDoctors, getAllPatients } from "../redux/actions";
   import { useDispatch, useSelector } from "react-redux";
   import { useEffect} from "react";
   import { Link } from "react-router-dom";
@@ -24,10 +24,12 @@ import {
     const {mostrar, setMostrar} = React.useContext(Context);
     const dispatch = useDispatch();
     const { doctors } = useSelector( (state) => state);
+    const allPatients = useSelector((state) => state.patients).map((e) => e.name);
     setMostrar(false);
 
     useEffect ( () =>{
-        dispatch(getDoctors())
+        dispatch(getDoctors());
+        dispatch(getAllPatients())
 
     }, [])
     
@@ -37,18 +39,40 @@ import {
         doctors: "All",
         rating: 0
       }]);
-   console.log(input, "SOY EL INPUT")
+    const [errors, setErrors] = useState({});
+
+      function validations(input) {
+        let error = {};
+        
+        if(!allPatients.find((el) => el.name.toLowerCase().includes((input.name.toLowerCase()))) ){
+          error.name = "Necesitas estar en nuestra base";
+        }
+      return error;}
 
    const [rating, setRating] = useState(0);
-    const handleSubmit = async (e) => {
+    
+   const handleSubmit = async (e) => {
       e.preventDefault();
-      dispatch(addReview(input))
+      if (!errors.name) {
+        dispatch(addReview(input));
+      } else{
+        alert("MAL")
+      }
    
     }
+    
     const handleChange = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
-
-    };
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    setErrors(
+      validations({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
+  };
 
     const ratingChanged = (newRating) => {
         console.log(newRating);
@@ -109,12 +133,13 @@ import {
                 value={input.name}
                 placeholder="Tu nombre"
                 onChange={(e) => handleChange(e)}/> 
-
+                <Text>{errors.name}</Text>
                 
            <FormLabel m="1rem">
                Tu experiencia en Wellness
               </FormLabel>
               <Textarea 
+                maxlength="80"
                 name="review"
                 type="text"
                 value={input.review}

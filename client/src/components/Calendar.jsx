@@ -118,6 +118,7 @@ function Calendar() {
     ),
     url(https://parrocchiagrumello.it/wp-content/uploads/2018/03/97079_agenda1.jpg)"
         bgRepeat="no-repeat"
+        bgSize="cover"
       >
         <Heading
           textAlign="center"

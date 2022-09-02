@@ -71,6 +71,7 @@ function NavBar() {
   const [overlay, setOverlay] = useState(<OverlayOne />);
   const notPrepaidModal = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const notVerificadeModal = useDisclosure();
   const notAuthenticatedModal = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const colorLetra = useColorModeValue("#2c7a7b", "#2D3748");
@@ -170,7 +171,7 @@ function NavBar() {
 
           {user && user.tipoRol?.[0] === "user" && (
             <>
-              {isAuthenticated ? (
+              {isAuthenticated && user.email_verified ? (
                 <Link to="/turnos">
                   <Button
                     colorScheme={schemeBt}
@@ -186,7 +187,11 @@ function NavBar() {
                   colorScheme={schemeBt}
                   variant="solid"
                   onClick={() =>
-                    isAuthenticated ? true : notAuthenticatedModal.onOpen()
+                    isAuthenticated
+                      ? user.email_verified
+                        ? true
+                        : notVerificadeModal.onOpen()
+                      : notAuthenticatedModal.onOpen()
                   }
                   bg={botonBg}
                   color={colorBt}
@@ -291,6 +296,26 @@ function NavBar() {
           )}
         </ButtonGroup>
       </Box>
+
+      <Modal
+        isCentered
+        isOpen={notVerificadeModal.isOpen}
+        onClose={notVerificadeModal.onClose}
+        colorScheme="teal"
+        w="100%"
+      >
+        {overlay}
+        <ModalContent bgColor="green.50" w="80%">
+          <ModalHeader color="#C53030">Ups!!</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text color="#C53030">Debes verificar el email</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Spacer />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
 
       <Modal
         isCentered

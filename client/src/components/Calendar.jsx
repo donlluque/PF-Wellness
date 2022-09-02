@@ -279,40 +279,6 @@ function Calendar() {
         onOpen={onOpen}
         form={form}
       />
-      {usuario && usuario.prepaid_healths?.length === 0 ? (
-        <Modal
-          blockScrollOnMount={false}
-          isOpen
-          onClose={dataIncompleteModal.onClose}
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Datos personales incompletos</ModalHeader>
-            <ModalBody>
-              <Text fontWeight="bold" mb="1rem">
-                Para poder solicitar un turno, tus datos personales obligatorios
-                deben estar completos.
-              </Text>
-            </ModalBody>
-
-            <ModalFooter>
-              <Button
-                colorScheme="teal"
-                variant="ghost"
-                mr={3}
-                onClick={() => history.goBack(-1)}
-              >
-                Cancelar
-              </Button>
-              <Link to={`/userProfile/${usuario.id}`}>
-                <Button colorScheme={"teal"}>Ir al perfil</Button>
-              </Link>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      ) : (
-        false
-      )}
     </>
   );
 }

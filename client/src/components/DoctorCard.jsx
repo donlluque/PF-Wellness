@@ -55,13 +55,9 @@ export default function DoctorCard({
 
   const [overlay, setOverlay] = useState(<OverlayOne />);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const {
-    isOpen: isEditOpen,
-    onOpen: onEditOpen,
-    onClose: onEditClose,
-  } = useDisclosure();
+  const notVerificadeModal = useDisclosure();
+  const notAuthenticatedModal = useDisclosure();
+  const modal = useDisclosure();
 
   //-----Estilos para modo oscuro----//
 
@@ -120,7 +116,7 @@ export default function DoctorCard({
             variant="solid"
             onClick={() => {
               dispatch(getDetailDoctors(id));
-              onEditOpen();
+              modal.onOpen();
             }}
             w={"full"}
             color={colorLetra}
@@ -134,7 +130,7 @@ export default function DoctorCard({
             Leer más
           </Button>
 
-          {isAuthenticated ? (
+          {isAuthenticated && user.email_verified ? (
             <Link to={`/calendar/${id}`}>
               <Button
                 onClick={() => dispatch(getDetailDoctors(id))}
@@ -157,7 +153,13 @@ export default function DoctorCard({
             <Button
               colorScheme="teal"
               variant="solid"
-              onClick={onOpen}
+              onClick={() =>
+                isAuthenticated
+                  ? user.email_verified
+                    ? true
+                    : notVerificadeModal.onOpen()
+                  : notAuthenticatedModal.onOpen()
+              }
               mt={"1rem"}
               w={"full"}
               rounded={"md"}
@@ -169,30 +171,52 @@ export default function DoctorCard({
               bg={bgselec}
             >
               Pedir turno
-              <Modal
-                isCentered
-                isOpen={isOpen}
-                onClose={onClose}
-                colorScheme="teal"
-              >
-                {overlay}
-                <ModalContent bgColor="green.50">
-                  <ModalHeader color="#C53030">Ups!!</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    <Text color="#C53030">Debes estar registrado</Text>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Spacer />
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
             </Button>
           )}
         </Box>
       </Box>
 
-      <Modal isOpen={isEditOpen} onClose={onEditClose}>
+      <Modal
+        isCentered
+        isOpen={notVerificadeModal.isOpen}
+        onClose={notVerificadeModal.onClose}
+        colorScheme="teal"
+        w="100%"
+      >
+        {overlay}
+        <ModalContent bgColor="green.50" w="80%">
+          <ModalHeader color="#C53030">Ups!!</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text color="#C53030">Debes verificar el email</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Spacer />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isCentered
+        isOpen={notAuthenticatedModal.isOpen}
+        onClose={notAuthenticatedModal.onClose}
+        colorScheme="teal"
+        w="100%"
+      >
+        {overlay}
+        <ModalContent bgColor="green.50" w="80%">
+          <ModalHeader color="#C53030">Ups!!</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text color="#C53030">Debes estar registrado</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Spacer />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal isOpen={modal.isOpen} onClose={modal.onClose}>
         <ModalOverlay />
         <ModalContent bg="#EBF8FF">
           <ModalHeader
@@ -215,7 +239,7 @@ export default function DoctorCard({
                 Ver comentarios
               </Button>
             </Link>
-            <Button bg="#2C7A7B" color="white" mr={3} onClick={onEditClose}>
+            <Button bg="#2C7A7B" color="white" mr={3} onClick={modal.onClose}>
               Close
             </Button>
           </ModalFooter>

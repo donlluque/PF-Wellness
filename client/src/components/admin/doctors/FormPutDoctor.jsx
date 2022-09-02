@@ -398,7 +398,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                 </FormLabel>
               )}
               {/*select segun el area general seleccionada*/}
-              {form.general_area === "Deportologia" && (
+              {form.general_area === "Deportología" && (
                 <Select
                   value={form.specialty}
                   onChange={(e) => handleChange(e)}
@@ -425,7 +425,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                   <option value="Respiratoria">Respiratoria</option>
                 </Select>
               )}
-              {form.general_area === "Osteopatia" && (
+              {form.general_area === "Osteopatía" && (
                 <Select
                   value={form.specialty}
                   onChange={(e) => handleChange(e)}
@@ -450,7 +450,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                   <option value="Dorsalgias">Dorsalgias</option>
                 </Select>
               )}
-              {form.general_area === "Reumatologia" && (
+              {form.general_area === "Reumatología" && (
                 <Select
                   value={form.specialty}
                   onChange={(e) => handleChange(e)}
@@ -476,7 +476,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                   <option value="Pie">Pie</option>
                 </Select>
               )}
-              {form.general_area === "Traumatologia" && (
+              {form.general_area === "Traumatología" && (
                 <Select
                   value={form.specialty}
                   onChange={(e) => handleChange(e)}

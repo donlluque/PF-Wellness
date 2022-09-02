@@ -62,9 +62,9 @@ export default function App() {
           <Route exact path="/calendar/:idDoctor">
             <Calendar />
           </Route>
-          <PrivateRouteAdmin exact path="/admin">
+          <Route exact path="/admin">
             <AdminProfile />
-          </PrivateRouteAdmin>
+          </Route>
           <Route exact path="/doctor">
             <DoctorProfile />
           </Route>

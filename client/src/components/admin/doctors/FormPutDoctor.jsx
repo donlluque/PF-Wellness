@@ -64,7 +64,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
           birthday: e.birthday,
           general_area: e.general_area,
           specialty: e.specialty,
-          work_days: e.work_days,
+          work_days: e.work_days.map((el) => el.id),
           hours_json: e.hours_json,
           prepaid_healths: e.prepaid_healths,
         })
@@ -95,6 +95,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
   const [form, setForm] = useState(initialForm);
 
   const [errors, setErrors] = useState({});
+  console.log(form, "formulario");
   const date = new Date().toLocaleDateString().split("/").reverse();
 
   useEffect(() => {
@@ -122,7 +123,6 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
 
     form.hours_json = formHours;
     //setErrors(validateForm(form));
-
     dispatch(putDoctor(form));
     setPutDoctor(false);
     setOverlay(<OverlayOne />);
@@ -140,7 +140,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
     if (dotor) {
       setForm({
         ...form,
-        id: dotor.id,
+        id: parseInt(dotor.id),
         name: dotor.name,
         document: dotor.document,
         medic_id: dotor.medic_id,
@@ -151,22 +151,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
         specialty: dotor.specialty,
         work_days: dotor.work_days,
         hours_json: dotor.hours_json,
-        prepaid_healths: dotor.prepaid_healths,
-      });
-    } else {
-      setForm({
-        ...form,
-        name: "",
-        document: "",
-        medic_id: "",
-        phone: "",
-        email: "",
-        birthday: "",
-        general_area: "",
-        specialty: "",
-        work_days: [],
-        hours_json: {},
-        prepaid_healths: [],
+        prepaid_healths: dotor.prepaid_healths.map((el) => el.name),
       });
     }
 
@@ -178,6 +163,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
   };
   //seccion horas
   const handleChangeFormHours = (e) => {
+    console.log(e);
     if (e === "totalDay") {
       setFormHours({ [e]: { start: "", end: "" } });
     } else {
@@ -229,9 +215,11 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
   };
 
   const handleDeleteDay = (day) => {
+    //NO BORRAR ESTE CONSOLE AGUS CUE LPM
+    console.log(day, "diaaaaa");
     setForm({
       ...form,
-      work_days: form.work_days.filter((c) => c !== day),
+      work_days: form.work_days.filter((c) => c != day),
     });
   };
 
@@ -381,9 +369,9 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                 Área general
               </FormLabel>
               <Select
-                value={form.general_area}
                 onChange={(e) => handleChange(e)}
                 name="general_area"
+                value={form.general_area.name}
               >
                 <option>Seleccionar una opción</option>
                 {areas &&
@@ -405,7 +393,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                 </FormLabel>
               )}
               {/*select segun el area general seleccionada*/}
-              {form.general_area === "Deportología" && (
+              {form.general_area === "Deportologia" && (
                 <Select
                   value={form.specialty}
                   onChange={(e) => handleChange(e)}
@@ -432,7 +420,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                   <option value="Respiratoria">Respiratoria</option>
                 </Select>
               )}
-              {form.general_area === "Osteopatía" && (
+              {form.general_area === "Osteopatia" && (
                 <Select
                   value={form.specialty}
                   onChange={(e) => handleChange(e)}
@@ -457,7 +445,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                   <option value="Dorsalgias">Dorsalgias</option>
                 </Select>
               )}
-              {form.general_area === "Reumatología" && (
+              {form.general_area === "Reumatologia" && (
                 <Select
                   value={form.specialty}
                   onChange={(e) => handleChange(e)}
@@ -483,7 +471,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                   <option value="Pie">Pie</option>
                 </Select>
               )}
-              {form.general_area === "Traumatología" && (
+              {form.general_area === "Traumatologia" && (
                 <Select
                   value={form.specialty}
                   onChange={(e) => handleChange(e)}
@@ -510,14 +498,14 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                 Prestaciones asociadas
               </FormLabel>
               <Select
-                value={form.prepaid_healths}
+                // value={form.prepaid_healths}
                 onChange={(e) => handleChangeList(e)}
                 name="prepaid_healths"
               >
                 <option>Seleccionar una opción</option>
                 <option value="Particular">Particular</option>
                 {prepaidHealth &&
-                  prepaidHealth.map((e) => (
+                  prepaidHealth.map((e, index) => (
                     <option key={e.id} value={e.name}>
                       {e.name}
                     </option>
@@ -531,7 +519,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
               {form.prepaid_healths?.length
                 ? form.prepaid_healths.map((e) => (
                     <ListItem m="1rem" key={e}>
-                      {e.name}
+                      {e}
                       <Button
                         colorScheme={"teal"}
                         variant={"ghost"}
@@ -568,13 +556,13 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                 {form.work_days?.length
                   ? form.work_days.map((e) => (
                       <ListItem m="1rem" key={e}>
-                        {e === "1"
+                        {e == 1
                           ? "Lunes"
-                          : e === "2"
+                          : e == 2
                           ? "Martes"
-                          : e === "3"
+                          : e == 3
                           ? "Miércoles"
-                          : e === "4"
+                          : e == 4
                           ? "Jueves"
                           : "Viernes"}
                         <Button

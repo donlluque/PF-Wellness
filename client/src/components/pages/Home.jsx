@@ -31,7 +31,6 @@ function Home() {
   return (
     <>
       <Center
-        border="1px solid red"
         h={{ base: "125vh", sm: "125vh", md: "100vh", lg: "100vh" }}
         bgRepeat="no-repeat"
         bgSize="cover"
@@ -61,7 +60,7 @@ function Home() {
           </Text>
         </Box>
       </Center>
-      <Container maxW="100%" centerContent border="1px solid red">
+      <Container maxW="100%" centerContent>
         <Flex
           direction={{ base: "column", sm: "column", md: "column", lg: "row" }}
           m={5}
@@ -166,7 +165,6 @@ function Home() {
         </Link>
       </Container>
       <Container
-        border="1px solid red"
         maxW="100%"
         centerContent
         bg={bg}
@@ -178,7 +176,6 @@ function Home() {
           Especialidades médicas destacadas
         </Heading>
         <SimpleGrid
-          border="1px solid red"
           columns={{ base: 1, sm: 1, md: 2 }}
           spacing={20}
           alignItems="center"
@@ -273,12 +270,12 @@ function Home() {
           Lo que opinan nuestros pacientes
         </Heading>
 
-          <Testimonios />
-          <Link to="/opiniones">
-                <Button colorScheme="teal" m={4}>
-                  Leer más
-                </Button>
-              </Link>
+        <Testimonios />
+        <Link to="/opiniones">
+          <Button colorScheme="teal" m={4}>
+            Leer más
+          </Button>
+        </Link>
       </Container>
     </>
   );

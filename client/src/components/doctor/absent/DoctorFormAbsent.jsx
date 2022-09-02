@@ -28,11 +28,13 @@ import { getHours, postAbsentDoctor } from "../../../redux/actions";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { AiOutlineClose } from "react-icons/ai";
 import { Container } from "reactstrap";
+import { useParams } from "react-router-dom";
 
 function DoctorFormAbsent() {
   const [form, setForm] = useState({});
   const dispatch = useDispatch();
   const { hoursWorking } = useSelector((state) => state);
+  const { id } = useParams();
 
   const [selectedDateStart, setSelectedDateStart] = useState(new Date()); //cambia fecha en calendario
   const [selectedDateEnd, setSelectedDateEnd] = useState(selectedDateStart);
@@ -41,6 +43,7 @@ function DoctorFormAbsent() {
 
   useEffect(() => {
     dispatch(getHours());
+    setForm({ ...form, doctorId: id });
   }, [dispatch]);
 
   const handleChange = (e) => {

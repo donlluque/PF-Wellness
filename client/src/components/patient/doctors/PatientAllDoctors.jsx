@@ -16,6 +16,8 @@ import {
   ModalFooter,
   ModalBody,
   useDisclosure,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -39,7 +41,15 @@ function PatientAllDoctors() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   console.log(user.id);
 
-  //const visiblePatients = turnsByPatient.filter(e => )
+  let aux = turnsByPatient?.map((e) => e.doctors?.[0]);
+  console.log(aux, "aux");
+  const visiblePatients = [];
+  aux?.forEach((e) => {
+    let search = visiblePatients.find((d) => d.id === e.id);
+    if (!search) {
+      visiblePatients.push(e);
+    }
+  });
 
   useEffect(() => {
     dispatch(getDoctors());
@@ -57,17 +67,21 @@ function PatientAllDoctors() {
     <>
       <TableContainer>
         <Table size="sm">
-          <Thead>
-            <Tr>
-              <Th isNumeric>ID</Th>
-              <Th>Nombre</Th>
-              <Th>Área</Th>
-              <Th>Especialidad</Th>
-            </Tr>
-          </Thead>
+          {visiblePatients.length ? (
+            <Thead>
+              <Tr>
+                <Th isNumeric>ID</Th>
+                <Th>Nombre</Th>
+                <Th>Área</Th>
+                <Th>Especialidad</Th>
+              </Tr>
+            </Thead>
+          ) : (
+            false
+          )}
           <Tbody>
-            {doctors &&
-              doctors.map((e) => (
+            {visiblePatients ? (
+              visiblePatients.map((e) => (
                 <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
                   <Td>{e.name}</Td>
@@ -94,7 +108,13 @@ function PatientAllDoctors() {
                     </Link>
                   </Td>
                 </Tr>
-              ))}
+              ))
+            ) : (
+              <Alert status="warning">
+                <AlertIcon />
+                No existen doctores deshabilitados
+              </Alert>
+            )}
           </Tbody>
           <Tfoot></Tfoot>
         </Table>

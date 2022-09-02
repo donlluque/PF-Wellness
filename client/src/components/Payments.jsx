@@ -55,7 +55,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
     dispatch(getHours());
     setPrepaid(handlePrepaid());
   }, [active]);
-
+  console.log("detail paient", patientDetail);
   const handlePrepaid = () => {
     let result;
     if (patientDetail.prepaid_healths?.find((e) => e.name === "Wellness")) {

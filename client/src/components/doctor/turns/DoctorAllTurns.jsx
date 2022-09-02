@@ -28,6 +28,7 @@ import {
   getTurnsByDoctor,
 } from "../../../redux/actions";
 import { TbCalendarOff } from "react-icons/tb";
+import { useParams } from "react-router-dom";
 
 /*
 - Cuando se haga el post con el idPaciente:
@@ -43,7 +44,7 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
   const { turnsByDoctor, user } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const idDoctor = user.id;
+  const { id } = useParams();
 
   let aux = turnsByDoctor;
   aux.forEach((e) => {
@@ -62,7 +63,7 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
     : turnsByDoctor;
 
   useEffect(() => {
-    dispatch(getTurnsByDoctor(idDoctor));
+    dispatch(getTurnsByDoctor(id));
   }, [dispatch]);
 
   const handleClick = (id) => {

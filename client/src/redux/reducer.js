@@ -102,7 +102,7 @@ export default function rootReducer(state = initialState, action) {
     }
     case "GET_TURNS_BY_PATIENT": {
       let turnsPatient = action.payload.data.filter(
-        (e) => e.patient[0].id === action.payload.idCurrentPatient
+        (e) => e.patient?.[0].id === action.payload.idCurrentPatient
       );
       return {
         ...state,

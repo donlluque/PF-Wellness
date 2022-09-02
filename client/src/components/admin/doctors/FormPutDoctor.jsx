@@ -32,6 +32,8 @@ import { useEffect, useState } from "react";
 import {
   getAllAreas,
   getDays,
+  getDetailDoctors,
+  getDoctors,
   getHours,
   getPrepaidHealth,
   putDoctor,
@@ -39,9 +41,10 @@ import {
 import { validateForm } from "../../../hooks/validateForm.js";
 import UploadImageDoctor from "../../UploadImageDoctor";
 import { AiOutlineClose } from "react-icons/ai";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 function FormPutDoctor({ setPutDoctor, setListDoctors }) {
+  const { id } = useParams();
   const { pathname } = useLocation();
   const [formHours, setFormHours] = useState({});
   const dispatch = useDispatch();
@@ -50,7 +53,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
   const { msgConfirm, prepaidHealth, hoursWorking, days, areas } = useSelector(
     (state) => state
   );
-
+  console.log("detail", doctorDetail);
   let lpm = {};
   doctors.find((e) => {
     return e.id === doctorDetail.id
@@ -102,6 +105,8 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
     dispatch(getHours());
     dispatch(getDays());
     dispatch(getAllAreas());
+    dispatch(getDoctors());
+    dispatch(getDetailDoctors(id));
   }, [dispatch]);
 
   //Define formato fecha actual calendario

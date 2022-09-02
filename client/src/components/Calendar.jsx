@@ -279,7 +279,7 @@ function Calendar() {
         onOpen={onOpen}
         form={form}
       />
-      {usuario && !usuario.prepaid_healths?.length ? (
+      {usuario && usuario.prepaid_healths?.length === 0 ? (
         <Modal
           blockScrollOnMount={false}
           isOpen

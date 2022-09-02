@@ -65,7 +65,7 @@ export default function App() {
           <PrivateRouteAdmin exact path="/admin">
             <AdminProfile />
           </PrivateRouteAdmin>
-          <Route exact path="/doctor">
+          <Route exact path="/doctor/:id">
             <DoctorProfile />
           </Route>
           <Route exact path="/wellnessPrepaid">

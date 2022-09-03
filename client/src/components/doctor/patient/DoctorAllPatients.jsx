@@ -41,7 +41,14 @@ function DoctorAllPatients() {
     dispatch(getTurnsByDoctor(id));
   }, [dispatch]);
 
-  let visiblePatients = turnsByDoctor.map((e) => e.patients);
+  let aux = turnsByDoctor?.map((e) => e.patients?.[0]);
+  const visiblePatients = [];
+  aux?.forEach((e) => {
+    let search = visiblePatients.find((d) => d.id === e.id);
+    if (!search) {
+      visiblePatients.push(e);
+    }
+  });
 
   const handleClick = (id) => {
     console.log(id);

@@ -19,14 +19,59 @@ function UserProfile() {
           size="md"
           variant="enclosed"
           colorScheme="teal"
-          ml="4rem"
-          mr="4rem"
+          ml={{
+            base: "2.5rem",
+            sm: "2.5rem",
+            md: "3rem",
+            lg: "4rem",
+            xl: "4rem",
+          }}
+          mr={{
+            base: "2.5rem",
+            sm: "2.5rem",
+            md: "3rem",
+            lg: "4rem",
+            xl: "4rem",
+          }}
         >
-          <TabList>
-            <Tab bgColor="white">Datos Personales</Tab>
-            <Tab bgColor="white">Mis turnos</Tab>
-            <Tab bgColor="white">Doctores</Tab>
-            <Tab bgColor="white">Mis pagos</Tab>
+          <TabList
+            whiteSpace
+            display={"flex"}
+            flexDirection={{
+              base: "column",
+              sm: "column",
+              md: "row",
+              lg: "row",
+            }}
+          >
+            <Tab
+              _selected={{ color: "white", bg: "teal.500" }}
+              bgColor="white"
+              mr="0.3rem"
+            >
+              Datos Personales
+            </Tab>
+            <Tab
+              _selected={{ color: "white", bg: "teal.500" }}
+              bgColor="white"
+              mr="0.3rem"
+            >
+              Mis turnos
+            </Tab>
+            <Tab
+              _selected={{ color: "white", bg: "teal.500" }}
+              bgColor="white"
+              mr="0.3rem"
+            >
+              Doctores
+            </Tab>
+            <Tab
+              _selected={{ color: "white", bg: "teal.500" }}
+              bgColor="white"
+              mr="0.3rem"
+            >
+              Mis pagos
+            </Tab>
           </TabList>
 
           <TabPanels bgColor="white">

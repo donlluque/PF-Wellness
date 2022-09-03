@@ -168,9 +168,20 @@ function FormUserProfile() {
             </Button>
           )}
         </Box>
-        <Box m="1rem" w="50rem">
+        <Box w="100%" display="flex" flexDirection="column" alignItems="center">
           <FormControl>
             <FormControl isDisabled={!putActive}>
+              {loading ? (
+                <h3>Cargando imagen...</h3>
+              ) : (
+                <Image
+                  m="1rem"
+                  borderRadius="full"
+                  boxSize="150px"
+                  src={form.picture}
+                  fallbackSrc="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
+                />
+              )}
               <Input
                 name="picture"
                 type="file"
@@ -179,16 +190,6 @@ function FormUserProfile() {
                 }
                 onChange={UploadI}
               />
-              {loading ? (
-                <h3>Cargando imagen...</h3>
-              ) : (
-                <Image
-                  borderRadius="full"
-                  boxSize="150px"
-                  src={form.picture}
-                  fallbackSrc="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
-                />
-              )}
             </FormControl>
             <FormControl isDisabled={!putActive} isInvalid={errors.name}>
               <FormLabel m="1rem" htmlFor="name">

@@ -33,13 +33,13 @@ function Prepaid() {
         <Heading
           textAlign="center"
           as="h1"
-          size="4xl"
+          fontSize={{ base: "4xl", sm: "4xl", md: "5xl", lg: "6xl" }}
           m="1rem"
           mt={{ base: "6rem", sm: "6rem", md: "4rem", lg: "1rem" }}
         >
           Prestaciones
         </Heading>
-        <Box>
+        <Box w={{ base: "75%", sm: "75%", md: "60%" }} textAlign="center">
           <Text as="i" fontSize="xl">
             "En Wellness queremos ayudarte. Descubre los beneficios de las obras
             sociales con las que trabajamos"

@@ -32,7 +32,6 @@ import {
 } from "../../../redux/actions";
 import DoctorDetail from "../../DoctorDetail";
 
-//BUSCAR EN EL HISTORIAL DE TURNOS, LOS MEDICOS CON LOS QUE ALGUNA VEZ SE ATENDIO
 function PatientAllDoctors() {
   const dispatch = useDispatch();
   const { doctors, doctorDetail, turnsByPatient, user } = useSelector(
@@ -43,11 +42,11 @@ function PatientAllDoctors() {
 
   let aux = turnsByPatient?.map((e) => e.doctors?.[0]);
   console.log(aux, "aux");
-  const visiblePatients = [];
+  const visibleDoctors = [];
   aux?.forEach((e) => {
-    let search = visiblePatients.find((d) => d.id === e.id);
+    let search = visibleDoctors.find((d) => d.id === e.id);
     if (!search) {
-      visiblePatients.push(e);
+      visibleDoctors.push(e);
     }
   });
 
@@ -67,7 +66,7 @@ function PatientAllDoctors() {
     <>
       <TableContainer>
         <Table size="sm">
-          {visiblePatients.length ? (
+          {visibleDoctors.length ? (
             <Thead>
               <Tr>
                 <Th isNumeric>ID</Th>
@@ -80,8 +79,8 @@ function PatientAllDoctors() {
             false
           )}
           <Tbody>
-            {visiblePatients ? (
-              visiblePatients.map((e) => (
+            {visibleDoctors.length ? (
+              visibleDoctors.map((e) => (
                 <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
                   <Td>{e.name}</Td>
@@ -112,7 +111,7 @@ function PatientAllDoctors() {
             ) : (
               <Alert status="warning">
                 <AlertIcon />
-                No existen doctores deshabilitados
+                Aún no eres paciente de ningun doctor
               </Alert>
             )}
           </Tbody>

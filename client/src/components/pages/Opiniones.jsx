@@ -58,12 +58,14 @@ function Opiniones() {
           reviews.map((e) => (
             <WrapItem p={4} borderRadius="0.5rem">
               <Box
+                display={"flex"}
+                flexDirection="column"
+                justifyContent={"center"}
                 p={3}
                 boxShadow="2xl"
                 borderRadius="0.5rem"
-                w="20rem"
+                w="15rem"
                 h="15rem"
-                alignItems="center"
                 bgColor="white"
               >
                 <Box p={3} justifyContent="center">

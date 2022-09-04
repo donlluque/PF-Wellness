@@ -10,6 +10,7 @@ const initialState = {
   days: [],
   user: {},
   turns: [],
+  absents: [],
   payments: {},
   turnsByPatient: [],
   turnsByDoctor: [],
@@ -89,6 +90,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         turns: action.payload,
+      };
+    }
+    case "GET_ABSENTS": {
+      return {
+        ...state,
+        absents: action.payload,
       };
     }
     case "GET_TURNS_BY_DOCTOR": {

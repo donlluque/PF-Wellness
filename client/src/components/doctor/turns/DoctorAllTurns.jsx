@@ -9,14 +9,9 @@ import {
   TableContainer,
   Button,
   Icon,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  Image,
-  useDisclosure,
+  Alert,
+  AlertIcon,
+  Text,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 
@@ -30,19 +25,9 @@ import {
 import { TbCalendarOff } from "react-icons/tb";
 import { useParams } from "react-router-dom";
 
-/*
-- Cuando se haga el post con el idPaciente:
-    - agregar nombre paciente
-- Cuando se cargue info de pago:
-    - agregar alguna columna con info de pago
-- Crear filtros en base a lo anterior
-- Mandar id por la funcion getTurnsByDoctor(id)
-*/
-
 function DoctorAllTurns({ nextTurns, prevTurns }) {
   const dispatch = useDispatch();
   const { turnsByDoctor, user } = useSelector((state) => state);
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { id } = useParams();
 
@@ -66,26 +51,24 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
     dispatch(getTurnsByDoctor(id));
   }, [dispatch]);
 
-  const handleClick = (id) => {
-    console.log(id);
-    //dispatch(getTurnDetail(id)); --> ahcer
-    onOpen();
-  };
-
   return (
     <>
       <TableContainer>
         <Table size="sm">
-          <Thead>
-            <Tr>
-              <Th>Id</Th>
-              <Th>Fecha</Th>
-              <Th>Hora</Th>
-              <Th>Paciente</Th>
-            </Tr>
-          </Thead>
+          {visibleTurns?.length ? (
+            <Thead>
+              <Tr>
+                <Th>Id</Th>
+                <Th>Fecha</Th>
+                <Th>Hora</Th>
+                <Th>Paciente</Th>
+              </Tr>
+            </Thead>
+          ) : (
+            false
+          )}
           <Tbody>
-            {visibleTurns &&
+            {visibleTurns.length ? (
               visibleTurns.map((e) => (
                 <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
@@ -93,15 +76,6 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
                   <Td>{e.hours_workings[0].hour}</Td>
                   <Td>{e.patient[0].name}</Td>
                   <Td>
-                    <Button
-                      m="0.5rem"
-                      colorScheme="teal"
-                      size="sm"
-                      onClick={() => handleClick(e.id)}
-                    >
-                      Detalle
-                    </Button>
-
                     <Button
                       m="0.5rem"
                       colorScheme={"teal"}
@@ -113,36 +87,25 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
                     </Button>
                   </Td>
                 </Tr>
-              ))}
+              ))
+            ) : (
+              <Alert status="warning">
+                <AlertIcon />
+                {nextTurns && (
+                  <Text>No se registran turnos próximos a la fecha</Text>
+                )}
+                {prevTurns && (
+                  <Text>No se registran turnos anteriores a la fecha</Text>
+                )}
+                {!nextTurns && !prevTurns && (
+                  <Text>No se registran turnos otorgados</Text>
+                )}
+              </Alert>
+            )}
           </Tbody>
           <Tfoot></Tfoot>
         </Table>
       </TableContainer>
-
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent bg="#EBF8FF">
-          <ModalHeader
-            fontSize={"2xl"}
-            textAlign="center"
-            color="#2C7A7B"
-            fontFamily={"body"}
-          >
-            {" "}
-          </ModalHeader>
-
-          <ModalBody>
-            PROXIMAMENTE TURN DETAIL
-            {/*<PatientDetail id={patients.id} />*/}
-          </ModalBody>
-
-          <ModalFooter>
-            <Button bg="#2C7A7B" color="white" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </>
   );
 }

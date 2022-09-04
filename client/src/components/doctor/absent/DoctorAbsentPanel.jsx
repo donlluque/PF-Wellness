@@ -5,7 +5,6 @@ import {
   ListIcon,
   Divider,
   Heading,
-  Text,
 } from "@chakra-ui/react";
 
 import { GrAdd } from "react-icons/gr";
@@ -13,12 +12,14 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
 
 import { Button } from "reactstrap";
 import { useState } from "react";
+import { AiFillCaretRight } from "react-icons/ai";
 
 import DoctorFormAbsent from "./DoctorFormAbsent";
+import DoctorAllAbsents from "./DoctorAllAbsents";
 
 function DoctorAbsentPanel() {
   const [listAbsents, setListAbsents] = useState(true);
-  const [filter, setFilter] = useState(false);
+
   const [newAbsent, setNewAbsent] = useState(false);
   return (
     <>
@@ -38,21 +39,24 @@ function DoctorAbsentPanel() {
           <Divider colorScheme={"teal"} />
           <List m="2rem" spacing={5}>
             <ListItem>
+              {newAbsent && <ListIcon as={AiFillCaretRight} color="teal.500" />}
               <Button
                 onClick={() => {
                   setNewAbsent(true);
                   setListAbsents(false);
-                  setFilter(false);
                 }}
               >
                 <ListIcon as={GrAdd} /> Nuevo registro
               </Button>
             </ListItem>
             <ListItem>
+              {listAbsents && (
+                <ListIcon as={AiFillCaretRight} color="teal.500" />
+              )}
               <Button
                 onClick={() => {
                   setListAbsents(true);
-                  setFilter(false);
+                  setNewAbsent(false);
                 }}
               >
                 <ListIcon as={BsFillPersonLinesFill} /> Ver todas
@@ -62,8 +66,13 @@ function DoctorAbsentPanel() {
         </Box>
         <Divider orientation="vertical" />
         <Box w={{ xl: "75%" }}>
-          {newAbsent && <DoctorFormAbsent />}
-          {listAbsents && <Text>Get ausencias</Text>}
+          {newAbsent && (
+            <DoctorFormAbsent
+              setNewAbsent={setNewAbsent}
+              setListAbsents={setListAbsents}
+            />
+          )}
+          {listAbsents && <DoctorAllAbsents />}
         </Box>
       </Box>
     </>

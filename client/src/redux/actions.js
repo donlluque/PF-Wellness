@@ -181,6 +181,44 @@ export const postAbsentDoctor = (form) => {
       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
   };
 };
+export const getAllAbsent = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/absence`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch({
+          type: "GET_ABSENTS",
+          payload: json,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+export const deleteAbsent = (id) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/absence`, {
+      method: "DELETE",
+      body: JSON.stringify({ absenceId: id }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? Promise.resolve({
+              status: 200,
+              statusText: `Ausencia eliminada con exito`,
+            })
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: "No se ha podido eliminar correctamente el registro",
+            })
+      )
+      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+      .catch((err) => console.log(err));
+  };
+};
 //PREPAID HEALTH
 export const getPrepaidHealth = () => {
   return function (dispatch) {

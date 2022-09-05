@@ -96,11 +96,13 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
   };
 
   const handleSubmitNotPay = () => {
+    console.log(form);
     dispatch(postTurn(form));
     onClose();
   };
 
   const handleSubmitPay = async () => {
+    console.log(form);
     dispatch(postTurn(form));
 
     setPayActive(true);

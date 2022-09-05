@@ -329,7 +329,6 @@ export const getTurnsByDoctor = (idCurrentDoctor) => {
     fetch(`${baseURL}/dates`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("holis");
         dispatch({
           type: "GET_TURNS_BY_DOCTOR",
           payload: { data, idCurrentDoctor },

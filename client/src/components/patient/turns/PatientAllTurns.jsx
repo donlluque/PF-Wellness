@@ -18,11 +18,13 @@ import { useEffect } from "react";
 
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { getTurnsByPatient } from "../../../redux/actions";
 
 function PatientAllTurns({ nextTurns, prevTurns }) {
   const dispatch = useDispatch();
   const { turnsByPatient } = useSelector((state) => state);
+  const { id } = useParams();
 
   let aux = turnsByPatient;
 
@@ -44,7 +46,7 @@ function PatientAllTurns({ nextTurns, prevTurns }) {
     : turnsByPatient;
 
   useEffect(() => {
-    dispatch(getTurnsByPatient(1));
+    dispatch(getTurnsByPatient(id));
     // dispatch(getTurns());
   }, [dispatch]);
 

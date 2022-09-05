@@ -238,7 +238,7 @@ export default function DoctorCard({
               colorScheme="teal"
               variant="ghost"
               mr={3}
-              // onClick={() => notInfoComplete.onClose}
+              onClick={() => notInfoComplete.onClose}
             >
               Cancelar
             </Button>

@@ -92,8 +92,8 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
                 <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
                   <Td>{e.date}</Td>
-                  <Td>{e.hours_workings[0].hour}</Td>
-                  <Td>{e.patient[0].name}</Td>
+                  <Td>{e.hours_workings[0]?.hour}</Td>
+                  <Td>{e.patients.length ? e.patients[0]?.fullName : false}</Td>
                   <Td>
                     <Button
                       m="0.5rem"

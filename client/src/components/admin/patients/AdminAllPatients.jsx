@@ -37,7 +37,7 @@ function AdminAllPatients() {
   const [aux, setAux] = useState();
 
   const visiblePatients = patients; /*.filter((e) => e.activo === true);*/
-
+  console.log(visiblePatients);
   useEffect(() => {
     dispatch(getAllPatients());
   }, [dispatch]);
@@ -75,7 +75,11 @@ function AdminAllPatients() {
                   </Td>
                   <Td>{e.fullName}</Td>
                   <Td>{e.email}</Td>
-                  <Td>COMPLETAR</Td>
+                  <Td>
+                    {e.prepaid_healths.length
+                      ? e.prepaid_healths[0]?.name
+                      : "Particular"}
+                  </Td>
                   <Td>
                     <Button
                       m="0.5rem"

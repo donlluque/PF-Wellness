@@ -44,7 +44,7 @@ function DoctorAllPatients() {
   let aux = turnsByDoctor?.map((e) => e.patients?.[0]);
   const visiblePatients = [];
   aux?.forEach((e) => {
-    let search = visiblePatients.find((d) => d.id === e.id);
+    let search = visiblePatients?.find((d) => d.id === e.id);
     if (!search) {
       visiblePatients.push(e);
     }

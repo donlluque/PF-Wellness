@@ -43,7 +43,7 @@ function AdminAllTurnos({ prevTurns, nextTurns }) {
     : prevTurns
     ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
     : turns;
-
+  console.log(visibleTurns);
   useEffect(() => {
     dispatch(getTurns());
   }, [dispatch]);
@@ -75,7 +75,7 @@ function AdminAllTurnos({ prevTurns, nextTurns }) {
                   <Td>{e.date}</Td>
                   <Td>{e.hours_workings[0].hour}</Td>
                   <Td>{e.doctors?.[0].name}</Td>
-                  <Td>paciente</Td>
+                  <Td>{e.patients.length ? e.patients[0]?.fullName : false}</Td>
                   <Td>
                     <Button
                       m="0.5rem"
@@ -84,16 +84,6 @@ function AdminAllTurnos({ prevTurns, nextTurns }) {
                       onClick={() => handleClick(e.id)}
                     >
                       Detalle
-                    </Button>
-
-                    <Button
-                      m="0.5rem"
-                      colorScheme={"teal"}
-                      variant="ghost"
-                      fontSize="xs"
-                      onClick={() => dispatch(deleteTurn(e.id))}
-                    >
-                      <Icon w={4} h={4} as={TbCalendarOff} />
                     </Button>
                   </Td>
                 </Tr>

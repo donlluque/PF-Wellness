@@ -21,17 +21,22 @@ import {
   Alert,
   AlertIcon,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { MdPersonAddDisabled } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPatients, getOnePatient } from "../../../redux/actions";
 import PatientDetail from "../../patient/PatientDetail";
+import ConfirmDisable from "../doctors/ConfirmDisable";
 
 function AdminAllPatients() {
   const dispatch = useDispatch();
   const { patients } = useSelector((state) => state);
-
+  const disableModal = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [aux, setAux] = useState();
+
+  const visiblePatients = patients; /*.filter((e) => e.activo === true);*/
 
   useEffect(() => {
     dispatch(getAllPatients());
@@ -47,26 +52,30 @@ function AdminAllPatients() {
     <>
       <TableContainer>
         <Table size="sm">
-          <Thead>
-            <Tr>
-              <Th isNumeric>ID</Th>
-              <Th></Th>
-              <Th>Nombre</Th>
-              <Th>Apellido</Th>
-              <Th>Email</Th>
-            </Tr>
-          </Thead>
+          {visiblePatients?.length ? (
+            <Thead>
+              <Tr>
+                <Th isNumeric>ID</Th>
+                <Th></Th>
+                <Th>Nombre</Th>
+                <Th>Email</Th>
+                <Th>Obra social</Th>
+              </Tr>
+            </Thead>
+          ) : (
+            false
+          )}
           <Tbody>
-            {patients ? (
-              patients.map((e) => (
+            {visiblePatients ? (
+              visiblePatients.map((e) => (
                 <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
                   <Td>
                     <Image src={e.picture} w="3rem" h="3rem" rounded={"50%"} />
                   </Td>
-                  <Td>{e.name}</Td>
-                  <Td>{e.last_name}</Td>
+                  <Td>{e.fullName}</Td>
                   <Td>{e.email}</Td>
+                  <Td>COMPLETAR</Td>
                   <Td>
                     <Button
                       m="0.5rem"
@@ -83,7 +92,18 @@ function AdminAllPatients() {
                         colorScheme={"teal"}
                         variant="ghost"
                         fontSize="xs"
+                        onClick={() => {
+                          dispatch(getOnePatient(e.id));
+                          disableModal.onOpen();
+                        }}
                       >
+                        <ConfirmDisable
+                          onClose={disableModal.onClose}
+                          isOpen={disableModal.isOpen}
+                          setAux={setAux}
+                          aux={aux}
+                          user="paciente"
+                        />
                         <Icon w={4} h={4} as={MdPersonAddDisabled} />
                       </Button>
                     </Tooltip>
@@ -119,7 +139,7 @@ function AdminAllPatients() {
 
           <ModalFooter>
             <Button bg="#2C7A7B" color="white" mr={3} onClick={onClose}>
-              Close
+              Cerrar
             </Button>
           </ModalFooter>
         </ModalContent>

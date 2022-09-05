@@ -74,7 +74,7 @@ function AdminAllTurnos({ prevTurns, nextTurns }) {
                   <Td isNumeric>{e.id}</Td>
                   <Td>{e.date}</Td>
                   <Td>{e.hours_workings[0].hour}</Td>
-                  <Td>{e.doctors[0].name}</Td>
+                  <Td>{e.doctors?.[0].name}</Td>
                   <Td>paciente</Td>
                   <Td>
                     <Button

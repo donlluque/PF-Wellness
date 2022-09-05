@@ -116,6 +116,15 @@ export default function rootReducer(state = initialState, action) {
         turnsByPatient: turnsPatient,
       };
     }
+    case "GET_TURN_BY_ID": {
+      let turn = action.payload.data.find(
+        (e) => e.id === action.payload.idTurn
+      );
+      return {
+        ...state,
+        turnById: turn,
+      };
+    }
 
     case "GET_PREPAID_HEALTH": {
       return {

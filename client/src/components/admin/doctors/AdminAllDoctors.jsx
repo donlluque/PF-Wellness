@@ -39,8 +39,6 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
   const [aux, setAux] = useState(true);
   const visibleDoctors = doctors.filter((e) => e.activo === true);
 
-  const [id, setId] = useState("");
-
   // localStorage.setItem("doctor", JSON.stringify(doctors));
   useEffect(() => {
     dispatch(getDoctors());
@@ -110,41 +108,21 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
                         colorScheme={"teal"}
                         variant="ghost"
                         fontSize="xs"
-                        onClick={() => modal2.onOpen()}
+                        onClick={() => {
+                          dispatch(getDetailDoctors(e.id));
+                          modal2.onOpen();
+                        }}
                       >
                         <ConfirmDisable
-                          idDoctor={id}
                           onClose={modal2.onClose}
                           isOpen={modal2.isOpen}
                           setAux={setAux}
                           aux={aux}
                           user="doctor"
-                          name={e.name}
                         />
                         <Icon w={4} h={4} as={MdPersonAddDisabled} />
                       </Button>
                     </Tooltip>
-
-                    <Button
-                      m="0.5rem"
-                      colorScheme={"teal"}
-                      variant="ghost"
-                      onClick={() => {
-                        setListDoctors(false);
-                        setPutDoctor(true);
-                        handleClick(e.id);
-                      }}
-                    >
-                      <Icon w={4} h={4} as={MdOutlineEditNote} />
-                    </Button>
-                    <Button
-                      m="0.5rem"
-                      colorScheme={"teal"}
-                      variant="ghost"
-                      fontSize="xs"
-                    >
-                      <Icon w={4} h={4} as={RiDeleteBin6Line} />
-                    </Button>
                   </Td>
                 </Tr>
               ))

@@ -9,11 +9,12 @@ import {
 } from "@chakra-ui/react";
 import { Button } from "reactstrap";
 import { useState } from "react";
+import { AiFillCaretRight } from "react-icons/ai";
 import ArchivedAllDoctors from "./ArchivedAllDoctors";
 import ArchivedAllPatients from "./ArchivedAllPatients";
 import { FaUserMd, FaUser } from "react-icons/fa";
 function ArchivedPanel() {
-  const [patients, setPatients] = useState(false);
+  const [patients, setPatients] = useState(true);
   const [doctors, setDoctors] = useState(false);
 
   return (
@@ -34,6 +35,7 @@ function ArchivedPanel() {
           <Divider colorScheme={"teal"} />
           <List m="2rem" spacing={5}>
             <ListItem>
+              {patients && <ListIcon as={AiFillCaretRight} color="teal.500" />}
               <Button
                 onClick={() => {
                   setPatients(true);
@@ -44,6 +46,7 @@ function ArchivedPanel() {
               </Button>
             </ListItem>
             <ListItem>
+              {doctors && <ListIcon as={AiFillCaretRight} color="teal.500" />}
               <Button
                 onClick={() => {
                   setPatients(false);

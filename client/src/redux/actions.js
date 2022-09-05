@@ -308,6 +308,21 @@ export const getTurns = () => {
       });
   };
 };
+export const getTurnById = (idTurn) => {
+  return function (dispatch) {
+    fetch(`${baseURL}/dates`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_TURN_BY_ID",
+          payload: { data, idTurn },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 
 export const getTurnsByDoctor = (idCurrentDoctor) => {
   return function (dispatch) {
@@ -418,6 +433,29 @@ export const getOnePatient = (id) => {
       .catch((error) => {
         console.log(error);
       });
+  };
+};
+export const disablePatient = (patientId) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/patient`, {
+      method: "PATCH",
+      body: JSON.stringify({ patientId }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? Promise.resolve({
+              status: res.status || "00",
+              statusText: `El paciente fue deshabilitado con exito!`,
+            })
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: "No es posible deshabilitar el paciente seleccionado",
+            })
+      )
+      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
   };
 };
 

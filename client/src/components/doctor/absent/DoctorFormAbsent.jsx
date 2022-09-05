@@ -20,21 +20,33 @@ import {
   ListItem,
   Button,
   Icon,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getHours, postAbsentDoctor } from "../../../redux/actions";
+import {
+  cleanConfirm,
+  getHours,
+  postAbsentDoctor,
+} from "../../../redux/actions";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { AiOutlineClose } from "react-icons/ai";
 import { Container } from "reactstrap";
 import { useParams } from "react-router-dom";
 
-function DoctorFormAbsent() {
+function DoctorFormAbsent({ setNewAbsent, setListAbsents }) {
   const [form, setForm] = useState({});
   const dispatch = useDispatch();
-  const { hoursWorking } = useSelector((state) => state);
+  const { hoursWorking, msgConfirm } = useSelector((state) => state);
   const { id } = useParams();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [selectedDateStart, setSelectedDateStart] = useState(new Date()); //cambia fecha en calendario
   const [selectedDateEnd, setSelectedDateEnd] = useState(selectedDateStart);
@@ -43,7 +55,6 @@ function DoctorFormAbsent() {
 
   useEffect(() => {
     dispatch(getHours());
-    setForm({ ...form, doctorId: id });
   }, [dispatch]);
 
   const handleChange = (e) => {
@@ -113,6 +124,11 @@ function DoctorFormAbsent() {
       });
     }
   };
+  const handleSubmit = () => {
+    form.doctorId = id;
+    onOpen();
+    dispatch(postAbsentDoctor(form));
+  };
 
   return (
     <>
@@ -159,7 +175,6 @@ function DoctorFormAbsent() {
           >
             <Box m="1rem" boxShadow={"2xl"} rounded={"md"}>
               <KeyboardDatePicker
-                clearable
                 value={selectedDateStart}
                 placeholder="Inicio"
                 disablePast
@@ -172,7 +187,6 @@ function DoctorFormAbsent() {
             </Box>
             <Box m="1rem" boxShadow={"2xl"} rounded={"md"}>
               <KeyboardDatePicker
-                clearable
                 value={selectedDateEnd}
                 placeholder="FIN"
                 disablePast
@@ -267,7 +281,7 @@ function DoctorFormAbsent() {
       {(form.extended || form.notTotalDay || form.totalDay) && (
         <Button
           colorScheme={"teal"}
-          onClick={() => dispatch(postAbsentDoctor(form))}
+          onClick={() => handleSubmit()}
           isDisabled={
             (form.extended && form.extended.end === "") ||
             (form.notTotalDay && !form.notTotalDay.hours?.length) ||
@@ -277,6 +291,29 @@ function DoctorFormAbsent() {
           Confirmar
         </Button>
       )}
+      <Modal isOpen={isOpen} colorScheme="teal" bg="teal.50" onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent bg="teal.50">
+          <ModalHeader>Registro confirmado</ModalHeader>
+          <ModalBody>
+            El registro de la ausencia ha sido ingresado con exito!
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              colorScheme={"teal"}
+              mr={3}
+              onClick={() => {
+                onClose();
+                dispatch(cleanConfirm());
+                setNewAbsent(false);
+                setListAbsents(true);
+              }}
+            >
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

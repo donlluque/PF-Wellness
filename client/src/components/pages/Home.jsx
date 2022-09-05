@@ -54,7 +54,7 @@ function Home() {
           Clínica de fisioterapia y
           <Spacer /> rehabilitación física
         </Heading>
-        <Box w={{ base: "75%", sm: "75%", md: "60%" }}>
+        <Box textAlign={"center"} w={{ base: "75%", sm: "75%", md: "60%" }}>
           <Text as="i" fontSize="xl" color={colorLetra}>
             "Cuida tu cuerpo. Es el único lugar que tienes para vivir"
           </Text>

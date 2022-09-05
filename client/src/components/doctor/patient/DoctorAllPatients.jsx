@@ -105,7 +105,7 @@ function DoctorAllPatients() {
               ) : (
                 <Alert status="warning">
                   <AlertIcon />
-                  Aun no contiene pacientes registrados
+                  Aun no tiene pacientes registrados
                 </Alert>
               )}
             </Tbody>

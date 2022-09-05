@@ -51,6 +51,12 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         doctors: action.payload,
       };
+    case "SEARCH_PATIENTS_BY_NAME":
+      console.log(action.payload, "ESTEEEE");
+      return {
+        ...state,
+        patients: action.payload,
+      };
 
     case "PUT_PATIENT": {
       return {

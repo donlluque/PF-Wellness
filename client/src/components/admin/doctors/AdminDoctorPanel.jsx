@@ -9,6 +9,7 @@ import {
 import { GrAdd } from "react-icons/gr";
 import { FiFilter } from "react-icons/fi";
 import { BsFillPersonLinesFill } from "react-icons/bs";
+import { AiFillCaretRight } from "react-icons/ai";
 import FormNewDoctor from "./FormNewDoctor";
 import { Button } from "reactstrap";
 import { useState } from "react";
@@ -39,6 +40,9 @@ function AdminDoctorPanel() {
           <Divider colorScheme={"teal"} />
           <List m="2rem" spacing={5}>
             <ListItem>
+              {listDoctors && (
+                <ListIcon as={AiFillCaretRight} color="teal.500" />
+              )}
               <Button
                 onClick={() => {
                   setListDoctors(true);
@@ -50,6 +54,7 @@ function AdminDoctorPanel() {
               </Button>
             </ListItem>
             <ListItem>
+              {newDoctor && <ListIcon as={AiFillCaretRight} color="teal.500" />}
               <Button
                 onClick={() => {
                   setNewDoctor(true);
@@ -61,6 +66,7 @@ function AdminDoctorPanel() {
               </Button>
             </ListItem>
             <ListItem>
+              {filter && <ListIcon as={AiFillCaretRight} color="teal.500" />}
               <Button
                 onClick={() => {
                   setNewDoctor(false);

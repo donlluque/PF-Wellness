@@ -12,19 +12,24 @@ import {
 } from "@chakra-ui/react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { cleanConfirm, disableDoctor } from "../../../redux/actions";
+import {
+  cleanConfirm,
+  disableDoctor,
+  disablePatient,
+} from "../../../redux/actions";
 function ConfirmDisable({
   isOpen,
   onClose,
-  idDoctor,
+
   setAux,
   aux,
   user,
-  name,
 }) {
   const dispatch = useDispatch();
 
-  const { msgConfirm } = useSelector((state) => state);
+  const { msgConfirm, doctorDetail, patientDetail } = useSelector(
+    (state) => state
+  );
 
   return (
     <>
@@ -34,7 +39,8 @@ function ConfirmDisable({
           <ModalHeader>Deshabilitar {user}</ModalHeader>
           {msgConfirm.status !== 200 && (
             <ModalBody>
-              ¿Estas seguro que desea deshabilitar al {user} {name}?
+              ¿Estas seguro que desea deshabilitar al {user}{" "}
+              {doctorDetail ? doctorDetail.name : patientDetail.name}?
             </ModalBody>
           )}
           {msgConfirm.status === 200 && (
@@ -59,7 +65,9 @@ function ConfirmDisable({
                 colorScheme="teal"
                 mr={3}
                 onClick={() => {
-                  dispatch(disableDoctor(idDoctor));
+                  doctorDetail
+                    ? dispatch(disableDoctor(doctorDetail.id))
+                    : dispatch(disablePatient(patientDetail.id));
                 }}
               >
                 Continuar

@@ -12,6 +12,15 @@ import {
   Alert,
   AlertIcon,
   Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Textarea,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 
@@ -19,15 +28,20 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteTurn,
   getOnePatient,
+  getTurnById,
   getTurns,
   getTurnsByDoctor,
 } from "../../../redux/actions";
 import { TbCalendarOff } from "react-icons/tb";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 function DoctorAllTurns({ nextTurns, prevTurns }) {
   const dispatch = useDispatch();
-  const { turnsByDoctor, user } = useSelector((state) => state);
+  const { turnsByDoctor, user, turnById } = useSelector((state) => state);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [value, setValue] = useState();
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const { id } = useParams();
 
@@ -50,6 +64,11 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
   useEffect(() => {
     dispatch(getTurnsByDoctor(id));
   }, [dispatch]);
+
+  //motivo de cancelacion de turno
+  const handleValueChange = (e) => {
+    setValue(e.target.value);
+  };
 
   return (
     <>
@@ -81,7 +100,10 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
                       colorScheme={"teal"}
                       variant="ghost"
                       fontSize="xs"
-                      onClick={() => dispatch(deleteTurn(e.id))}
+                      onClick={() => {
+                        onOpen();
+                        dispatch(getTurnById(e.id));
+                      }}
                     >
                       <Icon w={4} h={4} as={TbCalendarOff} />
                     </Button>
@@ -106,6 +128,57 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
           <Tfoot></Tfoot>
         </Table>
       </TableContainer>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Cancelar turno</ModalHeader>
+          {!confirmDelete && (
+            <ModalBody>
+              Motivo de cancelación:
+              <Textarea
+                value={value}
+                onChange={handleValueChange}
+                placeholder="Escribe el motivo de la cancelación del turno"
+                size="sm"
+              />
+            </ModalBody>
+          )}
+          {confirmDelete && (
+            <ModalBody>
+              ¿Estas seguro que desea cancelar el turno?
+              <Textarea
+                value={value}
+                onChange={handleValueChange}
+                placeholder="Escribe el motivo de la cancelación del turno"
+                size="sm"
+              />
+            </ModalBody>
+          )}
+
+          <ModalFooter>
+            <Button colorScheme="teal" variant="ghost" mr={3} onClick={onClose}>
+              Cancelar
+            </Button>
+            {!confirmDelete && (
+              <Button colorScheme="teal" onClick={() => setConfirmDelete(true)}>
+                Continuar
+              </Button>
+            )}
+            {confirmDelete && (
+              <Button
+                colorScheme="teal"
+                onClick={() => {
+                  onClose();
+                  setConfirmDelete(false);
+                  dispatch(deleteTurn(turnById.id));
+                }}
+              >
+                Notificar al paciente
+              </Button>
+            )}
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

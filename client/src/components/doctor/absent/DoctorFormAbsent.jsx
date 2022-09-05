@@ -44,7 +44,7 @@ import { useParams } from "react-router-dom";
 function DoctorFormAbsent({ setNewAbsent, setListAbsents }) {
   const [form, setForm] = useState({});
   const dispatch = useDispatch();
-  const { hoursWorking, msgConfirm } = useSelector((state) => state);
+  const { hoursWorking } = useSelector((state) => state);
   const { id } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
 

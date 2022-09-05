@@ -18,6 +18,7 @@ const review = require("./review.js");
 const absence = require("./absence.js");
 const mail_form = require("./mail/mail_form.js");
 const mail_pago = require("./mail/mail_pago.js");
+const mail_sub = require("./mail/mail_sub.js");
 
 const router = Router();
 
@@ -40,5 +41,6 @@ router.use("/general_area", general_area);
 
 router.use("/mail_form", mail_form);
 router.use("/mail_pago", mail_pago);
+router.use("/mail_sub", mail_sub);
 
 module.exports = router;

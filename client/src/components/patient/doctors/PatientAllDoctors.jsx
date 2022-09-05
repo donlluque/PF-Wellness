@@ -40,6 +40,8 @@ function PatientAllDoctors() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   console.log(user.id, "soy id paciente");
 
+  console.log("turnsByPatient", turnsByPatient);
+
   let aux = turnsByPatient?.map((e) => e.doctors?.[0]);
   console.log(aux, "aux");
   const visibleDoctors = [];
@@ -64,6 +66,7 @@ function PatientAllDoctors() {
 
   return (
     <>
+      <h1>Estoy</h1>
       <TableContainer>
         <Table size="sm">
           {visibleDoctors.length ? (

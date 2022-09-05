@@ -5,6 +5,7 @@ require("dotenv").config();
 
 router.post("/", async (req, res) => {
   const { email } = req.body;
+
   try {
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",

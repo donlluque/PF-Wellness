@@ -25,6 +25,7 @@ function PatientAllTurns({ nextTurns, prevTurns }) {
   const dispatch = useDispatch();
   const { turnsByPatient } = useSelector((state) => state);
   const { id } = useParams();
+  // console.log(typeof id, "ID DE TURNS");
 
   let aux = turnsByPatient;
 
@@ -45,10 +46,7 @@ function PatientAllTurns({ nextTurns, prevTurns }) {
     ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
     : turnsByPatient;
 
-  useEffect(() => {
-    dispatch(getTurnsByPatient(id));
-    // dispatch(getTurns());
-  }, [dispatch]);
+  console.log(visibleTurns, "visibleTurns turn patients");
 
   return (
     <>

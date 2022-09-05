@@ -27,7 +27,11 @@ import Logo from "../assets/logoPf.jpeg";
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { dateUser, getDetailDoctors } from "../redux/actions";
+import {
+  dateUser,
+  getDetailDoctors,
+  getTurnsByPatient,
+} from "../redux/actions";
 import { GrUserAdmin } from "react-icons/gr";
 import { FaUserCircle } from "react-icons/fa";
 import { BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
@@ -58,6 +62,7 @@ function NavBar() {
         dispatch(dateUser(user));
         // localStorage.setItem("user", JSON.stringify(user));
       }
+      dispatch(getTurnsByPatient(user.id));
     }
   }, [user]);
 

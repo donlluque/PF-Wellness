@@ -11,7 +11,6 @@ import {
   Icon,
   Alert,
   AlertIcon,
-  Text,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -19,6 +18,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Text,
   useDisclosure,
   Textarea,
 } from "@chakra-ui/react";
@@ -31,7 +31,7 @@ import {
   getTurnById,
   getTurns,
   getTurnsByDoctor,
-  sendEmail
+  sendEmailForm,
 } from "../../../redux/actions";
 import { TbCalendarOff } from "react-icons/tb";
 import { useParams } from "react-router-dom";
@@ -109,6 +109,19 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
                       <Icon w={4} h={4} as={TbCalendarOff} />
                     </Button>
                   </Td>
+                  <Td>
+                    <Button
+                      m="0.5rem"
+                      colorScheme={"teal"}
+                      variant="ghost"
+                      fontSize="xs"
+                      onClick={() => {
+                        dispatch(sendEmailForm(user));
+                      }}
+                    >
+                      Formulario
+                    </Button>
+                  </Td>
                 </Tr>
               ))
             ) : (
@@ -172,7 +185,6 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
                   onClose();
                   setConfirmDelete(false);
                   dispatch(deleteTurn(turnById.id));
-                  dispatch(sendEmail());
                 }}
               >
                 Notificar al paciente

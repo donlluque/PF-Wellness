@@ -51,6 +51,12 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         doctors: action.payload,
       };
+    case "SEARCH_PATIENTS_BY_NAME":
+      console.log(action.payload, "ESTEEEE");
+      return {
+        ...state,
+        patients: action.payload,
+      };
 
     case "PUT_PATIENT": {
       return {
@@ -179,6 +185,16 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         user: action.payload,
+      };
+    }
+    case "SEND_EMAIL_FORM": {
+      return {
+        ...state,
+      };
+    }
+    case "SEND_EMAIL_PAGO": {
+      return {
+        ...state,
       };
     }
     default:

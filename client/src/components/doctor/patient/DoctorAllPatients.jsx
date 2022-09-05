@@ -18,6 +18,7 @@ import {
   Alert,
   AlertIcon,
   useDisclosure,
+  CircularProgress,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 
@@ -36,15 +37,20 @@ function DoctorAllPatients() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { id } = useParams();
 
+  console.log("turnsByDoctor", turnsByDoctor);
+
   useEffect(() => {
     dispatch(getAllPatients());
     dispatch(getTurnsByDoctor(id));
   }, [dispatch]);
 
-  let aux = turnsByDoctor?.map((e) => e.patients?.[0]);
+  let aux = turnsByDoctor?.filter((e) => e.patients.length);
+  let aux2 = aux.map((el) => el.patients[0]);
+
   const visiblePatients = [];
-  aux?.forEach((e) => {
-    let search = visiblePatients?.find((d) => d.id === e.id);
+  aux2?.forEach((e) => {
+    let search = visiblePatients?.find((d) => d.id == e.id);
+    console.log(e.id, "E EN EL FOR EACH");
     if (!search) {
       visiblePatients.push(e);
     }

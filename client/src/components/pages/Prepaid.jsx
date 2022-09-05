@@ -10,6 +10,7 @@ import {
   ListItem,
   List,
   WrapItem,
+  Button,
 } from "@chakra-ui/react";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { BsTelephone } from "react-icons/bs";
@@ -21,12 +22,11 @@ import img from "../../img/logo-medicus.jpg";
 
 function Prepaid() {
   const dispatch = useDispatch();
-  const {prepaidHealth} = useSelector((state) => state);
-
+  const { prepaidHealth } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(getPrepaidHealth());
-  },[dispatch])
+  }, [dispatch]);
   return (
     <>
       <Center
@@ -63,6 +63,68 @@ function Prepaid() {
         <WrapItem>
           <Box
             m="3rem"
+            bgPosition="55%"
+            bgImage="linear-gradient(
+              rgba(230, 255, 250, 0.7),
+              rgba(230, 255, 250, 0.7)
+            ),
+            url(https://www.wedskenya.com/wp-content/uploads/2019/03/Cute-Holding-Hands-Quotes.jpg)"
+            bgRepeat="no-repeat"
+            bgSize="cover"
+            w="73rem"
+            h="15rem"
+            p="1rem"
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-around"
+            alignItems="center"
+            boxShadow="dark-lg"
+            borderRadius="0.5rem"
+            filter="grayscale(10%)"
+            border="2px"
+            borderColor="#D69E2E"
+          >
+            <Image
+              src={
+                "https://cdn.discordapp.com/attachments/1009488625219678269/1016320991221252217/WellnessPremium.png"
+              }
+              alt="img"
+              maxW="25rem"
+              mb="1rem"
+            />
+            <List spacing={3} fontSize="2xl">
+              <ListItem>
+                <ListIcon as={BsTelephone} color="green.600" />
+                +54 9 351 365-4238
+              </ListItem>
+              <ListItem>
+                <ListIcon as={MdAlternateEmail} color="green.600" />
+                wellnesclinica@gmail.com
+              </ListItem>
+              <ListItem color="green.600" fontWeight={"bold"}>
+                <ListIcon as={FaRegMoneyBillAlt} color="green.600" />
+                100%
+              </ListItem>
+            </List>
+            <Button
+              mt={"0.5rem"}
+              bg="#D69E2E"
+              w={"15rem"}
+              h={"4rem"}
+              fontSize={"3xl"}
+              fontWeight={"bold"}
+              boxShadow="dark-lg"
+            >
+              Suscribirse
+            </Button>
+          </Box>
+        </WrapItem>
+      </Wrap>
+
+      <Wrap bg="#EDF2F7" justify="center" mt="-2">
+        <WrapItem>
+          <Box
+            m="3rem"
             bg="white"
             w="20rem"
             h="15rem"
@@ -90,7 +152,7 @@ function Prepaid() {
               </ListItem>
               <ListItem color="green.500">
                 <ListIcon as={FaRegMoneyBillAlt} color="green.500" />
-                {(prepaidHealth[0]?.percentage)*100}%
+                {prepaidHealth[0]?.percentage * 100}%
               </ListItem>
             </List>
           </Box>
@@ -124,9 +186,9 @@ function Prepaid() {
                 <ListIcon as={MdAlternateEmail} color="green.500" />
                 {prepaidHealth[1]?.address}
               </ListItem>
-              <ListItem>
+              <ListItem color="green.500">
                 <ListIcon as={FaRegMoneyBillAlt} color="green.500" />
-                {(prepaidHealth[1]?.percentage)*100}%
+                {prepaidHealth[1]?.percentage * 100}%
               </ListItem>
             </List>
           </Box>
@@ -160,9 +222,9 @@ function Prepaid() {
                 <ListIcon as={MdAlternateEmail} color="green.500" />
                 {prepaidHealth[2]?.address}
               </ListItem>
-              <ListItem>
+              <ListItem color="green.500">
                 <ListIcon as={FaRegMoneyBillAlt} color="green.500" />
-                {(prepaidHealth[2]?.percentage)*100}%
+                {prepaidHealth[2]?.percentage * 100}%
               </ListItem>
             </List>
           </Box>
@@ -180,13 +242,7 @@ function Prepaid() {
             boxShadow="2xl"
             borderRadius="0.5rem"
           >
-            <Image
-              src={img}
-              alt="img"
-              maxW="10rem"
-              minH="6rem"
-              mb="0.5rem"
-            />
+            <Image src={img} alt="img" maxW="10rem" minH="6rem" mb="0.5rem" />
             <List spacing={3}>
               <ListItem>
                 <ListIcon as={BsTelephone} color="green.500" />
@@ -196,9 +252,9 @@ function Prepaid() {
                 <ListIcon as={MdAlternateEmail} color="green.500" />
                 {prepaidHealth[3]?.address}
               </ListItem>
-              <ListItem>
+              <ListItem color="green.500">
                 <ListIcon as={FaRegMoneyBillAlt} color="green.500" />
-                {(prepaidHealth[3]?.percentage)*100}%
+                {prepaidHealth[3]?.percentage * 100}%
               </ListItem>
             </List>
           </Box>
@@ -232,9 +288,9 @@ function Prepaid() {
                 <ListIcon as={MdAlternateEmail} color="green.500" />
                 {prepaidHealth[4]?.address}
               </ListItem>
-              <ListItem>
+              <ListItem color="green.500">
                 <ListIcon as={FaRegMoneyBillAlt} color="green.500" />
-                {(prepaidHealth[4]?.percentage)*100}%
+                {prepaidHealth[4]?.percentage * 100}%
               </ListItem>
             </List>
           </Box>
@@ -268,9 +324,9 @@ function Prepaid() {
                 <ListIcon as={MdAlternateEmail} color="green.500" />
                 {prepaidHealth[5]?.address}
               </ListItem>
-              <ListItem>
+              <ListItem color="green.500">
                 <ListIcon as={FaRegMoneyBillAlt} color="green.500" />
-                {(prepaidHealth[5]?.percentage)*100}%
+                {prepaidHealth[5]?.percentage * 100}%
               </ListItem>
             </List>
           </Box>

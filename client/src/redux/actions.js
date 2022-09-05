@@ -1,5 +1,6 @@
 import { baseURL } from "../index.js";
 import axios from "axios";
+import { id } from "date-fns/locale";
 
 //DOCTORS
 export function getDoctors() {
@@ -398,6 +399,7 @@ export const getAllAreas = () => {
 
 //PATIENT
 export const searchPatientByName = (patient) => {
+  console.log("patient", patient);
   return function (dispatch) {
     return fetch(`${baseURL}/patients?name=${patient}`)
       .then((res) =>
@@ -411,7 +413,7 @@ export const searchPatientByName = (patient) => {
             })
       )
       .then((data) => {
-        dispatch({ type: "SEARCH_DOCTOR_BY_NAME", payload: data });
+        dispatch({ type: "SEARCH_PATIENTS_BY_NAME", payload: data });
       })
       .catch((err) => {
         dispatch({ type: "HANDLE_ERROR", payload: err });
@@ -600,12 +602,27 @@ export const getReviews = () => {
   };
 };
 
-export const sendEmail = (payload) => {
+export const sendEmailForm = (payload) => {
   return async (dispatch) => {
     try {
-      let response = await axios.post(`${baseURL}/mail/mail_form`, payload);
+      let response = await axios.post(`${baseURL}/mail_form`, payload);
       return dispatch({
-        type: "SEND_EMAIL",
+        type: "SEND_EMAIL_FORM",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const sendEmailPago = (payload) => {
+  console.log(payload, "PAYLOAD");
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(`${baseURL}/mail_pago`, payload);
+      return dispatch({
+        type: "SEND_EMAIL_PAGO",
         payload: response.data,
       });
     } catch (error) {

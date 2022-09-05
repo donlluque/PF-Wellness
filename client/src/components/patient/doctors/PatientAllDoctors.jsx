@@ -38,7 +38,7 @@ function PatientAllDoctors() {
     (state) => state
   );
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log(user.id);
+  console.log(user.id, "soy id paciente");
 
   let aux = turnsByPatient?.map((e) => e.doctors?.[0]);
   console.log(aux, "aux");

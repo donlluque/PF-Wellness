@@ -82,13 +82,14 @@ function Calendar() {
     dispatch(getDetailDoctors(idDoctor));
     dispatch(getHours());
     dispatch(getOnePatient(usuario.id));
-    setForm({ ...form, idDoctor: idDoctor });
+    setForm({ ...form, idDoctor: idDoctor, idPatient: usuario.id });
+    // setForm({ ...form, idPatient: usuario.id });
     dispatch(getTurns());
   }, [dispatch]);
 
   const handleConfirm = (e) => {
     e.preventDefault();
-    form.idPatient = usuario.id;
+    // form.idPatient = usuario.id;
 
     //dispatch(postTurn(form));
     onOpen();
@@ -273,14 +274,15 @@ function Calendar() {
           Continuar
         </Button>
       </Box>
-
-      <Payments
-        active={active}
-        onClose={onClose}
-        isOpen={isOpen}
-        onOpen={onOpen}
-        form={form}
-      />
+      {form.idPatient ? (
+        <Payments
+          active={active}
+          onClose={onClose}
+          isOpen={isOpen}
+          onOpen={onOpen}
+          form={form}
+        />
+      ) : null}
     </>
   );
 }

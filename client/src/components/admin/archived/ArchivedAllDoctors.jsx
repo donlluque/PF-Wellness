@@ -96,17 +96,16 @@ function ArchivedAllDoctors() {
                         variant="ghost"
                         fontSize="xs"
                         onClick={() => {
-                          setId(e.id);
+                          dispatch(getDetailDoctors(e.id));
                           modal2.onOpen();
                         }}
                       >
                         <ConfirmEnable
                           aux={aux}
                           setAux={setAux}
-                          idDoctor={id}
                           onClose={modal2.onClose}
                           isOpen={modal2.isOpen}
-                          user={e.name}
+                          user={"doctor"}
                         />
                         <Icon w={4} h={4} as={FaUserCheck} />
                       </Button>
@@ -124,8 +123,6 @@ function ArchivedAllDoctors() {
           <Tfoot></Tfoot>
         </Table>
       </TableContainer>
-
-      {/*MODAL CONFIRM*/}
 
       {/*MODAL DETAIL*/}
       <Modal isOpen={isOpen} onClose={onClose}>

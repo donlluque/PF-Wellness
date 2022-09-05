@@ -12,11 +12,17 @@ import {
 } from "@chakra-ui/react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { cleanConfirm, disableDoctor } from "../../../redux/actions";
+import {
+  cleanConfirm,
+  disableDoctor,
+  disablePatient,
+} from "../../../redux/actions";
 function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
   const dispatch = useDispatch();
 
-  const { msgConfirm } = useSelector((state) => state);
+  const { msgConfirm, doctorDetail, patientDetail } = useSelector(
+    (state) => state
+  );
 
   return (
     <>
@@ -26,14 +32,17 @@ function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
           <ModalHeader>Habilitar {user}</ModalHeader>
           {msgConfirm.status !== 200 && (
             <ModalBody>
-              ¿Estas seguro que desea habilitar al {user} {name}?
+              ¿Estas seguro que desea habilitar al {user}{" "}
+              {doctorDetail ? doctorDetail.name : patientDetail.name}?
             </ModalBody>
           )}
           {msgConfirm.status === 200 && (
             <ModalBody>
               <Alert status="success">
                 <AlertIcon />
-                El {user} {name} fue habilitado con exito!
+                El {user}{" "}
+                {doctorDetail ? doctorDetail.name : patientDetail.name} fue
+                habilitado con exito!
               </Alert>
             </ModalBody>
           )}
@@ -51,7 +60,9 @@ function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
                 colorScheme="teal"
                 mr={3}
                 onClick={() => {
-                  dispatch(disableDoctor(idDoctor));
+                  doctorDetail
+                    ? dispatch(disableDoctor(doctorDetail.id))
+                    : dispatch(disablePatient(patientDetail.id));
                 }}
               >
                 Continuar
@@ -70,7 +81,7 @@ function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
                   setAux(!aux);
                 }}
               >
-                Close
+                Cerrar
               </Button>
             </ModalFooter>
           )}

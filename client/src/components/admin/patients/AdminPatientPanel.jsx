@@ -13,6 +13,7 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
 
 import { Button } from "reactstrap";
 import { useState } from "react";
+import { AiFillCaretRight } from "react-icons/ai";
 import AdminAllPatients from "./AdminAllPatients";
 import SearchBarPatient from "../../patient/SearchBarPatient";
 
@@ -37,6 +38,9 @@ function AdminPatientPanel() {
           <Divider colorScheme={"teal"} />
           <List m="2rem" spacing={5}>
             <ListItem>
+              {listPatients && (
+                <ListIcon as={AiFillCaretRight} color="teal.500" />
+              )}
               <Button
                 onClick={() => {
                   setListPatients(true);
@@ -47,6 +51,7 @@ function AdminPatientPanel() {
               </Button>
             </ListItem>
             <ListItem>
+              {filter && <ListIcon as={AiFillCaretRight} color="teal.500" />}
               <Button
                 onClick={() => {
                   setListPatients(true);

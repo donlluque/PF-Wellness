@@ -100,15 +100,16 @@ function ArchivedAllPatients() {
                         colorScheme={"teal"}
                         variant="ghost"
                         fontSize="xs"
-                        onClick={() => modal2.onOpen()}
+                        onClick={() => {
+                          dispatch(getOnePatient(e.id));
+                          modal2.onOpen();
+                        }}
                       >
                         <ConfirmEnable
                           aux={aux}
                           setAux={setAux}
-                          idDoctor={e.id}
                           onClose={modal2.onClose}
                           isOpen={modal2.isOpen}
-                          name={e.name}
                           user="paciente"
                         />
                         <Icon w={4} h={4} as={FaUserCheck} />

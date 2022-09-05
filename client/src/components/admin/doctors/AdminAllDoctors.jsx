@@ -26,7 +26,7 @@ import { useEffect } from "react";
 import { MdOutlineEditNote, MdPersonAddDisabled } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailDoctors, getDoctors, getHours } from "../../../redux/actions";
+import { getDetailDoctors, getDoctors, getHours, cleanDoctor } from "../../../redux/actions";
 import DoctorDetail from "../../DoctorDetail";
 import ConfirmDisable from "./ConfirmDisable";
 
@@ -156,7 +156,8 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
           </ModalBody>
 
           <ModalFooter>
-            <Button bg="#2C7A7B" color="white" mr={3} onClick={onClose}>
+            <Button bg="#2C7A7B" color="white" mr={3} onClick={() => {onClose()
+            dispatch(cleanDoctor())}}>
               Close
             </Button>
           </ModalFooter>

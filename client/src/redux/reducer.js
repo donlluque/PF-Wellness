@@ -181,7 +181,12 @@ export default function rootReducer(state = initialState, action) {
         user: action.payload,
       };
     }
-    case "SEND_EMAIL": {
+    case "SEND_EMAIL_FORM": {
+      return {
+        ...state,
+      };
+    }
+    case "SEND_EMAIL_PAGO": {
       return {
         ...state,
       };

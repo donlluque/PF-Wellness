@@ -603,7 +603,7 @@ export const getReviews = () => {
 export const sendEmail = (payload) => {
   return async (dispatch) => {
     try {
-      let response = await axios.post(`${baseURL}/mail/mail_form`, payload);
+      let response = await axios.post(`${baseURL}/mail_form`, payload);
       return dispatch({
         type: "SEND_EMAIL",
         payload: response.data,

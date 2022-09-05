@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
       secure: false, // true for 465, false for other ports
       auth: {
         user: "wellnesclinica@gmail.com", // generated ethereal user
-        pass: "dwmiflqcprweorwj", // generated ethereal password
+        pass: "jdllmwovaiuwxtqz", // generated ethereal password
       },
       tls: {
         rejectUnauthorized: false,

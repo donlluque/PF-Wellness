@@ -398,6 +398,7 @@ export const getAllAreas = () => {
 
 //PATIENT
 export const searchPatientByName = (patient) => {
+  console.log("patient", patient);
   return function (dispatch) {
     return fetch(`${baseURL}/patients?name=${patient}`)
       .then((res) =>
@@ -411,7 +412,7 @@ export const searchPatientByName = (patient) => {
             })
       )
       .then((data) => {
-        dispatch({ type: "SEARCH_DOCTOR_BY_NAME", payload: data });
+        dispatch({ type: "SEARCH_PATIENTS_BY_NAME", payload: data });
       })
       .catch((err) => {
         dispatch({ type: "HANDLE_ERROR", payload: err });

@@ -21,7 +21,7 @@ router.get("/", async (req, res, next) => {
     const nombre = await patientDb.filter((e) =>
       e.fullName.toLowerCase().includes(name.toLowerCase())
     );
-
+    console.log(nombre);
     nombre.length
       ? res.status(200).send(nombre)
       : res.status(400).send("Not exist");

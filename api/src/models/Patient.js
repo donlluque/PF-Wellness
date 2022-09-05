@@ -11,16 +11,6 @@ module.exports = (sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      fullName: {
-        type: DataTypes.VIRTUAL,
-        get() {
-          if (this.name && this.last_name) {
-            return `${this.name} ${this.last_name}`;
-          } else if (this.name) {
-            return `${this.name}`;
-          }
-        },
-      },
 
       name: {
         type: DataTypes.STRING,
@@ -86,6 +76,13 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
       },
     },
-    { timestamps: false }
+    {
+      timestamps: false,
+      getterMethods: {
+        fullName() {
+          return this.name + " " + this.last_name;
+        },
+      },
+    }
   );
 };

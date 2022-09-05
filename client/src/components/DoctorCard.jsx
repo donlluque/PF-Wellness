@@ -40,6 +40,7 @@ export default function DoctorCard({
 
   const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
   const usuario = useSelector((state) => state.user);
+  console.log(usuario, "USUARIOOOO");
 
   const OverlayOne = () => (
     <ModalOverlay

@@ -181,6 +181,11 @@ export default function rootReducer(state = initialState, action) {
         user: action.payload,
       };
     }
+    case "SEND_EMAIL": {
+      return {
+        ...state,
+      };
+    }
     default:
       return {
         ...state,

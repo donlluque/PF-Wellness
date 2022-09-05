@@ -25,6 +25,7 @@ import {
   getOnePatient,
   getPrepaidHealth,
   postTurn,
+  sendEmailPago,
 } from "../redux/actions";
 import axios from "axios";
 import { baseURL } from "../index.js";
@@ -32,7 +33,7 @@ import { Link } from "react-router-dom";
 
 function Payments({ onClose, isOpen, onOpen, form, active }) {
   const dispatch = useDispatch();
-  const { doctorDetail, patientDetail, prepaidHealth, hoursWorking } =
+  const { doctorDetail, patientDetail, prepaidHealth, hoursWorking, user } =
     useSelector((state) => state);
   const confirmModal = useDisclosure();
   const [wellnessPrepaid, setWellnessPrepaid] = useState(false);
@@ -55,7 +56,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
     dispatch(getHours());
     setPrepaid(handlePrepaid());
   }, [active]);
-  console.log("detail paient", patientDetail);
+
   const handlePrepaid = () => {
     let result;
     if (patientDetail.prepaid_healths?.find((e) => e.name === "Wellness")) {
@@ -98,7 +99,14 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
   const handleSubmitNotPay = () => {
     console.log(form);
     dispatch(postTurn(form));
+
     onClose();
+  };
+
+  const handleEmail = (user) => {
+    dispatch(sendEmailPago(user));
+    onClose();
+    confirmModal.onOpen();
   };
 
   const handleSubmitPay = async () => {
@@ -292,14 +300,14 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
                 Cancelar
               </Button>
             )}
+
             {payActive && (
               <Button
                 colorScheme="teal"
                 variant="ghost"
                 mr={3}
                 onClick={() => {
-                  onClose();
-                  confirmModal.onOpen();
+                  handleEmail(user);
                 }}
               >
                 Finalizar

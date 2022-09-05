@@ -68,7 +68,7 @@ export default function DoctorCard({
   const colorLetra = useColorModeValue("white", "#000000");
 
   //---------------------------------//
-
+  console.log(usuario, "estoy aca la puta que lo pario");
   return (
     <>
       <Box

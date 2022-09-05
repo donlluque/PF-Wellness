@@ -9,14 +9,15 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { makePayment } from "../redux/actions";
+// import { makePayment, sendEmailPago } from "../redux/actions";
 import axios from "axios";
 import { baseURL } from "../index.js";
 
 function MakePayments() {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const [input, setInput] = useState([
     {
       title: "",
@@ -32,8 +33,8 @@ function MakePayments() {
 
     try {
       const generarLink = await axios.post(`${baseURL}/pagos`, input);
-
       window.location.href = generarLink.data;
+      // dispatch(sendEmailPago(user.email));
     } catch (error) {
       console.log(error);
     }

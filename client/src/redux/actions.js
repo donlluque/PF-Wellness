@@ -600,12 +600,27 @@ export const getReviews = () => {
   };
 };
 
-export const sendEmail = (payload) => {
+export const sendEmailForm = (payload) => {
   return async (dispatch) => {
     try {
       let response = await axios.post(`${baseURL}/mail_form`, payload);
       return dispatch({
-        type: "SEND_EMAIL",
+        type: "SEND_EMAIL_FORM",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const sendEmailPago = (payload) => {
+  console.log(payload, "PAYLOAD");
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(`${baseURL}/mail_pago`, payload);
+      return dispatch({
+        type: "SEND_EMAIL_PAGO",
         payload: response.data,
       });
     } catch (error) {

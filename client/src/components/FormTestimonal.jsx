@@ -48,9 +48,11 @@ function MakeReviews() {
     if (!input.name) {
       error.name = "Necesitas completar con tu nombre";
     }
-    console.log(error.name);
     if (!input.review) {
       error.review = "Completa este campo";
+    }
+    if(!input.rating){
+      error.rating = "Debes elegir un rating";
     }
     return error;
   }
@@ -81,6 +83,12 @@ function MakeReviews() {
   const ratingChanged = (newRating) => {
     console.log(newRating);
     setInput({ ...input, rating: newRating });
+    setErrors(
+      validations({
+        ...input,
+        rating: newRating,
+      })
+    );
   };
   return (
     <>
@@ -174,13 +182,18 @@ function MakeReviews() {
           </Select>
           {/* <Rating name="half-rating" defaultValue={2.5} value={input.rating} precision={0.5} /> */}
           <Box ml="5.5rem" mt="1rem">
+          <FormControl isInvalid={errors.rating}>
             <ReactStars
-              value={rating || 1}
+              value={ rating }
               count={5}
               onChange={ratingChanged}
               size={40}
               activeColor="#ffd700"
             />
+            {errors.rating && (
+              <FormErrorMessage>{errors.rating} </FormErrorMessage>
+            )}
+            </FormControl>
           </Box>
           <Link to="/">
             <Button

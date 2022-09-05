@@ -599,6 +599,20 @@ export const getReviews = () => {
       });
   };
 };
+
+export const sendEmail = (payload) => {
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(`${baseURL}/mail/mail_form`, payload);
+      return dispatch({
+        type: "SEND_EMAIL",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 // export const dateUser = (payload) => {
 //   return function (dispatch) {
 //     return fetch(`${baseURL}/checkuser`, {

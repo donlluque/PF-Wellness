@@ -1,5 +1,6 @@
 import { baseURL } from "../index.js";
 import axios from "axios";
+import { id } from "date-fns/locale";
 
 //DOCTORS
 export function getDoctors() {

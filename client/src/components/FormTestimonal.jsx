@@ -5,32 +5,21 @@ import {
   FormLabel,
   Input,
   Textarea,
-  Select,
   FormControl,
   Button,
-  Text,
   FormErrorMessage,
 } from "@chakra-ui/react";
 import ReactStars from "react-rating-stars-component";
 import React from "react";
 import { Context } from "./Context";
 import { useState } from "react";
-import { getDoctors } from "../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { addReview } from "../redux/actions";
 
 function MakeReviews() {
   const { mostrar, setMostrar } = React.useContext(Context);
-  const dispatch = useDispatch();
   const history = useHistory();
-  const { doctors } = useSelector((state) => state);
   setMostrar(false);
-
-  useEffect(() => {
-    dispatch(getDoctors());
-  }, []);
 
   const [input, setInput] = useState([
     {
@@ -51,7 +40,7 @@ function MakeReviews() {
     if (!input.review) {
       error.review = "Completa este campo";
     }
-    if(!input.rating){
+    if (!input.rating) {
       error.rating = "Debes elegir un rating";
     }
     return error;
@@ -169,30 +158,18 @@ function MakeReviews() {
               <FormErrorMessage>{errors.review} </FormErrorMessage>
             )}
           </FormControl>
-
-          <Select
-            mt="1rem"
-            value={input.doctors}
-            onChange={(e) => handleChange(e)}
-            name="doctors"
-          >
-            <option value="All">Profesional que te atendió</option>
-            {doctors &&
-              doctors.map((e) => <option value={e.id}>{e.name}</option>)}
-          </Select>
-          {/* <Rating name="half-rating" defaultValue={2.5} value={input.rating} precision={0.5} /> */}
           <Box ml="5.5rem" mt="1rem">
-          <FormControl isInvalid={errors.rating}>
-            <ReactStars
-              value={ rating }
-              count={5}
-              onChange={ratingChanged}
-              size={40}
-              activeColor="#ffd700"
-            />
-            {errors.rating && (
-              <FormErrorMessage>{errors.rating} </FormErrorMessage>
-            )}
+            <FormControl isInvalid={errors.rating}>
+              <ReactStars
+                value={rating}
+                count={5}
+                onChange={ratingChanged}
+                size={40}
+                activeColor="#ffd700"
+              />
+              {errors.rating && (
+                <FormErrorMessage>{errors.rating} </FormErrorMessage>
+              )}
             </FormControl>
           </Box>
           <Link to="/">

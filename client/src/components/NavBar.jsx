@@ -28,6 +28,7 @@ import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { dateUser, getDetailDoctors } from "../redux/actions";
+import { GrUserAdmin } from "react-icons/gr";
 import { FaUserCircle } from "react-icons/fa";
 import { BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -162,39 +163,43 @@ function NavBar() {
             )}
           </Button>
 
-          <>
-            {isAuthenticated &&
-            user.email_verified &&
-            user &&
-            user.tipoRol?.[0] === "user" ? (
-              <Link to="/turnos">
+          {!user || (user && user.tipoRol?.[0] !== "admin") ? (
+            <>
+              {isAuthenticated &&
+              user.email_verified &&
+              user &&
+              user.tipoRol?.[0] === "user" ? (
+                <Link to="/turnos">
+                  <Button
+                    colorScheme={schemeBt}
+                    variant="solid"
+                    bg={botonBg}
+                    color={colorBt}
+                  >
+                    Turnos Online
+                  </Button>
+                </Link>
+              ) : (
                 <Button
                   colorScheme={schemeBt}
                   variant="solid"
+                  onClick={() =>
+                    isAuthenticated
+                      ? user.email_verified
+                        ? true
+                        : notVerificadeModal.onOpen()
+                      : notAuthenticatedModal.onOpen()
+                  }
                   bg={botonBg}
                   color={colorBt}
                 >
                   Turnos Online
                 </Button>
-              </Link>
-            ) : (
-              <Button
-                colorScheme={schemeBt}
-                variant="solid"
-                onClick={() =>
-                  isAuthenticated
-                    ? user.email_verified
-                      ? true
-                      : notVerificadeModal.onOpen()
-                    : notAuthenticatedModal.onOpen()
-                }
-                bg={botonBg}
-                color={colorBt}
-              >
-                Turnos Online
-              </Button>
-            )}
-          </>
+              )}
+            </>
+          ) : (
+            false
+          )}
 
           {!isAuthenticated && (
             <Button
@@ -276,6 +281,36 @@ function NavBar() {
                     >
                       <MenuItem>Ver perfil</MenuItem>
                     </Link>
+                    <MenuItem
+                      onClick={() =>
+                        logout({ returnTo: window.location.origin })
+                      }
+                    >
+                      Cerrar Sesión
+                    </MenuItem>
+                  </MenuList>
+                </>
+              )}
+            </Menu>
+          )}
+          {isAuthenticated && user.tipoRol?.[0] === "admin" && (
+            <Menu>
+              {({ isOpen }) => (
+                <>
+                  <MenuButton
+                    isActive={isOpen}
+                    as={Button}
+                    bg={modoUser}
+                    colorScheme={schemeBt}
+                    p={6}
+                  >
+                    {isOpen ? (
+                      <Icon boxSize={7} as={GrUserAdmin} color={bgUser} />
+                    ) : (
+                      <Icon boxSize={7} as={GrUserAdmin} color={bgUser} />
+                    )}
+                  </MenuButton>
+                  <MenuList>
                     <MenuItem
                       onClick={() =>
                         logout({ returnTo: window.location.origin })

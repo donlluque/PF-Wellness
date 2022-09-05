@@ -66,8 +66,7 @@ function ArchivedAllPatients() {
                 <Th isNumeric>ID</Th>
                 <Th></Th>
                 <Th>Nombre</Th>
-                <Th>Área</Th>
-                <Th>Especialidad</Th>
+                <Th>Email</Th>
               </Tr>
             </Thead>
           ) : (
@@ -82,8 +81,8 @@ function ArchivedAllPatients() {
                     <Image src={e.picture} w="3rem" h="3rem" rounded={"50%"} />
                   </Td>
                   <Td>{e.name}</Td>
-                  <Td>{e.general_area?.name}</Td>
-                  <Td>{e.specialty}</Td>
+                  <Td>{e.email}</Td>
+
                   <Td>
                     <Button
                       m="0.5rem"

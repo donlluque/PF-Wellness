@@ -15,11 +15,13 @@ import { Context } from "./Context";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { addReview } from "../redux/actions";
+import { useDispatch } from "react-redux";
 
 function MakeReviews() {
   const { mostrar, setMostrar } = React.useContext(Context);
   const history = useHistory();
   setMostrar(false);
+  const dispatch = useDispatch();
 
   const [input, setInput] = useState([
     {

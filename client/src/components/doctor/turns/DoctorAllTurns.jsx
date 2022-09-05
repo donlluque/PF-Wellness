@@ -31,6 +31,7 @@ import {
   getTurnById,
   getTurns,
   getTurnsByDoctor,
+  sendEmail
 } from "../../../redux/actions";
 import { TbCalendarOff } from "react-icons/tb";
 import { useParams } from "react-router-dom";
@@ -171,6 +172,7 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
                   onClose();
                   setConfirmDelete(false);
                   dispatch(deleteTurn(turnById.id));
+                  dispatch(sendEmail());
                 }}
               >
                 Notificar al paciente

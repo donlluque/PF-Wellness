@@ -207,6 +207,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       };
     }
+    case "SEND_EMAIL_SUB": {
+      return {
+        ...state,
+      };
+    }
     default:
       return {
         ...state,

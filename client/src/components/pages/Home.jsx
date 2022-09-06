@@ -130,6 +130,7 @@ function Home() {
               100%
             </ListItem>
           </List>
+
           <Button
             mt={{
               base: "1rem",

@@ -98,6 +98,8 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
   };
 
   const handleSubmitNotPay = () => {
+    form.monto = input.price;
+    console.log(form, "entre");
     dispatch(postTurn(form));
     onClose();
     confirmModal.onOpen();
@@ -106,7 +108,8 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
 
   const handleSubmitPay = async () => {
     setPayActive(true);
-    dispatch(dataPayment(form));
+    form.monto = input.price;
+
     localStorage.setItem("form", JSON.stringify(form));
 
     try {
@@ -211,7 +214,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
                     {input.cost}
                   </ListItem>
                 )}
-                {(prepaid !== "Wellness" || prepaid !== "Particular") && (
+                {prepaid !== "Wellness" && (
                   <ListItem>
                     <Text fontWeight="semibold" display="inline">
                       Cobertura Obra Social:

@@ -217,5 +217,27 @@ router.patch("/", async (req, res, next) => {
   res.send("cambiado");
 });
 
+router.patch("/wellness", async (req, res) => {
+  const { prepaid, patientId } = req.body;
+  try {
+    const patient = await Patient.findOne({
+      where: { id: patientId },
+      include: { model: Prepaid_health },
+    });
+    await patient.removePrepaid_health(patient.prepaid_healths[0]);
+
+    const dataPrepaidHealth = await Prepaid_health.findOne({
+      where: { name: prepaid },
+    });
+    await patient.addPrepaid_health(dataPrepaidHealth);
+    const newPatient = await Patient.findOne({
+      where: { id: patientId },
+      include: { model: Prepaid_health },
+    });
+    res.send(newPatient);
+  } catch (e) {
+    res.status(400).send("No existe el paciente");
+  }
+});
 
 module.exports = router;

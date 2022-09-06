@@ -10,11 +10,11 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 
-function PaymentModal({ onClose, paymentActive, linkPayment }) {
+function PaymentModal({ isOpen, onClose, paymentActive, linkPayment }) {
   return (
     <>
       <Modal
-        isOpen={paymentActive}
+        isOpen={isOpen}
         onClose={onClose}
         closeOnOverlayClick={false}
         size="4xl"

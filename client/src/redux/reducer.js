@@ -17,6 +17,7 @@ const initialState = {
   patientsByDoctor: [],
   reviews: [],
   areas: [],
+  stats:[]
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -95,6 +96,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         turns: action.payload,
+      };
+    }
+    case "GET_STATS": {
+      return {
+        ...state,
+        stats: action.payload,
       };
     }
     case "GET_ABSENTS": {

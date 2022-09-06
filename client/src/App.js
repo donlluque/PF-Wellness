@@ -28,6 +28,7 @@ import Opiniones from "./components/pages/Opiniones";
 import WellnessAsociados from "./components/paymentsWellness/WellnessAsociado";
 import ConfirmPaymentTurn from "./components/paymentsTurns/ConfirmPaymentTurn";
 import ConfirmPaymentWellness from "./components/paymentsWellness/ConfirmPaymentWellness";
+import Stats from "./components/admin/stats";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -46,6 +47,9 @@ export default function App() {
           </Route>
           <Route exact path="/opiniones">
             <Opiniones />
+          </Route>
+          <Route exact path="/stats">
+            <Stats />
           </Route>
           <Route exact path="/especialidades">
             <Specialties />

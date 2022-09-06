@@ -25,7 +25,7 @@ function PatientAllTurns({ nextTurns, prevTurns }) {
   const dispatch = useDispatch();
   const { turnsByPatient } = useSelector((state) => state);
   const { id } = useParams();
-  // console.log(typeof id, "ID DE TURNS");
+  console.log(id, "ID DE TURNS");
 
   let aux = turnsByPatient;
 
@@ -39,11 +39,13 @@ function PatientAllTurns({ nextTurns, prevTurns }) {
     );
   });
 
-  let visibleTurns = nextTurns
-    ? aux.filter((e) => e.newDate.getTime() >= new Date().getTime())
-    : prevTurns
-    ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
-    : turnsByPatient;
+  let visibleTurns = aux;
+
+  // nextTurns
+  // ? aux.filter((e) => e.newDate.getTime() >= new Date().getTime())
+  // : prevTurns
+  // ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
+  // : turnsByPatient;
 
   return (
     <>

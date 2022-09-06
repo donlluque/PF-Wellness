@@ -105,18 +105,21 @@ export default function rootReducer(state = initialState, action) {
     }
     case "GET_TURNS_BY_DOCTOR": {
       let turnsDoctor = action.payload.data.filter(
-        (e) => e.doctors[0].id === action.payload.idCurrentDoctor
+        (e) => e.doctors[0].id == action.payload.idCurrentDoctor
       );
-      console.log(turnsDoctor, "reducerrrrr");
+
       return {
         ...state,
         turnsByDoctor: turnsDoctor,
       };
     }
     case "GET_TURNS_BY_PATIENT": {
+      console.log("action.payload.idCurrentPatient", action.payload);
+      console.log(action.payload.idCurrentPatient, "action.payload.data");
       let turnsPatient = action.payload.data.filter(
-        (e) => e.patient?.[0].id === action.payload.idCurrentPatient
+        (e) => e.patients[0]?.id == action.payload.idCurrentPatient
       );
+      console.log(turnsPatient, "turnsPatient");
 
       return {
         ...state,
@@ -133,6 +136,7 @@ export default function rootReducer(state = initialState, action) {
       };
     }
     case "DATA_PAYMENT": {
+      console.log(action.payload, "DATA PAYMENNNTTT");
       return {
         ...state,
         dataPayment: action.payload,

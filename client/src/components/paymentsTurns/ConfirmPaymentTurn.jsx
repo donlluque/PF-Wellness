@@ -1,24 +1,29 @@
 import { Heading, Box, Button, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { postTurn, sendEmailPago } from "../../redux/actions";
+import { useLocation, Link } from "react-router-dom";
+import { postTurn, sendEmailPago, getOnePatient } from "../../redux/actions";
 
 function ConfirmPaymentTurn() {
   const { search } = useLocation();
   const dispatch = useDispatch();
-  const { form, user } = useSelector((state) => state);
+  const { dataPayment, patientDetail } = useSelector((state) => state);
+  console.log(search, "search");
+  console.log(dataPayment, "dataPayment pago");
+  console.log(patientDetail, "patientDetail en el pago");
+  var form = JSON.parse(localStorage.getItem("form"));
 
   const handleSubmit = () => {
     if (search.includes("approved")) {
       dispatch(postTurn(form));
-      dispatch(sendEmailPago(user));
+      // dispatch(sendEmailPago(patientDetail));
     }
   };
 
   useEffect(() => {
+    dispatch(getOnePatient(form.idPatient));
     handleSubmit();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -59,11 +64,19 @@ function ConfirmPaymentTurn() {
             Gracias por confiar en nosotros!
           </Text>
         </Box>
-        <a href="http://localhost:3000/">
-          <Button m="1rem" colorScheme={"teal"}>
-            Volver al Home
+        <Link to="/">
+          <Button
+            m="1rem"
+            colorScheme={"teal"}
+            onClick={() =>
+              search.includes("approved")
+                ? dispatch(sendEmailPago(patientDetail))
+                : null
+            }
+          >
+            Enviar comprobante
           </Button>
-        </a>
+        </Link>
       </Box>
     </>
   );

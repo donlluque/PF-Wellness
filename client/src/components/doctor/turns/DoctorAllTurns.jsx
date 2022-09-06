@@ -44,10 +44,11 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, setValue] = useState();
   const [confirmDelete, setConfirmDelete] = useState(false);
-
+  console.log("turnsByDoctor", turnsByDoctor);
   const { id } = useParams();
-
+  console.log("IDDDD", id);
   let aux = turnsByDoctor;
+  console.log("aux antes del each", aux);
   aux.forEach((e) => {
     let array = e.date.split("/");
     e.newDate = new Date(
@@ -56,16 +57,22 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
       parseInt(array[0])
     );
   });
+  console.log("aux despues del each", aux);
 
-  let visibleTurns = nextTurns
-    ? aux.filter((e) => e.newDate.getTime() > new Date().getTime())
-    : prevTurns
-    ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
-    : turnsByDoctor;
+  console.log("nextTurns", nextTurns);
 
+  //EL PROBLEMA ESTA ACA AGUSTINA
+  let visibleTurns = aux;
+  // nextTurns
+  // ? aux.filter((e) => e.newDate.getTime() > new Date().getTime())
+  // : prevTurns
+  // ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
+  // : turnsByDoctor;
+
+  console.log("visibleTurns", visibleTurns);
   useEffect(() => {
     dispatch(getTurnsByDoctor(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   //motivo de cancelacion de turno
   const handleValueChange = (e) => {

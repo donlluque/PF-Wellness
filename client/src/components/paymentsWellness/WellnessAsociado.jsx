@@ -11,8 +11,37 @@ import {
   Center,
   Spacer,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import PaymentModal from "./PaymentModal";
+import { baseURL } from "../../index";
+import axios from "axios";
+
 function WellnessAsociados() {
+  const [paymentActive, setPaymentActive] = useState(false);
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const dispatch = useDispatch();
+  const [link, setLink] = useState();
+  const [input, setInput] = useState({
+    title: "Wellness Asociados",
+    price: 0,
+  });
+  console.log("link", link);
+
+  //Se pueden definir tres tipos de suscripciones --> Bimestral, semestral, anual y variar el monto
+
+  const handlePayment = async () => {
+    setPaymentActive(true);
+    try {
+      const generarLink = await axios.post(`${baseURL}/pagos`, input);
+      setLink(generarLink.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {" "}
@@ -44,6 +73,15 @@ function WellnessAsociados() {
           </Text>
         </Box>
       </Center>
+      <Button colorScheme="teal" onClick={() => handlePayment()}>
+        Suscribirse
+      </Button>
+      <PaymentModal
+        paymentActive={paymentActive}
+        onClose={onClose}
+        isOpen={isOpen}
+        linkPayment={link}
+      />
     </>
   );
 }

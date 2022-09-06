@@ -73,7 +73,9 @@ function AdminAllPatients() {
                   <Td>
                     <Image src={e.picture} w="3rem" h="3rem" rounded={"50%"} />
                   </Td>
-                  <Td>{e.fullName}</Td>
+                  <Td>
+                    {e.name} {e.last_name}
+                  </Td>
                   <Td>{e.email}</Td>
                   <Td>
                     {e.prepaid_healths.length

@@ -1,8 +1,8 @@
 import React from "react";
-import { cleanDoctor, getDetailDoctors, getHours } from "../redux/actions";
+import { cleanDoctor, getDetailDoctors } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Box, Text, List, ListItem, Image, Button } from "@chakra-ui/react";
+import { Box, Text, List, ListItem, Image } from "@chakra-ui/react";
 
 export default function DoctorDetail({ id }) {
   const dispatch = useDispatch();

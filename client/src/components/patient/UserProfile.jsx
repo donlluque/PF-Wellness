@@ -1,8 +1,8 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
 
 import FormUserProfile from "./FormUserProfile";
-import PatientTurnsPanel from "./patient/turns/PatientTurnsPanel";
-import PatientDoctorPanel from "./patient/doctors/PatientDoctorPanel";
+import PatientTurnsPanel from "./turns/PatientTurnsPanel";
+import PatientDoctorPanel from "./doctors/PatientDoctorPanel";
 
 function UserProfile() {
   return (

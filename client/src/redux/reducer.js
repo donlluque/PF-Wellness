@@ -52,7 +52,6 @@ export default function rootReducer(state = initialState, action) {
         doctors: action.payload,
       };
     case "SEARCH_PATIENTS_BY_NAME":
-      console.log(action.payload, "ESTEEEE");
       return {
         ...state,
         patients: action.payload,
@@ -130,6 +129,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         turnById: turn,
+      };
+    }
+    case "DATA_PAYMENT": {
+      return {
+        ...state,
+        dataPayment: action.payload,
       };
     }
 

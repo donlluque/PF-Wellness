@@ -9,12 +9,16 @@ import {
   Alert,
   AlertIcon,
   AlertDescription,
+  Button,
+  Icon,
 } from "@chakra-ui/react";
 import { GrSearch } from "react-icons/gr";
-import { searchPatientByName } from "../../redux/actions";
+import { AiOutlineReload } from "react-icons/ai";
+import { getAllPatients, searchPatientByName } from "../../redux/actions";
 
 export default function SearchBarPatient() {
   const [empty, setEmpty] = useState(false);
+  const [active, setActive] = useState(false);
   const dispatch = useDispatch();
   const [patient, setPatient] = useState("");
 
@@ -26,6 +30,7 @@ export default function SearchBarPatient() {
     if (patient) {
       dispatch(searchPatientByName(patient));
       setPatient("");
+      setActive(true);
     } else {
       setEmpty(true);
     }
@@ -43,10 +48,21 @@ export default function SearchBarPatient() {
           onChange={(e) => handleChange(e)}
         />
         <IconButton
-          onClick={(e) => handleClick(e)}
+          onClick={() => handleClick()}
           aria-label="Search database"
           icon={<GrSearch />}
         />
+        {active && (
+          <Button
+            ml={2}
+            onClick={() => {
+              dispatch(getAllPatients());
+              setActive(false);
+            }}
+          >
+            <Icon as={AiOutlineReload} />
+          </Button>
+        )}
       </Box>
       {empty && (
         <Alert status="warning" mb="0.5rem">

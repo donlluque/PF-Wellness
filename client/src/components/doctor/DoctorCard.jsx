@@ -11,14 +11,12 @@ import {
   Button,
   ModalCloseButton,
   Box,
-  Wrap,
   Image,
   Text,
   useDisclosure,
   Heading,
   Avatar,
   Spacer,
-  Center,
   Flex,
   Stack,
   useColorModeValue,
@@ -26,7 +24,7 @@ import {
 import DoctorDetail from "./DoctorDetail";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { getDetailDoctors } from "../redux/actions";
+import { getDetailDoctors } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function DoctorCard({
@@ -43,13 +41,6 @@ export default function DoctorCard({
   console.log(usuario, "USUARIOOOO");
 
   const OverlayOne = () => (
-    <ModalOverlay
-      bg="blackAlpha.300"
-      backdropFilter="blur(10px) hue-rotate(90deg)"
-    />
-  );
-
-  const OverlayTwo = () => (
     <ModalOverlay
       bg="blackAlpha.300"
       backdropFilter="blur(10px) hue-rotate(90deg)"
@@ -184,37 +175,6 @@ export default function DoctorCard({
         </Box>
       </Box>
 
-      {/*       
-      <Modal
-         
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Datos personales incompletos</ModalHeader>
-            <ModalBody>
-              <Text fontWeight="bold" mb="1rem">
-                Para poder solicitar un turno, tus datos personales obligatorios
-                deben estar completos.
-              </Text>
-            </ModalBody>
-            <ModalFooter>
-              <Button
-                colorScheme="teal"
-                variant="ghost"
-                mr={3}
-                onClick={() => history.goBack(-1)}
-              >
-                Cancelar
-              </Button>
-              <Link to={`/userProfile/${usuario.id}`}>
-                <Button colorScheme={"teal"}>Ir al perfil</Button>
-              </Link>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      ) 
-    </Modal> */}
-
       <Modal
         isCentered
         isOpen={notInfoComplete.isOpen}
@@ -315,7 +275,7 @@ export default function DoctorCard({
               </Button>
             </Link>
             <Button bg="#2C7A7B" color="white" mr={3} onClick={modal.onClose}>
-              Close
+              Cerrar
             </Button>
           </ModalFooter>
         </ModalContent>

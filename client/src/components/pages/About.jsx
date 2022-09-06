@@ -147,7 +147,7 @@ function About() {
 
         <Box display={{ md: "flex" }} justifyItems="center" alignItems="center">
           <Box>
-            <Heading as="h2" size="xl" textAlign="center">
+            <Heading as="h2" size="xl" textAlign="center" mt="1rem">
               Contactanos
             </Heading>
             <List

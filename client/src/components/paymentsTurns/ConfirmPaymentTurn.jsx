@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { postTurn, sendEmailPago } from "../../redux/actions";
-import { baseURL } from "../../index";
 
 function ConfirmPaymentTurn() {
   const { search } = useLocation();
@@ -60,7 +59,7 @@ function ConfirmPaymentTurn() {
             Gracias por confiar en nosotros!
           </Text>
         </Box>
-        <a href={`${baseURL}`}>
+        <a href="http://localhost:3000/">
           <Button m="1rem" colorScheme={"teal"}>
             Volver al Home
           </Button>

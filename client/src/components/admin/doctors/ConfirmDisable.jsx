@@ -1,5 +1,4 @@
 import {
-  Icon,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -86,7 +85,7 @@ function ConfirmDisable({
                   setAux(!aux);
                 }}
               >
-                Close
+                Cerrar
               </Button>
             </ModalFooter>
           )}

@@ -104,7 +104,7 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
                     </Tooltip>
                     <Tooltip label="Deshabilitar">
                       <Button
-                        m="0.5rem"
+                        m="0.3rem"
                         colorScheme={"teal"}
                         variant="ghost"
                         fontSize="xs"

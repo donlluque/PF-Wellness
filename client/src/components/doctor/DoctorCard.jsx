@@ -182,7 +182,7 @@ export default function DoctorCard({
         colorScheme="teal"
         w="100%"
       >
-        {overlay}
+        <ModalOverlay />
         <ModalContent bgColor="green.50" w="80%">
           <ModalHeader color="#C53030">
             Datos personales incompletos
@@ -218,7 +218,7 @@ export default function DoctorCard({
         colorScheme="teal"
         w="100%"
       >
-        {overlay}
+        <ModalOverlay />
         <ModalContent bgColor="green.50" w="80%">
           <ModalHeader color="#C53030">Ups!!</ModalHeader>
           <ModalCloseButton />
@@ -238,7 +238,7 @@ export default function DoctorCard({
         colorScheme="teal"
         w="100%"
       >
-        {overlay}
+        <ModalOverlay />
         <ModalContent bgColor="green.50" w="80%">
           <ModalHeader color="#C53030">Ups!!</ModalHeader>
           <ModalCloseButton />

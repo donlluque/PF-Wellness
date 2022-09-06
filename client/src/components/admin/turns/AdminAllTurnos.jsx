@@ -37,11 +37,11 @@ function AdminAllTurnos({ prevTurns, nextTurns }) {
   });
 
   let visibleTurns = nextTurns
-    ? aux.filter((e) => e.newDate.getTime() > new Date().getTime())
+    ? aux.filter((e) => e.newDate.getTime() >= new Date().getTime())
     : prevTurns
     ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
     : turns;
-  console.log(visibleTurns);
+
   useEffect(() => {
     dispatch(getTurns());
   }, [dispatch]);
@@ -69,52 +69,16 @@ function AdminAllTurnos({ prevTurns, nextTurns }) {
             {visibleTurns &&
               visibleTurns.map((e) => (
                 <Tr key={e.id}>
-                  <Td isNumeric>{e.id}</Td>
+                  <Td>{e.id}</Td>
                   <Td>{e.date}</Td>
                   <Td>{e.hours_workings[0].hour}</Td>
                   <Td>{e.doctors?.[0].name}</Td>
                   <Td>{e.patients.length ? e.patients[0]?.fullName : false}</Td>
-                  <Td>
-                    <Button
-                      m="0.5rem"
-                      colorScheme="teal"
-                      size="sm"
-                      onClick={() => handleClick(e.id)}
-                    >
-                      Detalle
-                    </Button>
-                  </Td>
                 </Tr>
               ))}
           </Tbody>
-          <Tfoot></Tfoot>
         </Table>
       </TableContainer>
-
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent bg="#EBF8FF">
-          <ModalHeader
-            fontSize={"2xl"}
-            textAlign="center"
-            color="#2C7A7B"
-            fontFamily={"body"}
-          >
-            {" "}
-          </ModalHeader>
-
-          <ModalBody>
-            PROXIMAMENTE
-            {/*<PatientDetail id={patients.id} />*/}
-          </ModalBody>
-
-          <ModalFooter>
-            <Button bg="#2C7A7B" color="white" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </>
   );
 }

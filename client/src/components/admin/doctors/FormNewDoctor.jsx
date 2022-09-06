@@ -55,7 +55,6 @@ const initialForm = {
   prepaid_healths: [],
 };
 function FormNewDoctor() {
-  const [putActive, setPutActive] = useState(false);
   const { pathname } = useLocation();
   const [form, setForm] = useState(initialForm);
   const [formHours, setFormHours] = useState({});
@@ -306,15 +305,6 @@ function FormNewDoctor() {
                       {e.name}
                     </option>
                   ))}
-                {/*<option value="Deportología">Deportología</option>
-                <option value="Fisioterapia y kinesiología">
-                  Kinesiología y Fisioterapia
-                </option>
-                <option value="Osteopatía">Osteopatía</option>
-                <option value="Quiropraxia">Quiropraxia</option>
-                <option value="Reumatología">Reumatología</option>
-                <option value="Terapia de dolor">Terapia de Dolor</option>
-              <option value="Traumatología">Traumatología</option>*/}
               </Select>
               {errors.general_area && (
                 <FormErrorMessage>{errors.general_area}</FormErrorMessage>
@@ -435,7 +425,6 @@ function FormNewDoctor() {
                 name="prepaid_healths"
               >
                 <option>Seleccionar una opción</option>
-                <option value="Particular">Particular</option>
                 {prepaidHealth &&
                   prepaidHealth.map((e) => (
                     <option key={e.id} value={e.name}>

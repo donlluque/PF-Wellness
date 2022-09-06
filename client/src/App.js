@@ -9,10 +9,9 @@ import Specialties from "./components/pages/Specialties";
 import Prepaid from "./components/pages/Prepaid";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import UserProfile from "./components/UserProfile";
+import UserProfile from "./components/patient/UserProfile";
 import Turnos from "./components/pages/Turnos";
 import Calendar from "./components/Calendar";
-import MakePayments from "./components/MakePayments";
 import PrivateRouteAdmin from "./components/private/PrivateRouteAdmin";
 import PrivateRoutePerfil from "./components/private/PrivateRoutePerfil";
 // import PrivateRouterPago from "./components/private/PrivateRoutePago";
@@ -24,7 +23,9 @@ import DoctorProfile from "./components/doctor/DoctorProfile";
 import FormTestimonial from "./components/FormTestimonal";
 import { Context } from "./components/Context";
 import Opiniones from "./components/pages/Opiniones";
-import WellnessAsociados from "./components/WellnessAsociado";
+import WellnessAsociados from "./components/paymentsWellness/WellnessAsociado";
+import ConfirmPaymentTurn from "./components/paymentsTurns/ConfirmPaymentTurn";
+import ConfirmPaymentWellness from "./components/paymentsWellness/ConfirmPaymentWellness";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -70,6 +71,12 @@ export default function App() {
           </Route>
           <Route exact path="/wellnessPrepaid">
             <WellnessAsociados />
+          </Route>
+          <Route exact path="/paymentTurn">
+            <ConfirmPaymentTurn />
+          </Route>
+          <Route exact path="/payment/wellness-prepaid">
+            <ConfirmPaymentWellness />
           </Route>
           <Route exact path="/testimonials">
             <FormTestimonial />

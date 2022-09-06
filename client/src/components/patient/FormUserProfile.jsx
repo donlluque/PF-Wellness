@@ -21,12 +21,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { putPatient } from "../redux/actions";
+import { putPatient } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getOnePatient } from "../redux/actions";
-import { validateForm } from "../hooks/validateForm.js";
+import { getOnePatient } from "../../redux/actions";
+import { validateForm } from "../../hooks/validateForm";
 
 function FormUserProfile() {
   const { id } = useParams();

@@ -30,13 +30,11 @@ import {
   getHours,
   getTurnsByPatient,
 } from "../../../redux/actions";
-import DoctorDetail from "../../DoctorDetail";
+import DoctorDetail from "../../doctor/DoctorDetail";
 
 function PatientAllDoctors() {
   const dispatch = useDispatch();
-  const { doctors, doctorDetail, turnsByPatient, user } = useSelector(
-    (state) => state
-  );
+  const { doctorDetail, turnsByPatient, user } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
   console.log(user.id, "soy id paciente");
 
@@ -66,7 +64,6 @@ function PatientAllDoctors() {
 
   return (
     <>
-      <h1>Estoy</h1>
       <TableContainer>
         <Table size="sm">
           {visibleDoctors.length ? (

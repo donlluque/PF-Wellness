@@ -1,6 +1,5 @@
 import { baseURL } from "../index.js";
 import axios from "axios";
-import { id } from "date-fns/locale";
 
 //DOCTORS
 export function getDoctors() {
@@ -380,6 +379,8 @@ export const deleteTurn = (id) => {
       .catch((err) => console.log(err));
   };
 };
+
+export const dataPayment = (form) => ({ type: "DATA_PAYMENT", payload: form });
 //AREAS GENERALES
 export const getAllAreas = () => {
   return function (dispatch) {
@@ -399,7 +400,6 @@ export const getAllAreas = () => {
 
 //PATIENT
 export const searchPatientByName = (patient) => {
-  console.log("patient", patient);
   return function (dispatch) {
     return fetch(`${baseURL}/patients?name=${patient}`)
       .then((res) =>

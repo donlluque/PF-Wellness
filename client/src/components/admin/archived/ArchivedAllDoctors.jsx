@@ -27,7 +27,7 @@ import { FaUserCheck } from "react-icons/fa";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailDoctors, getDoctors, getHours } from "../../../redux/actions";
-import DoctorDetail from "../../DoctorDetail";
+import DoctorDetail from "../../doctor/DoctorDetail";
 
 import ConfirmEnable from "./ConfirmEnable";
 
@@ -37,7 +37,6 @@ function ArchivedAllDoctors() {
   const { doctors, doctorDetail } = useSelector((state) => state);
   const modal2 = useDisclosure();
   const [aux, setAux] = useState(true);
-  const [id, setId] = useState();
 
   const visibleDoctors = doctors.filter((e) => e.activo === false);
 

@@ -157,9 +157,9 @@ function NavBar() {
         >
           <Button
             onClick={toggleColorMode}
-            colorScheme={modo}
-            bg={modo}
+            colorScheme={"teal"}
             color={modoColor}
+            borderRadius="50%"
           >
             {colorMode === "light" ? (
               <Icon as={BsFillMoonFill} />
@@ -209,6 +209,7 @@ function NavBar() {
           {!isAuthenticated && (
             <Button
               colorScheme="teal"
+              bg="#E6FFFA70"
               variant="outline"
               color={modoUser}
               onClick={() => {
@@ -307,7 +308,8 @@ function NavBar() {
                     as={Button}
                     bg={modoUser}
                     colorScheme={schemeBt}
-                    p={6}
+                    pl={4}
+                    pr={4}
                   >
                     {isOpen ? (
                       <Icon boxSize={7} as={GrUserAdmin} color={bgUser} />

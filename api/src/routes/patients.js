@@ -204,5 +204,18 @@ router.post("/", async (req, res, next) => {
     next(error);
   }
 });
+router.patch("/", async (req, res, next) => {
+  const { patientId } = req.body;
+
+  const patient = await Patient.findOne({ where: { id: patientId } });
+
+  let state = null;
+
+  if (patient.dataValues.activo) state = false;
+  else state = true;
+  await doctor.update({ activo: state });
+  res.send("cambiado");
+});
+
 
 module.exports = router;

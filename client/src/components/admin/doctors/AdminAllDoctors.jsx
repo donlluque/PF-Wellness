@@ -156,7 +156,7 @@ function AdminAllDoctors({ setPutDoctor, setListDoctors }) {
           </ModalBody>
 
           <ModalFooter>
-            <Button bg="#2C7A7B" color="white" mr={3} onClick={onClose}>
+            <Button bg="#2C7A7B" color="white" mr={3} onClick={() => onClose()}>
               Close
             </Button>
           </ModalFooter>

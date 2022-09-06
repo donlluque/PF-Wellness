@@ -242,7 +242,7 @@ function Prepaid() {
             boxShadow="2xl"
             borderRadius="0.5rem"
           >
-            <Image src={img} alt="img" maxW="10rem" minH="6rem" mb="0.5rem" />
+            <Image src={prepaidHealth[3]?.logo} alt="img" maxW="10rem" minH="8rem" mb="0.5rem" />
             <List spacing={3}>
               <ListItem>
                 <ListIcon as={BsTelephone} color="green.500" />

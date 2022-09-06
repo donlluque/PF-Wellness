@@ -10,7 +10,7 @@ import {
     Legend,
     Filler,
   } from "chart.js";
-  import { Bar } from "react-chartjs-2";
+  import { Bar, Line } from "react-chartjs-2";
   import { useEffect, useMemo } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { getDoctors } from "../../redux/actions";
@@ -51,7 +51,10 @@ import {
 
     const dispatch = useDispatch();
     const { doctors } = useSelector((state) => state);
-    const labels = ["Julio", "Agosto", "Septiembre"];
+    const labels = ["Deportología", "Fisioterapia y Kinesiología", "Osteopatía", "Quiropraxia","Reumatología", "Terapia de Dolor", "Traumatología"];
+
+    const doctors2 = doctors.map(d => d.general_area.id);
+    console.log(doctors2, "soy doctors 2")
   
     useEffect(() => {
       dispatch(getDoctors());
@@ -63,7 +66,7 @@ import {
             {
               label: "Mis datos",
               tension: 0.3,
-              data: doctors,
+              data: [3,4,2,6,4,1,3],
               backgroundColor: [
                 "rgb(255, 205, 86)",
                 "rgb(75, 192, 192)",
@@ -74,18 +77,20 @@ import {
           labels,
         };
       },
-      []);
+      [doctors]);
       console.log(data, "SOY DATA MEMO")
     return (
       <>
-        {doctors && (
-             <Box
-             w="50rem"
-             p="10rem"
-           >
+      <Box
+      w="50rem"
+      p="10rem"
+    >
+        {doctors && ( 
+             
             <Bar data={data} options={options} />
-            </Box>
+          
         )}
+          </Box>
       </>
     );
   };

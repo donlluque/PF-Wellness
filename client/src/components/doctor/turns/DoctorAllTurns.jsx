@@ -17,10 +17,10 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
   Text,
   useDisclosure,
   Textarea,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 
@@ -36,6 +36,7 @@ import {
 import { TbCalendarOff } from "react-icons/tb";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+import { MdDoneAll } from "react-icons/md";
 
 function DoctorAllTurns({ nextTurns, prevTurns }) {
   const dispatch = useDispatch();
@@ -91,36 +92,40 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
             {visibleTurns.length ? (
               visibleTurns.map((e) => (
                 <Tr key={e.id}>
-                  <Td isNumeric>{e.id}</Td>
+                  <Td>{e.id}</Td>
                   <Td>{e.date}</Td>
                   <Td>{e.hours_workings[0]?.hour}</Td>
                   <Td>{e.patients.length ? e.patients[0]?.fullName : false}</Td>
                   <Td>
-                    <Button
-                      m="0.5rem"
-                      colorScheme={"teal"}
-                      variant="ghost"
-                      fontSize="xs"
-                      onClick={() => {
-                        onOpen();
-                        dispatch(getTurnById(e.id));
-                      }}
-                    >
-                      <Icon w={4} h={4} as={TbCalendarOff} />
-                    </Button>
-                  </Td>
-                  <Td>
-                    <Button
-                      m="0.5rem"
-                      colorScheme={"teal"}
-                      variant="ghost"
-                      fontSize="xs"
-                      onClick={() => {
-                        dispatch(sendEmailForm(user));
-                      }}
-                    >
-                      Formulario
-                    </Button>
+                    <Tooltip label="Cancelar turno">
+                      <Button
+                        m="0.5rem"
+                        colorScheme={"teal"}
+                        variant="ghost"
+                        fontSize="xs"
+                        onClick={() => {
+                          onOpen();
+                          dispatch(getTurnById(e.id));
+                        }}
+                      >
+                        <Icon w={4} h={4} as={TbCalendarOff} />
+                      </Button>
+                    </Tooltip>
+                    {prevTurns && (
+                      <Tooltip label="Paciente atendido">
+                        <Button
+                          m="0.5rem"
+                          colorScheme={"teal"}
+                          variant="ghost"
+                          fontSize="xs"
+                          onClick={() => {
+                            dispatch(sendEmailForm(user));
+                          }}
+                        >
+                          <Icon w={4} h={4} as={MdDoneAll} />
+                        </Button>
+                      </Tooltip>
+                    )}
                   </Td>
                 </Tr>
               ))

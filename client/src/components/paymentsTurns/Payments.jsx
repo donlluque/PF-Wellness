@@ -270,7 +270,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
             )}
 
             {payActive && (
-              <Box>
+              <Box mt="1rem">
                 <iframe
                   border="3px solid black"
                   src={link}

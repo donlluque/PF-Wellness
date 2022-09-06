@@ -11,7 +11,6 @@ import { BsCalendarCheck, BsCalendar3, BsCalendarEvent } from "react-icons/bs";
 import { AiFillCaretRight } from "react-icons/ai";
 import { useState } from "react";
 import PatientAllTurns from "./PatientAllTurns";
-import { Icon } from "@material-ui/core";
 
 function PatientTurnsPanel() {
   const [nextTurns, setNextTurns] = useState(true);

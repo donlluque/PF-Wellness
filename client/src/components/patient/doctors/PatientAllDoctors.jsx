@@ -36,9 +36,8 @@ function PatientAllDoctors() {
   const dispatch = useDispatch();
   const { doctorDetail, turnsByPatient, user } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log(user.id);
 
-  console.log("turnsByPatient", turnsByPatient);
+  var perfil = JSON.parse(localStorage.getItem("user"));
 
   let aux = turnsByPatient?.map((e) => e.doctors?.[0]);
   console.log(aux, "aux");
@@ -51,13 +50,11 @@ function PatientAllDoctors() {
   });
 
   useEffect(() => {
-    dispatch(getDoctors());
-    dispatch(getTurnsByPatient(user.id));
+    dispatch(getTurnsByPatient(perfil.id));
     dispatch(getHours());
   }, [dispatch]);
 
   const handleClick = (id) => {
-    console.log(id);
     dispatch(getDetailDoctors(id));
     onOpen();
   };

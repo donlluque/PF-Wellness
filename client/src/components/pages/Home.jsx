@@ -72,7 +72,11 @@ function Home() {
         pb="2rem"
         textAlign="center"
       >
-        <Heading color="white" mt="3rem" fontSize="5xl">
+        <Heading
+          color="white"
+          mt="3rem"
+          fontSize={{ base: "2xl", sm: "4xl", md: "5xl", lg: "6xl" }}
+        >
           Asociate a Wellness y disfruta de una cobertura total
         </Heading>
         <Box
@@ -85,11 +89,17 @@ function Home() {
             url(https://www.wedskenya.com/wp-content/uploads/2019/03/Cute-Holding-Hands-Quotes.jpg)"
           bgRepeat="no-repeat"
           bgSize="cover"
-          w="73rem"
-          h="15rem"
+          w="85vw"
+          h={{ xl: "15rem" }}
           p="1rem"
           display="flex"
-          flexDirection="row"
+          flexDirection={{
+            base: "column",
+            sm: "column",
+            md: "column",
+            lg: "column",
+            xl: "row",
+          }}
           justifyContent="space-around"
           alignItems="center"
           boxShadow="dark-lg"
@@ -103,10 +113,10 @@ function Home() {
               "https://cdn.discordapp.com/attachments/1009488625219678269/1016320991221252217/WellnessPremium.png"
             }
             alt="img"
-            maxW="25rem"
+            w={{ base: "20rem", sm: "20rem", md: "20rem", lg: "25rem" }}
             mb="1rem"
           />
-          <List spacing={3} fontSize="2xl">
+          <List spacing={4} fontSize="2xl">
             <ListItem>
               <ListIcon as={BsTelephone} color="green.600" />
               +54 9 351 365-4238
@@ -121,7 +131,13 @@ function Home() {
             </ListItem>
           </List>
           <Button
-            mt={"0.5rem"}
+            mt={{
+              base: "1rem",
+              sm: "1rem",
+              md: "1rem",
+              lg: "1rem",
+              xl: "0.5rem",
+            }}
             bg="#D69E2E"
             w={"15rem"}
             h={"4rem"}

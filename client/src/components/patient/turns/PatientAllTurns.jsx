@@ -39,14 +39,11 @@ function PatientAllTurns({ nextTurns, prevTurns }) {
     );
   });
 
-  console.log(aux, "post");
   let visibleTurns = nextTurns
     ? aux.filter((e) => e.newDate.getTime() >= new Date().getTime())
     : prevTurns
     ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
     : turnsByPatient;
-
-  console.log(visibleTurns, "visibleTurns turn patients");
 
   return (
     <>
@@ -91,7 +88,7 @@ function PatientAllTurns({ nextTurns, prevTurns }) {
                 </Tr>
               ))
             ) : (
-              <Alert status="warning">
+              <Alert status="warning" w="100%">
                 <AlertIcon />
                 {prevTurns && <Text>No existen turnos previos a la fecha</Text>}
                 {nextTurns && <Text>No existen turnos futuros a la fecha</Text>}

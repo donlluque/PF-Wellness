@@ -531,7 +531,7 @@ router.post("/", async (req, res) => {
                                               color: #2ecc71;
                                             "
                                           >
-                                            Pago Confirmado
+                                            Turno Confirmado
                                           </h1>
                                         </td>
                                       </tr>
@@ -559,7 +559,7 @@ router.post("/", async (req, res) => {
                                               font-size: 14px;
                                             "
                                           >
-                                          Tu pago se realizó correctamente. Gracias por confiar en nosotros y en nuestros profesionales.
+                                          Gracias por confiar en nosotros y en nuestros profesionales.
                                           Tu turno fue confirmado el día: <strong>${citaDay}</strong> a la hora: <strong>${citaHora} hs</strong>
                                           </p>
                                         </td>

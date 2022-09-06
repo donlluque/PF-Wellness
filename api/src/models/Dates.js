@@ -18,9 +18,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
       },
 
-      history_id: {
+      monto: {
         type: DataTypes.INTEGER,
       },
+
     },
     { timestamps: false }
   );

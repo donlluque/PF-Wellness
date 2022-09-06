@@ -168,7 +168,10 @@ function NavBar() {
             )}
           </Button>
 
-          {!user || (user && user.tipoRol?.[0] !== "admin") ? (
+          {!user ||
+          (user &&
+            user.tipoRol?.[0] !== "admin" &&
+            user.tipoRol?.[0] !== "Doctor") ? (
             <>
               {isAuthenticated &&
               user.email_verified &&
@@ -338,12 +341,11 @@ function NavBar() {
         isOpen={notVerificadeModal.isOpen}
         onClose={notVerificadeModal.onClose}
         colorScheme="teal"
-        size="xs"
       >
-        <ModalOverlay size="xs" />
-        <ModalContent bgColor="green.50" w="80%">
+        <ModalOverlay />
+        <ModalContent bgColor="green.50" w="60%">
           <ModalHeader color="#C53030">Ups!!</ModalHeader>
-          <ModalCloseButton />
+
           <ModalBody>
             <Text color="#C53030">Debes verificar el email</Text>
           </ModalBody>
@@ -354,16 +356,16 @@ function NavBar() {
       </Modal>
 
       <Modal
+        size="xs"
         isCentered
         isOpen={notAuthenticatedModal.isOpen}
         onClose={notAuthenticatedModal.onClose}
         colorScheme="teal"
-        size="xs"
       >
-        <ModalOverlay size="xs" />
-        <ModalContent bgColor="green.50">
+        <ModalOverlay />
+        <ModalContent w="60%" bgColor="green.50">
           <ModalHeader color="#C53030">Ups!!</ModalHeader>
-          <ModalCloseButton />
+
           <ModalBody>
             <Text color="#C53030">Debes estar registrado</Text>
           </ModalBody>

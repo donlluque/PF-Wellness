@@ -18,7 +18,7 @@ import {
   Container,
   Text,
   Spacer,
-  Icon
+  Icon,
 } from "@chakra-ui/react";
 import { FcApproval } from "react-icons/fc";
 import { getAllAreas } from "../../redux/actions";
@@ -28,11 +28,11 @@ import { MdAttachMoney } from "react-icons/md";
 
 function Specialties() {
   const dispatch = useDispatch();
-  const {areas} = useSelector((state) => state)
-console.log("areas", areas)
+  const { areas } = useSelector((state) => state);
+
   useEffect(() => {
-   dispatch(getAllAreas())
-  },[dispatch])
+    dispatch(getAllAreas());
+  }, [dispatch]);
   return (
     <>
       <Center
@@ -68,22 +68,31 @@ console.log("areas", areas)
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Deportología
           </Heading>
-          <Box 
-            
+          <Box
             p="1rem"
-            alignItems="center"
+            pt={0}
             display="flex"
-            flexDirection="column" 
-            boxShadow="2xl"
-            bgColor="green.100" >
-          <Text alignItems="center" display="flex" >
-            Costo consulta:
-            
-          <Icon as={MdAttachMoney} color="green.500"/>
-            {areas[0]?.costConsult}
-          </Text>
+            alignItems="center"
+            justifyContent={"center"}
+          >
+            <Text display="inline">Consulta:</Text>
+            <Icon display="inline" as={MdAttachMoney} color="green.500" />
+            <Text display={"inline"} fontWeight="semibold">
+              {areas[1]?.costConsult}
+            </Text>
           </Box>
-          <Box display={{ md: "flex" }} p="2rem">
+          <Box
+            display="flex"
+            flexDirection={{
+              base: "column",
+              sm: "column",
+              md: "column",
+              lg: "row",
+            }}
+            alignItems="center"
+            justifyContent={"center"}
+            p="2rem"
+          >
             <Container centerContent>
               <Text w="100%" textAlign="justify">
                 Si realizas actividad fisica o deportes, también contamos con un
@@ -112,8 +121,9 @@ console.log("areas", areas)
             <Image
               alt="deportologia"
               src={deportologia}
-              borderRadius="0.5rem"
-              mr="5rem"
+              borderRadius="1rem"
+              w={{ base: "100%", sm: "100%", md: "25rem" }}
+              p="1rem"
             />
           </Box>
         </Stack>
@@ -121,22 +131,31 @@ console.log("areas", areas)
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Kinesiología y Fisioterapia
           </Heading>
-          <Box 
-            
+          <Box
             p="1rem"
-            alignItems="center"
+            pt={0}
             display="flex"
-            flexDirection="column" 
-            boxShadow="2xl"
-            bgColor="green.100" >
-          <Text alignItems="center" display="flex" >
-            Costo consulta:
-            
-          <Icon as={MdAttachMoney} color="green.500"/>
-            {areas[1]?.costConsult}
-          </Text>
+            alignItems="center"
+            justifyContent={"center"}
+          >
+            <Text display="inline">Consulta:</Text>
+            <Icon display="inline" as={MdAttachMoney} color="green.500" />
+            <Text display={"inline"} fontWeight="semibold">
+              {areas[2]?.costConsult}
+            </Text>
           </Box>
-          <Box display={{ md: "flex" }} p="2rem">
+          <Box
+            display="flex"
+            flexDirection={{
+              base: "column",
+              sm: "column",
+              md: "column",
+              lg: "row",
+            }}
+            alignItems="center"
+            justifyContent={"center"}
+            p="2rem"
+          >
             <Container centerContent>
               <Text w="100%" textAlign="justify">
                 Para poder realizar tratamientos de recuperación de lesiones y
@@ -171,8 +190,8 @@ console.log("areas", areas)
               alt="kineyfisio"
               src={kinesiologia}
               borderRadius="0.5rem"
-              mr="5rem"
-              maxW="30rem"
+              w={{ base: "100%", sm: "100%", md: "25rem" }}
+              p="1rem"
             />
           </Box>
         </Stack>
@@ -180,20 +199,18 @@ console.log("areas", areas)
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Osteopatía
           </Heading>
-          <Box 
-            
+          <Box
             p="1rem"
-            alignItems="center"
+            pt={0}
             display="flex"
-            flexDirection="column" 
-            boxShadow="2xl"
-            bgColor="green.100" >
-          <Text alignItems="center" display="flex" >
-            Costo consulta:
-            
-          <Icon as={MdAttachMoney} color="green.500"/>
-            {areas[2]?.costConsult}
-          </Text>
+            alignItems="center"
+            justifyContent={"center"}
+          >
+            <Text display="inline">Consulta:</Text>
+            <Icon display="inline" as={MdAttachMoney} color="green.500" />
+            <Text display={"inline"} fontWeight="semibold">
+              {areas[3]?.costConsult}
+            </Text>
           </Box>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
@@ -216,11 +233,11 @@ console.log("areas", areas)
               </List>
             </Container>
             <Image
+              w={{ base: "100%", sm: "100%", md: "25rem" }}
+              p="1rem"
               alt="osteopatia"
               src={osteopatia}
-              maxW="30rem"
               borderRadius="0.5rem"
-              mr="5rem"
             />
           </Box>
         </Stack>
@@ -228,20 +245,18 @@ console.log("areas", areas)
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Quiropraxia
           </Heading>
-          <Box 
-            
+          <Box
             p="1rem"
-            alignItems="center"
+            pt={0}
             display="flex"
-            flexDirection="column" 
-            boxShadow="2xl"
-            bgColor="green.100" >
-          <Text alignItems="center" display="flex" >
-            Costo consulta:
-            
-          <Icon as={MdAttachMoney} color="green.500"/>
-            {areas[3]?.costConsult}
-          </Text>
+            alignItems="center"
+            justifyContent={"center"}
+          >
+            <Text display="inline">Consulta:</Text>
+            <Icon display="inline" as={MdAttachMoney} color="green.500" />
+            <Text display={"inline"} fontWeight="semibold">
+              {areas[4]?.costConsult}
+            </Text>
           </Box>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
@@ -279,8 +294,8 @@ console.log("areas", areas)
               alt="quiropraxia"
               src={quiropraxia}
               borderRadius="0.5rem"
-              minW="25rem"
-              mr="5rem"
+              w={{ base: "100%", sm: "100%", md: "25rem" }}
+              p="1rem"
             />
           </Box>
         </Stack>
@@ -288,20 +303,18 @@ console.log("areas", areas)
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Reumatología
           </Heading>
-          <Box 
-            
+          <Box
             p="1rem"
-            alignItems="center"
+            pt={0}
             display="flex"
-            flexDirection="column" 
-            boxShadow="2xl"
-            bgColor="green.100" >
-          <Text alignItems="center" display="flex" >
-            Costo consulta:
-            
-          <Icon as={MdAttachMoney} color="green.500"/>
-            {areas[4]?.costConsult}
-          </Text>
+            alignItems="center"
+            justifyContent={"center"}
+          >
+            <Text display="inline">Consulta:</Text>
+            <Icon display="inline" as={MdAttachMoney} color="green.500" />
+            <Text display={"inline"} fontWeight="semibold">
+              {areas[5]?.costConsult}
+            </Text>
           </Box>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
@@ -340,8 +353,8 @@ console.log("areas", areas)
               alt="reumatologia"
               src={reumatologia}
               borderRadius="0.5rem"
-              maxW="30rem"
-              mr="5rem"
+              w={{ base: "100%", sm: "100%", md: "25rem" }}
+              p="1rem"
             />
           </Box>
         </Stack>
@@ -349,20 +362,18 @@ console.log("areas", areas)
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Terapia de Dolor
           </Heading>
-          <Box 
-            
+          <Box
             p="1rem"
-            alignItems="center"
+            pt={0}
             display="flex"
-            flexDirection="column" 
-            boxShadow="2xl"
-            bgColor="green.100" >
-          <Text alignItems="center" display="flex" >
-            Costo consulta:
-            
-          <Icon as={MdAttachMoney} color="green.500"/>
-            {areas[5]?.costConsult}
-          </Text>
+            alignItems="center"
+            justifyContent={"center"}
+          >
+            <Text display="inline">Consulta:</Text>
+            <Icon display="inline" as={MdAttachMoney} color="green.500" />
+            <Text display={"inline"} fontWeight="semibold">
+              {areas[6]?.costConsult}
+            </Text>
           </Box>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
@@ -391,8 +402,8 @@ console.log("areas", areas)
               borderRadius="0.5rem"
               alt="terapiaDeDolor"
               src={terapiaDeDolor}
-              maxW="30rem"
-              mr="5rem"
+              w={{ base: "100%", sm: "100%", md: "25rem" }}
+              p="1rem"
             />
           </Box>
         </Stack>
@@ -400,20 +411,18 @@ console.log("areas", areas)
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Traumatología
           </Heading>
-          <Box 
-            
+          <Box
             p="1rem"
-            alignItems="center"
+            pt={0}
             display="flex"
-            flexDirection="column" 
-            boxShadow="2xl"
-            bgColor="green.100" >
-          <Text alignItems="center" display="flex" >
-            Costo consulta:
-            
-          <Icon as={MdAttachMoney} color="green.500"/>
-            {areas[6]?.costConsult}
-          </Text>
+            alignItems="center"
+            justifyContent={"center"}
+          >
+            <Text display="inline">Consulta:</Text>
+            <Icon display="inline" as={MdAttachMoney} color="green.500" />
+            <Text display={"inline"} fontWeight="semibold">
+              {areas[0]?.costConsult}
+            </Text>
           </Box>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
@@ -450,7 +459,8 @@ console.log("areas", areas)
               borderRadius="0.5rem"
               alt="traumatologia"
               src={traumatologia}
-              mr="5rem"
+              w={{ base: "100%", sm: "100%", md: "25rem" }}
+              p="1rem"
             />
           </Box>
         </Stack>

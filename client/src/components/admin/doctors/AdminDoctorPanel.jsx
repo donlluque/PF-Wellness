@@ -35,7 +35,7 @@ function AdminDoctorPanel() {
         }}
         justifyContent="space-around"
       >
-        <Box w={{ xl: "30%" }}>
+        <Box w={{ xl: "20%" }}>
           <Heading as="h6">Menu</Heading>
           <Divider colorScheme={"teal"} />
           <List m="2rem" spacing={5}>
@@ -80,7 +80,7 @@ function AdminDoctorPanel() {
           </List>
         </Box>
         <Divider orientation="vertical" />
-        <Box w={{ xl: "70%" }}>
+        <Box w={{ xl: "80%" }}>
           {filter && <NavStaff />}
           {newDoctor && <FormNewDoctor />}
           {listDoctors && (

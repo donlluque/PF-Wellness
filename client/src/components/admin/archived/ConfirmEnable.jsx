@@ -1,5 +1,4 @@
 import {
-  Icon,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -26,7 +25,7 @@ function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Habilitar {user}</ModalHeader>

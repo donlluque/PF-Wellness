@@ -18,6 +18,7 @@ import { MdAlternateEmail } from "react-icons/md";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPrepaidHealth } from "../../redux/actions";
+import { Link } from "react-router-dom";
 import img from "../../img/logo-medicus.jpg";
 
 function Prepaid() {
@@ -106,6 +107,7 @@ function Prepaid() {
                 100%
               </ListItem>
             </List>
+            <Link to="/wellnessPrepaid">
             <Button
               mt={"0.5rem"}
               bg="#D69E2E"
@@ -117,6 +119,7 @@ function Prepaid() {
             >
               Suscribirse
             </Button>
+            </Link>
           </Box>
         </WrapItem>
       </Wrap>

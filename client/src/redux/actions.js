@@ -325,6 +325,7 @@ export const getTurnById = (idTurn) => {
 };
 
 export const getTurnsByDoctor = (idCurrentDoctor) => {
+  console.log(idCurrentDoctor, "idCurrentDoctor");
   return function (dispatch) {
     fetch(`${baseURL}/dates`)
       .then((res) => res.json())
@@ -341,6 +342,7 @@ export const getTurnsByDoctor = (idCurrentDoctor) => {
 };
 
 export const getTurnsByPatient = (idCurrentPatient) => {
+  console.log(idCurrentPatient, "idCurrentPatient");
   return function (dispatch) {
     fetch(`${baseURL}/dates`)
       .then((res) => res.json())

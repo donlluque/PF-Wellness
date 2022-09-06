@@ -2,12 +2,27 @@ const { Router } = require("express");
 const router = Router();
 const nodemailer = require("nodemailer");
 require("dotenv").config();
+const { Patient, Dates1, Hours_working } = require("../../db.js");
 
 router.post("/", async (req, res) => {
-  const { email } = req.body;
+  const { email, id } = req.body;
   console.log(req.body, "El body completo");
 
   try {
+    const cita = await Patient.findOne({
+      where: { id: id },
+      include: {
+        model: Dates1,
+        include: {
+          model: Hours_working,
+        },
+      },
+    });
+    const citas = cita.dataValues.dates1s;
+    const citaDay = citas[citas.length - 1].dataValues.date;
+    const citaHora =
+      citas[citas.length - 1].dataValues.hours_workings[0].dataValues.hour;
+    console.log(citaHora, "ultima CITA");
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
@@ -545,7 +560,7 @@ router.post("/", async (req, res) => {
                                             "
                                           >
                                           Tu pago se realizó correctamente. Gracias por confiar en nosotros y en nuestros profesionales.
-                                          Tu turno fue confirmado el día:  a la hora:
+                                          Tu turno fue confirmado el día: <strong>${citaDay}</strong> a la hora: <strong>${citaHora} hs</strong>
                                           </p>
                                         </td>
                                       </tr>
@@ -678,7 +693,7 @@ router.post("/", async (req, res) => {
           "There is a problem in the server, please try again later " + err
         );
       } else {
-        res.send("Your message was sent successfully");
+        res.send("se mando el mail");
       }
     });
   } catch (error) {

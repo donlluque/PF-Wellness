@@ -130,24 +130,25 @@ function Home() {
               100%
             </ListItem>
           </List>
-
-          <Button
-            mt={{
-              base: "1rem",
-              sm: "1rem",
-              md: "1rem",
-              lg: "1rem",
-              xl: "0.5rem",
-            }}
-            bg="#D69E2E"
-            w={"15rem"}
-            h={"4rem"}
-            fontSize={"3xl"}
-            fontWeight={"bold"}
-            boxShadow="dark-lg"
-          >
-            Suscribirse
-          </Button>
+          <Link to="/wellnessPrepaid">
+            <Button
+              mt={{
+                base: "1rem",
+                sm: "1rem",
+                md: "1rem",
+                lg: "1rem",
+                xl: "0.5rem",
+              }}
+              bg="#D69E2E"
+              w={"15rem"}
+              h={"4rem"}
+              fontSize={"3xl"}
+              fontWeight={"bold"}
+              boxShadow="dark-lg"
+            >
+              Suscribirse
+            </Button>
+          </Link>
         </Box>
       </Container>
       <Container maxW="100%" centerContent>

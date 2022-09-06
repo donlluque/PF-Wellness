@@ -617,6 +617,23 @@ export const sendEmailForm = (payload) => {
   };
 };
 
+//estadisticas
+export const getStats = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/stats`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_STATS",
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 export const sendEmailPago = (payload) => {
   console.log(payload, "PAYLOAD");
   return async (dispatch) => {

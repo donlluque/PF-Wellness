@@ -17,6 +17,8 @@ import PrivateRoutePerfil from "./components/private/PrivateRoutePerfil";
 // import PrivateRouterPago from "./components/private/PrivateRoutePago";
 import PrivateRouterCalendario from "./components/private/PrivateRouterCalendario";
 import PrivateRoute from "./components/private/PrivateRoute";
+import PrivateRouteDoctor from "./components/private/PrivateRouteDoctor";
+import PrivateRouteTestimonial from "./components/private/PrivateRouteTestimonial";
 
 import AdminProfile from "./components/admin/AdminProfile";
 import DoctorProfile from "./components/doctor/DoctorProfile";
@@ -26,7 +28,6 @@ import Opiniones from "./components/pages/Opiniones";
 import WellnessAsociados from "./components/paymentsWellness/WellnessAsociado";
 import ConfirmPaymentTurn from "./components/paymentsTurns/ConfirmPaymentTurn";
 import ConfirmPaymentWellness from "./components/paymentsWellness/ConfirmPaymentWellness";
-import Stats from "./components/admin/stats";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -45,9 +46,6 @@ export default function App() {
           </Route>
           <Route exact path="/opiniones">
             <Opiniones />
-          </Route>
-          <Route exact path="/stats">
-            <Stats />
           </Route>
           <Route exact path="/especialidades">
             <Specialties />
@@ -70,9 +68,9 @@ export default function App() {
           <PrivateRouteAdmin exact path="/admin">
             <AdminProfile />
           </PrivateRouteAdmin>
-          <Route exact path="/doctor/:id">
+          <PrivateRouteDoctor exact path="/doctor/:id">
             <DoctorProfile />
-          </Route>
+          </PrivateRouteDoctor>
           <Route exact path="/wellnessPrepaid">
             <WellnessAsociados />
           </Route>
@@ -82,9 +80,9 @@ export default function App() {
           <Route exact path="/payment/wellness-prepaid">
             <ConfirmPaymentWellness />
           </Route>
-          <Route exact path="/testimonials">
+          <PrivateRouteTestimonial exact path="/testimonials">
             <FormTestimonial />
-          </Route>
+          </PrivateRouteTestimonial>
           <Route exact path="*">
             <Error />
           </Route>

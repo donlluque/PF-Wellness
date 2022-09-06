@@ -25,8 +25,8 @@ function WellnessAsociados() {
   const dispatch = useDispatch();
   const [link, setLink] = useState();
   const [input, setInput] = useState({
-    title: "Wellness Asociados",
-    price: 0,
+    reason: "Wellness Asociados",
+    price: 7000,
   });
   console.log("link", link);
 
@@ -36,7 +36,8 @@ function WellnessAsociados() {
     setPaymentActive(true);
     onOpen();
     try {
-      const generarLink = await axios.post(`${baseURL}/pagos`, input);
+      const generarLink = await axios.post(`${baseURL}/asociados`, input);
+      console.log(generarLink);
       setLink(generarLink.data);
     } catch (error) {
       console.log(error);

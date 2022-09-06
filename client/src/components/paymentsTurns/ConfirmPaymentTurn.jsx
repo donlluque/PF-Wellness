@@ -7,8 +7,10 @@ import { postTurn, sendEmailPago, getOnePatient } from "../../redux/actions";
 function ConfirmPaymentTurn() {
   const { search } = useLocation();
   const dispatch = useDispatch();
+  const turnos = useSelector((state) => state.turnsByPatient);
   const { dataPayment, patientDetail } = useSelector((state) => state);
   console.log(search, "search");
+  console.log(turnos, "turnos turnsByPatient");
   console.log(dataPayment, "dataPayment pago");
   console.log(patientDetail, "patientDetail en el pago");
   var form = JSON.parse(localStorage.getItem("form"));

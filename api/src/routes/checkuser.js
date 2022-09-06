@@ -58,7 +58,7 @@ router.post("/", async (req, res, next) => {
       ],
     });
 
-    console.log(patient, "soy patient");
+    // console.log(patient, "soy patient");
     if (!email) res.status(400).send("Sorry, I need more data to post");
     if (doctor) {
       return res.status(200).send(doctor);

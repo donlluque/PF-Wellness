@@ -107,6 +107,8 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
   const handleSubmitPay = async () => {
     setPayActive(true);
     dispatch(dataPayment(form));
+    localStorage.setItem("form", JSON.stringify(form));
+
     try {
       const generarLink = await axios.post(`${baseURL}/pagos`, input);
       setLink(generarLink.data);

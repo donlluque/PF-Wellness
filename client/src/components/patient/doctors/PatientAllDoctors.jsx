@@ -20,7 +20,7 @@ import {
   AlertIcon,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { AiOutlineComment } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,7 +37,9 @@ function PatientAllDoctors() {
   const { doctorDetail, turnsByPatient, user } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  var perfil = JSON.parse(localStorage.getItem("user"));
+  console.log(turnsByPatient, "turnsByPatient");
+  const { id } = useParams();
+  console.log(id, "ID DE PARAMS");
 
   let aux = turnsByPatient?.map((e) => e.doctors?.[0]);
   console.log(aux, "aux");
@@ -50,7 +52,7 @@ function PatientAllDoctors() {
   });
 
   useEffect(() => {
-    dispatch(getTurnsByPatient(perfil.id));
+    dispatch(getTurnsByPatient(id));
     dispatch(getHours());
   }, [dispatch]);
 

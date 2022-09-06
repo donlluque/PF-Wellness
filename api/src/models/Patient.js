@@ -75,6 +75,10 @@ module.exports = (sequelize) => {
       picture: {
         type: DataTypes.STRING,
       },
+      activo: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+      },
     },
     {
       timestamps: false,

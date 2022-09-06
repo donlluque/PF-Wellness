@@ -1,0 +1,310 @@
+[
+    {
+     "id": 1,
+     "name": "Margarita Rodriguez",
+     "medic_id": "DO12AGEC90265146386015207816",
+     "general_area": "Terapia de dolor",
+     "especialidades_id": "Artrosis",
+     "activo": true,
+     "phone": "+54 9 351 205-4738",
+     "email": "marga_rodriguez@gmail.com",
+     "birthday": "15/01/1998",
+     "document": 26526955,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Osde",
+      "Medicus",
+      "Galeno"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_maria-kurpis-5166.jpg",
+     "description": "lunes, martes y viernes 10 a 16hs"
+    },
+    {
+     "id": 2,
+     "name": "Juana Romero",
+     "medic_id": "AL79598880140631263568242093",
+     "general_area": "Reumatologia",
+     "especialidades_id": "Artrosis",
+     "activo": true,
+     "phone": "+54 9 351 145-2964",
+     "email": "juana.romero@gmail.com",
+     "birthday": "10/05/1999",
+     "document": 25963147,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Galeno",
+      "Medife",
+      "Parque Salud",
+      "Swiss medical"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_hospital-privado-jefa-endocrinologia-ramaciotti-5432.jpg",
+     "description": "lunes a viernes 15 a 21hs"
+    },
+    {
+     "id": 3,
+     "name": "Valentina Nadal",
+     "medic_id": "CY2180908746D278Y199Z4T70051",
+     "general_area": "Quiropraxia",
+     "especialidades_id": "Columna",
+     "activo": true,
+     "phone": "+54 9 351 854-6040",
+     "email": "valentinanadal24@gmail.com",
+     "birthday": "02/09/1994",
+     "document": 36874558,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Osde",
+      "Galeno",
+      "Medicus",
+      "Parque Salud",
+      "Medife"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_hospital-privado-jefa-ivana-canonero-9655.jpg",
+     "description": "lunes a sabado 12 a 20hs"
+    },
+    {
+     "id": 4,
+     "name": "Martina Medina",
+     "medic_id": "MT62ZUGD003040197T8126714273153",
+     "general_area": "Osteopatia",
+     "especialidades_id": "Artrosis",
+     "activo": true,
+     "phone": "+54 9 2954 385-713",
+     "email": "marmedina@gmail.com",
+     "birthday": "30/02/1995",
+     "document": 29654369,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Galeno",
+      "Parque Salud",
+      "Osde"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_luciana-simes-web-0881.jpg",
+     "description": "lunes a viernes 15 a 21hs"
+    },
+    {
+     "id": 5,
+     "name": "Agustina Herrera",
+     "medic_id": "CY350903006724001148U011Z6N3",
+     "general_area": "Fisioterapia y Kinesiologia",
+     "especialidades_id": "Miembro inferior",
+     "activo": true,
+     "phone": "+54 9 2953 816-116",
+     "email": "agustina_herrera_dr@yahoo.com",
+     "birthday": "23/04/1990",
+     "document": 37559154,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Medicus",
+      "Osde",
+      "Medicus",
+      "Medife"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_dra-bonin-web-2766.jpg",
+     "description": "lunes, miercoles y viernes 15 a 21hs"
+    },
+    {
+     "id": 6,
+     "name": "Alejandra Aguirre",
+     "medic_id": "BH89ZFQL326155A6799668",
+     "general_area": "Deportologia",
+     "especialidades_id": "Esguinces",
+     "activo": true,
+     "phone": "+54 9 2954 613-249",
+     "email": "aleaguirre34@gmail.com",
+     "birthday": "15/07/1993",
+     "document": 38665825,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Swiss medical",
+      "Medife",
+      "Medicus",
+      "Osde"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_florencia-arbach-web-1213.jpg",
+     "description": "lunes a viernes 9 a 18hs"
+    },
+    {
+     "id": 7,
+     "name": "Claudia Pereyra",
+     "medic_id": "LB231412507X469A8986B5205722",
+     "general_area": "Traumatologia",
+     "especialidades_id": "Pie y mano",
+     "activo": true,
+     "phone": "+54 9 351 294-4678",
+     "email": "claudipereyra78@yahoo.com",
+     "birthday": "01/01/1991",
+     "document": 26895331,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Parque salud",
+      "Medife",
+      "Medicus",
+      "Galeno"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_hospital-privado-jefa-jimena-zurueta-0613.jpg",
+     "description": "lunes a jueves 15 a 21hs"
+    },
+    {
+     "id": 8,
+     "name": "Ana Suarez",
+     "medic_id": "GT706L40804777B0315K568159Y9",
+     "general_area": "Terapia de dolor",
+     "especialidades_id": "Lumbalgia",
+     "activo": true,
+     "phone": "+54 9 11 545-6524",
+     "email": "anasuarez2401@gmail.com",
+     "birthday": "30/03/1984",
+     "document": 27669543,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Medife",
+      "Galeno",
+      "Swiss medical"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_hospital-privado-neumonologia-vanesa-abrate-3072.jpg",
+     "description": "miercoles a domingo 15 a 21hs"
+    },
+    {
+     "id": 9,
+     "name": "Angel Castro",
+     "medic_id": "CR21705500570070704622",
+     "general_area": "Quiropraxia",
+     "especialidades_id": "General",
+     "activo": true,
+     "phone": "+54 9 351 165-6548",
+     "email": "angelitocastro@hotmail.com",
+     "birthday": "24/01/1981",
+     "document": 35998267,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Galeno",
+      "Medife",
+      "Medicus"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_hp-01-dr-alejandro-peirone-9102.jpg",
+     "description": "lunes, miercoles y domingo 15 a 21hs"
+    },
+    {
+     "id": 10,
+     "name": "Luis Silva",
+     "medic_id": "PK93MEXK0010079473919295",
+     "general_area": "Fisioterapia y Kinesiologia",
+     "especialidades_id": "Columna",
+     "activo": true,
+     "phone": "+54 9 351 654-2144",
+     "email": "luismsilva@yahoo.com",
+     "birthday": "03/03/1983",
+     "document": 28569443,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Osde",
+      "Galeno",
+      "Medicus",
+      "Parque Salud",
+      "Medife"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_hospital-privado-jefa-martin-maraschio-0479.jpg",
+     "description": "lunes a viernes 9 a 20hs"
+    },
+    {
+     "id": 11,
+     "name": "Alejandro Rodriguez",
+     "medic_id": "LV44HXVB238009S204P3G",
+     "general_area": "Traumatologia",
+     "especialidades_id": "Pediatria",
+     "activo": true,
+     "phone": "+54 9 351 145-6325",
+     "email": "alerodriguez23@gmail.com",
+     "birthday": "15/06/1987",
+     "document": 26851667,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Galeno",
+      "Medicus",
+      "Osde"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_dr-alberto-de-battista-4332.jpg",
+     "description": "martes, jueves y sabado 10 a 18hs"
+    },
+    {
+     "id": 12,
+     "name": "Ariel Ortiz",
+     "medic_id": "RO07ABLX00M314H4031O7B41",
+     "general_area": "Deportologia",
+     "especialidades_id": "Hernias",
+     "activo": true,
+     "phone": "+54 9 351 854-6040",
+     "email": "drarielortiz@gmail.com",
+     "birthday": "13/08/1999",
+     "document": 29579662,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Medicus",
+      "Parque Salud",
+      "Osde"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_hp-13-dr-ignacio-juaneda-5335.jpg",
+     "description": "martes a domingo 10 a 20hs"
+    },
+    {
+     "id": 13,
+     "name": "Miguel Angel Pereyro",
+     "medic_id": "QA95EGVZ8G17J36E54R7ULMZ37236",
+     "general_area": "Quiropraxia",
+     "especialidades_id": "Hombro y rodilla",
+     "activo": true,
+     "phone": "+54 9 351 169-1754",
+     "email": "mapereyro@gmail.com",
+     "birthday": "20/10/2003",
+     "document": 26975443,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Medife",
+      "Galeno",
+      "Swiss medical",
+      "Osde"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_hospital-privado-jefe-marcelo-ruggieri-5860.jpg",
+     "description": "lunes, miercoles y domingo 12 a 21hs"
+    },
+    {
+     "id": 14,
+     "name": "Cesar Dieguez",
+     "medic_id": "GB77KJLG27148450036312",
+     "general_area": "Fisioterapia y Kinesiologia",
+     "especialidades_id": "Dorsalgia",
+     "activo": true,
+     "phone": "+54 9 351 198-9873",
+     "email": "cesaradieguez@yahoo.com",
+     "birthday": "24/01/2000",
+     "document": 28665821,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Parque salud",
+      "Galeno",
+      "Medife"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_dr-martinez-colombres-web-9404.jpg",
+     "description": "lunes a sabado 13 a 20hs"
+    },
+    {
+     "id": 15,
+     "name": "Rodrigo Martinez",
+     "medic_id": "TN1650657603607379657003",
+     "general_area": "Traumatologia",
+     "especialidades_id": "Cervicalgia",
+     "activo": true,
+     "phone": "+54 9 351 544-6338",
+     "email": "rodrimartinez56",
+     "birthday": "25/11/2005",
+     "document": 39557234,
+     "type_document": "DNI",
+     "prepaid_health": [
+      "Medicus",
+      "Medife"
+     ],
+     "picture": "https://hospitalprivado.com.ar/uploads/cache/profile_j_hp-01-dr-alejandro-peirone-9102.jpg",
+     "description": "martes, viernes y domingo 9 a 19hs"
+    }
+   ]

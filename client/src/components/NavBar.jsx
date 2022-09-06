@@ -62,7 +62,7 @@ function NavBar() {
         dispatch(dateUser(user));
         // localStorage.setItem("user", JSON.stringify(user));
       }
-      dispatch(getTurnsByPatient(user.id));
+      // dispatch(getTurnsByPatient(user.id));
     }
   }, [user]);
 

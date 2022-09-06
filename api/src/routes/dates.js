@@ -12,7 +12,7 @@ const {
 } = require("../db.js");
 
 router.post("/", async (req, res, next) => {
-  const { date, idHour, idDoctor, idPatient } = req.body;
+  const { date, idHour, idDoctor, idPatient,monto } = req.body;
   try {
     const doctorId = idDoctor; //dato enviado desde el front
     const patientId = idPatient; //dato enviado desde el front
@@ -52,6 +52,7 @@ router.post("/", async (req, res, next) => {
 
     const turno = await Dates1.create({
       date,
+      monto
     });
 
     await turno.addDoctor(doctor);

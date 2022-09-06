@@ -49,7 +49,13 @@ export const searchTurnByDate = (turns, date) => {
   return turnsDate;
 };
 
-export const searchTurnsAvailable = (hours, totalHours, totalTurns, date) => {
+export const searchTurnsAvailable = (
+  hours,
+  totalHours,
+  totalTurns,
+  date,
+  absents
+) => {
   let rangeTurns = validateRange(hours, totalHours);
   let dateTurns = searchTurnByDate(totalTurns, date); //[{},{}] dateTurns.map(e => e.hours_working[0].hour))
   console.log("soyDateTurn", dateTurns);

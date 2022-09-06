@@ -1,5 +1,4 @@
 import React from "react";
-//import { cleanDoctor } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Box, Text, List, ListItem, Image } from "@chakra-ui/react";

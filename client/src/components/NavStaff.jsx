@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import SearchBar from "./SearchBar";
+import SearchBar from "./doctor/SearchBar";
 import {
   getDoctors,
   filterDoctors,

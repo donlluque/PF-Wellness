@@ -12,7 +12,7 @@ import NavStaff from "../NavStaff";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../Pagination";
-import DoctorCard from "../DoctorCard";
+import DoctorCard from "../doctor/DoctorCard";
 import { useEffect } from "react";
 import { getHours } from "../../redux/actions";
 

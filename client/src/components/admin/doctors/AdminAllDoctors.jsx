@@ -24,10 +24,10 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 import { MdOutlineEditNote, MdPersonAddDisabled } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailDoctors, getDoctors, getHours } from "../../../redux/actions";
-import DoctorDetail from "../../DoctorDetail";
+import DoctorDetail from "../../doctor/DoctorDetail";
 import ConfirmDisable from "./ConfirmDisable";
 
 function AdminAllDoctors({ setPutDoctor, setListDoctors }) {

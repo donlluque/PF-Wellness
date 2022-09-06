@@ -21,14 +21,15 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  dataPayment,
   getHours,
   getOnePatient,
   getPrepaidHealth,
   postTurn,
   sendEmailPago,
-} from "../redux/actions";
+} from "../../redux/actions";
 import axios from "axios";
-import { baseURL } from "../index.js";
+import { baseURL } from "../../index.js";
 import { Link } from "react-router-dom";
 
 function Payments({ onClose, isOpen, onOpen, form, active }) {
@@ -97,23 +98,15 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
   };
 
   const handleSubmitNotPay = () => {
-    console.log(form);
     dispatch(postTurn(form));
-
-    onClose();
-  };
-
-  const handleEmail = (user) => {
-    dispatch(sendEmailPago(user));
     onClose();
     confirmModal.onOpen();
+    dispatch(sendEmailPago(user));
   };
 
   const handleSubmitPay = async () => {
-    console.log(form);
-    dispatch(postTurn(form));
-
     setPayActive(true);
+    dispatch(dataPayment(form));
     try {
       const generarLink = await axios.post(`${baseURL}/pagos`, input);
       setLink(generarLink.data);
@@ -143,6 +136,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
       result === "Medife"
     ) {
       let percentage = prepaidHealth.find((e) => e.name === result).percentage;
+
       let price = cost - percentage * cost;
 
       setInput({
@@ -290,29 +284,10 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
           </ModalBody>
 
           <ModalFooter>
-            {!payActive && (
-              <Button
-                colorScheme="teal"
-                variant="ghost"
-                mr={3}
-                onClick={onClose}
-              >
-                Cancelar
-              </Button>
-            )}
+            <Button colorScheme="teal" variant="ghost" mr={3} onClick={onClose}>
+              Cancelar
+            </Button>
 
-            {payActive && (
-              <Button
-                colorScheme="teal"
-                variant="ghost"
-                mr={3}
-                onClick={() => {
-                  handleEmail(user);
-                }}
-              >
-                Finalizar
-              </Button>
-            )}
             {prepaid === "Wellness" && (
               <Button colorScheme={"teal"} onClick={() => handleSubmitNotPay()}>
                 Confirmar turno
@@ -326,7 +301,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      {/*MODAL CONFIRM TURNO*/}
+      {/*MODAL CONFIRM TURNO SIN PAGAR*/}
       <Modal
         blockScrollOnMount={false}
         isOpen={confirmModal.isOpen}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { DatePicker } from "@material-ui/pickers";
-import { Link } from "react-router-dom";
 
 import {
   Box,
@@ -14,13 +13,7 @@ import {
   Alert,
   AlertIcon,
   AlertDescription,
-  ModalOverlay,
-  ModalHeader,
-  ModalContent,
   useDisclosure,
-  Modal,
-  ModalBody,
-  ModalFooter,
   CircularProgress,
 } from "@chakra-ui/react";
 import {
@@ -28,18 +21,19 @@ import {
   getHours,
   getTurns,
   getOnePatient,
+  getAllAbsent,
 } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { FcCheckmark } from "react-icons/fc";
 import { searchTurnsAvailable } from "./validateTurn";
-import Payments from "./Payments";
+import Payments from "./paymentsTurns/Payments";
 
 function Calendar() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure(); //modal confirmacion de turno
-  const dataIncompleteModal = useDisclosure();
+
   const [selectedDate, setDateChange] = useState(""); //cambia fecha en calendario
   const [form, setForm] = useState({});
   const [arrayTurns, setArrayTurns] = useState([]); //horas disponibles a renderizar
@@ -47,6 +41,7 @@ function Calendar() {
   const { hoursWorking, turns } = useSelector((state) => state);
   const doctorDetail = useSelector((state) => state.doctorDetail);
   const usuario = useSelector((state) => state.user);
+  const absents = useSelector((state) => state.absents);
   const [active, setActive] = useState(false);
 
   //copia de estado global
@@ -85,13 +80,13 @@ function Calendar() {
     setForm({ ...form, idDoctor: idDoctor, idPatient: usuario.id });
     // setForm({ ...form, idPatient: usuario.id });
     dispatch(getTurns());
+    dispatch(getAllAbsent());
   }, [dispatch]);
 
   const handleConfirm = (e) => {
     e.preventDefault();
     // form.idPatient = usuario.id;
 
-    //dispatch(postTurn(form));
     onOpen();
     setActive(true);
   };
@@ -101,7 +96,9 @@ function Calendar() {
     setDateChange(date);
     setForm({ ...form, date: date.toLocaleDateString() });
     //validaciones horas disponibles
-    setArrayTurns(searchTurnsAvailable(hours, totalHours, totalTurns, date));
+    setArrayTurns(
+      searchTurnsAvailable(hours, totalHours, totalTurns, date, absents)
+    );
   };
 
   const handleClick = (e) => {

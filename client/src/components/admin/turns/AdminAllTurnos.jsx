@@ -8,7 +8,6 @@ import {
   Td,
   TableContainer,
   Button,
-  Icon,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -19,9 +18,8 @@ import {
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 
-import { TbCalendarOff } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTurn, getTurns } from "../../../redux/actions";
+import { getTurns } from "../../../redux/actions";
 
 function AdminAllTurnos({ prevTurns, nextTurns }) {
   const dispatch = useDispatch();

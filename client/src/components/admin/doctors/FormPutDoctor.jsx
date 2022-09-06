@@ -508,7 +508,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
                 name="prepaid_healths"
               >
                 <option>Seleccionar una opción</option>
-                <option value="Particular">Particular</option>
+
                 {prepaidHealth &&
                   prepaidHealth.map((e, index) => (
                     <option key={e.id} value={e.name}>

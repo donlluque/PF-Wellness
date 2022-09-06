@@ -28,12 +28,10 @@ import { FaUserCheck } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllPatients,
-  getDetailDoctors,
-  getDoctors,
   getHours,
   getOnePatient,
 } from "../../../redux/actions";
-import DoctorDetail from "../../DoctorDetail";
+import DoctorDetail from "../../doctor/DoctorDetail";
 
 import ConfirmEnable from "./ConfirmEnable";
 

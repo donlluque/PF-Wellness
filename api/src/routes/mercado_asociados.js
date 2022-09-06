@@ -10,7 +10,7 @@ mercadopago.configure({
 
 router.post("/", async (req, res, next) => {
   let preference = {
-    reason: "Asociados de Wellness",
+    reason: req.body.reason,
     auto_recurring: {
       frequency: 1,
       frequency_type: "months",
@@ -19,11 +19,7 @@ router.post("/", async (req, res, next) => {
       //unit_price: parseInt(req.body.price), TIENE QUE SER UN NUMERO por eso arriba esta el parseInt por si viene un STRING
     },
 
-    back_url: {
-      success:
-        //"https://pf-wellness.vercel.app/payment" ||
-        "http://localhost:3000//payment/wellness-prepaid",
-    }, // redireccionar de nuevo a Wellness componente de PAGO EXITOSO
+    back_url: "https://pf-wellness.vercel.app/", // redireccionar de nuevo a Wellness componente de PAGO EXITOSO
     payer_email: "test_user_67403553@testuser.com",
   };
 

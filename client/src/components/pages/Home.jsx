@@ -130,6 +130,7 @@ function Home() {
               100%
             </ListItem>
           </List>
+          <Link to="/wellnessPrepaid">
           <Button
             mt={{
               base: "1rem",
@@ -146,7 +147,9 @@ function Home() {
             boxShadow="dark-lg"
           >
             Suscribirse
+          
           </Button>
+          </Link>
         </Box>
       </Container>
       <Container maxW="100%" centerContent>

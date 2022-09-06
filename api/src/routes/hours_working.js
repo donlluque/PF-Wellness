@@ -16,7 +16,6 @@ router.get("/", async (req, res, next) => {
     } else {
       res.status(200).send(hoursWorkkingDb);
     }
-    res.send(info);
   } catch (error) {
     console.log(error);
   }

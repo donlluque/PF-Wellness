@@ -5,6 +5,7 @@ require("dotenv").config();
 
 router.post("/", async (req, res) => {
   const { email } = req.body;
+  console.log(req.body, "El body completo");
 
   try {
     let transporter = nodemailer.createTransport({

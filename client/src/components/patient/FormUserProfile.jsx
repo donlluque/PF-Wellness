@@ -103,6 +103,7 @@ function FormUserProfile() {
     setOverlay(<OverlayOne />);
     onOpen();
     setPutActive(false);
+    window.location.reload();
   };
 
   const handlePutActive = () => {

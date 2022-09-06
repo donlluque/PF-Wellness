@@ -3,6 +3,7 @@ import ArchivedPanel from "./archived/ArchivedPanel";
 import AdminDoctorPanel from "./doctors/AdminDoctorPanel";
 import AdminPatientPanel from "./patients/AdminPatientPanel";
 import AdminTurnsPanel from "./turns/AdminTurnsPanel";
+import Chart from "./stats";
 
 function AdminProfile() {
   return (
@@ -82,9 +83,7 @@ function AdminProfile() {
 
           <TabPanels bgColor="white">
             <TabPanel>
-              <Box w="20rem" h="30rem">
-                PROXIMANTE
-              </Box>
+              <Chart/>
             </TabPanel>
             <TabPanel>
               <AdminDoctorPanel />

@@ -78,7 +78,7 @@ function Specialties() {
             <Text display="inline">Consulta:</Text>
             <Icon display="inline" as={MdAttachMoney} color="green.500" />
             <Text display={"inline"} fontWeight="semibold">
-              {areas[1]?.costConsult}
+              {areas[0]?.costConsult}
             </Text>
           </Box>
           <Box
@@ -141,7 +141,7 @@ function Specialties() {
             <Text display="inline">Consulta:</Text>
             <Icon display="inline" as={MdAttachMoney} color="green.500" />
             <Text display={"inline"} fontWeight="semibold">
-              {areas[2]?.costConsult}
+              {areas[1]?.costConsult}
             </Text>
           </Box>
           <Box
@@ -209,7 +209,7 @@ function Specialties() {
             <Text display="inline">Consulta:</Text>
             <Icon display="inline" as={MdAttachMoney} color="green.500" />
             <Text display={"inline"} fontWeight="semibold">
-              {areas[3]?.costConsult}
+              {areas[2]?.costConsult}
             </Text>
           </Box>
           <Box display={{ md: "flex" }} p="2rem">
@@ -255,7 +255,7 @@ function Specialties() {
             <Text display="inline">Consulta:</Text>
             <Icon display="inline" as={MdAttachMoney} color="green.500" />
             <Text display={"inline"} fontWeight="semibold">
-              {areas[4]?.costConsult}
+              {areas[3]?.costConsult}
             </Text>
           </Box>
           <Box display={{ md: "flex" }} p="2rem">
@@ -313,7 +313,7 @@ function Specialties() {
             <Text display="inline">Consulta:</Text>
             <Icon display="inline" as={MdAttachMoney} color="green.500" />
             <Text display={"inline"} fontWeight="semibold">
-              {areas[5]?.costConsult}
+              {areas[4]?.costConsult}
             </Text>
           </Box>
           <Box display={{ md: "flex" }} p="2rem">
@@ -372,7 +372,7 @@ function Specialties() {
             <Text display="inline">Consulta:</Text>
             <Icon display="inline" as={MdAttachMoney} color="green.500" />
             <Text display={"inline"} fontWeight="semibold">
-              {areas[6]?.costConsult}
+              {areas[5]?.costConsult}
             </Text>
           </Box>
           <Box display={{ md: "flex" }} p="2rem">
@@ -421,7 +421,7 @@ function Specialties() {
             <Text display="inline">Consulta:</Text>
             <Icon display="inline" as={MdAttachMoney} color="green.500" />
             <Text display={"inline"} fontWeight="semibold">
-              {areas[0]?.costConsult}
+              {areas[6]?.costConsult}
             </Text>
           </Box>
           <Box display={{ md: "flex" }} p="2rem">

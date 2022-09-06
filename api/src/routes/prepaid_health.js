@@ -57,14 +57,14 @@ router.get("/:id", async (req, res, next) => {
 });
 
 router.put("/", async (req, res, next) => {
-  const{id,name}=req.body
+  const{id,name,address,phone,logo,percentage}=req.body
   const modificar= await Prepaid_health.findOne({
     where:{
       id:id
     }
   })
 
-  const nuevo = await modificar.update({name})
+  const nuevo = await modificar.update({name,address,phone,logo,percentage})
   res.send(nuevo)
 })
 router.post("/", async (req, res, next) => {

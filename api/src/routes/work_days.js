@@ -38,5 +38,9 @@ router.put("/", async (req, res, next) => {
   const nuevo = await modificar.update({ day });
   res.send(nuevo);
 });
-
+router.post("/", async (req, res, next) => {
+  const {day}=req.body
+  const dayWork = await Work_days.create({day})
+  res.send(dayWork)
+})
 module.exports = router;

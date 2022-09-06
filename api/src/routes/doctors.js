@@ -145,7 +145,7 @@ router.post("/", async (req, res, next) => {
       },
     });
     const areaId = dataGeneralArea.dataValues.id;
-    console.log(areaId);
+
     const newDoctor = await Doctor.create({
       name,
       medic_id,
@@ -182,6 +182,8 @@ router.put("/", async (req, res, next) => {
     work_days,
   } = req.body;
 
+  // const obrasSociales = prepaid_healths.map((el) => el.name);
+
   const modificar = await Doctor.findOne({
     where: { id },
   });
@@ -190,7 +192,7 @@ router.put("/", async (req, res, next) => {
 
   if (general_area) {
     const dataGeneral_area = await General_area.findOne({
-      where: { name: general_area },
+      where: { name: general_area.name },
     });
     areaId = dataGeneral_area.dataValues.id;
   }
@@ -229,6 +231,7 @@ router.put("/", async (req, res, next) => {
 
 router.patch("/", async (req, res, next) => {
   const { doctorId } = req.body;
+  console.log(doctorId, "bakkkkkk");
 
   const doctor = await Doctor.findOne({ where: { id: doctorId } });
 
@@ -236,8 +239,8 @@ router.patch("/", async (req, res, next) => {
 
   if (doctor.dataValues.activo) state = false;
   else state = true;
-  await doctor.update({ activo: state });
-  res.send("cambiado");
+  let response = await doctor.update({ activo: state });
+  res.status(200).send(response);
 });
 
 module.exports = router;

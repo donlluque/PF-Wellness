@@ -27,7 +27,12 @@ import Logo from "../assets/logoPf.jpeg";
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { dateUser } from "../redux/actions";
+import {
+  dateUser,
+  getDetailDoctors,
+  getTurnsByPatient,
+} from "../redux/actions";
+import { GrUserAdmin } from "react-icons/gr";
 import { FaUserCircle } from "react-icons/fa";
 import { BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -57,19 +62,16 @@ function NavBar() {
         dispatch(dateUser(user));
         // localStorage.setItem("user", JSON.stringify(user));
       }
+      dispatch(getTurnsByPatient(user.id));
     }
   }, [user]);
 
-  const OverlayOne = () => (
-    <ModalOverlay
-      bg="blackAlpha.300"
-      backdropFilter="blur(10px) hue-rotate(90deg)"
-    />
-  );
-
   //-----Estilos para modo oscuro----//
-  const [overlay, setOverlay] = useState(<OverlayOne />);
+
+  const notPrepaidModal = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const notVerificadeModal = useDisclosure();
+  const notAuthenticatedModal = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const colorLetra = useColorModeValue("#2c7a7b", "#2D3748");
   const botonBg = useColorModeValue("#319795", "#1A202C");
@@ -82,7 +84,7 @@ function NavBar() {
   //----------------------------------//
 
   return (
-    <Box position="absolute" w="100%" border="1px solid red">
+    <Box position="absolute" w="100%">
       <Box
         display="flex"
         m={2}
@@ -144,7 +146,6 @@ function NavBar() {
 
         <Spacer />
         <ButtonGroup
-          border="1px solid red"
           mt={{ base: "1rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "0" }}
           display="flex"
           flexDirection={{
@@ -154,33 +155,11 @@ function NavBar() {
             lg: "row",
           }}
         >
-          {isAuthenticated ? (
-            <Link to="/turnos">
-              <Button
-                colorScheme={schemeBt}
-                variant="solid"
-                bg={botonBg}
-                color={colorBt}
-              >
-                Turnos Online
-              </Button>
-            </Link>
-          ) : (
-            <Button
-              colorScheme={schemeBt}
-              variant="solid"
-              onClick={onOpen}
-              bg={botonBg}
-              color={colorBt}
-            >
-              Turnos Online
-            </Button>
-          )}
           <Button
             onClick={toggleColorMode}
-            colorScheme={modo}
-            bg={modo}
+            colorScheme={"teal"}
             color={modoColor}
+            borderRadius="50%"
           >
             {colorMode === "light" ? (
               <Icon as={BsFillMoonFill} />
@@ -188,15 +167,49 @@ function NavBar() {
               <Icon as={BsFillSunFill} />
             )}
           </Button>
-          <Link to="/admin">
-            <Button colorScheme={modo} bg={botonBg} color={colorBt}>
-              Acceso admin
-            </Button>
-          </Link>
+
+          {!user || (user && user.tipoRol?.[0] !== "admin") ? (
+            <>
+              {isAuthenticated &&
+              user.email_verified &&
+              user &&
+              user.tipoRol?.[0] === "user" ? (
+                <Link to="/turnos">
+                  <Button
+                    colorScheme={schemeBt}
+                    variant="solid"
+                    bg={botonBg}
+                    color={colorBt}
+                  >
+                    Turnos Online
+                  </Button>
+                </Link>
+              ) : (
+                <Button
+                  colorScheme={schemeBt}
+                  variant="solid"
+                  onClick={() =>
+                    isAuthenticated
+                      ? user.email_verified
+                        ? true
+                        : notVerificadeModal.onOpen()
+                      : notAuthenticatedModal.onOpen()
+                  }
+                  bg={botonBg}
+                  color={colorBt}
+                >
+                  Turnos Online
+                </Button>
+              )}
+            </>
+          ) : (
+            false
+          )}
 
           {!isAuthenticated && (
             <Button
               colorScheme="teal"
+              bg="#E6FFFA70"
               variant="outline"
               color={modoUser}
               onClick={() => {
@@ -206,7 +219,49 @@ function NavBar() {
               Acceder
             </Button>
           )}
-          {isAuthenticated && (
+          {isAuthenticated && user.tipoRol?.[0] === "Doctor" && (
+            <Menu>
+              {({ isOpen }) => (
+                <>
+                  <MenuButton
+                    isActive={isOpen}
+                    as={Button}
+                    bg={modoUser}
+                    colorScheme={schemeBt}
+                  >
+                    {isOpen ? (
+                      <Icon boxSize={7} as={FaUserCircle} color={bgUser} />
+                    ) : (
+                      <Icon boxSize={7} as={FaUserCircle} color={bgUser} />
+                    )}
+                  </MenuButton>
+                  <MenuList>
+                    <Link
+                      to={
+                        usuario.length
+                          ? `/doctor/${usuario[0].id}`
+                          : `/doctor/${usuario.id}`
+                      }
+                    >
+                      <MenuItem
+                        onClick={() => dispatch(getDetailDoctors(usuario.id))}
+                      >
+                        Ver perfil
+                      </MenuItem>
+                    </Link>
+                    <MenuItem
+                      onClick={() =>
+                        logout({ returnTo: window.location.origin })
+                      }
+                    >
+                      Cerrar Sesión
+                    </MenuItem>
+                  </MenuList>
+                </>
+              )}
+            </Menu>
+          )}
+          {isAuthenticated && user.tipoRol?.[0] === "user" && (
             <Menu>
               {({ isOpen }) => (
                 <>
@@ -244,18 +299,69 @@ function NavBar() {
               )}
             </Menu>
           )}
+          {isAuthenticated && user.tipoRol?.[0] === "admin" && (
+            <Menu>
+              {({ isOpen }) => (
+                <>
+                  <MenuButton
+                    isActive={isOpen}
+                    as={Button}
+                    bg={modoUser}
+                    colorScheme={schemeBt}
+                    pl={4}
+                    pr={4}
+                  >
+                    {isOpen ? (
+                      <Icon boxSize={7} as={GrUserAdmin} color={bgUser} />
+                    ) : (
+                      <Icon boxSize={7} as={GrUserAdmin} color={bgUser} />
+                    )}
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem
+                      onClick={() =>
+                        logout({ returnTo: window.location.origin })
+                      }
+                    >
+                      Cerrar Sesión
+                    </MenuItem>
+                  </MenuList>
+                </>
+              )}
+            </Menu>
+          )}
         </ButtonGroup>
       </Box>
 
       <Modal
         isCentered
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={notVerificadeModal.isOpen}
+        onClose={notVerificadeModal.onClose}
         colorScheme="teal"
-        w="100%"
+        size="xs"
       >
-        {overlay}
-        <ModalContent bgColor="green.50" border="1px solid red" w="80%">
+        <ModalOverlay size="xs" />
+        <ModalContent bgColor="green.50" w="80%">
+          <ModalHeader color="#C53030">Ups!!</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text color="#C53030">Debes verificar el email</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Spacer />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isCentered
+        isOpen={notAuthenticatedModal.isOpen}
+        onClose={notAuthenticatedModal.onClose}
+        colorScheme="teal"
+        size="xs"
+      >
+        <ModalOverlay size="xs" />
+        <ModalContent bgColor="green.50">
           <ModalHeader color="#C53030">Ups!!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

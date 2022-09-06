@@ -8,8 +8,10 @@ import {
 } from "@chakra-ui/react";
 import { Button } from "reactstrap";
 import { BsCalendarCheck, BsCalendar3, BsCalendarEvent } from "react-icons/bs";
+import { AiFillCaretRight } from "react-icons/ai";
 import { useState } from "react";
 import PatientAllTurns from "./PatientAllTurns";
+import { Icon } from "@material-ui/core";
 
 function PatientTurnsPanel() {
   const [nextTurns, setNextTurns] = useState(true);
@@ -34,6 +36,7 @@ function PatientTurnsPanel() {
           <Divider colorScheme={"teal"} />
           <List m="2rem" spacing={5}>
             <ListItem>
+              {nextTurns && <ListIcon as={AiFillCaretRight} color="teal.500" />}
               <Button
                 onClick={() => {
                   setNextTurns(true);
@@ -45,6 +48,7 @@ function PatientTurnsPanel() {
               </Button>
             </ListItem>
             <ListItem>
+              {prevTurns && <ListIcon as={AiFillCaretRight} color="teal.500" />}
               <Button
                 onClick={() => {
                   setNextTurns(false);
@@ -56,6 +60,9 @@ function PatientTurnsPanel() {
               </Button>
             </ListItem>
             <ListItem>
+              {!nextTurns && !prevTurns && (
+                <ListIcon as={AiFillCaretRight} color="teal.500" />
+              )}
               <Button
                 onClick={() => {
                   setNextTurns(false);

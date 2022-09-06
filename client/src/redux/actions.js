@@ -17,7 +17,6 @@ export function getDoctors() {
       });
   };
 }
-
 export function getDetailDoctors(id) {
   return function (dispatch) {
     fetch(`${baseURL}/doctors/${id}`)
@@ -63,6 +62,32 @@ export function filterDoctors(filter) {
       });
   };
 }
+export const putDoctor = (data) => {
+  console.log("data actions", data);
+
+  return function (dispatch) {
+    return fetch(`${baseURL}/doctors`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? Promise.resolve({
+              name: data.name,
+              status: res.status || "00",
+              statusText: `Datos guardados con exito`,
+            })
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: res.statusText,
+            })
+      )
+      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  };
+};
 
 //SEARCH BAR
 export function searchDoctorByName(input) {
@@ -86,7 +111,7 @@ export function searchDoctorByName(input) {
       });
   };
 }
-//post doctors
+//POST DOCTORS
 export const postDoctors = (form) => {
   console.log("soy form", form);
   return function (dispatch) {
@@ -111,6 +136,89 @@ export const postDoctors = (form) => {
   };
 };
 
+export const disableDoctor = (doctorId) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/doctors`, {
+      method: "PATCH",
+      body: JSON.stringify({ doctorId }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? Promise.resolve({
+              status: res.status || "00",
+              statusText: `El doctor fue deshabilitado con exito!`,
+            })
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: "No es posible deshabilitar el doctor seleccionado",
+            })
+      )
+      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  };
+};
+export const postAbsentDoctor = (form) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/absence`, {
+      method: "POST",
+      body: JSON.stringify(form),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? res.json()
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: `VER ERROR`,
+            })
+      )
+      .then((data) => {
+        dispatch({ type: "CONFIRM_ACTION", payload: data });
+      })
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  };
+};
+export const getAllAbsent = () => {
+  return function (dispatch) {
+    fetch(`${baseURL}/absence`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch({
+          type: "GET_ABSENTS",
+          payload: json,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+export const deleteAbsent = (id) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/absence`, {
+      method: "DELETE",
+      body: JSON.stringify({ absenceId: id }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? Promise.resolve({
+              status: 200,
+              statusText: `Ausencia eliminada con exito`,
+            })
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: "No se ha podido eliminar correctamente el registro",
+            })
+      )
+      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+      .catch((err) => console.log(err));
+  };
+};
 //PREPAID HEALTH
 export const getPrepaidHealth = () => {
   return function (dispatch) {
@@ -160,7 +268,7 @@ export const getDays = () => {
       });
   };
 };
-//APPOINTMENT
+//TURNS
 export const postTurn = (form) => {
   console.log("soy post", form);
   return function (dispatch) {
@@ -200,13 +308,27 @@ export const getTurns = () => {
       });
   };
 };
+export const getTurnById = (idTurn) => {
+  return function (dispatch) {
+    fetch(`${baseURL}/dates`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_TURN_BY_ID",
+          payload: { data, idTurn },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 
 export const getTurnsByDoctor = (idCurrentDoctor) => {
   return function (dispatch) {
     fetch(`${baseURL}/dates`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("holis");
         dispatch({
           type: "GET_TURNS_BY_DOCTOR",
           payload: { data, idCurrentDoctor },
@@ -224,7 +346,7 @@ export const getTurnsByPatient = (idCurrentPatient) => {
       .then((res) => res.json())
       .then((data) => {
         dispatch({
-          type: "GET_TURNS_BY_DOCTOR",
+          type: "GET_TURNS_BY_PATIENT",
           payload: { data, idCurrentPatient },
         });
       })
@@ -236,8 +358,9 @@ export const getTurnsByPatient = (idCurrentPatient) => {
 
 export const deleteTurn = (id) => {
   return function (dispatch) {
-    return fetch(`${baseURL}/dates/${id}`, {
+    return fetch(`${baseURL}/dates`, {
       method: "DELETE",
+      body: JSON.stringify({ dateId: id }),
       headers: { "Content-Type": "application/json" },
     })
       .then((res) =>
@@ -257,6 +380,8 @@ export const deleteTurn = (id) => {
   };
 };
 
+export const dataPayment = (form) => ({ type: "DATA_PAYMENT", payload: form });
+//AREAS GENERALES
 export const getAllAreas = () => {
   return function (dispatch) {
     fetch(`${baseURL}/general_area`)
@@ -288,7 +413,7 @@ export const searchPatientByName = (patient) => {
             })
       )
       .then((data) => {
-        dispatch({ type: "SEARCH_DOCTOR_BY_NAME", payload: data });
+        dispatch({ type: "SEARCH_PATIENTS_BY_NAME", payload: data });
       })
       .catch((err) => {
         dispatch({ type: "HANDLE_ERROR", payload: err });
@@ -311,6 +436,29 @@ export const getOnePatient = (id) => {
       });
   };
 };
+export const disablePatient = (patientId) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/patient`, {
+      method: "PATCH",
+      body: JSON.stringify({ patientId }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? Promise.resolve({
+              status: res.status || "00",
+              statusText: `El paciente fue deshabilitado con exito!`,
+            })
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: "No es posible deshabilitar el paciente seleccionado",
+            })
+      )
+      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  };
+};
 
 export const getAllPatients = () => {
   return function (dispatch) {
@@ -327,7 +475,21 @@ export const getAllPatients = () => {
       });
   };
 };
-
+export const getPatientsByDoctor = (idCurrentDoctor) => {
+  return function (dispatch) {
+    fetch(`${baseURL}/dates`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "GET_PATIENTS_BY_DOCTOR",
+          payload: { data, idCurrentDoctor },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 //POST PATIENT
 export const postPatient = (form) => {
   return function (dispatch) {
@@ -439,6 +601,35 @@ export const getReviews = () => {
       });
   };
 };
+
+export const sendEmailForm = (payload) => {
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(`${baseURL}/mail_form`, payload);
+      return dispatch({
+        type: "SEND_EMAIL_FORM",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const sendEmailPago = (payload) => {
+  console.log(payload, "PAYLOAD");
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(`${baseURL}/mail_pago`, payload);
+      return dispatch({
+        type: "SEND_EMAIL_PAGO",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 // export const dateUser = (payload) => {
 //   return function (dispatch) {
 //     return fetch(`${baseURL}/checkuser`, {
@@ -466,6 +657,7 @@ export const getReviews = () => {
 //   };
 // };
 
+//CLEAN MSG
 export const cleanError = () => ({ type: "CLEAN_ERROR" });
 export const cleanConfirm = () => ({ type: "CLEAN_MSG" });
 

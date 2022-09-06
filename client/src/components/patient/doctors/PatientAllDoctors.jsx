@@ -16,23 +16,43 @@ import {
   ModalFooter,
   ModalBody,
   useDisclosure,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import { AiOutlineComment } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailDoctors, getDoctors, getHours } from "../../../redux/actions";
-import DoctorDetail from "../../DoctorDetail";
+import {
+  getDetailDoctors,
+  getDoctors,
+  getHours,
+  getTurnsByPatient,
+} from "../../../redux/actions";
+import DoctorDetail from "../../doctor/DoctorDetail";
 
-//BUSCAR EN EL HISTORIAL DE TURNOS, LOS MEDICOS CON LOS QUE ALGUNA VEZ SE ATENDIO
 function PatientAllDoctors() {
   const dispatch = useDispatch();
-  const { doctors, doctorDetail } = useSelector((state) => state);
+  const { doctorDetail, turnsByPatient, user } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log(user.id);
+
+  console.log("turnsByPatient", turnsByPatient);
+
+  let aux = turnsByPatient?.map((e) => e.doctors?.[0]);
+  console.log(aux, "aux");
+  const visibleDoctors = [];
+  aux?.forEach((e) => {
+    let search = visibleDoctors.find((d) => d.id === e.id);
+    if (!search) {
+      visibleDoctors.push(e);
+    }
+  });
 
   useEffect(() => {
     dispatch(getDoctors());
-    //dispatch(getDoctorsByPatient(id))
+    dispatch(getTurnsByPatient(user.id));
     dispatch(getHours());
   }, [dispatch]);
 
@@ -46,17 +66,21 @@ function PatientAllDoctors() {
     <>
       <TableContainer>
         <Table size="sm">
-          <Thead>
-            <Tr>
-              <Th isNumeric>ID</Th>
-              <Th>Nombre</Th>
-              <Th>Área</Th>
-              <Th>Especialidad</Th>
-            </Tr>
-          </Thead>
+          {visibleDoctors.length ? (
+            <Thead>
+              <Tr>
+                <Th isNumeric>ID</Th>
+                <Th>Nombre</Th>
+                <Th>Área</Th>
+                <Th>Especialidad</Th>
+              </Tr>
+            </Thead>
+          ) : (
+            false
+          )}
           <Tbody>
-            {doctors &&
-              doctors.map((e) => (
+            {visibleDoctors.length ? (
+              visibleDoctors.map((e) => (
                 <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
                   <Td>{e.name}</Td>
@@ -71,17 +95,25 @@ function PatientAllDoctors() {
                     >
                       Detalle
                     </Button>
-                    <Button
-                      m="0.5rem"
-                      colorScheme={"teal"}
-                      variant="ghost"
-                      fontSize="xs"
-                    >
-                      <Icon w={4} h={4} as={AiOutlineComment} />
-                    </Button>
+                    <Link to="/testimonials">
+                      <Button
+                        m="0.5rem"
+                        colorScheme={"teal"}
+                        variant="ghost"
+                        fontSize="xs"
+                      >
+                        <Icon w={4} h={4} as={AiOutlineComment} />
+                      </Button>
+                    </Link>
                   </Td>
                 </Tr>
-              ))}
+              ))
+            ) : (
+              <Alert status="warning">
+                <AlertIcon />
+                Aún no eres paciente de ningun doctor
+              </Alert>
+            )}
           </Tbody>
           <Tfoot></Tfoot>
         </Table>

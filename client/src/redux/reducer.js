@@ -10,9 +10,11 @@ const initialState = {
   days: [],
   user: {},
   turns: [],
+  absents: [],
   payments: {},
   turnsByPatient: [],
   turnsByDoctor: [],
+  patientsByDoctor: [],
   reviews: [],
   areas: [],
 };
@@ -34,6 +36,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         detail: {},
       };
+    case "PUT_DOCTORS": {
+      return {
+        ...state,
+      };
+    }
     case "FILTER_DOCTORS":
       return {
         ...state,
@@ -43,6 +50,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         doctors: action.payload,
+      };
+    case "SEARCH_PATIENTS_BY_NAME":
+      return {
+        ...state,
+        patients: action.payload,
       };
 
     case "PUT_PATIENT": {
@@ -85,10 +97,17 @@ export default function rootReducer(state = initialState, action) {
         turns: action.payload,
       };
     }
+    case "GET_ABSENTS": {
+      return {
+        ...state,
+        absents: action.payload,
+      };
+    }
     case "GET_TURNS_BY_DOCTOR": {
       let turnsDoctor = action.payload.data.filter(
-        (e) => e.doctors[0].id === action.payload.idCurrentDoctor
+        (e) => e.doctors[0].id == action.payload.idCurrentDoctor
       );
+      console.log(turnsDoctor, "reducerrrrr");
       return {
         ...state,
         turnsByDoctor: turnsDoctor,
@@ -96,11 +115,26 @@ export default function rootReducer(state = initialState, action) {
     }
     case "GET_TURNS_BY_PATIENT": {
       let turnsPatient = action.payload.data.filter(
-        (e) => e.patient[0].id === action.payload.idCurrentPatient
+        (e) => e.patient?.[0].id === action.payload.idCurrentPatient
       );
       return {
         ...state,
         turnsByPatient: turnsPatient,
+      };
+    }
+    case "GET_TURN_BY_ID": {
+      let turn = action.payload.data.find(
+        (e) => e.id === action.payload.idTurn
+      );
+      return {
+        ...state,
+        turnById: turn,
+      };
+    }
+    case "DATA_PAYMENT": {
+      return {
+        ...state,
+        dataPayment: action.payload,
       };
     }
 
@@ -156,6 +190,16 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         user: action.payload,
+      };
+    }
+    case "SEND_EMAIL_FORM": {
+      return {
+        ...state,
+      };
+    }
+    case "SEND_EMAIL_PAGO": {
+      return {
+        ...state,
       };
     }
     default:

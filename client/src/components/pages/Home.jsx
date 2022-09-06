@@ -17,6 +17,9 @@ import {
 import { Link } from "react-router-dom";
 import { FcNext } from "react-icons/fc";
 import Testimonios from "./Testimonios";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { BsTelephone } from "react-icons/bs";
+import { MdAlternateEmail } from "react-icons/md";
 
 function Home() {
   //-----Estilos para modo oscuro----//
@@ -31,7 +34,6 @@ function Home() {
   return (
     <>
       <Center
-        border="1px solid red"
         h={{ base: "125vh", sm: "125vh", md: "100vh", lg: "100vh" }}
         bgRepeat="no-repeat"
         bgSize="cover"
@@ -55,13 +57,83 @@ function Home() {
           Clínica de fisioterapia y
           <Spacer /> rehabilitación física
         </Heading>
-        <Box w={{ base: "75%", sm: "75%", md: "60%" }} textAlign="center">
+        <Box textAlign={"center"} w={{ base: "75%", sm: "75%", md: "60%" }}>
           <Text as="i" fontSize="xl" color={colorLetra}>
             "Cuida tu cuerpo. Es el único lugar que tienes para vivir"
           </Text>
         </Box>
       </Center>
-      <Container maxW="100%" centerContent border="1px solid red">
+      <Container
+        border="1px solid red"
+        maxW="100%"
+        centerContent
+        bgImage="
+        url(https://cdn.discordapp.com/attachments/1009488625219678269/1016439728666595328/fondo-dorado-o-textura-sombra-degradados_38648-63.jpg)"
+        pb="2rem"
+        textAlign="center"
+      >
+        <Heading color="white" mt="3rem" fontSize="5xl">
+          Asociate a Wellness y disfruta de una cobertura total
+        </Heading>
+        <Box
+          m="3rem"
+          bgPosition="55%"
+          bgImage="linear-gradient(
+              rgba(230, 255, 250, 0.7),
+              rgba(230, 255, 250, 0.7)
+            ),
+            url(https://www.wedskenya.com/wp-content/uploads/2019/03/Cute-Holding-Hands-Quotes.jpg)"
+          bgRepeat="no-repeat"
+          bgSize="cover"
+          w="73rem"
+          h="15rem"
+          p="1rem"
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-around"
+          alignItems="center"
+          boxShadow="dark-lg"
+          borderRadius="0.5rem"
+          filter="grayscale(10%)"
+          border="2px"
+          borderColor="#D69E2E"
+        >
+          <Image
+            src={
+              "https://cdn.discordapp.com/attachments/1009488625219678269/1016320991221252217/WellnessPremium.png"
+            }
+            alt="img"
+            maxW="25rem"
+            mb="1rem"
+          />
+          <List spacing={3} fontSize="2xl">
+            <ListItem>
+              <ListIcon as={BsTelephone} color="green.600" />
+              +54 9 351 365-4238
+            </ListItem>
+            <ListItem>
+              <ListIcon as={MdAlternateEmail} color="green.600" />
+              wellnesclinica@gmail.com
+            </ListItem>
+            <ListItem color="green.600" fontWeight={"bold"}>
+              <ListIcon as={FaRegMoneyBillAlt} color="green.600" />
+              100%
+            </ListItem>
+          </List>
+          <Button
+            mt={"0.5rem"}
+            bg="#D69E2E"
+            w={"15rem"}
+            h={"4rem"}
+            fontSize={"3xl"}
+            fontWeight={"bold"}
+            boxShadow="dark-lg"
+          >
+            Suscribirse
+          </Button>
+        </Box>
+      </Container>
+      <Container maxW="100%" centerContent>
         <Flex
           direction={{ base: "column", sm: "column", md: "column", lg: "row" }}
           m={5}
@@ -166,7 +238,6 @@ function Home() {
         </Link>
       </Container>
       <Container
-        border="1px solid red"
         maxW="100%"
         centerContent
         bg={bg}
@@ -178,7 +249,6 @@ function Home() {
           Especialidades médicas destacadas
         </Heading>
         <SimpleGrid
-          border="1px solid red"
           columns={{ base: 1, sm: 1, md: 2 }}
           spacing={20}
           alignItems="center"
@@ -273,12 +343,12 @@ function Home() {
           Lo que opinan nuestros pacientes
         </Heading>
 
-          <Testimonios />
-          <Link to="/opiniones">
-                <Button colorScheme="teal" m={4}>
-                  Leer más
-                </Button>
-              </Link>
+        <Testimonios />
+        <Link to="/opiniones">
+          <Button colorScheme="teal" m={4}>
+            Leer más
+          </Button>
+        </Link>
       </Container>
     </>
   );

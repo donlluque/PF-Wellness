@@ -5,6 +5,7 @@ require("dotenv").config();
 
 router.post("/", async (req, res) => {
   const { email } = req.body;
+
   try {
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -12,7 +13,7 @@ router.post("/", async (req, res) => {
       secure: false, // true for 465, false for other ports
       auth: {
         user: "wellnesclinica@gmail.com", // generated ethereal user
-        pass: "dwmiflqcprweorwj", // generated ethereal password
+        pass: "jdllmwovaiuwxtqz", // generated ethereal password
       },
       tls: {
         rejectUnauthorized: false,

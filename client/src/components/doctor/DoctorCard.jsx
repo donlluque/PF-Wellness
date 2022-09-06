@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { Link } from "react-router-dom";
 import {
   Modal,
@@ -10,14 +11,12 @@ import {
   Button,
   ModalCloseButton,
   Box,
-  Wrap,
   Image,
   Text,
   useDisclosure,
   Heading,
   Avatar,
   Spacer,
-  Center,
   Flex,
   Stack,
   useColorModeValue,
@@ -25,8 +24,8 @@ import {
 import DoctorDetail from "./DoctorDetail";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { getDetailDoctors } from "../redux/actions";
-import { useDispatch } from "react-redux";
+import { getDetailDoctors } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function DoctorCard({
   id,
@@ -36,8 +35,10 @@ export default function DoctorCard({
   specialty,
 }) {
   const dispatch = useDispatch();
-  console.log(general_area);
+
   const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
+  const usuario = useSelector((state) => state.user);
+  console.log(usuario, "USUARIOOOO");
 
   const OverlayOne = () => (
     <ModalOverlay
@@ -46,22 +47,12 @@ export default function DoctorCard({
     />
   );
 
-  const OverlayTwo = () => (
-    <ModalOverlay
-      bg="blackAlpha.300"
-      backdropFilter="blur(10px) hue-rotate(90deg)"
-    />
-  );
-
   const [overlay, setOverlay] = useState(<OverlayOne />);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const {
-    isOpen: isEditOpen,
-    onOpen: onEditOpen,
-    onClose: onEditClose,
-  } = useDisclosure();
+  const notVerificadeModal = useDisclosure();
+  const notAuthenticatedModal = useDisclosure();
+  const notInfoComplete = useDisclosure();
+  const modal = useDisclosure();
 
   //-----Estilos para modo oscuro----//
 
@@ -120,7 +111,7 @@ export default function DoctorCard({
             variant="solid"
             onClick={() => {
               dispatch(getDetailDoctors(id));
-              onEditOpen();
+              modal.onOpen();
             }}
             w={"full"}
             color={colorLetra}
@@ -134,7 +125,9 @@ export default function DoctorCard({
             Leer más
           </Button>
 
-          {isAuthenticated ? (
+          {isAuthenticated &&
+          user.email_verified &&
+          usuario.prepaid_healths?.length > 0 ? (
             <Link to={`/calendar/${id}`}>
               <Button
                 onClick={() => dispatch(getDetailDoctors(id))}
@@ -157,7 +150,15 @@ export default function DoctorCard({
             <Button
               colorScheme="teal"
               variant="solid"
-              onClick={onOpen}
+              onClick={() =>
+                isAuthenticated
+                  ? user.email_verified
+                    ? usuario.prepaid_healths?.length
+                      ? true
+                      : notInfoComplete.onOpen()
+                    : notVerificadeModal.onOpen()
+                  : notAuthenticatedModal.onOpen()
+              }
               mt={"1rem"}
               w={"full"}
               rounded={"md"}
@@ -169,30 +170,88 @@ export default function DoctorCard({
               bg={bgselec}
             >
               Pedir turno
-              <Modal
-                isCentered
-                isOpen={isOpen}
-                onClose={onClose}
-                colorScheme="teal"
-              >
-                {overlay}
-                <ModalContent bgColor="green.50">
-                  <ModalHeader color="#C53030">Ups!!</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    <Text color="#C53030">Debes estar registrado</Text>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Spacer />
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
             </Button>
           )}
         </Box>
       </Box>
 
-      <Modal isOpen={isEditOpen} onClose={onEditClose}>
+      <Modal
+        isCentered
+        isOpen={notInfoComplete.isOpen}
+        onClose={notInfoComplete.onClose}
+        colorScheme="teal"
+        w="100%"
+      >
+        {overlay}
+        <ModalContent bgColor="green.50" w="80%">
+          <ModalHeader color="#C53030">
+            Datos personales incompletos
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text fontWeight="bold" mb="1rem">
+              Para poder solicitar un turno, tus datos personales obligatorios
+              deben estar completos.
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              mr={3}
+              onClick={() => notInfoComplete.onClose}
+            >
+              Cancelar
+            </Button>
+            <Link to={`/userProfile/${usuario.id}`}>
+              <Button colorScheme={"teal"}>Ir al perfil</Button>
+            </Link>
+            <Spacer />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isCentered
+        isOpen={notVerificadeModal.isOpen}
+        onClose={notVerificadeModal.onClose}
+        colorScheme="teal"
+        w="100%"
+      >
+        {overlay}
+        <ModalContent bgColor="green.50" w="80%">
+          <ModalHeader color="#C53030">Ups!!</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text color="#C53030">Debes verificar el email</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Spacer />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isCentered
+        isOpen={notAuthenticatedModal.isOpen}
+        onClose={notAuthenticatedModal.onClose}
+        colorScheme="teal"
+        w="100%"
+      >
+        {overlay}
+        <ModalContent bgColor="green.50" w="80%">
+          <ModalHeader color="#C53030">Ups!!</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text color="#C53030">Debes estar registrado</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Spacer />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal isOpen={modal.isOpen} onClose={modal.onClose}>
         <ModalOverlay />
         <ModalContent bg="#EBF8FF">
           <ModalHeader
@@ -204,15 +263,19 @@ export default function DoctorCard({
             {" "}
             {name}
           </ModalHeader>
-          {/* <ModalCloseButton /> */}
+
           <ModalBody>
-            {/* <Lorem count={2} /> */}
             <DoctorDetail id={id} />
           </ModalBody>
 
           <ModalFooter>
-            <Button bg="#2C7A7B" color="white" mr={3} onClick={onEditClose}>
-              Close
+            <Link to="/opiniones">
+              <Button colorScheme={"teal"} variant="ghost">
+                Ver comentarios
+              </Button>
+            </Link>
+            <Button bg="#2C7A7B" color="white" mr={3} onClick={modal.onClose}>
+              Cerrar
             </Button>
           </ModalFooter>
         </ModalContent>

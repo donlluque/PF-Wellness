@@ -6,8 +6,8 @@ export const validateForm = (form) => {
   let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚú\s]+$/; //acepta letras y espacios, caracteres ajenos al ingles como la ñ
   let regexPhone =
     /(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})/;
-  let regexDocument = /^(7?)\d{7}$/; //cambiar a al menos 7 digitos
-
+  let regexDocument = /^(7?)\d{7,}$/; //cambiar a al menos 7 digitos
+  
   if (!form.name) {
     errors.name = "Requerido";
   } else if (!regexName.test(form.name)) {
@@ -22,7 +22,7 @@ export const validateForm = (form) => {
   if (!form.document) {
     errors.document = "Requerido";
   } else if (!regexDocument.test(form.document)) {
-    errors.document = "Debe contener 7 digitos"; //MODIFICAR --> hay DNI cn 7 digitos
+    errors.document = "Debe contener al menos 7 dígitos"; //MODIFICAR --> hay DNI cn 7 digitos
   }
 
   if (!regexPhone.test(form.phone)) {

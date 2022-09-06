@@ -1,61 +1,88 @@
 import {
-    Box,
-    Center,
-    Heading,
-    FormLabel,
-    Input,
-    Textarea,
-    Select,
-    FormControl,
-    Button
-  } from "@chakra-ui/react";
-  import ReactStars from "react-rating-stars-component";
-  import React from 'react';
-  import {Context} from "./Context";
-  import { useState } from "react";
-  import { getDoctors } from "../redux/actions";
-  import { useDispatch, useSelector } from "react-redux";
-  import { useEffect} from "react";
-  import { Link } from "react-router-dom";
-  import {addReview} from "../redux/actions";
+  Box,
+  Center,
+  Heading,
+  FormLabel,
+  Input,
+  Textarea,
+  FormControl,
+  Button,
+  FormErrorMessage,
+} from "@chakra-ui/react";
+import ReactStars from "react-rating-stars-component";
+import React from "react";
+import { Context } from "./Context";
+import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { addReview } from "../redux/actions";
+import { useDispatch } from "react-redux";
 
+function MakeReviews() {
+  const { mostrar, setMostrar } = React.useContext(Context);
+  const history = useHistory();
+  setMostrar(false);
+  const dispatch = useDispatch();
 
- function MakeReviews(){
-    const {mostrar, setMostrar} = React.useContext(Context);
-    const dispatch = useDispatch();
-    const { doctors } = useSelector( (state) => state);
-    setMostrar(false);
+  const [input, setInput] = useState([
+    {
+      name: "",
+      review: "",
+      doctors: "All",
+      rating: 0,
+    },
+  ]);
+  const [errors, setErrors] = useState({ flag: true });
 
-    useEffect ( () =>{
-        dispatch(getDoctors())
+  function validations(input) {
+    let error = {};
 
-    }, [])
-    
-    const [input, setInput] = useState([{
-        name: "",
-        review: "", 
-        doctors: "All",
-        rating: 0
-      }]);
-   console.log(input, "SOY EL INPUT")
-
-   const [rating, setRating] = useState(0);
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      dispatch(addReview(input))
-   
+    if (!input.name) {
+      error.name = "Necesitas completar con tu nombre";
     }
-    const handleChange = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
+    if (!input.review) {
+      error.review = "Completa este campo";
+    }
+    if (!input.rating) {
+      error.rating = "Debes elegir un rating";
+    }
+    return error;
+  }
 
-    };
+  const [rating, setRating] = useState(0);
 
-    const ratingChanged = (newRating) => {
-        console.log(newRating);
-        setInput({...input, rating: newRating})
-      };
-    return(
-        <>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!errors.name) {
+      dispatch(addReview(input));
+    }
+    history.push("/");
+  };
+
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    setErrors(
+      validations({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
+  };
+
+  const ratingChanged = (newRating) => {
+    console.log(newRating);
+    setInput({ ...input, rating: newRating });
+    setErrors(
+      validations({
+        ...input,
+        rating: newRating,
+      })
+    );
+  };
+  return (
+    <>
       <Center
         h={{ base: "100vh", sm: "100vh", md: "80vh", lg: "70vh" }}
         bgImage="linear-gradient(
@@ -98,61 +125,70 @@ import {
           lg: "flex-start",
         }}
       ></Box>
-      
-<Box maxW='sm' borderWidth="1px" borderRadius="0.5rem" ml='30rem' p="1rem" mb="2rem" boxShadow="2xl">
-        <FormControl>
- <FormLabel m="1rem">
-               Nombre
-              </FormLabel>
-              <Input
-                name="name"
-                value={input.name}
-                placeholder="Tu nombre"
-                onChange={(e) => handleChange(e)}/> 
 
-                
-           <FormLabel m="1rem">
-               Tu experiencia en Wellness
-              </FormLabel>
-              <Textarea 
-                name="review"
-                type="text"
-                value={input.review}
-                placeholder="Tu experiencia"
-                onChange={(e) => handleChange(e)}/>
-             <Select mt="1rem"
-                value={input.doctors}
-                onChange={(e) => handleChange(e)}
-                name="doctors"
-              >
-                <option value="All">Profesional que te atendió</option>
-                {doctors &&
-                  doctors.map((e) => (
-                    <option value={e.id}>{e.name}</option>
-                  ))}
-              </Select>
-              {/* <Rating name="half-rating" defaultValue={2.5} value={input.rating} precision={0.5} /> */}
-              <Box ml="5.5rem" mt="1rem">
+      <Box
+        maxW="sm"
+        borderWidth="1px"
+        borderRadius="0.5rem"
+        ml="30rem"
+        p="1rem"
+        mb="2rem"
+        boxShadow="2xl"
+      >
+        <FormControl>
+          <FormControl isInvalid={errors.name}>
+            <FormLabel m="1rem">Nombre</FormLabel>
+            <Input
+              name="name"
+              value={input.name}
+              placeholder="Tu nombre"
+              onChange={(e) => handleChange(e)}
+            />
+            {errors.name && <FormErrorMessage>{errors.name} </FormErrorMessage>}
+          </FormControl>
+          <FormControl isInvalid={errors.review}>
+            <FormLabel m="1rem">Tu experiencia en Wellness</FormLabel>
+            <Textarea
+              maxlength="80"
+              name="review"
+              type="text"
+              value={input.review}
+              placeholder="Tu experiencia"
+              onChange={(e) => handleChange(e)}
+            />
+            {errors.review && (
+              <FormErrorMessage>{errors.review} </FormErrorMessage>
+            )}
+          </FormControl>
+          <Box ml="5.5rem" mt="1rem">
+            <FormControl isInvalid={errors.rating}>
               <ReactStars
-                
                 value={rating}
-                
                 count={5}
                 onChange={ratingChanged}
                 size={40}
                 activeColor="#ffd700"
-                />
-                </Box>
-<Link to="/">
-<Button m="1rem" ml="7.5rem" mt="2rem" colorScheme={"teal"} onClick={(e) => handleSubmit(e)}>
-  Confirmar
-</Button>
-</Link>
-  </FormControl>
-  </Box>
-  
-  </>
-    )
- 
+              />
+              {errors.rating && (
+                <FormErrorMessage>{errors.rating} </FormErrorMessage>
+              )}
+            </FormControl>
+          </Box>
+          <Link to="/">
+            <Button
+              m="1rem"
+              ml="7.5rem"
+              mt="2rem"
+              colorScheme={"teal"}
+              onClick={(e) => handleSubmit(e)}
+              disabled={Object.keys(errors).length}
+            >
+              Confirmar
+            </Button>
+          </Link>
+        </FormControl>
+      </Box>
+    </>
+  );
 }
 export default MakeReviews;

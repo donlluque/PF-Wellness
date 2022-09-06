@@ -9,38 +9,42 @@ import {
   TableContainer,
   Button,
   Icon,
+  Alert,
+  AlertIcon,
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalFooter,
   ModalBody,
-  Image,
+  ModalCloseButton,
+  Text,
   useDisclosure,
+  Textarea,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTurn, getTurns, getTurnsByDoctor } from "../../../redux/actions";
+import {
+  deleteTurn,
+  getOnePatient,
+  getTurnById,
+  getTurns,
+  getTurnsByDoctor,
+  sendEmailForm,
+} from "../../../redux/actions";
 import { TbCalendarOff } from "react-icons/tb";
-
-/*
-- Cuando se haga el post con el idPaciente:
-    - agregar nombre paciente
-- Cuando se cargue info de pago:
-    - agregar alguna columna con info de pago
-- Crear filtros en base a lo anterior
-- Mandar id por la funcion getTurnsByDoctor(id)
-*/
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 function DoctorAllTurns({ nextTurns, prevTurns }) {
   const dispatch = useDispatch();
-  const { turnsByDoctor, user } = useSelector((state) => state);
+  const { turnsByDoctor, user, turnById } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [value, setValue] = useState();
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const idDoctor = user.id;
-
-  console.log(user);
+  const { id } = useParams();
 
   let aux = turnsByDoctor;
   aux.forEach((e) => {
@@ -59,85 +63,133 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
     : turnsByDoctor;
 
   useEffect(() => {
-    dispatch(getTurnsByDoctor(1));
-    // dispatch(getTurns());
+    dispatch(getTurnsByDoctor(id));
   }, [dispatch]);
 
-  const handleClick = (id) => {
-    console.log(id);
-    //dispatch(getOnePatient(id));
-    onOpen();
+  //motivo de cancelacion de turno
+  const handleValueChange = (e) => {
+    setValue(e.target.value);
   };
 
   return (
     <>
       <TableContainer>
         <Table size="sm">
-          <Thead>
-            <Tr>
-              <Th>Id</Th>
-              <Th>Fecha</Th>
-              <Th>Hora</Th>
-              <Th>Paciente</Th>
-            </Tr>
-          </Thead>
+          {visibleTurns?.length ? (
+            <Thead>
+              <Tr>
+                <Th>Id</Th>
+                <Th>Fecha</Th>
+                <Th>Hora</Th>
+                <Th>Paciente</Th>
+              </Tr>
+            </Thead>
+          ) : (
+            false
+          )}
           <Tbody>
-            {visibleTurns &&
+            {visibleTurns.length ? (
               visibleTurns.map((e) => (
                 <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
                   <Td>{e.date}</Td>
-                  <Td>{e.hours_workings[0].hour}</Td>
-
-                  <Td>paciente</Td>
+                  <Td>{e.hours_workings[0]?.hour}</Td>
+                  <Td>{e.patients.length ? e.patients[0]?.fullName : false}</Td>
                   <Td>
-                    <Button
-                      m="0.5rem"
-                      colorScheme="teal"
-                      size="sm"
-                      onClick={() => handleClick(e.id)}
-                    >
-                      Detalle
-                    </Button>
-
                     <Button
                       m="0.5rem"
                       colorScheme={"teal"}
                       variant="ghost"
                       fontSize="xs"
-                      onClick={() => dispatch(deleteTurn(e.id))}
+                      onClick={() => {
+                        onOpen();
+                        dispatch(getTurnById(e.id));
+                      }}
                     >
                       <Icon w={4} h={4} as={TbCalendarOff} />
                     </Button>
                   </Td>
+                  <Td>
+                    <Button
+                      m="0.5rem"
+                      colorScheme={"teal"}
+                      variant="ghost"
+                      fontSize="xs"
+                      onClick={() => {
+                        dispatch(sendEmailForm(user));
+                      }}
+                    >
+                      Formulario
+                    </Button>
+                  </Td>
                 </Tr>
-              ))}
+              ))
+            ) : (
+              <Alert status="warning">
+                <AlertIcon />
+                {nextTurns && (
+                  <Text>No se registran turnos próximos a la fecha</Text>
+                )}
+                {prevTurns && (
+                  <Text>No se registran turnos anteriores a la fecha</Text>
+                )}
+                {!nextTurns && !prevTurns && (
+                  <Text>No se registran turnos otorgados</Text>
+                )}
+              </Alert>
+            )}
           </Tbody>
           <Tfoot></Tfoot>
         </Table>
       </TableContainer>
-
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent bg="#EBF8FF">
-          <ModalHeader
-            fontSize={"2xl"}
-            textAlign="center"
-            color="#2C7A7B"
-            fontFamily={"body"}
-          >
-            {" "}
-          </ModalHeader>
-
-          <ModalBody>
-            PROXIMAMENTE
-            {/*<PatientDetail id={patients.id} />*/}
-          </ModalBody>
+        <ModalContent>
+          <ModalHeader>Cancelar turno</ModalHeader>
+          {!confirmDelete && (
+            <ModalBody>
+              Motivo de cancelación:
+              <Textarea
+                value={value}
+                onChange={handleValueChange}
+                placeholder="Escribe el motivo de la cancelación del turno"
+                size="sm"
+              />
+            </ModalBody>
+          )}
+          {confirmDelete && (
+            <ModalBody>
+              ¿Estas seguro que desea cancelar el turno?
+              <Textarea
+                value={value}
+                onChange={handleValueChange}
+                placeholder="Escribe el motivo de la cancelación del turno"
+                size="sm"
+              />
+            </ModalBody>
+          )}
 
           <ModalFooter>
-            <Button bg="#2C7A7B" color="white" mr={3} onClick={onClose}>
-              Close
+            <Button colorScheme="teal" variant="ghost" mr={3} onClick={onClose}>
+              Cancelar
             </Button>
+            {!confirmDelete && (
+              <Button colorScheme="teal" onClick={() => setConfirmDelete(true)}>
+                Continuar
+              </Button>
+            )}
+            {confirmDelete && (
+              <Button
+                colorScheme="teal"
+                onClick={() => {
+                  onClose();
+                  setConfirmDelete(false);
+                  dispatch(deleteTurn(turnById.id));
+                }}
+              >
+                Notificar al paciente
+              </Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>

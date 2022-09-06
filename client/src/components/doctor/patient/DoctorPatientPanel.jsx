@@ -14,6 +14,7 @@ import { Button } from "reactstrap";
 import { useState } from "react";
 import DoctorAllPatients from "./DoctorAllPatients";
 import SearchBarPatient from "../../patient/SearchBarPatient";
+import { AiFillCaretRight } from "react-icons/ai";
 
 //Configurar searchBar
 //Filtrar paceintes que alguna vez hayan sido atendidos por este doctor
@@ -39,6 +40,9 @@ function DoctorPatientPanel() {
           <Divider colorScheme={"teal"} />
           <List m="2rem" spacing={5}>
             <ListItem>
+              {listPatients && (
+                <ListIcon as={AiFillCaretRight} color="teal.500" />
+              )}
               <Button
                 onClick={() => {
                   setListPatients(true);
@@ -49,6 +53,7 @@ function DoctorPatientPanel() {
               </Button>
             </ListItem>
             <ListItem>
+              {filter && <ListIcon as={AiFillCaretRight} color="teal.500" />}
               <Button
                 onClick={() => {
                   setListPatients(true);

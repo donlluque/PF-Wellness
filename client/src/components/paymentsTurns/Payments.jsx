@@ -15,19 +15,28 @@ import {
   List,
   ListItem,
   AlertTitle,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOnePatient, getPrepaidHealth, postTurn } from "../redux/actions";
+import {
+  dataPayment,
+  getHours,
+  getOnePatient,
+  getPrepaidHealth,
+  postTurn,
+  sendEmailPago,
+} from "../../redux/actions";
 import axios from "axios";
-import { baseURL } from "../index.js";
+import { baseURL } from "../../index.js";
+import { Link } from "react-router-dom";
 
 function Payments({ onClose, isOpen, onOpen, form, active }) {
   const dispatch = useDispatch();
-  const { doctorDetail, patientDetail, prepaidHealth } = useSelector(
-    (state) => state
-  );
+  const { doctorDetail, patientDetail, prepaidHealth, hoursWorking, user } =
+    useSelector((state) => state);
+  const confirmModal = useDisclosure();
   const [wellnessPrepaid, setWellnessPrepaid] = useState(false);
   const [withoutPrepaid, setWithoutPrepaid] = useState(false);
   const [link, setLink] = useState();
@@ -40,11 +49,12 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
     price: 0,
   });
 
-  console.log(link, "link");
+  let auxHour = hoursWorking?.find((e) => e.id === parseInt(form.idHour));
 
   useEffect(() => {
     dispatch(getOnePatient(form.idPatient));
     dispatch(getPrepaidHealth());
+    dispatch(getHours());
     setPrepaid(handlePrepaid());
   }, [active]);
 
@@ -67,8 +77,8 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
           setWithoutPrepaid(true);
           result = "Particular";
         } else {
-          let prepaidPatient = patientDetail.prepaid_healths
-            ? patientDetail.prepaid_healths[0].name
+          let prepaidPatient = patientDetail?.prepaid_healths
+            ? patientDetail?.prepaid_healths[0].name
             : false;
           let selectPrepaid = doctorDetail.prepaid_healths?.find(
             (e) => e.name === prepaidPatient
@@ -90,12 +100,13 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
   const handleSubmitNotPay = () => {
     dispatch(postTurn(form));
     onClose();
+    confirmModal.onOpen();
+    dispatch(sendEmailPago(user));
   };
 
   const handleSubmitPay = async () => {
-    dispatch(postTurn(form));
-
     setPayActive(true);
+    dispatch(dataPayment(form));
     try {
       const generarLink = await axios.post(`${baseURL}/pagos`, input);
       setLink(generarLink.data);
@@ -125,6 +136,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
       result === "Medife"
     ) {
       let percentage = prepaidHealth.find((e) => e.name === result).percentage;
+
       let price = cost - percentage * cost;
 
       setInput({
@@ -185,7 +197,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
                   <Text fontWeight="semibold" display="inline">
                     Hora:
                   </Text>{" "}
-                  {form.idHour}
+                  {auxHour && auxHour.hour}
                 </ListItem>
               </List>
               <List spacing={3} m="1rem">
@@ -234,11 +246,11 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
               )}
             </Box>
 
-            {prepaid === "Wellness" && (
+            {prepaid !== "Wellness" && (
               <Alert status="info" display={"flex"} flexDirection="column">
                 <Box display={"flex"} flexDirection="row">
                   <AlertIcon />
-                  <AlertTitle>Wellness PRO!</AlertTitle>
+                  <AlertTitle>Wellness Asociados!</AlertTitle>
                 </Box>
                 <Box
                   display={"flex"}
@@ -250,7 +262,9 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
                     Suscribite a nuestro programa y obtené una cobertura del
                     100% en nuestros servicios
                   </AlertDescription>
-                  <Button mt={"0.5rem"}>Suscribirse</Button>
+                  <Link to="/wellnessPrepaid">
+                    <Button mt={"0.5rem"}>Suscribirse</Button>
+                  </Link>
                 </Box>
               </Alert>
             )}
@@ -270,26 +284,10 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
           </ModalBody>
 
           <ModalFooter>
-            {!payActive && (
-              <Button
-                colorScheme="teal"
-                variant="ghost"
-                mr={3}
-                onClick={onClose}
-              >
-                Cancelar
-              </Button>
-            )}
-            {payActive && (
-              <Button
-                colorScheme="teal"
-                variant="ghost"
-                mr={3}
-                onClick={onClose}
-              >
-                Close
-              </Button>
-            )}
+            <Button colorScheme="teal" variant="ghost" mr={3} onClick={onClose}>
+              Cancelar
+            </Button>
+
             {prepaid === "Wellness" && (
               <Button colorScheme={"teal"} onClick={() => handleSubmitNotPay()}>
                 Confirmar turno
@@ -297,14 +295,42 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
             )}
             {prepaid !== "Wellness" && !payActive && (
               <Button colorScheme={"teal"} onClick={() => handleSubmitPay()}>
-                Ir a Pagar
+                Pagar
               </Button>
             )}
-            {!payActive && (
-              <Button colorScheme={"teal"} onClick={() => handleSubmitPay()}>
-                Ir a Pagar
-              </Button>
-            )}
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      {/*MODAL CONFIRM TURNO SIN PAGAR*/}
+      <Modal
+        blockScrollOnMount={false}
+        isOpen={confirmModal.isOpen}
+        onClose={confirmModal.onClose}
+      >
+        <ModalOverlay />
+        <ModalContent bg={"teal.50"} colorScheme="teal">
+          <ModalHeader colorScheme="teal" textAlign={"center"} fontSize="2xl">
+            Turno confirmado!
+          </ModalHeader>
+          <ModalBody colorScheme="teal" textAlign={"center"}>
+            <Text mb="1rem">
+              Hemos enviado un mail con la confirmación del turno. Por favor
+              revisa tu correo electronico.
+            </Text>
+            <Text
+              colorScheme="teal"
+              fontWeight="semibold"
+              m="1rem"
+              mb="0"
+              fontSize={"lg"}
+            >
+              Gracias por confiar en nosotros!
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Link to="/">
+              <Button colorScheme="teal">Cerrar</Button>
+            </Link>
           </ModalFooter>
         </ModalContent>
       </Modal>

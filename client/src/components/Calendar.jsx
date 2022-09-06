@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { DatePicker } from "@material-ui/pickers";
-import { Link } from "react-router-dom";
 
 import {
   Box,
@@ -15,23 +14,26 @@ import {
   AlertIcon,
   AlertDescription,
   useDisclosure,
+  CircularProgress,
 } from "@chakra-ui/react";
 import {
   getDetailDoctors,
   getHours,
   getTurns,
   getOnePatient,
+  getAllAbsent,
 } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { FcCheckmark } from "react-icons/fc";
 import { searchTurnsAvailable } from "./validateTurn";
-import Payments from "./Payments";
+import Payments from "./paymentsTurns/Payments";
 
 function Calendar() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure(); //modal confirmacion de turno
+
   const [selectedDate, setDateChange] = useState(""); //cambia fecha en calendario
   const [form, setForm] = useState({});
   const [arrayTurns, setArrayTurns] = useState([]); //horas disponibles a renderizar
@@ -39,8 +41,9 @@ function Calendar() {
   const { hoursWorking, turns } = useSelector((state) => state);
   const doctorDetail = useSelector((state) => state.doctorDetail);
   const usuario = useSelector((state) => state.user);
+  const absents = useSelector((state) => state.absents);
   const [active, setActive] = useState(false);
-  console.log(usuario, "usuario");
+
   //copia de estado global
   const totalHours = hoursWorking;
   const totalTurns = turns;
@@ -74,16 +77,16 @@ function Calendar() {
     dispatch(getDetailDoctors(idDoctor));
     dispatch(getHours());
     dispatch(getOnePatient(usuario.id));
-
-    setForm({ ...form, idDoctor: idDoctor });
+    setForm({ ...form, idDoctor: idDoctor, idPatient: usuario.id });
+    // setForm({ ...form, idPatient: usuario.id });
     dispatch(getTurns());
+    dispatch(getAllAbsent());
   }, [dispatch]);
 
   const handleConfirm = (e) => {
     e.preventDefault();
-    form.idPatient = usuario.id;
+    // form.idPatient = usuario.id;
 
-    //dispatch(postTurn(form));
     onOpen();
     setActive(true);
   };
@@ -93,7 +96,9 @@ function Calendar() {
     setDateChange(date);
     setForm({ ...form, date: date.toLocaleDateString() });
     //validaciones horas disponibles
-    setArrayTurns(searchTurnsAvailable(hours, totalHours, totalTurns, date));
+    setArrayTurns(
+      searchTurnsAvailable(hours, totalHours, totalTurns, date, absents)
+    );
   };
 
   const handleClick = (e) => {
@@ -111,6 +116,7 @@ function Calendar() {
     ),
     url(https://parrocchiagrumello.it/wp-content/uploads/2018/03/97079_agenda1.jpg)"
         bgRepeat="no-repeat"
+        bgSize="cover"
       >
         <Heading
           textAlign="center"
@@ -122,6 +128,11 @@ function Calendar() {
           Turnos Online
         </Heading>
       </Center>
+      {!hours && (
+        <Center m="8rem">
+          <CircularProgress isIndeterminate color="teal.500" size="100px" />
+        </Center>
+      )}
       {hours && (
         <Box
           pt={"1.5rem"}
@@ -252,7 +263,7 @@ function Calendar() {
       )}
       <Box display={"flex"} justifyContent="end" mr="3rem">
         <Button
-          //isDisabled={!form.idHour}
+          isDisabled={!form.idHour}
           m="1rem"
           colorScheme={"teal"}
           onClick={(e) => handleConfirm(e)}
@@ -260,13 +271,15 @@ function Calendar() {
           Continuar
         </Button>
       </Box>
-      <Payments
-        active={active}
-        onClose={onClose}
-        isOpen={isOpen}
-        onOpen={onOpen}
-        form={form}
-      />
+      {form.idPatient ? (
+        <Payments
+          active={active}
+          onClose={onClose}
+          isOpen={isOpen}
+          onOpen={onOpen}
+          form={form}
+        />
+      ) : null}
     </>
   );
 }

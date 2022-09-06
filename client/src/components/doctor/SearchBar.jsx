@@ -1,8 +1,8 @@
 import React from "react";
-import { searchDoctorByName } from "../redux/actions";
+import { searchDoctorByName } from "../../redux/actions";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { IconButton, Input, Box, Wrap } from "@chakra-ui/react";
+import { IconButton, Input, Box } from "@chakra-ui/react";
 import { GrSearch } from "react-icons/gr";
 
 export default function SearchBar({

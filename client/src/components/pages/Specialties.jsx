@@ -5,7 +5,7 @@ import osteopatia from "../../img/osteo.jpg";
 import quiropraxia from "../../img/quiropraxia.jpg";
 import reumatologia from "../../img/reumato.jpg";
 import terapiaDeDolor from "../../img/terapiadedolor.jpeg";
-import traumatologia from "../../img/traumato.webp";
+import traumatologia from "../../img/traumatoesta.png";
 import {
   Stack,
   Center,
@@ -18,9 +18,21 @@ import {
   Container,
   Text,
   Spacer,
+  Icon
 } from "@chakra-ui/react";
 import { FcApproval } from "react-icons/fc";
+import { getAllAreas } from "../../redux/actions";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { MdAttachMoney } from "react-icons/md";
+
 function Specialties() {
+  const dispatch = useDispatch();
+  const {areas} = useSelector((state) => state)
+console.log("areas", areas)
+  useEffect(() => {
+   dispatch(getAllAreas())
+  },[dispatch])
   return (
     <>
       <Center
@@ -56,6 +68,21 @@ function Specialties() {
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Deportología
           </Heading>
+          <Box 
+            
+            p="1rem"
+            alignItems="center"
+            display="flex"
+            flexDirection="column" 
+            boxShadow="2xl"
+            bgColor="green.100" >
+          <Text alignItems="center" display="flex" >
+            Costo consulta:
+            
+          <Icon as={MdAttachMoney} color="green.500"/>
+            {areas[1]?.costConsult}
+          </Text>
+          </Box>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
               <Text w="100%" textAlign="justify">
@@ -94,6 +121,21 @@ function Specialties() {
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Kinesiología y Fisioterapia
           </Heading>
+          <Box 
+            
+            p="1rem"
+            alignItems="center"
+            display="flex"
+            flexDirection="column" 
+            boxShadow="2xl"
+            bgColor="green.100" >
+          <Text alignItems="center" display="flex" >
+            Costo consulta:
+            
+          <Icon as={MdAttachMoney} color="green.500"/>
+            {areas[2]?.costConsult}
+          </Text>
+          </Box>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
               <Text w="100%" textAlign="justify">
@@ -138,6 +180,21 @@ function Specialties() {
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Osteopatía
           </Heading>
+          <Box 
+            
+            p="1rem"
+            alignItems="center"
+            display="flex"
+            flexDirection="column" 
+            boxShadow="2xl"
+            bgColor="green.100" >
+          <Text alignItems="center" display="flex" >
+            Costo consulta:
+            
+          <Icon as={MdAttachMoney} color="green.500"/>
+            {areas[3]?.costConsult}
+          </Text>
+          </Box>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
               <Text w="100%" textAlign="justify">
@@ -171,6 +228,21 @@ function Specialties() {
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Quiropraxia
           </Heading>
+          <Box 
+            
+            p="1rem"
+            alignItems="center"
+            display="flex"
+            flexDirection="column" 
+            boxShadow="2xl"
+            bgColor="green.100" >
+          <Text alignItems="center" display="flex" >
+            Costo consulta:
+            
+          <Icon as={MdAttachMoney} color="green.500"/>
+            {areas[4]?.costConsult}
+          </Text>
+          </Box>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
               <Text w="100%" textAlign="justify">
@@ -216,6 +288,21 @@ function Specialties() {
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Reumatología
           </Heading>
+          <Box 
+            
+            p="1rem"
+            alignItems="center"
+            display="flex"
+            flexDirection="column" 
+            boxShadow="2xl"
+            bgColor="green.100" >
+          <Text alignItems="center" display="flex" >
+            Costo consulta:
+            
+          <Icon as={MdAttachMoney} color="green.500"/>
+            {areas[5]?.costConsult}
+          </Text>
+          </Box>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
               <Text w="100%" textAlign="justify">
@@ -262,6 +349,21 @@ function Specialties() {
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Terapia de Dolor
           </Heading>
+          <Box 
+            
+            p="1rem"
+            alignItems="center"
+            display="flex"
+            flexDirection="column" 
+            boxShadow="2xl"
+            bgColor="green.100" >
+          <Text alignItems="center" display="flex" >
+            Costo consulta:
+            
+          <Icon as={MdAttachMoney} color="green.500"/>
+            {areas[6]?.costConsult}
+          </Text>
+          </Box>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
               <Text w="100%" textAlign="justify">
@@ -298,6 +400,21 @@ function Specialties() {
           <Heading as="h2" size="2xl" pt="1rem" textAlign="center">
             Traumatología
           </Heading>
+          <Box 
+            
+            p="1rem"
+            alignItems="center"
+            display="flex"
+            flexDirection="column" 
+            boxShadow="2xl"
+            bgColor="green.100" >
+          <Text alignItems="center" display="flex" >
+            Costo consulta:
+            
+          <Icon as={MdAttachMoney} color="green.500"/>
+            {areas[0]?.costConsult}
+          </Text>
+          </Box>
           <Box display={{ md: "flex" }} p="2rem">
             <Container centerContent>
               <Text w="100%" textAlign="justify">

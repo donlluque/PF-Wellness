@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
       secure: false, // true for 465, false for other ports
       auth: {
         user: "wellnesclinica@gmail.com", // generated ethereal user
-        pass: "dwmiflqcprweorwj", // generated ethereal password
+        pass: "jdllmwovaiuwxtqz", // generated ethereal password
       },
       tls: {
         rejectUnauthorized: false,
@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
             <meta name="x-apple-disable-message-reformatting" />
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
             <meta content="telephone=no" name="format-detection" />
-            <title>Verificación de Cuenta</title>
+            <title>Tu opinión nos importa</title>
            
         </head>
         <style type="text/css">

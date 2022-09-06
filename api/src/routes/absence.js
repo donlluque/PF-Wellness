@@ -8,9 +8,10 @@ router.post("/", async (req, res, next) => {
 
   const { extended, totalDay, notTotalDay, doctorId } = req.body;
   const doctor = await Doctor.findOne({ where: { id: doctorId } });
+
   const absence = await Absence.create({ extended, totalDay, notTotalDay });
   await doctor.addAbsence(absence);
-  res.send(enviar);
+  res.send("enviar");
 
   // } catch (error) {
   //   console.log(error);
@@ -33,7 +34,7 @@ router.delete("/", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
   // try {
 
-  const absence = await Absence.findAll();
+  const absence = await Absence.findAll({ include: { model: Doctor } });
 
   res.send(absence);
 

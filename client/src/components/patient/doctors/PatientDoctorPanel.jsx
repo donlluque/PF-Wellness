@@ -9,7 +9,7 @@ import {
 
 import { FiFilter } from "react-icons/fi";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-
+import { AiFillCaretRight } from "react-icons/ai";
 import { Button } from "reactstrap";
 import { useState } from "react";
 import PatientAllDoctors from "./PatientAllDoctors";
@@ -36,6 +36,9 @@ function PatientDoctorPanel() {
           <Divider colorScheme={"teal"} />
           <List m="2rem" spacing={5}>
             <ListItem>
+              {listDoctors && (
+                <ListIcon as={AiFillCaretRight} color="teal.500" />
+              )}
               <Button
                 onClick={() => {
                   setListDoctors(true);
@@ -48,6 +51,7 @@ function PatientDoctorPanel() {
             </ListItem>
 
             <ListItem>
+              {filter && <ListIcon as={AiFillCaretRight} color="teal.500" />}
               <Button
                 onClick={() => {
                   setListDoctors(true);

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import DoctorCard from "../DoctorCard";
+import DoctorCard from "../doctor/DoctorCard";
 import NavStaff from "../NavStaff";
 import {
   Box,

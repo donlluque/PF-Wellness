@@ -17,20 +17,27 @@ import {
   ModalBody,
   Image,
   useDisclosure,
+  Tooltip,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { useEffect } from "react";
-import { MdOutlineEditNote } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { MdPersonAddDisabled } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPatients, getOnePatient } from "../../../redux/actions";
 import PatientDetail from "../../patient/PatientDetail";
+import ConfirmDisable from "../doctors/ConfirmDisable";
 
 function AdminAllPatients() {
   const dispatch = useDispatch();
   const { patients } = useSelector((state) => state);
-
+  const disableModal = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [aux, setAux] = useState();
 
+  const visiblePatients = patients; /*.filter((e) => e.activo === true);*/
+  console.log(visiblePatients);
   useEffect(() => {
     dispatch(getAllPatients());
   }, [dispatch]);
@@ -45,26 +52,36 @@ function AdminAllPatients() {
     <>
       <TableContainer>
         <Table size="sm">
-          <Thead>
-            <Tr>
-              <Th isNumeric>ID</Th>
-              <Th></Th>
-              <Th>Nombre</Th>
-              <Th>Apellido</Th>
-              <Th>Email</Th>
-            </Tr>
-          </Thead>
+          {visiblePatients?.length ? (
+            <Thead>
+              <Tr>
+                <Th isNumeric>ID</Th>
+                <Th></Th>
+                <Th>Nombre</Th>
+                <Th>Email</Th>
+                <Th>Obra social</Th>
+              </Tr>
+            </Thead>
+          ) : (
+            false
+          )}
           <Tbody>
-            {patients &&
-              patients.map((e) => (
+            {visiblePatients ? (
+              visiblePatients.map((e) => (
                 <Tr key={e.id}>
                   <Td isNumeric>{e.id}</Td>
                   <Td>
                     <Image src={e.picture} w="3rem" h="3rem" rounded={"50%"} />
                   </Td>
-                  <Td>{e.name}</Td>
-                  <Td>{e.last_name}</Td>
+                  <Td>
+                    {e.name} {e.last_name}
+                  </Td>
                   <Td>{e.email}</Td>
+                  <Td>
+                    {e.prepaid_healths.length
+                      ? e.prepaid_healths[0]?.name
+                      : "Particular"}
+                  </Td>
                   <Td>
                     <Button
                       m="0.5rem"
@@ -74,20 +91,37 @@ function AdminAllPatients() {
                     >
                       Detalle
                     </Button>
-                    <Button m="0.5rem" colorScheme={"teal"} variant="ghost">
-                      <Icon w={4} h={4} as={MdOutlineEditNote} />
-                    </Button>
-                    <Button
-                      m="0.5rem"
-                      colorScheme={"teal"}
-                      variant="ghost"
-                      fontSize="xs"
-                    >
-                      <Icon w={4} h={4} as={RiDeleteBin6Line} />
-                    </Button>
+
+                    <Tooltip label="Deshabilitar">
+                      <Button
+                        m="0.5rem"
+                        colorScheme={"teal"}
+                        variant="ghost"
+                        fontSize="xs"
+                        onClick={() => {
+                          dispatch(getOnePatient(e.id));
+                          disableModal.onOpen();
+                        }}
+                      >
+                        <ConfirmDisable
+                          onClose={disableModal.onClose}
+                          isOpen={disableModal.isOpen}
+                          setAux={setAux}
+                          aux={aux}
+                          user="paciente"
+                        />
+                        <Icon w={4} h={4} as={MdPersonAddDisabled} />
+                      </Button>
+                    </Tooltip>
                   </Td>
                 </Tr>
-              ))}
+              ))
+            ) : (
+              <Alert status="warning">
+                <AlertIcon />
+                No existen pacientes registrados
+              </Alert>
+            )}
           </Tbody>
           <Tfoot></Tfoot>
         </Table>
@@ -111,7 +145,7 @@ function AdminAllPatients() {
 
           <ModalFooter>
             <Button bg="#2C7A7B" color="white" mr={3} onClick={onClose}>
-              Close
+              Cerrar
             </Button>
           </ModalFooter>
         </ModalContent>

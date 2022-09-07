@@ -5,7 +5,7 @@ const {
   Doctor,
   Patient,
   Prepaid_health,
-  Work_days,
+  Dates1,
   Absence,
   General_area,
   Review,
@@ -83,13 +83,24 @@ router.get("/", async (req, res, next) => {
   });
 
   const subscritos = patientDb.filter((el) => el.prepaid_healths[0].id == 8);
-  const notSubscritos = patientDb.filter((el) => el.prepaid_healths[0].id !== 8);
+  const notSubscritos = patientDb.filter(
+    (el) => el.prepaid_healths[0].id !== 8
+  );
 
   let patints = [subscritos.length, notSubscritos.length];
+
+  let monto = 0;
+  const dates = await Dates1.findAll({ where: { monto: { [Op.gt]: 0 } } });
+
+  dates.forEach((el) => {
+    console.log(el.monto);
+    monto += el.monto;
+  });
 
   let stats = {
     doctorsCount: countGeneralArea,
     patientsCount: patints,
+    monto,
   };
 
   res.status(200).send(stats);

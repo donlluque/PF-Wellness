@@ -56,6 +56,7 @@ function MakeReviews() {
       dispatch(addReview(input));
     }
     history.push("/");
+    setMostrar(true);
   };
 
   const handleChange = (e) => {

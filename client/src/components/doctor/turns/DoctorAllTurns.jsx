@@ -38,17 +38,17 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { MdDoneAll } from "react-icons/md";
 
-function DoctorAllTurns({ nextTurns, prevTurns }) {
+function DoctorAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
   const dispatch = useDispatch();
   const { turnsByDoctor, user, turnById } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, setValue] = useState();
   const [confirmDelete, setConfirmDelete] = useState(false);
-  console.log("turnsByDoctor", turnsByDoctor);
+
   const { id } = useParams();
   console.log("IDDDD", id);
   let aux = turnsByDoctor;
-  console.log("aux antes del each", aux);
+
   aux.forEach((e) => {
     let array = e.date.split("/");
     e.newDate = new Date(
@@ -57,17 +57,12 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
       parseInt(array[0])
     );
   });
-  console.log("aux despues del each", aux);
 
-  console.log("nextTurns", nextTurns);
-
-  //EL PROBLEMA ESTA ACA AGUSTINA
-  let visibleTurns = aux;
-  // nextTurns
-  // ? aux.filter((e) => e.newDate.getTime() > new Date().getTime())
-  // : prevTurns
-  // ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
-  // : turnsByDoctor;
+  let visibleTurns = nextTurns
+    ? aux.filter((e) => e.newDate.getTime() > new Date().getTime())
+    : prevTurns
+    ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
+    : turnsByDoctor;
 
   console.log("visibleTurns", visibleTurns);
   useEffect(() => {
@@ -197,6 +192,7 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
                   onClose();
                   setConfirmDelete(false);
                   dispatch(deleteTurn(turnById.id));
+                  setAuxRender(!auxRender);
                 }}
               >
                 Notificar al paciente

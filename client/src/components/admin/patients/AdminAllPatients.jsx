@@ -37,7 +37,7 @@ function AdminAllPatients() {
   const [aux, setAux] = useState();
 
   const visiblePatients = patients.filter((e) => e.activo === true);
-  console.log(visiblePatients);
+
   useEffect(() => {
     dispatch(getAllPatients());
   }, [dispatch]);

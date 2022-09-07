@@ -2,18 +2,16 @@ import { Heading, Box, Button, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { postTurn, sendEmailPago } from "../../redux/actions";
-import { baseURL } from "../../index";
+import { putWellness, sendEmailWellness } from "../../redux/actions";
 
 function ConfirmPaymentWellness() {
   const { search } = useLocation();
   const dispatch = useDispatch();
-  const { form, user } = useSelector((state) => state);
+  const { user } = useSelector((state) => state);
 
   const handleSubmit = () => {
     if (search.includes("approved")) {
-      dispatch(postTurn(form));
-      dispatch(sendEmailPago(user));
+      dispatch(putWellness(user.id));
     }
   };
 
@@ -70,17 +68,17 @@ function ConfirmPaymentWellness() {
             Sigue navegando por la web y descubre todos los beneficios que
             tenemos para ofrecerte
           </Text>
-          <Text mb="1rem" fontSize={"lg"}>
-            Hemos enviado un mail con la confirmación. Por favor revisa tu
-            correo electronico.
-          </Text>
           <Text colorScheme="teal" fontWeight="semibold" m="1rem" mb="0">
             Gracias por confiar en nosotros!
           </Text>
         </Box>
-        <a href={`${baseURL}`}>
-          <Button m="1rem" colorScheme={"teal"}>
-            Volver al Home
+        <a href="http://localhost:3000/">
+          <Button
+            m="1rem"
+            colorScheme={"teal"}
+            onClick={() => dispatch(sendEmailWellness(user))}
+          >
+            Enviar comprobante
           </Button>
         </a>
       </Box>

@@ -42,7 +42,7 @@ function ArchivedAllPatients() {
   const modal2 = useDisclosure();
   const [aux, setAux] = useState(true);
 
-  const visiblePatients = patients; /*.filter((e) => e.activo === false);*/
+  const visiblePatients = patients.filter((e) => e.activo === false);
 
   useEffect(() => {
     dispatch(getAllPatients());

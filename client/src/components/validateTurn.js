@@ -1,12 +1,3 @@
-//ARRAY TOTAL HOURS (de 8:00 a 20.30hrs)
-/*export const createAllTurns = () => {
-  let availableTurns = [];
-  for (let i = 1; i < 26; i++) {
-    availableTurns.push(i);
-  }
-  return availableTurns;
-};*/
-
 export const validateRange = (hours, totalHours) => {
   let totalTurns = totalHours;
 
@@ -47,7 +38,11 @@ export const searchTurnByDate = (turns, date, absentsDoctor, rangeTurns) => {
   if (absent || Array.isArray(absent)) {
     console.log("entre");
     turnsDate = turns.filter((turn) => turn.date === date.toLocaleDateString()); /// [{id: 1, fecha: ...}.... {..}, {}]
+    console.log(turnsDate, "turnsDate");
     let turnsDateHours = turnsDate.map((e) => e.hours_workings[0].hour);
+    console.log(turnsDateHours, "turnsDateHours");
+
+    turnsDateSelected = turnsDateHours;
     if (Array.isArray(absent)) {
       absent.forEach((i) => {
         if (!turnsDateHours.find((e) => e === i)) {

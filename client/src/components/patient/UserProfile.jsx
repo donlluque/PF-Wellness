@@ -1,13 +1,25 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Box,
+  CircularProgress,
+  Center,
+} from "@chakra-ui/react";
 
 import FormUserProfile from "./FormUserProfile";
 import PatientTurnsPanel from "./turns/PatientTurnsPanel";
 import PatientDoctorPanel from "./doctors/PatientDoctorPanel";
+import { useSelector } from "react-redux";
 
 function UserProfile() {
+  const { patientDetail } = useSelector((state) => state);
+
   return (
     <>
-      <Box bgColor="teal.50">
+      <Box bgColor="teal.50" minW="100vh">
         <Tabs
           pt={{
             base: "23rem",

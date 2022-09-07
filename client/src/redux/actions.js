@@ -292,7 +292,6 @@ export const postTurn = (form) => {
       .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
   };
 };
-
 export const getTurns = () => {
   return function (dispatch) {
     fetch(`${baseURL}/dates`)
@@ -440,7 +439,7 @@ export const getOnePatient = (id) => {
 };
 export const disablePatient = (patientId) => {
   return function (dispatch) {
-    return fetch(`${baseURL}/patient`, {
+    return fetch(`${baseURL}/patients`, {
       method: "PATCH",
       body: JSON.stringify({ patientId }),
       headers: { "Content-Type": "application/json" },
@@ -647,6 +646,45 @@ export const sendEmailPago = (payload) => {
     } catch (error) {
       console.log(error);
     }
+  };
+};
+
+export const sendEmailWellness = (payload) => {
+  console.log(payload, "PAYLOAD");
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(`${baseURL}/mail_sub`, payload);
+      return dispatch({
+        type: "SEND_EMAIL_SUB",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const putWellness = (patientId) => {
+  return function (dispatch) {
+    return fetch(`${baseURL}/patients/wellness`, {
+      method: "PATCH",
+      body: JSON.stringify({ patientId, prepaid: "Wellness" }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) =>
+        res.ok
+          ? Promise.resolve({
+              status: res.status || "00",
+              statusText: `La obra social fue actualizada con exito`,
+            })
+          : Promise.reject({
+              err: true,
+              status: res.status || "00",
+              statusText: "No es posible actualizar la obra social",
+            })
+      )
+      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
   };
 };
 // export const dateUser = (payload) => {

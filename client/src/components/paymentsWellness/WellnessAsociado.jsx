@@ -34,10 +34,10 @@ function WellnessAsociados() {
 
   const handlePayment = async () => {
     setPaymentActive(true);
-    onOpen()
+    onOpen();
     try {
       const generarLink = await axios.post(`${baseURL}/asociados`, input);
-      console.log(generarLink)
+      console.log(generarLink);
       setLink(generarLink.data);
     } catch (error) {
       console.log(error);

@@ -50,6 +50,7 @@ function PatientAllDoctors() {
       visibleDoctors.push(e);
     }
   });
+  console.log(visibleDoctors,"doctoress")
 
   useEffect(() => {
     dispatch(getTurnsByPatient(id));

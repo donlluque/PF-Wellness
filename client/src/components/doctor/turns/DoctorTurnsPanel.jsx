@@ -19,6 +19,7 @@ import DoctorAllTurns from "./DoctorAllTurns";
 function DoctorTurnsPanel() {
   const [nextTurns, setNextTurns] = useState(true);
   const [prevTurns, setPrevTurns] = useState(false);
+  const [auxRender, setAuxRender] = useState(false);
 
   return (
     <>
@@ -76,7 +77,12 @@ function DoctorTurnsPanel() {
         </Box>
         <Divider orientation="vertical" />
         <Box w={{ xl: "75%" }}>
-          <DoctorAllTurns nextTurns={nextTurns} prevTurns={prevTurns} />
+          <DoctorAllTurns
+            setAuxRender={setAuxRender}
+            auxRender={auxRender}
+            nextTurns={nextTurns}
+            prevTurns={prevTurns}
+          />
         </Box>
       </Box>
     </>

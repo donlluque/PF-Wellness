@@ -108,17 +108,17 @@ function Prepaid() {
               </ListItem>
             </List>
             <Link to="/wellnessPrepaid">
-            <Button
-              mt={"0.5rem"}
-              bg="#D69E2E"
-              w={"15rem"}
-              h={"4rem"}
-              fontSize={"3xl"}
-              fontWeight={"bold"}
-              boxShadow="dark-lg"
-            >
-              Suscribirse
-            </Button>
+              <Button
+                mt={"0.5rem"}
+                bg="#D69E2E"
+                w={"15rem"}
+                h={"4rem"}
+                fontSize={"3xl"}
+                fontWeight={"bold"}
+                boxShadow="dark-lg"
+              >
+                Suscribirse
+              </Button>
             </Link>
           </Box>
         </WrapItem>
@@ -245,7 +245,13 @@ function Prepaid() {
             boxShadow="2xl"
             borderRadius="0.5rem"
           >
-            <Image src={prepaidHealth[3]?.logo} alt="img" maxW="10rem" minH="8rem" mb="0.5rem" />
+            <Image
+              src={prepaidHealth[3]?.logo}
+              alt="img"
+              maxW="12rem"
+              minH="6rem"
+              mb="0.5rem"
+            />
             <List spacing={3}>
               <ListItem>
                 <ListIcon as={BsTelephone} color="green.500" />

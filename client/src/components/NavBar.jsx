@@ -68,11 +68,9 @@ function NavBar() {
 
   //-----Estilos para modo oscuro----//
 
-  const notPrepaidModal = useDisclosure();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const notVerificadeModal = useDisclosure();
   const notAuthenticatedModal = useDisclosure();
-  const { colorMode, toggleColorMode } = useColorMode();
+  /*const { colorMode, toggleColorMode } = useColorMode();
   const colorLetra = useColorModeValue("#2c7a7b", "#2D3748");
   const botonBg = useColorModeValue("#319795", "#1A202C");
   const colorBt = useColorModeValue("white", "white");
@@ -80,7 +78,7 @@ function NavBar() {
   const modo = useColorModeValue("transparent", "transparent");
   const modoColor = useColorModeValue("white", "#D69E2E");
   const modoUser = useColorModeValue("#319795", "#1A202C");
-  const bgUser = useColorModeValue("white", "white");
+  const bgUser = useColorModeValue("white", "white");*/
   //----------------------------------//
 
   return (
@@ -117,27 +115,27 @@ function NavBar() {
             align={{ base: "center", sm: "center", md: "row" }}
           >
             <Link to="/">
-              <Button colorScheme="teal" variant="ghost" color={colorLetra}>
+              <Button colorScheme="teal" variant="ghost">
                 Home
               </Button>
             </Link>
             <Link to="/about">
-              <Button colorScheme="teal" variant="ghost" color={colorLetra}>
+              <Button colorScheme="teal" variant="ghost">
                 Nosotros
               </Button>
             </Link>
             <Link to="/especialidades">
-              <Button colorScheme="teal" variant="ghost" color={colorLetra}>
+              <Button colorScheme="teal" variant="ghost">
                 Especialidades Médicas
               </Button>
             </Link>
             <Link to="/prestaciones">
-              <Button colorScheme="teal" variant="ghost" color={colorLetra}>
+              <Button colorScheme="teal" variant="ghost">
                 Prestaciones
               </Button>
             </Link>
             <Link to="/staff">
-              <Button colorScheme="teal" variant="ghost" color={colorLetra}>
+              <Button colorScheme="teal" variant="ghost">
                 Staff
               </Button>
             </Link>
@@ -155,19 +153,6 @@ function NavBar() {
             lg: "row",
           }}
         >
-          <Button
-            onClick={toggleColorMode}
-            colorScheme={"teal"}
-            color={modoColor}
-            borderRadius="50%"
-          >
-            {colorMode === "light" ? (
-              <Icon as={BsFillMoonFill} />
-            ) : (
-              <Icon as={BsFillSunFill} />
-            )}
-          </Button>
-
           {!user ||
           (user &&
             user.tipoRol?.[0] !== "admin" &&
@@ -178,18 +163,13 @@ function NavBar() {
               user &&
               user.tipoRol?.[0] === "user" ? (
                 <Link to="/turnos">
-                  <Button
-                    colorScheme={schemeBt}
-                    variant="solid"
-                    bg={botonBg}
-                    color={colorBt}
-                  >
+                  <Button colorScheme={"teal"} variant="solid">
                     Turnos Online
                   </Button>
                 </Link>
               ) : (
                 <Button
-                  colorScheme={schemeBt}
+                  colorScheme={"teal"}
                   variant="solid"
                   onClick={() =>
                     isAuthenticated
@@ -198,8 +178,6 @@ function NavBar() {
                         : notVerificadeModal.onOpen()
                       : notAuthenticatedModal.onOpen()
                   }
-                  bg={botonBg}
-                  color={colorBt}
                 >
                   Turnos Online
                 </Button>
@@ -214,7 +192,6 @@ function NavBar() {
               colorScheme="teal"
               bg="#E6FFFA70"
               variant="outline"
-              color={modoUser}
               onClick={() => {
                 loginWithRedirect();
               }}
@@ -229,13 +206,12 @@ function NavBar() {
                   <MenuButton
                     isActive={isOpen}
                     as={Button}
-                    bg={modoUser}
-                    colorScheme={schemeBt}
+                    colorScheme={"teal"}
                   >
                     {isOpen ? (
-                      <Icon boxSize={7} as={FaUserCircle} color={bgUser} />
+                      <Icon boxSize={7} as={FaUserCircle} />
                     ) : (
-                      <Icon boxSize={7} as={FaUserCircle} color={bgUser} />
+                      <Icon boxSize={7} as={FaUserCircle} />
                     )}
                   </MenuButton>
                   <MenuList>
@@ -271,13 +247,12 @@ function NavBar() {
                   <MenuButton
                     isActive={isOpen}
                     as={Button}
-                    bg={modoUser}
-                    colorScheme={schemeBt}
+                    colorScheme={"teal"}
                   >
                     {isOpen ? (
-                      <Icon boxSize={7} as={FaUserCircle} color={bgUser} />
+                      <Icon boxSize={7} as={FaUserCircle} />
                     ) : (
-                      <Icon boxSize={7} as={FaUserCircle} color={bgUser} />
+                      <Icon boxSize={7} as={FaUserCircle} />
                     )}
                   </MenuButton>
                   <MenuList>
@@ -309,15 +284,14 @@ function NavBar() {
                   <MenuButton
                     isActive={isOpen}
                     as={Button}
-                    bg={modoUser}
-                    colorScheme={schemeBt}
+                    colorScheme={"teal"}
                     pl={4}
                     pr={4}
                   >
                     {isOpen ? (
-                      <Icon boxSize={7} as={GrUserAdmin} color={bgUser} />
+                      <Icon boxSize={7} as={GrUserAdmin} />
                     ) : (
-                      <Icon boxSize={7} as={GrUserAdmin} color={bgUser} />
+                      <Icon boxSize={7} as={GrUserAdmin} />
                     )}
                   </MenuButton>
                   <MenuList>

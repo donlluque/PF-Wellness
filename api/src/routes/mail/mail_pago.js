@@ -18,10 +18,10 @@ router.post("/", async (req, res) => {
         },
       },
     });
-    const citas = cita.dataValues.dates1s;
-    const citaDay = citas[citas.length - 1].dataValues.date;
-    const citaHora =
-      citas[citas.length - 1].dataValues.hours_workings[0].dataValues.hour;
+    const citas = cita.dataValues.dates1s.pop();
+    console.log(citas, "citaaa ultima");
+    const citaDay = citas.dataValues.date;
+    const citaHora = citas.dataValues.hours_workings[0].dataValues.hour;
     console.log(citaHora, "ultima CITA");
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
     let info = await transporter.sendMail({
       from: "wellnesclinica@gmail.com", // sender address
       to: email, // list of receivers
-      subject: "Comprobante de pago", // Subject line
+      subject: "Confirmación de turno", // Subject line
       text: "Wellness", // plain text body
       html: `<!DOCTYPE html>
         <html   xmlns="http://www.w3.org/1999/xhtml"

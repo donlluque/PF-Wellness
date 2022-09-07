@@ -213,7 +213,7 @@ router.patch("/", async (req, res, next) => {
 
   if (patient.dataValues.activo) state = false;
   else state = true;
-  await doctor.update({ activo: state });
+  await patient.update({ activo: state });
   res.send("cambiado");
 });
 

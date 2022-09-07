@@ -439,7 +439,7 @@ export const getOnePatient = (id) => {
 };
 export const disablePatient = (patientId) => {
   return function (dispatch) {
-    return fetch(`${baseURL}/patient`, {
+    return fetch(`${baseURL}/patients`, {
       method: "PATCH",
       body: JSON.stringify({ patientId }),
       headers: { "Content-Type": "application/json" },

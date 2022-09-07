@@ -43,14 +43,12 @@ function Calendar() {
   const usuario = useSelector((state) => state.user);
   const absents = useSelector((state) => state.absents);
   const [active, setActive] = useState(false);
-  const [vacationActive, setVacationActive] = useState(false);
-  const [vacationDates, setVacationDates] = useState({});
 
   //copia de estado global
   const absentsDoctor = absents.filter(
     (e) => e.doctors[0]?.id === doctorDetail.id
   );
-  console.log(absentsDoctor, "ausencua");
+
   const totalHours = hoursWorking;
   const totalTurns = turns;
   const dias = doctorDetail.work_days?.map((e) => parseInt(e.id));
@@ -86,7 +84,6 @@ function Calendar() {
     setForm({ ...form, idDoctor: idDoctor, idPatient: usuario.id });
     dispatch(getTurns());
     dispatch(getAllAbsent());
-    vacationControlled();
   }, [dispatch]);
 
   const handleConfirm = (e) => {
@@ -109,23 +106,6 @@ function Calendar() {
 
   const handleClick = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const vacationControlled = (vacationActive) => {
-    absentsDoctor.forEach((e) => {
-      if (e.extended) {
-        let endDate = e.extended.end.split("/");
-        endDate = new Date(
-          parseInt(endDate[2]),
-          parseInt(endDate[1] - 1),
-          parseInt(endDate[0])
-        );
-        if (endDate.getTime() > new Date().getTime()) {
-          setVacationActive(true);
-          setVacationDates(e.extended);
-        }
-      }
-    });
   };
 
   return (
@@ -202,18 +182,7 @@ function Calendar() {
               </Text>
               <Text>{doctorDetail.phone}</Text>
             </Box>
-            {vacationActive && (
-              <Box
-                w={{ base: "90vw", sm: "50vw", md: "50vw", lg: "25vw" }}
-                m="1rem"
-              >
-                <Alert status="warning">
-                  <AlertIcon />
-                  El profesional seleccionado no se encuentra disponible desde{" "}
-                  {vacationDates.start} hasta {vacationDates.end}
-                </Alert>
-              </Box>
-            )}
+
             <Button
               w="90%"
               colorScheme={"teal"}

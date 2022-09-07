@@ -97,13 +97,13 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
     return result;
   };
 
-  const handleSubmitNotPay = () => {
+  const handleSubmitNotPay = async () => {
     form.monto = input.price;
     console.log(form, "entre");
-    dispatch(postTurn(form));
+    await dispatch(postTurn(form));
     onClose();
     confirmModal.onOpen();
-    dispatch(sendEmailPago(user));
+    //dispatch(sendEmailPago(user));
   };
 
   const handleSubmitPay = async () => {
@@ -311,6 +311,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
         blockScrollOnMount={false}
         isOpen={confirmModal.isOpen}
         onClose={confirmModal.onClose}
+        closeOnOverlayClick={false}
       >
         <ModalOverlay />
         <ModalContent bg={"teal.50"} colorScheme="teal">
@@ -334,7 +335,12 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
           </ModalBody>
           <ModalFooter>
             <Link to="/">
-              <Button colorScheme="teal">Cerrar</Button>
+              <Button
+                colorScheme="teal"
+                onClick={() => dispatch(sendEmailPago(user))}
+              >
+                Cerrar
+              </Button>
             </Link>
           </ModalFooter>
         </ModalContent>

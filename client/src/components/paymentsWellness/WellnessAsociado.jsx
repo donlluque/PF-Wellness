@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import PaymentModal from "./PaymentModal";
 import { baseURL } from "../../index";
 import axios from "axios";
+import { FcNext } from "react-icons/fc";
 
 function WellnessAsociados() {
   const [paymentActive, setPaymentActive] = useState(false);
@@ -75,9 +76,55 @@ function WellnessAsociados() {
           </Text>
         </Box>
       </Center>
-      <Button colorScheme="teal" onClick={() => handlePayment()}>
-        Suscribirse
-      </Button>
+      <Box display="flex">
+        <Box>
+          Disfruta de los beneficios que tenemos para ofrecerte:
+          <List>
+            <ListItem>
+              <ListIcon as={FcNext} />
+              Atención personalizada y excelencia médica
+            </ListItem>
+            <ListItem>
+              <ListIcon as={FcNext} />
+              Cobertura 100% garantizada en todos nuestros servicios los 365
+              días del año
+            </ListItem>
+            <ListItem>
+              <ListIcon as={FcNext} />
+              Traslados hacia y desde la clínica en casos de emergencia
+            </ListItem>
+            <ListItem>
+              <ListIcon as={FcNext} />
+              Personal disponible las 24hrs del día
+            </ListItem>
+            <ListItem>
+              <ListIcon as={FcNext} />
+              Atención domiciliaria sin costo en casos en donde el paciente no
+              pueda movilizarse
+            </ListItem>
+          </List>
+        </Box>
+        <Box>Descubri los planes que tenemos para vos</Box>
+        <List>
+          <ListItem>
+            <ListIcon as={FcNext} />
+            Plan mensual: $7000/mes
+          </ListItem>
+          <ListItem>
+            <ListIcon as={FcNext} />
+            Plan semestral: $42000/semestral -- $35000/mes
+          </ListItem>
+          <ListItem>
+            <ListIcon as={FcNext} />
+            Plan anual: $84000/anual -- $70000/mes
+          </ListItem>
+        </List>
+        <Box>
+          <Button colorScheme="teal" onClick={() => handlePayment()}>
+            Suscribirse
+          </Button>
+        </Box>
+      </Box>
       <PaymentModal
         paymentActive={paymentActive}
         onClose={onClose}

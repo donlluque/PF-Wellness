@@ -12,11 +12,8 @@ import {
 import FormUserProfile from "./FormUserProfile";
 import PatientTurnsPanel from "./turns/PatientTurnsPanel";
 import PatientDoctorPanel from "./doctors/PatientDoctorPanel";
-import { useSelector } from "react-redux";
 
 function UserProfile() {
-  const { patientDetail } = useSelector((state) => state);
-
   return (
     <>
       <Box bgColor="teal.50" minW="100vh">
@@ -76,13 +73,6 @@ function UserProfile() {
               mr="0.3rem"
             >
               Doctores
-            </Tab>
-            <Tab
-              _selected={{ color: "white", bg: "teal.500" }}
-              bgColor="white"
-              mr="0.3rem"
-            >
-              Mis pagos
             </Tab>
           </TabList>
 

@@ -41,18 +41,17 @@ function DoctorAllAbsents() {
   useEffect(() => {
     dispatch(getAllAbsent());
   }, [dispatch, aux]);
-  console.log(absents);
+
   let visibleAbsents = absents?.filter(
     (e) => e.doctors?.[0].id === parseInt(id)
   );
-  console.log(visibleAbsents);
 
   return (
     <>
       <>
-        <TableContainer>
-          <Table size="sm">
-            {visibleAbsents?.length ? (
+        {visibleAbsents?.length ? (
+          <TableContainer>
+            <Table size="sm">
               <Thead>
                 <Tr>
                   <Th isNumeric>ID</Th>
@@ -62,69 +61,67 @@ function DoctorAllAbsents() {
                   <Th></Th>
                 </Tr>
               </Thead>
-            ) : (
-              false
-            )}
-            <Tbody>
-              {visibleAbsents?.length ? (
-                visibleAbsents.map((e) => (
-                  <Tr key={e.id}>
-                    <Td isNumeric>{e.id}</Td>
-                    <Td>
-                      {e.extended
-                        ? "Licencia Extendida"
-                        : e.totalDay
-                        ? "Ausencia día completo"
-                        : "Ausencia Breve"}
-                    </Td>
-                    <Td>
-                      {e.extended ? (
-                        <Text>
-                          {e.extended.start} - {e.extended.end}
-                        </Text>
-                      ) : e.totalDay ? (
-                        e.totalDay?.date
-                      ) : (
-                        e.notTotalDay?.date
-                      )}
-                    </Td>
-                    <Td>
-                      {e.extended ? (
-                        "-"
-                      ) : e.totalDay ? (
-                        "-"
-                      ) : (
-                        <Text>
-                          {e.notTotalDay?.hours?.map((e) => e).join(" - ")}
-                        </Text>
-                      )}
-                    </Td>
-                    <Td>
-                      <Button
-                        m="0.5rem"
-                        colorScheme={"teal"}
-                        variant="ghost"
-                        fontSize="xs"
-                        onClick={() => {
-                          dispatch(deleteAbsent(e.id));
-                          setAux(!aux);
-                        }}
-                      >
-                        <Icon w={4} h={4} as={TbCalendarOff} />
-                      </Button>
-                    </Td>
-                  </Tr>
-                ))
-              ) : (
-                <Alert status="warning">
-                  <AlertIcon />
-                  No tiene ausencias registradas
-                </Alert>
-              )}
-            </Tbody>
-            <Tfoot></Tfoot>
-          </Table>
-        </TableContainer>
+
+              <Tbody>
+                {visibleAbsents &&
+                  visibleAbsents.map((e) => (
+                    <Tr key={e.id}>
+                      <Td isNumeric>{e.id}</Td>
+                      <Td>
+                        {e.extended
+                          ? "Licencia Extendida"
+                          : e.totalDay
+                          ? "Ausencia día completo"
+                          : "Ausencia Breve"}
+                      </Td>
+                      <Td>
+                        {e.extended ? (
+                          <Text>
+                            {e.extended.start} - {e.extended.end}
+                          </Text>
+                        ) : e.totalDay ? (
+                          e.totalDay?.date
+                        ) : (
+                          e.notTotalDay?.date
+                        )}
+                      </Td>
+                      <Td>
+                        {e.extended ? (
+                          "-"
+                        ) : e.totalDay ? (
+                          "-"
+                        ) : (
+                          <Text>
+                            {e.notTotalDay?.hours?.map((e) => e).join(" - ")}
+                          </Text>
+                        )}
+                      </Td>
+                      <Td>
+                        <Button
+                          m="0.5rem"
+                          colorScheme={"teal"}
+                          variant="ghost"
+                          fontSize="xs"
+                          onClick={() => {
+                            dispatch(deleteAbsent(e.id));
+                            setAux(!aux);
+                          }}
+                        >
+                          <Icon w={4} h={4} as={TbCalendarOff} />
+                        </Button>
+                      </Td>
+                    </Tr>
+                  ))}
+              </Tbody>
+              <Tfoot></Tfoot>
+            </Table>
+          </TableContainer>
+        ) : (
+          <Alert status="warning">
+            <AlertIcon />
+            No tiene ausencias registradas
+          </Alert>
+        )}
         <Modal
           isOpen={msgConfirm && msgConfirm.statusText}
           colorScheme="teal"

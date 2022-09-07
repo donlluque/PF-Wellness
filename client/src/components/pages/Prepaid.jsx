@@ -59,72 +59,101 @@ function Prepaid() {
           </Text>
         </Box>
       </Center>
-
-      <Wrap bg="#EDF2F7" justify="center" mt="-2">
-        <WrapItem>
-          <Box
-            m="3rem"
-            bgPosition="55%"
-            bgImage="linear-gradient(
+      <Box display="flex" justifyContent={"center"} w="100%">
+        <Box
+          m="3rem"
+          bgImage="linear-gradient(
               rgba(230, 255, 250, 0.7),
               rgba(230, 255, 250, 0.7)
             ),
             url(https://www.wedskenya.com/wp-content/uploads/2019/03/Cute-Holding-Hands-Quotes.jpg)"
-            bgRepeat="no-repeat"
-            bgSize="cover"
-            w="73rem"
-            h="15rem"
-            p="1rem"
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-around"
-            alignItems="center"
-            boxShadow="dark-lg"
-            borderRadius="0.5rem"
-            filter="grayscale(10%)"
-            border="2px"
-            borderColor="#D69E2E"
+          bgRepeat="no-repeat"
+          bgSize="cover"
+          w="85vw"
+          h={{ xl: "15rem" }}
+          p="1rem"
+          display="flex"
+          flexDirection={{
+            base: "column",
+            sm: "column",
+            md: "column",
+            lg: "column",
+            xl: "row",
+          }}
+          justifyContent="space-around"
+          alignItems="center"
+          boxShadow="dark-lg"
+          borderRadius="0.5rem"
+          filter="grayscale(10%)"
+          border="2px"
+          borderColor="#D69E2E"
+        >
+          <Image
+            src={
+              "https://cdn.discordapp.com/attachments/1009488625219678269/1016320991221252217/WellnessPremium.png"
+            }
+            alt="img"
+            w={{ base: "20rem", sm: "20rem", md: "20rem", lg: "25rem" }}
+            mb="1rem"
+          />
+          <List
+            spacing={4}
+            fontSize={{ base: "xl", sm: "xl", md: "2xl", lg: "2xl", xl: "2xl" }}
           >
-            <Image
-              src={
-                "https://cdn.discordapp.com/attachments/1009488625219678269/1016320991221252217/WellnessPremium.png"
-              }
-              alt="img"
-              maxW="25rem"
-              mb="1rem"
-            />
-            <List spacing={3} fontSize="2xl">
-              <ListItem>
-                <ListIcon as={BsTelephone} color="green.600" />
-                +54 9 351 365-4238
-              </ListItem>
-              <ListItem>
-                <ListIcon as={MdAlternateEmail} color="green.600" />
-                wellnesclinica@gmail.com
-              </ListItem>
-              <ListItem color="green.600" fontWeight={"bold"}>
-                <ListIcon as={FaRegMoneyBillAlt} color="green.600" />
-                100%
-              </ListItem>
-            </List>
-            <Link to="/wellnessPrepaid">
-              <Button
-                mt={"0.5rem"}
-                bg="#D69E2E"
-                w={"15rem"}
-                h={"4rem"}
-                fontSize={"3xl"}
-                fontWeight={"bold"}
-                boxShadow="dark-lg"
-              >
-                Suscribirse
-              </Button>
-            </Link>
-          </Box>
-        </WrapItem>
-      </Wrap>
+            <ListItem>
+              <ListIcon as={BsTelephone} color="green.600" />
+              +54 9 351 365-4238
+            </ListItem>
+            <ListItem>
+              <ListIcon as={MdAlternateEmail} color="green.600" />
+              wellnesclinica@gmail.com
+            </ListItem>
+            <ListItem color="green.600" fontWeight={"bold"}>
+              <ListIcon as={FaRegMoneyBillAlt} color="green.600" />
+              100%
+            </ListItem>
+          </List>
+          <Link to="/wellnessPrepaid">
+            <Button
+              mt={{
+                base: "1rem",
+                sm: "1rem",
+                md: "1rem",
+                lg: "1rem",
+                xl: "0.5rem",
+              }}
+              bg="#D69E2E"
+              w={{
+                base: "12rem",
+                sm: "12rem",
+                md: "12rem",
+                lg: "15rem",
+                xl: "15rem",
+              }}
+              h={{
+                base: "3rem",
+                sm: "3rem",
+                md: "4rem",
+                lg: "4rem",
+                xl: "4rem",
+              }}
+              fontSize={{
+                base: "2xl",
+                sm: "2xl",
+                md: "2xl",
+                lg: "3xl",
+                xl: "3xl",
+              }}
+              fontWeight={"bold"}
+              boxShadow="dark-lg"
+            >
+              Suscribirse
+            </Button>
+          </Link>
+        </Box>
+      </Box>
 
-      <Wrap bg="#EDF2F7" justify="center" mt="-2">
+      <Wrap bg="#EDF2F7" justify="center" mt="-2" w="100vw">
         <WrapItem>
           <Box
             m="3rem"

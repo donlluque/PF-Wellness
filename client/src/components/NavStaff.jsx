@@ -73,12 +73,6 @@ export default function NavStaff({ setInput, setPage }) {
     />
   );
   const [overlay, setOverlay] = useState(<OverlayOne />);
-  //-----Estilos para modo oscuro----//
-
-  const botonBg = useColorModeValue("#319795", "#4A5568");
-  const colorBt = useColorModeValue("white", "white");
-
-  //---------------------------------//
 
   return (
     <Box w="100%">
@@ -107,11 +101,11 @@ export default function NavStaff({ setInput, setPage }) {
           <Select
             m="1rem"
             cursor="pointer"
-            bg={botonBg}
-            color={colorBt}
             onChange={(e) => handleFilter(e)}
             value={values.especialidad}
             name="especialidad"
+            bg="teal.500"
+            color="white"
           >
             <option value="All">Areas Generales</option>
             <option value="Deportología">Deportología</option>
@@ -127,12 +121,13 @@ export default function NavStaff({ setInput, setPage }) {
 
           <Select
             m="1rem"
-            bg={botonBg}
-            color={colorBt}
             onChange={(e) => handleFilter(e)}
             value={values.obrasocial}
             name="obrasocial"
             cursor="pointer"
+            colorScheme="teal"
+            bg="teal.500"
+            color="white"
           >
             <option value="All">Prestaciones</option>
             {prepaidHealth &&

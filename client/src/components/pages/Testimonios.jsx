@@ -1,20 +1,11 @@
 import React from "react";
-import {
-  Box,
-  Text,
-  Wrap,
-  WrapItem,
-  Center,
-  Icon,
-  Spacer,
-} from "@chakra-ui/react";
+import { Box, Text, Wrap, WrapItem, Icon, Spacer } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getReviews } from "../../redux/actions";
 import ReactStars from "react-rating-stars-component";
 import { ImQuotesLeft, ImQuotesRight } from "react-icons/im";
 
-//valee agusccue  LCDLLLLLLLLLLL
 function Reviews() {
   const dispatch = useDispatch();
   const { reviews } = useSelector((state) => state);

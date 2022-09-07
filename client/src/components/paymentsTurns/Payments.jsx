@@ -21,7 +21,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  dataPayment,
   getHours,
   getOnePatient,
   getPrepaidHealth,
@@ -103,7 +102,6 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
     await dispatch(postTurn(form));
     onClose();
     confirmModal.onOpen();
-    //dispatch(sendEmailPago(user));
   };
 
   const handleSubmitPay = async () => {

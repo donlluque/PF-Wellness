@@ -53,7 +53,7 @@ function FormPutDoctor({ setPutDoctor, setListDoctors }) {
   const { msgConfirm, prepaidHealth, hoursWorking, days, areas } = useSelector(
     (state) => state
   );
-  console.log("detail", doctorDetail);
+
   let lpm = {};
   doctors.find((e) => {
     return e.id === doctorDetail.id

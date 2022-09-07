@@ -19,17 +19,12 @@ import {
   Alert,
   AlertIcon,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+
 import { Link, useParams } from "react-router-dom";
 
 import { AiOutlineComment } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getDetailDoctors,
-  getDoctors,
-  getHours,
-  getTurnsByPatient,
-} from "../../../redux/actions";
+import { getDetailDoctors } from "../../../redux/actions";
 import DoctorDetail from "../../doctor/DoctorDetail";
 
 function PatientAllDoctors() {
@@ -37,12 +32,10 @@ function PatientAllDoctors() {
   const { doctorDetail, turnsByPatient, user } = useSelector((state) => state);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  console.log(turnsByPatient, "turnsByPatient");
   const { id } = useParams();
-  console.log(id, "ID DE PARAMS");
 
   let aux = turnsByPatient?.map((e) => e.doctors?.[0]);
-  console.log(aux, "aux");
+
   const visibleDoctors = [];
   aux?.forEach((e) => {
     let search = visibleDoctors.find((d) => d.id === e.id);
@@ -50,12 +43,6 @@ function PatientAllDoctors() {
       visibleDoctors.push(e);
     }
   });
-  console.log(visibleDoctors,"doctoress")
-
-  useEffect(() => {
-    dispatch(getTurnsByPatient(id));
-    dispatch(getHours());
-  }, [dispatch]);
 
   const handleClick = (id) => {
     dispatch(getDetailDoctors(id));

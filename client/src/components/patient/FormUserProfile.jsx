@@ -29,6 +29,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getOnePatient } from "../../redux/actions";
 import { validateForm } from "../../hooks/validateForm";
+import Loading from "../Loading/Loading";
 
 function FormUserProfile() {
   const { id } = useParams();
@@ -147,234 +148,248 @@ function FormUserProfile() {
     setErrors(validateForm({ ...form, [e.target.name]: e.target.value }));
   };
 
+  const llenar = Object.keys(perfil);
+
   //MENSAJE
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-      <Box display={{ md: "flex" }} justifyContent="center">
-        <Box display="flex" flexDirection="column" alignItems="center">
-          {!putActive && (
-            <Button
-              m="2rem"
-              onClick={handlePutActive}
-              colorScheme="teal"
-              variant="solid"
-            >
-              Modificar datos
-            </Button>
-          )}
-        </Box>
-        <Box w="100%" display="flex" flexDirection="column" alignItems="center">
-          <FormControl>
-            <FormControl isDisabled={!putActive}>
-              {loading ? (
-                <h3>Cargando imagen...</h3>
-              ) : (
-                <Image
-                  m="1rem"
-                  borderRadius="full"
-                  boxSize="150px"
-                  src={form.picture}
-                  fallbackSrc="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
-                />
-              )}
-              <Input
-                name="picture"
-                type="file"
-                placeholder={
-                  !perfil.picture ? "Escribe nombre completo" : perfil.picture
-                }
-                onChange={UploadI}
-              />
-            </FormControl>
-            <FormControl isDisabled={!putActive} isInvalid={errors.name}>
-              <FormLabel m="1rem" htmlFor="name">
-                Nombre
-              </FormLabel>
-              <Input
-                value={form.name}
-                onChange={(e) => handleChange(e)}
-                onBlur={(e) => handleBlur(e)}
-                name="name"
-                placeholder={
-                  !perfil.name ? "Escribe nombre completo" : perfil.name
-                }
-              />
-              {errors.name && (
-                <FormErrorMessage>{errors.name}</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl isDisabled={!putActive} isInvalid={errors.last_name}>
-              <FormLabel m="1rem" htmlFor="last_name">
-                Apellido
-              </FormLabel>
-              <Input
-                onChange={(e) => handleChange(e)}
-                name="last_name"
-                value={form.last_name}
-                placeholder={
-                  !perfil.last_name ? "Escribe apellidos" : perfil.last_name
-                }
-              />
-              {errors.last_name && (
-                <FormErrorMessage>{errors.last_name}</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl isDisabled={!putActive}>
-              <FormLabel m="1rem" htmlFor="email">
-                Email
-              </FormLabel>
-              <Input
-                disabled
-                value={perfil.email}
-                onChange={(e) => handleChange(e)}
-                type="email"
-                name="email"
-              />
-            </FormControl>
-            <FormControl isDisabled={!putActive} isInvalid={errors.birthday}>
-              <FormLabel m="1rem" htmlFor="birthday">
-                Fecha de nacimiento
-              </FormLabel>
-              <Input
-                value={form.birthday}
-                onChange={(e) => handleChange(e)}
-                type="date"
-                max={styleDate(date)}
-                name="birthday"
-              />
-            </FormControl>
-            <FormControl isDisabled={!putActive} isInvalid={errors.document}>
-              <FormLabel m="1rem" htmlFor="document">
-                Cédula de identificación
-              </FormLabel>
-              <InputGroup>
-                <InputLeftAddon children="DNI" />
-                <Input
-                  value={form.document}
-                  onChange={(e) => handleChange(e)}
-                  type="number"
-                  name="document"
-                  placeholder={
-                    !perfil.document ? "Nro de documento" : perfil.document
-                  }
-                />
-              </InputGroup>
-
-              {errors.document && (
-                <FormErrorMessage>{errors.document}</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl isDisabled={!putActive} isInvalid={errors.phone}>
-              <FormLabel m="1rem" htmlFor="phone">
-                Tel/Cel
-              </FormLabel>
-
-              <Input
-                value={form.phone}
-                onChange={(e) => handleChange(e)}
-                type="tel"
-                name="phone"
-                placeholder={!perfil.phone ? "Nro de telefono" : perfil.phone}
-              />
-              {errors.phone && (
-                <FormErrorMessage>{errors.phone}</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl isDisabled={!putActive} isInvalid={errors.nationality}>
-              <FormLabel m="1rem" htmlFor="nationality">
-                Nacionalidad
-              </FormLabel>
-              <Input
-                value={form.nationality}
-                onChange={(e) => handleChange(e)}
-                name="nationality"
-                placeholder={
-                  !perfil.nationality ? "Nacionalidad" : perfil.nationality
-                }
-              />
-            </FormControl>
-            <FormControl isDisabled={!putActive} isInvalid={errors.direction}>
-              <FormLabel m="1rem" htmlFor="direction">
-                Dirección
-              </FormLabel>
-
-              <Input
-                value={form.direction}
-                onChange={(e) => handleChange(e)}
-                name="direction"
-                placeholder={
-                  !perfil.direction ? "Calle, N°, depto" : perfil.direction
-                }
-              />
-            </FormControl>
-            <FormControl
-              isDisabled={!putActive}
-              isInvalid={errors.prepaid_health}
-            >
-              <FormLabel m="1rem" htmlFor="prepaid">
-                Obra social
-              </FormLabel>
-              <Select
-                value={form.prepaid_health}
-                onChange={(e) => handleChange(e)}
-                name="prepaid_health"
-              >
-                <option value="">Seleccionar una opción</option>
-                {prepaidHealth &&
-                  prepaidHealth.map((e) => (
-                    <option key={e.id} value={e.name}>
-                      {e.name}
-                    </option>
-                  ))}
-              </Select>
-
-              {errors.prepaid_health && (
-                <FormErrorMessage>{errors.prepaid_health}</FormErrorMessage>
-              )}
-            </FormControl>
-
-            <Box display="flex" justifyContent={"center"}>
+      {llenar.length ? (
+        <Box display={{ md: "flex" }} justifyContent="center">
+          <Box display="flex" flexDirection="column" alignItems="center">
+            {!putActive && (
               <Button
-                mt="1rem"
-                onClick={(e) => handleSubmit(e)}
-                type="submit"
+                m="2rem"
+                onClick={handlePutActive}
                 colorScheme="teal"
                 variant="solid"
-                disabled={Object.keys(errors).length}
               >
-                Guardar
+                Modificar datos
               </Button>
-            </Box>
-          </FormControl>
-        </Box>
+            )}
+          </Box>
+          <Box
+            w="100%"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+          >
+            <FormControl>
+              <FormControl isDisabled={!putActive}>
+                {loading ? (
+                  <h3>Cargando imagen...</h3>
+                ) : (
+                  <Image
+                    m="1rem"
+                    borderRadius="full"
+                    boxSize="150px"
+                    src={form.picture}
+                    fallbackSrc="https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
+                  />
+                )}
+                <Input
+                  name="picture"
+                  type="file"
+                  placeholder={
+                    !perfil.picture ? "Escribe nombre completo" : perfil.picture
+                  }
+                  onChange={UploadI}
+                />
+              </FormControl>
+              <FormControl isDisabled={!putActive} isInvalid={errors.name}>
+                <FormLabel m="1rem" htmlFor="name">
+                  Nombre
+                </FormLabel>
+                <Input
+                  value={form.name}
+                  onChange={(e) => handleChange(e)}
+                  onBlur={(e) => handleBlur(e)}
+                  name="name"
+                  placeholder={
+                    !perfil.name ? "Escribe nombre completo" : perfil.name
+                  }
+                />
+                {errors.name && (
+                  <FormErrorMessage>{errors.name}</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl isDisabled={!putActive} isInvalid={errors.last_name}>
+                <FormLabel m="1rem" htmlFor="last_name">
+                  Apellido
+                </FormLabel>
+                <Input
+                  onChange={(e) => handleChange(e)}
+                  name="last_name"
+                  value={form.last_name}
+                  placeholder={
+                    !perfil.last_name ? "Escribe apellidos" : perfil.last_name
+                  }
+                />
+                {errors.last_name && (
+                  <FormErrorMessage>{errors.last_name}</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl isDisabled={!putActive}>
+                <FormLabel m="1rem" htmlFor="email">
+                  Email
+                </FormLabel>
+                <Input
+                  disabled
+                  value={perfil.email}
+                  onChange={(e) => handleChange(e)}
+                  type="email"
+                  name="email"
+                />
+              </FormControl>
+              <FormControl isDisabled={!putActive} isInvalid={errors.birthday}>
+                <FormLabel m="1rem" htmlFor="birthday">
+                  Fecha de nacimiento
+                </FormLabel>
+                <Input
+                  value={form.birthday}
+                  onChange={(e) => handleChange(e)}
+                  type="date"
+                  max={styleDate(date)}
+                  name="birthday"
+                />
+              </FormControl>
+              <FormControl isDisabled={!putActive} isInvalid={errors.document}>
+                <FormLabel m="1rem" htmlFor="document">
+                  Cédula de identificación
+                </FormLabel>
+                <InputGroup>
+                  <InputLeftAddon children="DNI" />
+                  <Input
+                    value={form.document}
+                    onChange={(e) => handleChange(e)}
+                    type="number"
+                    name="document"
+                    placeholder={
+                      !perfil.document ? "Nro de documento" : perfil.document
+                    }
+                  />
+                </InputGroup>
 
-        {
-          (msgConfirm.status = "200" && (
-            <Modal
-              isCentered
-              isOpen={isOpen}
-              onClose={onClose}
-              colorScheme="teal"
-            >
-              <ModalOverlay />
-              <ModalContent bgColor="green.50">
-                <ModalHeader color="teal.600">Perfil actualizado</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                  <Text color="teal.600">
-                    Tus datos fueron modificados exitosamente!
-                  </Text>
-                </ModalBody>
-                <ModalFooter>
-                  <Spacer />
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
-          ))
-        }
-      </Box>
+                {errors.document && (
+                  <FormErrorMessage>{errors.document}</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl isDisabled={!putActive} isInvalid={errors.phone}>
+                <FormLabel m="1rem" htmlFor="phone">
+                  Tel/Cel
+                </FormLabel>
+
+                <Input
+                  value={form.phone}
+                  onChange={(e) => handleChange(e)}
+                  type="tel"
+                  name="phone"
+                  placeholder={!perfil.phone ? "Nro de telefono" : perfil.phone}
+                />
+                {errors.phone && (
+                  <FormErrorMessage>{errors.phone}</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl
+                isDisabled={!putActive}
+                isInvalid={errors.nationality}
+              >
+                <FormLabel m="1rem" htmlFor="nationality">
+                  Nacionalidad
+                </FormLabel>
+                <Input
+                  value={form.nationality}
+                  onChange={(e) => handleChange(e)}
+                  name="nationality"
+                  placeholder={
+                    !perfil.nationality ? "Nacionalidad" : perfil.nationality
+                  }
+                />
+              </FormControl>
+              <FormControl isDisabled={!putActive} isInvalid={errors.direction}>
+                <FormLabel m="1rem" htmlFor="direction">
+                  Dirección
+                </FormLabel>
+
+                <Input
+                  value={form.direction}
+                  onChange={(e) => handleChange(e)}
+                  name="direction"
+                  placeholder={
+                    !perfil.direction ? "Calle, N°, depto" : perfil.direction
+                  }
+                />
+              </FormControl>
+              <FormControl
+                isDisabled={!putActive}
+                isInvalid={errors.prepaid_health}
+              >
+                <FormLabel m="1rem" htmlFor="prepaid">
+                  Obra social
+                </FormLabel>
+                <Select
+                  value={form.prepaid_health}
+                  onChange={(e) => handleChange(e)}
+                  name="prepaid_health"
+                >
+                  <option value="">Seleccionar una opción</option>
+                  {prepaidHealth &&
+                    prepaidHealth.map((e) => (
+                      <option key={e.id} value={e.name}>
+                        {e.name}
+                      </option>
+                    ))}
+                </Select>
+
+                {errors.prepaid_health && (
+                  <FormErrorMessage>{errors.prepaid_health}</FormErrorMessage>
+                )}
+              </FormControl>
+
+              <Box display="flex" justifyContent={"center"}>
+                <Button
+                  mt="1rem"
+                  onClick={(e) => handleSubmit(e)}
+                  type="submit"
+                  colorScheme="teal"
+                  variant="solid"
+                  disabled={Object.keys(errors).length}
+                >
+                  Guardar
+                </Button>
+              </Box>
+            </FormControl>
+          </Box>
+
+          {
+            (msgConfirm.status = "200" && (
+              <Modal
+                isCentered
+                isOpen={isOpen}
+                onClose={onClose}
+                colorScheme="teal"
+              >
+                <ModalOverlay />
+                <ModalContent bgColor="green.50">
+                  <ModalHeader color="teal.600">Perfil actualizado</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <Text color="teal.600">
+                      Tus datos fueron modificados exitosamente!
+                    </Text>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Spacer />
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            ))
+          }
+        </Box>
+      ) : (
+        <Loading />
+      )}
     </>
   );
 }

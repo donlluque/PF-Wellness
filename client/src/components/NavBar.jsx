@@ -49,6 +49,11 @@ function NavBar() {
   //LOGIN NUEVO
 
   console.log(user, "user de NavBAr");
+  const handleClick = () => {
+    if (!usuario.activo) {
+      notActivoModal.onOpen();
+    }
+  };
 
   useEffect(() => {
     setRefresh(true);
@@ -70,6 +75,9 @@ function NavBar() {
 
   const notVerificadeModal = useDisclosure();
   const notAuthenticatedModal = useDisclosure();
+
+  const notActivoModal = useDisclosure();
+
   /*const { colorMode, toggleColorMode } = useColorMode();
   const colorLetra = useColorModeValue("#2c7a7b", "#2D3748");
   const botonBg = useColorModeValue("#319795", "#1A202C");
@@ -160,6 +168,7 @@ function NavBar() {
               user.tipoRol?.[0] !== "Doctor") ? (
               <>
                 {isAuthenticated &&
+                usuario.activo &&
                 user.email_verified &&
                 user &&
                 user.tipoRol?.[0] === "user" ? (
@@ -175,7 +184,9 @@ function NavBar() {
                     onClick={() =>
                       isAuthenticated
                         ? user.email_verified
-                          ? true
+                          ? usuario.activo
+                            ? true
+                            : notActivoModal.onOpen()
                           : notVerificadeModal.onOpen()
                         : notAuthenticatedModal.onOpen()
                     }
@@ -218,13 +229,19 @@ function NavBar() {
                     <MenuList>
                       <Link
                         to={
-                          usuario.length
-                            ? `/doctor/${usuario[0].id}`
-                            : `/doctor/${usuario.id}`
+                          usuario.activo
+                            ? usuario.length
+                              ? `/doctor/${usuario[0].id}`
+                              : `/doctor/${usuario.id}`
+                            : "/"
                         }
                       >
                         <MenuItem
-                          onClick={() => dispatch(getDetailDoctors(usuario.id))}
+                          onClick={() =>
+                            usuario.activo
+                              ? dispatch(getDetailDoctors(usuario.id))
+                              : notActivoModal.onOpen()
+                          }
                         >
                           Ver perfil
                         </MenuItem>
@@ -259,12 +276,20 @@ function NavBar() {
                     <MenuList>
                       <Link
                         to={
-                          usuario.length
-                            ? `/userProfile/${usuario[0].id}`
-                            : `/userProfile/${usuario.id}`
+                          usuario.activo
+                            ? usuario.length
+                              ? `/userProfile/${usuario[0].id}`
+                              : `/userProfile/${usuario.id}`
+                            : "/"
                         }
                       >
-                        <MenuItem>Ver perfil</MenuItem>
+                        <MenuItem
+                          onClick={() => {
+                            handleClick();
+                          }}
+                        >
+                          Ver perfil
+                        </MenuItem>
                       </Link>
                       <MenuItem
                         onClick={() =>
@@ -328,6 +353,11 @@ function NavBar() {
           <ModalFooter>
             <Spacer />
           </ModalFooter>
+          <ModalBody>
+            <Text color="#C53030">
+              Si te verificaste, refresca la página. Muchas gracias 😀
+            </Text>
+          </ModalBody>
         </ModalContent>
       </Modal>
 
@@ -344,6 +374,28 @@ function NavBar() {
 
           <ModalBody>
             <Text color="#C53030">Debes estar registrado</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Spacer />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <Modal
+        isCentered
+        isOpen={notActivoModal.isOpen}
+        onClose={notActivoModal.onClose}
+        colorScheme="teal"
+      >
+        <ModalOverlay />
+        <ModalContent w="80%" bgColor="green.50">
+          <ModalCloseButton />
+          <ModalHeader color="#C53030">Lo Sentimos!</ModalHeader>
+
+          <ModalBody>
+            <Text color="#C53030">
+              Te encuentras deshabilitado, comunicate con
+              wellnesclinica@gmail.com.
+            </Text>
           </ModalBody>
           <ModalFooter>
             <Spacer />

@@ -51,6 +51,7 @@ export default function DoctorCard({
 
   const notVerificadeModal = useDisclosure();
   const notAuthenticatedModal = useDisclosure();
+  const notActivoModal = useDisclosure();
   const notInfoComplete = useDisclosure();
   const modal = useDisclosure();
 
@@ -117,6 +118,7 @@ export default function DoctorCard({
           </Button>
 
           {isAuthenticated &&
+          usuario.activo &&
           user.email_verified &&
           usuario.prepaid_healths?.length > 0 ? (
             <Link to={`/calendar/${id}`}>
@@ -143,7 +145,9 @@ export default function DoctorCard({
                 isAuthenticated
                   ? user.email_verified
                     ? usuario.prepaid_healths?.length
-                      ? true
+                      ? usuario.activo
+                        ? true
+                        : notActivoModal.onOpen()
                       : notInfoComplete.onOpen()
                     : notVerificadeModal.onOpen()
                   : notAuthenticatedModal.onOpen()
@@ -231,6 +235,29 @@ export default function DoctorCard({
           <ModalCloseButton />
           <ModalBody>
             <Text color="#C53030">Debes estar registrado</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Spacer />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isCentered
+        isOpen={notActivoModal.isOpen}
+        onClose={notActivoModal.onClose}
+        colorScheme="teal"
+      >
+        <ModalOverlay />
+        <ModalContent w="80%" bgColor="green.50">
+          <ModalCloseButton />
+          <ModalHeader color="#C53030">Lo Sentimos!</ModalHeader>
+
+          <ModalBody>
+            <Text color="#C53030">
+              Te encuentras deshabilitado, comunicate con
+              wellnesclinica@gmail.com.
+            </Text>
           </ModalBody>
           <ModalFooter>
             <Spacer />

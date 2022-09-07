@@ -49,7 +49,8 @@ router.get("/", async (req, res, next) => {
   });
 
   if (name) {
-    const nombre = await doctorsDb.filter((e) =>
+    const activo = await doctorsDb.filter((a) => a.activo === true);
+    const nombre = await activo.filter((e) =>
       e.name.toLowerCase().includes(name.toLowerCase())
     );
     nombre.length

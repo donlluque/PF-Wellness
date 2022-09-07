@@ -25,7 +25,7 @@ ReactDOM.render(
       domain="dev-zqmpe2rk.us.auth0.com"
       clientId="fY7Jrp1tLWX3hLk4bmger0CK1huTGPOj"
       // redirectUri={window.location.origin}
-      redirectUri="http://localhost:3000/"
+      redirectUri="https://pf-wellness.vercel.app/"
     >
       <React.StrictMode>
         <BrowserRouter>

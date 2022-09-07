@@ -23,9 +23,7 @@ router.post("/", async (req, res, next) => {
       },
     ],
     back_urls: {
-      success:
-        //"https://pf-wellness.vercel.app/payment" ||
-        "http://localhost:3000/paymentTurn", // redireccionar de nuevo a Wellness componente de PAGO EXITOSO
+      success: "https://pf-wellness.vercel.app/paymentTurn", // redireccionar de nuevo a Wellness componente de PAGO EXITOSO
       failure: "http://www.failure.com", //no la vamos a usar, por si falla el pago con tarjeta
       pending: "http://www.pending.com", //no la vamos a usar, para pagos en efectivo o pedido de autorizacion de tarjeta
     },

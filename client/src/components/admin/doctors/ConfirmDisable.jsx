@@ -32,14 +32,14 @@ function ConfirmDisable({
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Deshabilitar {user}</ModalHeader>
           {msgConfirm.status !== 200 && (
             <ModalBody>
               ¿Estas seguro que desea deshabilitar al {user}{" "}
-              {doctorDetail ? doctorDetail.name : patientDetail.name}?
+              {user === "doctor" ? doctorDetail.name : patientDetail.name}?
             </ModalBody>
           )}
           {msgConfirm.status === 200 && (
@@ -64,7 +64,7 @@ function ConfirmDisable({
                 colorScheme="teal"
                 mr={3}
                 onClick={() => {
-                  doctorDetail
+                  user === "doctor"
                     ? dispatch(disableDoctor(doctorDetail.id))
                     : dispatch(disablePatient(patientDetail.id));
                 }}

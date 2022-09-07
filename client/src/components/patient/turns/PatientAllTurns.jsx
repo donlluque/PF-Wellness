@@ -13,6 +13,7 @@ import {
   Tooltip,
   Alert,
   AlertIcon,
+  Box,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 
@@ -39,13 +40,13 @@ function PatientAllTurns({ nextTurns, prevTurns }) {
     );
   });
 
-  let visibleTurns = aux;
-console.log(visibleTurns)
-  // nextTurns
-  // ? aux.filter((e) => e.newDate.getTime() >= new Date().getTime())
-  // : prevTurns
-  // ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
-  // : turnsByPatient;
+
+  let visibleTurns = nextTurns
+    ? aux.filter((e) => e.newDate.getTime() >= new Date().getTime())
+    : prevTurns
+    ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
+    : turnsByPatient;
+
 
   return (
     <>
@@ -59,6 +60,7 @@ console.log(visibleTurns)
                 <Th>Hora</Th>
                 <Th>Doctor</Th>
                 <Th>Especialidad</Th>
+                <Th>Pago</Th>
               </Tr>
             </Thead>
           ) : (
@@ -74,6 +76,7 @@ console.log(visibleTurns)
 
                   <Td>{e.doctors?.[0].name}</Td>
                   <Td>{e.doctors[0].general_area.name}</Td>
+                  <Td>{e.monto}</Td>
 
                   <Td>
                     <Tooltip label="Eliminar">
@@ -90,14 +93,20 @@ console.log(visibleTurns)
                 </Tr>
               ))
             ) : (
-              <Alert status="warning" w="100%">
-                <AlertIcon />
-                {prevTurns && <Text>No existen turnos previos a la fecha</Text>}
-                {nextTurns && <Text>No existen turnos futuros a la fecha</Text>}
-                {!nextTurns && !prevTurns && (
-                  <Text>No existen turnos futuros a la fecha</Text>
-                )}
-              </Alert>
+              <Box>
+                <Alert status="warning">
+                  <AlertIcon />
+                  {prevTurns && (
+                    <Text>No existen turnos previos a la fecha</Text>
+                  )}
+                  {nextTurns && (
+                    <Text>No existen turnos futuros a la fecha</Text>
+                  )}
+                  {!nextTurns && !prevTurns && (
+                    <Text>No existen turnos futuros a la fecha</Text>
+                  )}
+                </Alert>
+              </Box>
             )}
           </Tbody>
         </Table>

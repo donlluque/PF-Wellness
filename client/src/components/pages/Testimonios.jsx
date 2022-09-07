@@ -34,6 +34,7 @@ function Reviews() {
                 borderRadius="0.5rem"
                 w="20rem"
                 h="15rem"
+                bg="white"
               >
                 <Icon ml={3} as={ImQuotesLeft} color="teal.600" />
                 <Spacer />

@@ -13,13 +13,11 @@ const {
 
 router.post("/", async (req, res, next) => {
   const { date, idHour, idDoctor, idPatient, monto } = req.body;
+  console.log(date, idHour, idDoctor, idPatient, monto);
   try {
-    const doctorId = idDoctor; //dato enviado desde el front
-    const patientId = idPatient; //dato enviado desde el front
-
     const doctor = await Doctor.findOne({
       where: {
-        id: doctorId,
+        id: idDoctor,
       },
       include: {
         model: General_area,
@@ -29,10 +27,9 @@ router.post("/", async (req, res, next) => {
       },
     });
 
-    // console.log("doctor")
     const patient = await Patient.findOne({
       where: {
-        id: patientId,
+        id: idPatient,
       },
       include: {
         model: Prepaid_health,
@@ -48,18 +45,24 @@ router.post("/", async (req, res, next) => {
       },
     });
 
-    console.log(hoursWorking);
-
     const turno = await Dates1.create({
       date,
       monto,
     });
 
     await turno.addDoctor(doctor);
+    console.log("soy turno dsp", turno);
     await turno.addPatient(patient);
     await turno.addHours_working(hoursWorking);
+    const t = await Dates1.findAll({
+      include: [
+        { model: Doctor },
+        { model: Patient },
+        { model: Hours_working },
+      ],
+    });
 
-    res.send(doctor);
+    res.send(t);
   } catch (error) {
     next(error);
   }

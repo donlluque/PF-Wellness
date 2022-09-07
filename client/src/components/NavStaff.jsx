@@ -136,11 +136,13 @@ export default function NavStaff({ setInput, setPage }) {
           >
             <option value="All">Prestaciones</option>
             {prepaidHealth &&
-              prepaidHealth.map((e) => (
-                <option key={e.id} value={e.name}>
-                  {e.name}
-                </option>
-              ))}
+              prepaidHealth
+                .filter((e) => e.name !== "Particular")
+                .map((e) => (
+                  <option key={e.id} value={e.name}>
+                    {e.name}
+                  </option>
+                ))}
           </Select>
           {filterActive && (
             <IconButton

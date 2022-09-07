@@ -97,16 +97,19 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
     return result;
   };
 
-  const handleSubmitNotPay = () => {
-    dispatch(postTurn(form));
+  const handleSubmitNotPay = async () => {
+    form.monto = input.price;
+    console.log(form, "entre");
+    await dispatch(postTurn(form));
     onClose();
     confirmModal.onOpen();
-    dispatch(sendEmailPago(user));
+    //dispatch(sendEmailPago(user));
   };
 
   const handleSubmitPay = async () => {
     setPayActive(true);
-    dispatch(dataPayment(form));
+    form.monto = input.price;
+
     localStorage.setItem("form", JSON.stringify(form));
 
     try {
@@ -211,7 +214,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
                     {input.cost}
                   </ListItem>
                 )}
-                {(prepaid !== "Wellness" || prepaid !== "Particular") && (
+                {prepaid !== "Wellness" && (
                   <ListItem>
                     <Text fontWeight="semibold" display="inline">
                       Cobertura Obra Social:
@@ -308,6 +311,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
         blockScrollOnMount={false}
         isOpen={confirmModal.isOpen}
         onClose={confirmModal.onClose}
+        closeOnOverlayClick={false}
       >
         <ModalOverlay />
         <ModalContent bg={"teal.50"} colorScheme="teal">
@@ -331,7 +335,12 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
           </ModalBody>
           <ModalFooter>
             <Link to="/">
-              <Button colorScheme="teal">Cerrar</Button>
+              <Button
+                colorScheme="teal"
+                onClick={() => dispatch(sendEmailPago(user))}
+              >
+                Cerrar
+              </Button>
             </Link>
           </ModalFooter>
         </ModalContent>

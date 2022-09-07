@@ -23,12 +23,12 @@ import { MdAlternateEmail } from "react-icons/md";
 
 function Home() {
   //-----Estilos para modo oscuro----//
-  const colorLetra = useColorModeValue("#1a202c", "#4A5568");
+  /* const colorLetra = useColorModeValue("#1a202c", "#4A5568");
   const bg = useColorModeValue("#e6fffa", "#E2E8F0");
   const color = useColorModeValue("#285E61", "#4A5568");
   const colorL = useColorModeValue("#38B2AC", "black");
   const botonBg = useColorModeValue("#319795", "#718096");
-  const colorBt = useColorModeValue("white", "white");
+  const colorBt = useColorModeValue("white", "white");*/
   //---------------------------------//
 
   return (
@@ -52,35 +52,25 @@ function Home() {
           fontSize={{ base: "2xl", sm: "4xl", md: "5xl", lg: "6xl" }}
           m="1rem"
           mt={{ base: "6rem", sm: "6rem", md: "4rem", lg: "1rem" }}
-          color={colorLetra}
         >
           Clínica de fisioterapia y
           <Spacer /> rehabilitación física
         </Heading>
         <Box textAlign={"center"} w={{ base: "75%", sm: "75%", md: "60%" }}>
-          <Text as="i" fontSize="xl" color={colorLetra}>
+          <Text as="i" fontSize="xl">
             "Cuida tu cuerpo. Es el único lugar que tienes para vivir"
           </Text>
         </Box>
       </Center>
-      <Container
-        border="1px solid red"
-        maxW="100%"
-        centerContent
-        bgImage="
-        url(https://cdn.discordapp.com/attachments/1009488625219678269/1016439728666595328/fondo-dorado-o-textura-sombra-degradados_38648-63.jpg)"
-        pb="2rem"
-        textAlign="center"
-      >
+      <Container maxW="100%" centerContent>
         <Heading
-          color="white"
-          mt="3rem"
-          fontSize={{ base: "2xl", sm: "4xl", md: "5xl", lg: "6xl" }}
+          textAlign={"center"}
+          fontSize={{ base: "2xl", sm: "4xl", md: "5xl", lg: "5xl" }}
+          m="2rem"
         >
-          Asociate a Wellness y disfruta de una cobertura total
+          Asociate a Wellness y disfruta de una cobertura total!
         </Heading>
         <Box
-          m="3rem"
           bgPosition="55%"
           bgImage="linear-gradient(
               rgba(230, 255, 250, 0.7),
@@ -100,6 +90,7 @@ function Home() {
             lg: "column",
             xl: "row",
           }}
+          mb="4rem"
           justifyContent="space-around"
           alignItems="center"
           boxShadow="dark-lg"
@@ -131,28 +122,27 @@ function Home() {
             </ListItem>
           </List>
           <Link to="/wellnessPrepaid">
-          <Button
-            mt={{
-              base: "1rem",
-              sm: "1rem",
-              md: "1rem",
-              lg: "1rem",
-              xl: "0.5rem",
-            }}
-            bg="#D69E2E"
-            w={"15rem"}
-            h={"4rem"}
-            fontSize={"3xl"}
-            fontWeight={"bold"}
-            boxShadow="dark-lg"
-          >
-            Suscribirse
-          
-          </Button>
+            <Button
+              mt={{
+                base: "1rem",
+                sm: "1rem",
+                md: "1rem",
+                lg: "1rem",
+                xl: "0.5rem",
+              }}
+              bg="#D69E2E"
+              w={"15rem"}
+              h={"4rem"}
+              fontSize={"3xl"}
+              fontWeight={"bold"}
+              boxShadow="dark-lg"
+            >
+              Suscribirse
+            </Button>
           </Link>
         </Box>
       </Container>
-      <Container maxW="100%" centerContent>
+      <Container maxW="100%" centerContent bg="teal.50">
         <Flex
           direction={{ base: "column", sm: "column", md: "column", lg: "row" }}
           m={5}
@@ -251,19 +241,12 @@ function Home() {
           />
         </Flex>
         <Link to="/about">
-          <Button colorScheme="teal" m={4} bg={botonBg} color={colorBt}>
+          <Button colorScheme="teal" m={4}>
             Leer más
           </Button>
         </Link>
       </Container>
-      <Container
-        maxW="100%"
-        centerContent
-        bg={bg}
-        color={color}
-        pb="2rem"
-        textAlign="center"
-      >
+      <Container maxW="100%" centerContent pb="2rem" textAlign="center">
         <Heading as="h2" size="xl" m={8}>
           Especialidades médicas destacadas
         </Heading>
@@ -285,7 +268,7 @@ function Home() {
                 Traumatología
               </Heading>
               <Link to="/especialidades">
-                <Button colorScheme="teal" variant="ghost" color={colorL}>
+                <Button colorScheme="teal" variant="ghost">
                   Leer más &gt;&gt;
                 </Button>
               </Link>
@@ -304,7 +287,7 @@ function Home() {
                 Kinesiología
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost" colorScheme="teal" color={colorL}>
+                <Button variant="ghost" colorScheme="teal">
                   Leer más &gt;&gt;
                 </Button>
               </Link>
@@ -323,7 +306,7 @@ function Home() {
                 Osteopatía
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost" colorScheme="teal" color={colorL}>
+                <Button variant="ghost" colorScheme="teal">
                   Leer más &gt;&gt;
                 </Button>
               </Link>
@@ -342,7 +325,7 @@ function Home() {
                 Deportología
               </Heading>
               <Link to="/especialidades">
-                <Button variant="ghost" colorScheme="teal" color={colorL}>
+                <Button variant="ghost" colorScheme="teal">
                   Leer más &gt;&gt;
                 </Button>
               </Link>
@@ -351,14 +334,14 @@ function Home() {
         </SimpleGrid>
       </Container>
       <Container
-        border="1px solid red"
         maxW="100%"
         centerContent
         bgColor="white"
         pb="2rem"
         textAlign="center"
+        bg="teal.50"
       >
-        <Heading as="h2" size="xl" m={8} color={colorL}>
+        <Heading as="h2" size="xl" m={8}>
           Lo que opinan nuestros pacientes
         </Heading>
 

@@ -32,7 +32,7 @@ function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
           {msgConfirm.status !== 200 && (
             <ModalBody>
               ¿Estas seguro que desea habilitar al {user}{" "}
-              {doctorDetail ? doctorDetail.name : patientDetail.name}?
+              {user === "doctor" ? doctorDetail.name : patientDetail.name}?
             </ModalBody>
           )}
           {msgConfirm.status === 200 && (
@@ -40,7 +40,7 @@ function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
               <Alert status="success">
                 <AlertIcon />
                 El {user}{" "}
-                {doctorDetail ? doctorDetail.name : patientDetail.name} fue
+                {user === "doctor" ? doctorDetail.name : patientDetail.name} fue
                 habilitado con exito!
               </Alert>
             </ModalBody>
@@ -59,7 +59,7 @@ function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
                 colorScheme="teal"
                 mr={3}
                 onClick={() => {
-                  doctorDetail
+                  user === "doctor"
                     ? dispatch(disableDoctor(doctorDetail.id))
                     : dispatch(disablePatient(patientDetail.id));
                 }}

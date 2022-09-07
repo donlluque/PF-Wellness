@@ -40,7 +40,7 @@ function PatientAllTurns({ nextTurns, prevTurns }) {
   });
 
   let visibleTurns = aux;
-
+console.log(visibleTurns)
   // nextTurns
   // ? aux.filter((e) => e.newDate.getTime() >= new Date().getTime())
   // : prevTurns

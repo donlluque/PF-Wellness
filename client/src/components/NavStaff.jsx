@@ -105,7 +105,6 @@ export default function NavStaff({ setInput, setPage }) {
             value={values.especialidad}
             name="especialidad"
             bg="teal.500"
-            color="white"
           >
             <option value="All">Areas Generales</option>
             <option value="Deportología">Deportología</option>
@@ -127,7 +126,6 @@ export default function NavStaff({ setInput, setPage }) {
             cursor="pointer"
             colorScheme="teal"
             bg="teal.500"
-            color="white"
           >
             <option value="All">Prestaciones</option>
             {prepaidHealth &&

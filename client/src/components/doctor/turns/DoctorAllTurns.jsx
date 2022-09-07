@@ -58,6 +58,7 @@ function DoctorAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
       parseInt(array[0])
     );
   });
+
   let visibleTurns = nextTurns
     ? aux.filter((e) => e.newDate.getTime() > new Date().getTime())
     : prevTurns

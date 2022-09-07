@@ -1,11 +1,20 @@
 const { Router } = require("express");
 const router = Router();
 const nodemailer = require("nodemailer");
+const { Patient, Dates1 } = require("../../db.js");
 require("dotenv").config();
 
 router.post("/", async (req, res) => {
-  const { email } = req.body;
+  const { id } = req.body;
+  console.log(id, "IDDDDD")
+
   try {
+    
+    const turno = await Dates1.findOne({
+      where: { id: id },
+      include: [{ model: Patient }],
+    });
+    const email = turno.dataValues.patients[0].dataValues.email;
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,

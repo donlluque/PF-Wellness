@@ -139,7 +139,7 @@ function MakeReviews() {
                 <FormErrorMessage>{errors.review} </FormErrorMessage>
               )}
             </FormControl>
-            <Box ml="5.5rem" mt="1rem">
+            <Box ml="1.5rem" mt="1rem">
               <FormControl isInvalid={errors.rating}>
                 <ReactStars
                   value={rating}
@@ -156,7 +156,7 @@ function MakeReviews() {
             <Link to="/">
               <Button
                 m="1rem"
-                ml="7.5rem"
+                ml="4.5rem"
                 mt="2rem"
                 colorScheme={"teal"}
                 onClick={(e) => handleSubmit(e)}

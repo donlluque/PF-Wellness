@@ -18,6 +18,7 @@ import { getHours } from "../../redux/actions";
 
 function Staff() {
   const allDoctors = useSelector((state) => state.doctors);
+  const activos = allDoctors.filter((e) => e.activo === true);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -73,8 +74,8 @@ function Staff() {
           false
         )}
         <Wrap justify={"center"}>
-          {allDoctors &&
-            allDoctors
+          {activos &&
+            activos
               .slice((page - 1) * forPage, (page - 1) * forPage + forPage)
               .map((doc) => {
                 return (

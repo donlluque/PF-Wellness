@@ -82,8 +82,8 @@ router.get("/", async (req, res, next) => {
     },
   });
 
-  const subscritos = patientDb.filter((el) => el.prepaid_healths.id == 8);
-  const notSubscritos = patientDb.filter((el) => el.prepaid_healths.id !== 8);
+  const subscritos = patientDb.filter((el) => el.prepaid_healths[0].id == 8);
+  const notSubscritos = patientDb.filter((el) => el.prepaid_healths[0].id !== 8);
 
   let patints = [subscritos.length, notSubscritos.length];
 

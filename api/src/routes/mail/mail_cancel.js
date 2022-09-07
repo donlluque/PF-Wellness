@@ -2,10 +2,29 @@ const { Router } = require("express");
 const router = Router();
 const nodemailer = require("nodemailer");
 require("dotenv").config();
+const { Patient, Dates1, Hours_working } = require("../../db.js");
 
 router.post("/", async (req, res) => {
-  const { email } = req.body;
+  const { id } = req.body;
+  console.log(req.body, "El body completo");
+
   try {
+    const turno = await Dates1.findOne({
+      where: { id: id },
+      include: [{ model: Patient }, { model: Hours_working }],
+    });
+
+    console.log(turno, "turno cancelado");
+
+    const dia = turno.dataValues.date;
+    console.log(dia, "dia cancelado");
+
+    const hora = turno.dataValues.hours_workings[0].dataValues.hour;
+    console.log(hora, "Hora cancelado");
+
+    const email = turno.dataValues.patients[0].dataValues.email;
+    console.log(email, "email cancelado");
+
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
@@ -22,7 +41,7 @@ router.post("/", async (req, res) => {
     let info = await transporter.sendMail({
       from: "wellnesclinica@gmail.com", // sender address
       to: email, // list of receivers
-      subject: "Compartinos tu experiencia", // Subject line
+      subject: "Comprobante de pago", // Subject line
       text: "Wellness", // plain text body
       html: `<!DOCTYPE html>
         <html   xmlns="http://www.w3.org/1999/xhtml"
@@ -34,7 +53,7 @@ router.post("/", async (req, res) => {
             <meta name="x-apple-disable-message-reformatting" />
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
             <meta content="telephone=no" name="format-detection" />
-            <title>Tu opinión nos importa</title>
+            <title>Verificación de Cuenta</title>
            
         </head>
         <style type="text/css">
@@ -485,7 +504,7 @@ router.post("/", async (req, res) => {
                                               text-decoration: none;
                                               -ms-interpolation-mode: bicubic;
                                             "
-                                            width="600"
+                                            width="400"
                                             class="adapt-img"
                                           />
                                         </td>
@@ -511,10 +530,10 @@ router.post("/", async (req, res) => {
                                               font-size: 46px;
                                               font-style: normal;
                                               font-weight: bold;
-                                              color: #286650;
+                                              color: #e74c3c;
                                             "
                                           >
-                                            Ayudanos a mejorar
+                                            Turno Cancelado
                                           </h1>
                                         </td>
                                       </tr>
@@ -542,8 +561,9 @@ router.post("/", async (req, res) => {
                                               font-size: 14px;
                                             "
                                           >
-                                            Muchas gracias por haber confiado en nosotros. 
-                                            Te invitamos a completar el siguiente formulario para contarnos tu experiencia en Wellness.
+                                          Tu turno fue cancelado debido a que el doctor se le presentaron inconvenientes.
+                                          Turno cancelado el dia: <strong>${dia}</strong>a las <strong>${hora} hs</strong>
+                                          Comuníquese con nosotros para coordinar otro turno.
                                           </p>
                                         </td>
                                       </tr>
@@ -553,197 +573,7 @@ router.post("/", async (req, res) => {
                               </table>
                             </td>
                           </tr>
-                          <tr>
-                            <td
-                              class="esdev-adapt-off"
-                              align="left"
-                              style="padding: 20px; margin: 0"
-                            >
-                              <table
-                                cellpadding="0"
-                                cellspacing="0"
-                                class="esdev-mso-table"
-                                style="
-                                  mso-table-lspace: 0pt;
-                                  mso-table-rspace: 0pt;
-                                  border-collapse: collapse;
-                                  border-spacing: 0px;
-                                  width: 560px;
-                                "
-                              >
-                                <tr>
-                                  <td
-                                    class="esdev-mso-td"
-                                    valign="top"
-                                    style="padding: 0; margin: 0"
-                                  >
-                                    <table
-                                      cellpadding="0"
-                                      cellspacing="0"
-                                      class="es-left"
-                                      align="left"
-                                      style="
-                                        mso-table-lspace: 0pt;
-                                        mso-table-rspace: 0pt;
-                                        border-collapse: collapse;
-                                        border-spacing: 0px;
-                                        float: left;
-                                      "
-                                    >
-                                      <tr class="es-mobile-hidden">
-                                        <td
-                                          align="left"
-                                          style="padding: 0; margin: 0; width: 146px"
-                                        >
-                                          <table
-                                            cellpadding="0"
-                                            cellspacing="0"
-                                            width="100%"
-                                            role="presentation"
-                                            style="
-                                              mso-table-lspace: 0pt;
-                                              mso-table-rspace: 0pt;
-                                              border-collapse: collapse;
-                                              border-spacing: 0px;
-                                            "
-                                          >
-                                            <tr>
-                                              <td
-                                                align="center"
-                                                height="40"
-                                                style="padding: 0; margin: 0"
-                                              ></td>
-                                            </tr>
-                                          </table>
-                                        </td>
-                                      </tr>
-                                    </table>
-                                  </td>
-                                  <td
-                                    class="esdev-mso-td"
-                                    valign="top"
-                                    style="padding: 0; margin: 0"
-                                  >
-                                    <table
-                                      cellpadding="0"
-                                      cellspacing="0"
-                                      class="es-left"
-                                      align="left"
-                                      style="
-                                        mso-table-lspace: 0pt;
-                                        mso-table-rspace: 0pt;
-                                        border-collapse: collapse;
-                                        border-spacing: 0px;
-                                        float: left;
-                                      "
-                                    >
-                                      <tr>
-                                        <td
-                                          align="left"
-                                          style="padding: 0; margin: 0; width: 121px"
-                                        >
-                                          <table
-                                            cellpadding="0"
-                                            cellspacing="0"
-                                            width="100%"
-                                           
-                                            style="
-                                              mso-table-lspace: 0pt;
-                                              mso-table-rspace: 0pt;
-                                              border-collapse: separate;
-                                              border-spacing: 0px;
-                                            
-                                              border-radius: 10px 0px 0px 10px;
-                                            "
-                                            role="presentation"
-                                          >
-                                            <tr>
-                                              <td
-                                                align="right"
-                                                style="
-                                                  padding: 0;
-                                                  margin: 0;
-                                                  padding-top: 10px;
-                                                "
-                                              >
-                                              <a href='http://localhost:3000/testimonials'>
-                                                <button
-                                                  style="
-                                                    background: #38B2AC;
-                                                    border-radius:25px;
-                                                    margin: 0;
-                                                    border:none;
-                                                    font-family: arial,
-                                                      'helvetica neue', helvetica,
-                                                      sans-serif;
-                                                    line-height: 21px;
-                                                    color: #f5f5dc;
-                                                    font-size: 14px;
-                                                    cursor:pointer;
-                                                  "
-                                                  type:"submite",
-                                                >
-                                                  Completar Formulario
-                                                </button>
-                                              </a>
-                                              </td>
-                                            </tr>
-                                          </table>
-                                        </td>
-                                      </tr>
-                                    </table>
-                                  </td>
-                                  <td
-                                    class="esdev-mso-td"
-                                    valign="top"
-                                    style="padding: 0; margin: 0"
-                                  >
-                                    <table
-                                      cellpadding="0"
-                                      cellspacing="0"
-                                      class="es-right"
-                                      align="right"
-                                      style="
-                                        mso-table-lspace: 0pt;
-                                        mso-table-rspace: 0pt;
-                                        border-collapse: collapse;
-                                        border-spacing: 0px;
-                                        float: right;
-                                      "
-                                    >
-                                      <tr class="es-mobile-hidden">
-                                        <td
-                                          align="left"
-                                          style="padding: 0; margin: 0; width: 138px"
-                                        >
-                                          <table
-                                            cellpadding="0"
-                                            cellspacing="0"
-                                            width="100%"
-                                            role="presentation"
-                                            style="
-                                              mso-table-lspace: 0pt;
-                                              mso-table-rspace: 0pt;
-                                              border-collapse: collapse;
-                                              border-spacing: 0px;
-                                            "
-                                          >
-                                            <tr>
-                                              <td
-                                                align="center"
-                                                height="40"
-                                                style="padding: 0; margin: 0"
-                                              ></td>
-                                            </tr>
-                                          </table>
-                                        </td>
-                                      </tr>
-                                    </table>
-                                  </td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
+                          
                           <tr>
                             <td
                               align="left"
@@ -866,7 +696,7 @@ router.post("/", async (req, res) => {
           "There is a problem in the server, please try again later " + err
         );
       } else {
-        res.send("Your message was sent successfully");
+        res.send("se mando el mail");
       }
     });
   } catch (error) {

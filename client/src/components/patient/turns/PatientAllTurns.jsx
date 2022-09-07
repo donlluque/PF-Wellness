@@ -40,11 +40,13 @@ function PatientAllTurns({ nextTurns, prevTurns }) {
     );
   });
 
+
   let visibleTurns = nextTurns
     ? aux.filter((e) => e.newDate.getTime() >= new Date().getTime())
     : prevTurns
     ? aux.filter((e) => e.newDate.getTime() < new Date().getTime())
     : turnsByPatient;
+
 
   return (
     <>

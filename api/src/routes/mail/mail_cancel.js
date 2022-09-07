@@ -6,7 +6,7 @@ const { Patient, Dates1, Hours_working } = require("../../db.js");
 
 router.post("/", async (req, res) => {
   const { id } = req.body;
-  console.log(req.body, "El body completo");
+  console.log(id, "El body completo");
 
   try {
     const turno = await Dates1.findOne({
@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
     let info = await transporter.sendMail({
       from: "wellnesclinica@gmail.com", // sender address
       to: email, // list of receivers
-      subject: "Comprobante de pago", // Subject line
+      subject: "Cancelacion de turno", // Subject line
       text: "Wellness", // plain text body
       html: `<!DOCTYPE html>
         <html   xmlns="http://www.w3.org/1999/xhtml"

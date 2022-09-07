@@ -664,6 +664,21 @@ export const sendEmailWellness = (payload) => {
   };
 };
 
+export const sendEmailCancelacion = (payload) => {
+  console.log(payload, "PAYLOAD");
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(`${baseURL}/mail_cancel`, payload);
+      return dispatch({
+        type: "SEND_EMAIL_CANCEL",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const putWellness = (patientId) => {
   return function (dispatch) {
     return fetch(`${baseURL}/patients/wellness`, {

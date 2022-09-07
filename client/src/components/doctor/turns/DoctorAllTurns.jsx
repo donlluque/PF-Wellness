@@ -32,6 +32,7 @@ import {
   getTurns,
   getTurnsByDoctor,
   sendEmailForm,
+  sendEmailCancelacion,
 } from "../../../redux/actions";
 import { TbCalendarOff } from "react-icons/tb";
 import { useParams } from "react-router-dom";
@@ -165,15 +166,7 @@ function DoctorAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
             </ModalBody>
           )}
           {confirmDelete && (
-            <ModalBody>
-              ¿Estas seguro que desea cancelar el turno?
-              <Textarea
-                value={value}
-                onChange={handleValueChange}
-                placeholder="Escribe el motivo de la cancelación del turno"
-                size="sm"
-              />
-            </ModalBody>
+            <ModalBody>¿Estas seguro que desea cancelar el turno?</ModalBody>
           )}
 
           <ModalFooter>
@@ -181,7 +174,13 @@ function DoctorAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
               Cancelar
             </Button>
             {!confirmDelete && (
-              <Button colorScheme="teal" onClick={() => setConfirmDelete(true)}>
+              <Button
+                colorScheme="teal"
+                onClick={() => {
+                  setConfirmDelete(true);
+                  dispatch(sendEmailCancelacion(turnById));
+                }}
+              >
                 Continuar
               </Button>
             )}

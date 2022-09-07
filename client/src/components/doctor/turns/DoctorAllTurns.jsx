@@ -32,6 +32,7 @@ import {
   getTurns,
   getTurnsByDoctor,
   sendEmailForm,
+  sendEmailCancelacion,
 } from "../../../redux/actions";
 import { TbCalendarOff } from "react-icons/tb";
 import { useParams } from "react-router-dom";
@@ -57,8 +58,9 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
       parseInt(array[0])
     );
   });
-  console.log("aux despues del each", aux);
 
+  console.log("aux despues del each", aux);
+  console.log(turnById, "LA CONCHA DE LA LORA");
   console.log("nextTurns", nextTurns);
 
   //EL PROBLEMA ESTA ACA AGUSTINA
@@ -170,15 +172,7 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
             </ModalBody>
           )}
           {confirmDelete && (
-            <ModalBody>
-              ¿Estas seguro que desea cancelar el turno?
-              <Textarea
-                value={value}
-                onChange={handleValueChange}
-                placeholder="Escribe el motivo de la cancelación del turno"
-                size="sm"
-              />
-            </ModalBody>
+            <ModalBody>¿Estas seguro que desea cancelar el turno?</ModalBody>
           )}
 
           <ModalFooter>
@@ -186,7 +180,13 @@ function DoctorAllTurns({ nextTurns, prevTurns }) {
               Cancelar
             </Button>
             {!confirmDelete && (
-              <Button colorScheme="teal" onClick={() => setConfirmDelete(true)}>
+              <Button
+                colorScheme="teal"
+                onClick={() => {
+                  setConfirmDelete(true);
+                  dispatch(sendEmailCancelacion(turnById));
+                }}
+              >
                 Continuar
               </Button>
             )}

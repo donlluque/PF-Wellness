@@ -6,7 +6,6 @@ const { Patient, Dates1, Hours_working } = require("../../db.js");
 
 router.post("/", async (req, res) => {
   const { email, id } = req.body;
-  console.log(req.body, "El body completo");
 
   try {
     const cita = await Patient.findOne({

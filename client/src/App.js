@@ -14,6 +14,7 @@ import Turnos from "./components/pages/Turnos";
 import Calendar from "./components/Calendar";
 import PrivateRouteAdmin from "./components/private/PrivateRouteAdmin";
 import PrivateRoutePerfil from "./components/private/PrivateRoutePerfil";
+
 // import PrivateRouterPago from "./components/private/PrivateRoutePago";
 import PrivateRouterCalendario from "./components/private/PrivateRouterCalendario";
 import PrivateRoute from "./components/private/PrivateRoute";
@@ -28,7 +29,7 @@ import Opiniones from "./components/pages/Opiniones";
 import WellnessAsociados from "./components/paymentsWellness/WellnessAsociado";
 import ConfirmPaymentTurn from "./components/paymentsTurns/ConfirmPaymentTurn";
 import ConfirmPaymentWellness from "./components/paymentsWellness/ConfirmPaymentWellness";
-
+import KommunicateChat from "./components/Chat.jsx";
 export default function App() {
   const { pathname } = useLocation();
   console.log(pathname);
@@ -37,6 +38,7 @@ export default function App() {
     <BrowserRouter>
       <Context.Provider value={{ mostrar, setMostrar }}>
         <Route path="/">{mostrar && <NavBar />}</Route>
+        <Route path="/">{mostrar && <KommunicateChat />}</Route>
         <Switch>
           <PrivateRoute exact path="/">
             <Home />

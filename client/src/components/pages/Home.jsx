@@ -20,6 +20,7 @@ import Testimonios from "./Testimonios";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { BsTelephone } from "react-icons/bs";
 import { MdAlternateEmail } from "react-icons/md";
+import Chat from "./../Chat";
 
 function Home() {
   //-----Estilos para modo oscuro----//
@@ -356,6 +357,7 @@ function Home() {
           </Button>
         </Link>
       </Container>
+      <Chat />
     </>
   );
 }

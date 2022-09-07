@@ -42,13 +42,17 @@ import { MdDoneAll } from "react-icons/md";
 function DoctorAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
   const dispatch = useDispatch();
   const { turnsByDoctor, user, turnById } = useSelector((state) => state);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  //const { isOpen, onOpen, onClose } = useDisclosure();
+  const modalCancel = useDisclosure();
+  const sendEmail = useDisclosure();
   const [value, setValue] = useState();
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const { id } = useParams();
   console.log("IDDDD", id);
   let aux = turnsByDoctor;
+  console.log("TURNOSSSSSSS", turnById);
+
 
   aux.forEach((e) => {
     let array = e.date.split("/");
@@ -70,10 +74,12 @@ function DoctorAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
     dispatch(getTurnsByDoctor(id));
   }, [dispatch, id, auxRender]);
 
-  //motivo de cancelacion de turno
-  const handleValueChange = (e) => {
-    setValue(e.target.value);
-  };
+
+
+  const handleClick = (e) => {
+    console.log(turnById, "TURNO DEL ORTO")
+    dispatch(sendEmailForm(turnById)); 
+  }
 
   return (
     <>
@@ -107,7 +113,7 @@ function DoctorAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
                           variant="ghost"
                           fontSize="xs"
                           onClick={() => {
-                            onOpen();
+                            modalCancel.onOpen();
                             dispatch(getTurnById(e.id));
                           }}
                         >
@@ -122,8 +128,11 @@ function DoctorAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
                             variant="ghost"
                             fontSize="xs"
                             onClick={() => {
-                              dispatch(sendEmailForm(user));
+                              sendEmail.onOpen();
+                              console.log(e.id, "EHHHHID")
+                              dispatch(getTurnById(e.id));
                             }}
+                            
                           >
                             <Icon w={4} h={4} as={MdDoneAll} />
                           </Button>
@@ -149,27 +158,47 @@ function DoctorAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
         </Alert>
       )}
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={sendEmail.isOpen} onClose={sendEmail.onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Cancelar turno</ModalHeader>
-          {!confirmDelete && (
-            <ModalBody>
-              Motivo de cancelación:
-              <Textarea
-                value={value}
-                onChange={handleValueChange}
-                placeholder="Escribe el motivo de la cancelación del turno"
-                size="sm"
-              />
-            </ModalBody>
-          )}
+         
           {confirmDelete && (
             <ModalBody>¿Estas seguro que desea cancelar el turno?</ModalBody>
           )}
 
           <ModalFooter>
-            <Button colorScheme="teal" variant="ghost" mr={3} onClick={onClose}>
+            <Button colorScheme="teal" variant="ghost" mr={3} onClick={sendEmail.onClose}>
+              Cancelar
+            </Button>
+            
+              <Button
+                colorScheme="teal"
+                onClick={() => {
+                  sendEmail.onClose();
+                  dispatch(sendEmailForm(turnById))
+                  //setConfirmDelete(false);
+                  //dispatch(deleteTurn(turnById.id));
+                  //setAuxRender(!auxRender);
+                }}
+              >
+                Notificar al paciente
+              </Button>
+            
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={modalCancel.isOpen} onClose={modalCancel.onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Cancelar turno</ModalHeader>
+         
+          {confirmDelete && (
+            <ModalBody>¿Estas seguro que desea cancelar el turno?</ModalBody>
+          )}
+
+          <ModalFooter>
+            <Button colorScheme="teal" variant="ghost" mr={3} onClick={modalCancel.onClose}>
               Cancelar
             </Button>
             {!confirmDelete && (
@@ -187,7 +216,7 @@ function DoctorAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
               <Button
                 colorScheme="teal"
                 onClick={() => {
-                  onClose();
+                  modalCancel.onClose();
                   setConfirmDelete(false);
                   dispatch(deleteTurn(turnById.id));
                   setAuxRender(!auxRender);

@@ -64,7 +64,7 @@ function Opiniones() {
                 p={3}
                 boxShadow="2xl"
                 borderRadius="0.5rem"
-                w="15rem"
+                w="20rem"
                 h="15rem"
                 bgColor="white"
               >
@@ -84,7 +84,7 @@ function Opiniones() {
                   <Spacer />
                   <Icon ml={20} as={ImQuotesRight} color="teal.600" />
                 </Box>
-                <Box ml="4rem" w="10.5rem">
+                <Box ml="3.5rem" w="10.5rem">
                   <ReactStars
                     value={e.rating}
                     count={5}

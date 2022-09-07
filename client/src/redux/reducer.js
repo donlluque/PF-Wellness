@@ -18,6 +18,7 @@ const initialState = {
   reviews: [],
   areas: [],
   stats: [],
+  turnById: {},
 };
 
 export default function rootReducer(state = initialState, action) {

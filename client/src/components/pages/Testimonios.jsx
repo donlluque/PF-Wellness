@@ -23,7 +23,7 @@ function Reviews() {
                 pt={8}
                 boxShadow="2xl"
                 borderRadius="0.5rem"
-                w="20rem"
+                w="25rem"
                 h="15rem"
                 bg="white"
               >
@@ -41,17 +41,17 @@ function Reviews() {
                 </Text>
                 <Spacer />
                 <Icon ml={20} as={ImQuotesRight} color="teal.600" />
-                <Box ml="4.5rem" w="10.5rem">
+                <Box ml="4.5rem" w="12rem">
                   <ReactStars
                     value={e.rating}
                     count={5}
-                    size={40}
+                    size={37}
                     activeColor="#ffd700"
                     edit={false}
                   />
                 </Box>
 
-                <Text fontSize={14} as="b" color="teal.400">
+                <Text mb="1rem" fontSize={14} as="b" color="teal.400">
                   {e.name}
                 </Text>
               </Box>

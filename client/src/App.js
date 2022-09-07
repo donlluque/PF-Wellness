@@ -18,7 +18,7 @@ import PrivateRoutePerfil from "./components/private/PrivateRoutePerfil";
 import PrivateRouterCalendario from "./components/private/PrivateRouterCalendario";
 import PrivateRoute from "./components/private/PrivateRoute";
 import PrivateRouteDoctor from "./components/private/PrivateRouteDoctor";
-import PrivateRouteTestimonial from "./components/private/PrivateRouteTestimonial";
+//import PrivateRouteTestimonial from "./components/private/PrivateRouteTestimonial";
 
 import AdminProfile from "./components/admin/AdminProfile";
 import DoctorProfile from "./components/doctor/DoctorProfile";
@@ -80,9 +80,9 @@ export default function App() {
           <Route exact path="/payment/wellness-prepaid">
             <ConfirmPaymentWellness />
           </Route>
-          <PrivateRouteTestimonial exact path="/testimonials">
+          <Route exact path="/testimonials">
             <FormTestimonial />
-          </PrivateRouteTestimonial>
+          </Route>
           <Route exact path="*">
             <Error />
           </Route>

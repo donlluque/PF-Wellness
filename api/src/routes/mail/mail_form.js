@@ -6,10 +6,9 @@ require("dotenv").config();
 
 router.post("/", async (req, res) => {
   const { id } = req.body;
-  console.log(id, "IDDDDD")
+  console.log(id, "IDDDDD");
 
   try {
-    
     const turno = await Dates1.findOne({
       where: { id: id },
       include: [{ model: Patient }],
@@ -675,7 +674,7 @@ router.post("/", async (req, res) => {
                                                   padding-top: 10px;
                                                 "
                                               >
-                                              <a href='http://localhost:3000/testimonials'>
+                                              <a href='https://pf-wellness.vercel.app/testimonials'>
                                                 <button
                                                   style="
                                                     background: #38B2AC;

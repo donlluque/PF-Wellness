@@ -35,7 +35,7 @@ export default function rootReducer(state = initialState, action) {
     case "CLEAN_DOCTOR":
       return {
         ...state,
-        detail: {},
+        doctorDetail: {},
       };
     case "PUT_DOCTORS": {
       return {
@@ -121,15 +121,9 @@ export default function rootReducer(state = initialState, action) {
       };
     }
     case "GET_TURNS_BY_PATIENT": {
-      console.log("action.payload", action.payload);
-      console.log(
-        action.payload.idCurrentPatient,
-        "action.payload.idCurrentPatient"
-      );
       let turnsPatient = action.payload.data.filter(
-        (e) => e.patients[0]?.id == 4
+        (e) => e.patients[0]?.id == action.payload.idCurrentPatient
       );
-      console.log(turnsPatient, "turnsPatient");
 
       return {
         ...state,

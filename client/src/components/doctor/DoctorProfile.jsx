@@ -17,8 +17,20 @@ function DoctorProfile() {
         }}
         size="md"
         variant="enclosed"
-        ml="4rem"
-        mr="4rem"
+        ml={{
+          base: "1.5rem",
+          sm: "1.5rem",
+          md: "3rem",
+          lg: "4rem",
+          xl: "4rem",
+        }}
+        mr={{
+          base: "1.5rem",
+          sm: "1.5rem",
+          md: "3rem",
+          lg: "4rem",
+          xl: "4rem",
+        }}
       >
         <TabList
           whiteSpace

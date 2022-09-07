@@ -26,7 +26,7 @@ function Opiniones() {
   return (
     <>
       <Center
-        h={{ base: "125vh", sm: "125vh", md: "100vh", lg: "100vh" }}
+        h="100vh"
         top={0}
         bgRepeat="no-repeat"
         bgSize="cover"
@@ -43,7 +43,7 @@ function Opiniones() {
           as="h1"
           size="4xl"
           m="1rem"
-          mt={{ base: "6rem", sm: "6rem", md: "4rem", lg: "1rem" }}
+          mt={{ base: "4rem", sm: "4rem", md: "4rem", lg: "1rem" }}
         >
           Testimonios
         </Heading>

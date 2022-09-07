@@ -12,11 +12,10 @@ import { AiFillCaretRight } from "react-icons/ai";
 import { useState } from "react";
 import PatientAllTurns from "./PatientAllTurns";
 
-function PatientTurnsPanel() {
+function PatientTurnsPanel({ setAuxRender, auxRender }) {
   const [nextTurns, setNextTurns] = useState(true);
   const [prevTurns, setPrevTurns] = useState(false);
-  //const [listTurns, setListTurns] = useState(GiTruce);
-  const [filter, setFilter] = useState(false);
+
   return (
     <>
       <Box
@@ -40,7 +39,6 @@ function PatientTurnsPanel() {
                 onClick={() => {
                   setNextTurns(true);
                   setPrevTurns(false);
-                  setFilter(false);
                 }}
               >
                 <ListIcon as={BsCalendarEvent} /> Próximos turnos
@@ -52,7 +50,6 @@ function PatientTurnsPanel() {
                 onClick={() => {
                   setNextTurns(false);
                   setPrevTurns(true);
-                  setFilter(false);
                 }}
               >
                 <ListIcon as={BsCalendarCheck} /> Historial
@@ -66,7 +63,6 @@ function PatientTurnsPanel() {
                 onClick={() => {
                   setNextTurns(false);
                   setPrevTurns(false);
-                  setFilter(false);
                 }}
               >
                 <ListIcon as={BsCalendar3} /> Ver todos
@@ -76,7 +72,12 @@ function PatientTurnsPanel() {
         </Box>
         <Divider orientation="vertical" />
         <Box w={{ xl: "75%" }}>
-          <PatientAllTurns nextTurns={nextTurns} prevTurns={prevTurns} />
+          <PatientAllTurns
+            auxRender={auxRender}
+            setAuxRender={setAuxRender}
+            nextTurns={nextTurns}
+            prevTurns={prevTurns}
+          />
         </Box>
       </Box>
     </>

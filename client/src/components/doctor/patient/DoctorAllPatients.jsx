@@ -37,8 +37,6 @@ function DoctorAllPatients() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { id } = useParams();
 
-  console.log("turnsByDoctor", turnsByDoctor);
-
   useEffect(() => {
     dispatch(getAllPatients());
     dispatch(getTurnsByDoctor(id));
@@ -63,25 +61,22 @@ function DoctorAllPatients() {
   };
   return (
     <>
-      <>
+      {visiblePatients?.length ? (
         <TableContainer>
           <Table size="sm">
-            {visiblePatients?.length ? (
-              <Thead>
-                <Tr>
-                  <Th isNumeric>ID</Th>
-                  <Th></Th>
-                  <Th>Nombre</Th>
-                  <Th>Apellido</Th>
-                  <Th>Email</Th>
-                  <Th></Th>
-                </Tr>
-              </Thead>
-            ) : (
-              false
-            )}
+            <Thead>
+              <Tr>
+                <Th isNumeric>ID</Th>
+                <Th></Th>
+                <Th>Nombre</Th>
+                <Th>Apellido</Th>
+                <Th>Email</Th>
+                <Th></Th>
+              </Tr>
+            </Thead>
+
             <Tbody>
-              {visiblePatients?.length ? (
+              {visiblePatients &&
                 visiblePatients.map((e) => (
                   <Tr key={e.id}>
                     <Td isNumeric>{e.id}</Td>
@@ -107,42 +102,41 @@ function DoctorAllPatients() {
                       </Button>
                     </Td>
                   </Tr>
-                ))
-              ) : (
-                <Alert status="warning">
-                  <AlertIcon />
-                  Aun no tiene pacientes registrados
-                </Alert>
-              )}
+                ))}
             </Tbody>
             <Tfoot></Tfoot>
           </Table>
         </TableContainer>
+      ) : (
+        <Alert status="warning">
+          <AlertIcon />
+          Aun no tiene pacientes registrados
+        </Alert>
+      )}
 
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent bg="#EBF8FF">
-            <ModalHeader
-              fontSize={"2xl"}
-              textAlign="center"
-              color="#2C7A7B"
-              fontFamily={"body"}
-            >
-              {" "}
-            </ModalHeader>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent bg="#EBF8FF">
+          <ModalHeader
+            fontSize={"2xl"}
+            textAlign="center"
+            color="#2C7A7B"
+            fontFamily={"body"}
+          >
+            {" "}
+          </ModalHeader>
 
-            <ModalBody>
-              <PatientDetail id={patients.id} />
-            </ModalBody>
+          <ModalBody>
+            <PatientDetail id={patients.id} />
+          </ModalBody>
 
-            <ModalFooter>
-              <Button bg="#2C7A7B" color="white" mr={3} onClick={onClose}>
-                Close
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
+          <ModalFooter>
+            <Button bg="#2C7A7B" color="white" mr={3} onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

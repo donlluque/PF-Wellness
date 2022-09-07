@@ -68,7 +68,7 @@ function DoctorAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
   console.log("visibleTurns", visibleTurns);
   useEffect(() => {
     dispatch(getTurnsByDoctor(id));
-  }, [dispatch, id]);
+  }, [dispatch, id, auxRender]);
 
   //motivo de cancelacion de turno
   const handleValueChange = (e) => {
@@ -77,9 +77,9 @@ function DoctorAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
 
   return (
     <>
-      <TableContainer>
-        <Table size="sm">
-          {visibleTurns?.length ? (
+      {visibleTurns.length ? (
+        <TableContainer>
+          <Table size="sm">
             <Thead>
               <Tr>
                 <Th>Id</Th>
@@ -88,68 +88,67 @@ function DoctorAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
                 <Th>Paciente</Th>
               </Tr>
             </Thead>
-          ) : (
-            false
-          )}
-          <Tbody>
-            {visibleTurns.length ? (
-              visibleTurns.map((e) => (
-                <Tr key={e.id}>
-                  <Td>{e.id}</Td>
-                  <Td>{e.date}</Td>
-                  <Td>{e.hours_workings[0]?.hour}</Td>
-                  <Td>{e.patients.length ? e.patients[0]?.fullName : false}</Td>
-                  <Td>
-                    <Tooltip label="Cancelar turno">
-                      <Button
-                        m="0.5rem"
-                        colorScheme={"teal"}
-                        variant="ghost"
-                        fontSize="xs"
-                        onClick={() => {
-                          onOpen();
-                          dispatch(getTurnById(e.id));
-                        }}
-                      >
-                        <Icon w={4} h={4} as={TbCalendarOff} />
-                      </Button>
-                    </Tooltip>
-                    {prevTurns && (
-                      <Tooltip label="Paciente atendido">
+
+            <Tbody>
+              {visibleTurns &&
+                visibleTurns.map((e) => (
+                  <Tr key={e.id}>
+                    <Td>{e.id}</Td>
+                    <Td>{e.date}</Td>
+                    <Td>{e.hours_workings[0]?.hour}</Td>
+                    <Td>
+                      {e.patients.length ? e.patients[0]?.fullName : false}
+                    </Td>
+                    <Td>
+                      <Tooltip label="Cancelar turno">
                         <Button
                           m="0.5rem"
                           colorScheme={"teal"}
                           variant="ghost"
                           fontSize="xs"
                           onClick={() => {
-                            dispatch(sendEmailForm(user));
+                            onOpen();
+                            dispatch(getTurnById(e.id));
                           }}
                         >
-                          <Icon w={4} h={4} as={MdDoneAll} />
+                          <Icon w={4} h={4} as={TbCalendarOff} />
                         </Button>
                       </Tooltip>
-                    )}
-                  </Td>
-                </Tr>
-              ))
-            ) : (
-              <Alert status="warning">
-                <AlertIcon />
-                {nextTurns && (
-                  <Text>No se registran turnos próximos a la fecha</Text>
-                )}
-                {prevTurns && (
-                  <Text>No se registran turnos anteriores a la fecha</Text>
-                )}
-                {!nextTurns && !prevTurns && (
-                  <Text>No se registran turnos otorgados</Text>
-                )}
-              </Alert>
-            )}
-          </Tbody>
-          <Tfoot></Tfoot>
-        </Table>
-      </TableContainer>
+                      {prevTurns && (
+                        <Tooltip label="Paciente atendido">
+                          <Button
+                            m="0.5rem"
+                            colorScheme={"teal"}
+                            variant="ghost"
+                            fontSize="xs"
+                            onClick={() => {
+                              dispatch(sendEmailForm(user));
+                            }}
+                          >
+                            <Icon w={4} h={4} as={MdDoneAll} />
+                          </Button>
+                        </Tooltip>
+                      )}
+                    </Td>
+                  </Tr>
+                ))}
+            </Tbody>
+            <Tfoot></Tfoot>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Alert status="warning">
+          <AlertIcon />
+          {nextTurns && <Text>No se registran turnos próximos a la fecha</Text>}
+          {prevTurns && (
+            <Text>No se registran turnos anteriores a la fecha</Text>
+          )}
+          {!nextTurns && !prevTurns && (
+            <Text>No se registran turnos otorgados</Text>
+          )}
+        </Alert>
+      )}
+
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

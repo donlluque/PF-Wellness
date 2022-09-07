@@ -20,13 +20,9 @@ import {
 import { BsTelephone } from "react-icons/bs";
 import { ImMobile } from "react-icons/im";
 import { MdAlternateEmail, MdOutlinePlace } from "react-icons/md";
-import { VscCheckAll, VscQuote } from "react-icons/vsc";
+import { VscCheckAll } from "react-icons/vsc";
+import { ImQuotesRight, ImQuotesLeft } from "react-icons/im";
 function About() {
-  //-----Estilos para modo oscuro----//
-  const bg = useColorModeValue("#319795", "#CBD5E0");
-  const color = useColorModeValue("white", "black");
-  const colorLetra = useColorModeValue("#1a202c", "#4A5568");
-  //---------------------------------//
   return (
     <>
       <Center
@@ -43,7 +39,6 @@ function About() {
         mb={2}
       >
         <Heading
-          color={colorLetra}
           textAlign="center"
           as="h1"
           size="4xl"
@@ -54,11 +49,7 @@ function About() {
           Nosotros
         </Heading>
         <Box w={{ base: "75%", sm: "75%", md: "60%" }} textAlign="center">
-          <Text
-            color={colorLetra}
-            as="i"
-            fontSize={{ base: "md", sm: "xl", md: "xl" }}
-          >
+          <Text as="i" fontSize={{ base: "md", sm: "xl", md: "xl" }}>
             "Estamos justo donde nos necesitas. Experiencia. Servicio.
             Integridad"
           </Text>
@@ -99,12 +90,11 @@ function About() {
           />
         </Flex>
         <Box
-          color={color}
           w="100%"
           display="flex"
           flexDirection="column"
           alignItems="center"
-          bg={bg}
+          bg="teal.50"
         >
           <Heading as="h2" size="xl" m={5} textAlign="center">
             ¿Por qué nosotros?
@@ -138,10 +128,14 @@ function About() {
             </Box>
           </Box>
           <Heading as="h5" size="md" textAlign="center" m="2rem">
-            <Icon as={VscQuote} /> Nuestra misión es brindar una atención médica
-            de primer nivel y lograr la satisfacción total de nuestros
-            pacientes.
-            <Icon as={VscQuote} style={{ transform: [{ rotateY: "90deg" }] }} />
+            <Icon as={ImQuotesLeft} mr={2} /> Nuestra misión es brindar una
+            atención médica de primer nivel y lograr la satisfacción total de
+            nuestros pacientes{" "}
+            <Icon
+              as={ImQuotesRight}
+              ml={2}
+              style={{ transform: [{ rotateY: "90deg" }] }}
+            />
           </Heading>
         </Box>
 
@@ -185,7 +179,7 @@ function About() {
             <iframe
               title="mapa"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5405.254985384337!2d-64.19322203134845!3d-31.411447370491572!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9432987886a77c07%3A0x4f75f1c212944cac!2sAv.%20Col%C3%B3n%20299%2C%20X5000EPC%20C%C3%B3rdoba%2C%20Argentina!5e0!3m2!1ses!2sit!4v1660863672409!5m2!1ses!2sit"
-              width="400"
+              width="300"
               height="300"
               allowfullscreen="true"
               loading="lazy"
@@ -197,5 +191,5 @@ function About() {
     </>
   );
 }
-// border="1px solid gray"
+
 export default About;

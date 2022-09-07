@@ -54,13 +54,6 @@ export default function DoctorCard({
   const notInfoComplete = useDisclosure();
   const modal = useDisclosure();
 
-  //-----Estilos para modo oscuro----//
-
-  const bgselec = useColorModeValue("#319795", "#A0AEC0");
-  const colorLetra = useColorModeValue("white", "#000000");
-
-  //---------------------------------//
-
   return (
     <>
       <Box
@@ -114,13 +107,11 @@ export default function DoctorCard({
               modal.onOpen();
             }}
             w={"full"}
-            color={colorLetra}
             rounded={"md"}
             _hover={{
               transform: "translateY(-2px)",
               boxShadow: "lg",
             }}
-            bg={bgselec}
           >
             Leer más
           </Button>
@@ -140,8 +131,6 @@ export default function DoctorCard({
                   transform: "translateY(-2px)",
                   boxShadow: "lg",
                 }}
-                color={colorLetra}
-                bg={bgselec}
               >
                 Pedir turno
               </Button>
@@ -166,8 +155,6 @@ export default function DoctorCard({
                 transform: "translateY(-2px)",
                 boxShadow: "lg",
               }}
-              color={colorLetra}
-              bg={bgselec}
             >
               Pedir turno
             </Button>
@@ -274,7 +261,12 @@ export default function DoctorCard({
                 Ver comentarios
               </Button>
             </Link>
-            <Button bg="#2C7A7B" color="white" mr={3} onClick={modal.onClose}>
+            <Button
+              bg="#2C7A7B"
+              color="white"
+              mr={3}
+              onClick={() => modal.onClose()}
+            >
               Cerrar
             </Button>
           </ModalFooter>

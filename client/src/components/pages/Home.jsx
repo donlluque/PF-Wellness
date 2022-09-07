@@ -34,7 +34,7 @@ function Home() {
   return (
     <>
       <Center
-        h={{ base: "125vh", sm: "125vh", md: "100vh", lg: "100vh" }}
+        h="100vh"
         bgRepeat="no-repeat"
         bgSize="cover"
         top={0}
@@ -45,6 +45,7 @@ function Home() {
     url(https://www.unitecoprofesional.es/blog/wp-content/uploads/2021/09/como-hacer-una-historia-clinica.jpg)"
         mb={2}
         flexDirection="column"
+        w="100%"
       >
         <Heading
           textAlign="center"
@@ -107,7 +108,10 @@ function Home() {
             w={{ base: "20rem", sm: "20rem", md: "20rem", lg: "25rem" }}
             mb="1rem"
           />
-          <List spacing={4} fontSize="2xl">
+          <List
+            fontSize={{ base: "xl", sm: "xl", md: "2xl", lg: "2xl", xl: "2xl" }}
+            spacing={4}
+          >
             <ListItem>
               <ListIcon as={BsTelephone} color="green.600" />
               +54 9 351 365-4238

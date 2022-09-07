@@ -1,22 +1,15 @@
-import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Box,
-  CircularProgress,
-  Center,
-} from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
 
 import FormUserProfile from "./FormUserProfile";
 import PatientTurnsPanel from "./turns/PatientTurnsPanel";
 import PatientDoctorPanel from "./doctors/PatientDoctorPanel";
+import { useState } from "react";
 
 function UserProfile() {
+  const [auxRender, setAuxRender] = useState(false);
   return (
     <>
-      <Box bgColor="teal.50" minW="100vh">
+      <Box bgColor="teal.50">
         <Tabs
           pt={{
             base: "23rem",
@@ -72,7 +65,7 @@ function UserProfile() {
               bgColor="white"
               mr="0.3rem"
             >
-              Doctores
+              Mis Doctores
             </Tab>
           </TabList>
 
@@ -81,10 +74,16 @@ function UserProfile() {
               <FormUserProfile />
             </TabPanel>
             <TabPanel>
-              <PatientTurnsPanel />
+              <PatientTurnsPanel
+                setAuxRender={setAuxRender}
+                auxRender={auxRender}
+              />
             </TabPanel>
             <TabPanel>
-              <PatientDoctorPanel />
+              <PatientDoctorPanel
+                setAuxRender={setAuxRender}
+                auxRender={auxRender}
+              />
             </TabPanel>
           </TabPanels>
         </Tabs>

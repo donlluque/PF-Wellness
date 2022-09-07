@@ -8,9 +8,9 @@ export default function Usuario() {
   let usuario = "";
 
   if (user.localhost === "admin") {
-    usuario = "http://localhost:3000/admin";
+    usuario = "https://pf-wellness.vercel.app/admin";
   } else {
-    usuario = "http://localhost:3000/";
+    usuario = "https://pf-wellness.vercel.app/";
   }
 
   return usuario;

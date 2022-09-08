@@ -122,6 +122,7 @@ export default function rootReducer(state = initialState, action) {
       };
     }
     case "GET_TURNS_BY_PATIENT": {
+      console.log(action.payload, "la re puta que te pario");
       let turnsPatient = action.payload.data.filter(
         (e) => e.patients[0]?.id == action.payload.idCurrentPatient
       );

@@ -7,6 +7,7 @@ import {
   Flex,
   List,
   Button,
+  Link,
   Icon,
   ListItem,
   ListIcon,
@@ -274,24 +275,16 @@ function WellnessAsociados() {
             </Stack>
           </RadioGroup>
           <Box display="flex" justifyContent={"center"} m="1rem">
-            <Button colorScheme="teal" onClick={() => handlePayment()}>
-              Suscribirse
-            </Button>
+            {
+              <Link href={link} isExternal>
+                <Button colorScheme="teal" onClick={() => handlePayment()}>
+                  Suscribirse
+                </Button>
+              </Link>
+            }
           </Box>
         </Box>
       </Box>
-      {paymentActive && (
-        <Box>
-          <iframe
-            src={link}
-            width="100%"
-            height="500"
-            title="wellness"
-            allow="fullscreen"
-            allowpaymentrequest
-          ></iframe>
-        </Box>
-      )}
       <PaymentModal
         paymentActive={paymentActive}
         onClose={onClose}

@@ -609,295 +609,409 @@ export const getTurnsByDoctor = (idCurrentDoctor) => {
   console.log(idCurrentDoctor, "idCurrentDoctor");
   return async (dispatch) => {
     try {
-      let response = await axios.get(`${baseURL}/dates`);
+      let data = await axios.get(`${baseURL}/dates`).data;
       return dispatch({
         type: "GET_TURNS_BY_DOCTOR",
+        payload: { data, idCurrentDoctor },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // return function (dispatch) {
+  //   fetch(`${baseURL}/dates`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       dispatch({
+  //         type: "GET_TURNS_BY_DOCTOR",
+  //         payload: { data, idCurrentDoctor },
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+};
+
+export const getTurnsByPatient = (idCurrentPatient) => {
+  return async (dispatch) => {
+    try {
+      let data = await axios.get(`${baseURL}/dates`).data;
+      return dispatch({
+        type: "GET_TURNS_BY_PATIENT",
+        payload: { data, idCurrentPatient },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // console.log(idCurrentPatient, "idCurrentPatient");
+  // return function (dispatch) {
+  //   fetch(`${baseURL}/dates`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       dispatch({
+  //         type: "GET_TURNS_BY_PATIENT",
+  //         payload: { data, idCurrentPatient },
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+};
+
+export const deleteTurn = (id) => {
+  return async (dispatch) => {
+    try {
+      let data = await axios.delete(`${baseURL}/dates`, { dateId: id }).data;
+      return dispatch({
+        type: "GET_TURNS_BY_PATIENT",
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // return async function (dispatch) {
+  //   return await fetch(`${baseURL}/dates`, {
+  //     method: "DELETE",
+  //     body: JSON.stringify({ dateId: id }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) =>
+  //       res.ok
+  //         ? Promise.resolve({
+  //             status: res.status || "00",
+  //             statusText: `Turno eliminado con exito`,
+  //           })
+  //         : Promise.reject({
+  //             err: true,
+  //             status: res.status || "00",
+  //             statusText: "No se ha podido eliminar correctamente el turno",
+  //           })
+  //     )
+  //     .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+  //     .catch((err) => console.log(err));
+  // };
+};
+
+export const dataPayment = (form) => ({ type: "DATA_PAYMENT", payload: form });
+//AREAS GENERALES
+
+export const getAllAreas = () => {
+  return async (dispatch) => {
+    try {
+      let response = await axios.get(`${baseURL}/general_area`);
+      return dispatch({
+        type: "GET_AREAS",
         payload: response.data,
       });
     } catch (error) {
       console.log(error);
     }
   };
-  return function (dispatch) {
-    fetch(`${baseURL}/dates`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch({
-          type: "GET_TURNS_BY_DOCTOR",
-          payload: { data, idCurrentDoctor },
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
-
-export const getTurnsByPatient = (idCurrentPatient) => {
-  console.log(idCurrentPatient, "idCurrentPatient");
-  return function (dispatch) {
-    fetch(`${baseURL}/dates`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch({
-          type: "GET_TURNS_BY_PATIENT",
-          payload: { data, idCurrentPatient },
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
-
-export const deleteTurn = (id) => {
-  return async function (dispatch) {
-    return await fetch(`${baseURL}/dates`, {
-      method: "DELETE",
-      body: JSON.stringify({ dateId: id }),
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) =>
-        res.ok
-          ? Promise.resolve({
-              status: res.status || "00",
-              statusText: `Turno eliminado con exito`,
-            })
-          : Promise.reject({
-              err: true,
-              status: res.status || "00",
-              statusText: "No se ha podido eliminar correctamente el turno",
-            })
-      )
-      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
-      .catch((err) => console.log(err));
-  };
-};
-
-export const dataPayment = (form) => ({ type: "DATA_PAYMENT", payload: form });
-//AREAS GENERALES
-export const getAllAreas = () => {
-  return function (dispatch) {
-    fetch(`${baseURL}/general_area`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        dispatch({
-          type: "GET_AREAS",
-          payload: json,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // return function (dispatch) {
+  //   fetch(`${baseURL}/general_area`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       dispatch({
+  //         type: "GET_AREAS",
+  //         payload: json,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 };
 
 //PATIENT
 export const searchPatientByName = (patient) => {
-  return async function (dispatch) {
-    return await fetch(`${baseURL}/patients?name=${patient}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) =>
-        res.ok
-          ? res.json()
-          : Promise.reject({
-              err: true,
-              status: res.status || "00",
-              type: "search",
-              statusText: `No se encuentra ningún usuario con el nombre "${patient.name}" `,
-            })
-      )
-      .then((data) => {
-        dispatch({ type: "SEARCH_PATIENTS_BY_NAME", payload: data });
-      })
-      .catch((err) => {
-        dispatch({ type: "HANDLE_ERROR", payload: err });
+  return async (dispatch) => {
+    try {
+      let response = await axios.get(`${baseURL}/patients?name=${patient}`);
+      return dispatch({
+        type: "SEARCH_PATIENTS_BY_NAME",
+        payload: response.data,
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  // return async function (dispatch) {
+  //   return await fetch(`${baseURL}/patients?name=${patient}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) =>
+  //       res.ok
+  //         ? res.json()
+  //         : Promise.reject({
+  //             err: true,
+  //             status: res.status || "00",
+  //             type: "search",
+  //             statusText: `No se encuentra ningún usuario con el nombre "${patient.name}" `,
+  //           })
+  //     )
+  //     .then((data) => {
+  //       dispatch({ type: "SEARCH_PATIENTS_BY_NAME", payload: data });
+  //     })
+  //     .catch((err) => {
+  //       dispatch({ type: "HANDLE_ERROR", payload: err });
+  //     });
+  // };
 };
 
 export const getOnePatient = (id) => {
-  return function (dispatch) {
-    fetch(`${baseURL}/patients/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        dispatch({
-          type: "GET_ONE_PATIENT",
-          payload: json,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+  return async (dispatch) => {
+    try {
+      let response = await axios.get(`${baseURL}/patients/${id}`);
+      return dispatch({
+        type: "GET_ONE_PATIENT",
+        payload: response.data,
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  // return function (dispatch) {
+  //   fetch(`${baseURL}/patients/${id}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       dispatch({
+  //         type: "GET_ONE_PATIENT",
+  //         payload: json,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 };
 export const disablePatient = (patientId) => {
-  return async function (dispatch) {
-    return await fetch(`${baseURL}/patients`, {
-      method: "PATCH",
-      body: JSON.stringify({ patientId }),
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) =>
-        res.ok
-          ? Promise.resolve({
-              status: res.status || "00",
-              statusText: `El paciente fue deshabilitado con exito!`,
-            })
-          : Promise.reject({
-              err: true,
-              status: res.status || "00",
-              statusText: "No es posible deshabilitar el paciente seleccionado",
-            })
-      )
-      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
-      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  return async (dispatch) => {
+    try {
+      let response = await axios.patch(`${baseURL}/patients`, patientId);
+      return dispatch({
+        type: "CONFIRM_ACTION",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  // return async function (dispatch) {
+  //   return await fetch(`${baseURL}/patients`, {
+  //     method: "PATCH",
+  //     body: JSON.stringify({ patientId }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) =>
+  //       res.ok
+  //         ? Promise.resolve({
+  //             status: res.status || "00",
+  //             statusText: `El paciente fue deshabilitado con exito!`,
+  //           })
+  //         : Promise.reject({
+  //             err: true,
+  //             status: res.status || "00",
+  //             statusText: "No es posible deshabilitar el paciente seleccionado",
+  //           })
+  //     )
+  //     .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+  //     .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  // };
 };
 
 export const getAllPatients = () => {
-  return function (dispatch) {
-    fetch(`${baseURL}/patients`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        dispatch({
-          type: "GET_PATIENTS",
-          payload: json,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+  return async (dispatch) => {
+    try {
+      let response = await axios.get(`${baseURL}/patients`);
+      return dispatch({
+        type: "GET_PATIENTS",
+        payload: response.data,
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  // return function (dispatch) {
+  //   fetch(`${baseURL}/patients`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       dispatch({
+  //         type: "GET_PATIENTS",
+  //         payload: json,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 };
 export const getPatientsByDoctor = (idCurrentDoctor) => {
-  return function (dispatch) {
-    fetch(`${baseURL}/dates`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch({
-          type: "GET_PATIENTS_BY_DOCTOR",
-          payload: { data, idCurrentDoctor },
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+  return async (dispatch) => {
+    try {
+      let data = (await axios.get(`${baseURL}/dates`)).data;
+
+      return dispatch({
+        type: "GET_PATIENTS_BY_DOCTOR",
+        payload: { data, idCurrentDoctor },
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  // return function (dispatch) {
+  //   fetch(`${baseURL}/dates`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       dispatch({
+  //         type: "GET_PATIENTS_BY_DOCTOR",
+  //         payload: { data, idCurrentDoctor },
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 };
 //POST PATIENT
 export const postPatient = (form) => {
-  return async function (dispatch) {
-    return await fetch(`${baseURL}/patients`, {
-      method: "POST",
-      body: JSON.stringify(form),
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) =>
-        res.ok
-          ? res.json()
-          : Promise.reject({
-              err: true,
-              status: res.status || "00",
-              statusText: `Ya existe un usuario con el mail ${form.email}`,
-            })
-      )
-      .then((data) => {
-        dispatch({ type: "CONFIRM_ACTION", payload: data });
-      })
-      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(`${baseURL}/patients`, form);
+
+      return dispatch({
+        type: "CONFIRM_ACTION",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  // return async function (dispatch) {
+  //   return await fetch(`${baseURL}/patients`, {
+  //     method: "POST",
+  //     body: JSON.stringify(form),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) =>
+  //       res.ok
+  //         ? res.json()
+  //         : Promise.reject({
+  //             err: true,
+  //             status: res.status || "00",
+  //             statusText: `Ya existe un usuario con el mail ${form.email}`,
+  //           })
+  //     )
+  //     .then((data) => {
+  //       dispatch({ type: "CONFIRM_ACTION", payload: data });
+  //     })
+  //     .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  // };
 };
 
 //PUT PATIENT
 export const putPatient = (data) => {
-  console.log("data actions", data);
-  return async function (dispatch) {
-    return await fetch(`${baseURL}/patients/${data.id}`, {
-      method: "PUT",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) =>
-        res.ok
-          ? Promise.resolve({
-              name: data.name,
-              status: res.status || "00",
-              statusText: `Datos guardados con exito`,
-            })
-          : Promise.reject({
-              err: true,
-              status: res.status || "00",
-              statusText: res.statusText,
-            })
-      )
-      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
-      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  return async (dispatch) => {
+    try {
+      let response = await axios.put(`${baseURL}/patients/${data.id}`, data);
+
+      return dispatch({
+        type: "CONFIRM_ACTION",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  // console.log("data actions", data);
+  // return async function (dispatch) {
+  //   return await fetch(`${baseURL}/patients/${data.id}`, {
+  //     method: "PUT",
+  //     body: JSON.stringify(data),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) =>
+  //       res.ok
+  //         ? Promise.resolve({
+  //             name: data.name,
+  //             status: res.status || "00",
+  //             statusText: `Datos guardados con exito`,
+  //           })
+  //         : Promise.reject({
+  //             err: true,
+  //             status: res.status || "00",
+  //             statusText: res.statusText,
+  //           })
+  //     )
+  //     .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+  //     .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  // };
 };
 
 export const dateUser = (payload) => {
@@ -998,26 +1112,38 @@ export const sendEmailForm = (payload) => {
 
 //estadisticas
 export const getStats = () => {
-  return function (dispatch) {
-    fetch(`${baseURL}/stats`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch({
-          type: "GET_STATS",
-          payload: data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+  return async (dispatch) => {
+    try {
+      let response = await axios.get(`${baseURL}/stats`);
+
+      return dispatch({
+        type: "GET_STATS",
+        payload: response.data,
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  // return function (dispatch) {
+  //   fetch(`${baseURL}/stats`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       dispatch({
+  //         type: "GET_STATS",
+  //         payload: data,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 };
 
 export const sendEmailPago = (payload) => {
@@ -1066,31 +1192,45 @@ export const sendEmailCancelacion = (payload) => {
 };
 
 export const putWellness = (patientId) => {
-  return async function (dispatch) {
-    return await fetch(`${baseURL}/patients/wellness`, {
-      method: "PATCH",
-      body: JSON.stringify({ patientId, prepaid: "Wellness" }),
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) =>
-        res.ok
-          ? Promise.resolve({
-              status: res.status || "00",
-              statusText: `La obra social fue actualizada con exito`,
-            })
-          : Promise.reject({
-              err: true,
-              status: res.status || "00",
-              statusText: "No es posible actualizar la obra social",
-            })
-      )
-      .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
-      .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  return async (dispatch) => {
+    try {
+      let response = await axios.patch(`${baseURL}/patients/wellness`, {
+        patientId,
+        prepaid: "Wellness",
+      });
+      return dispatch({
+        type: "SEND_EMAIL_CANCEL",
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  // return async function (dispatch) {
+  //   return await fetch(`${baseURL}/patients/wellness`, {
+  //     method: "PATCH",
+  //     body: JSON.stringify({ patientId, prepaid: "Wellness" }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) =>
+  //       res.ok
+  //         ? Promise.resolve({
+  //             status: res.status || "00",
+  //             statusText: `La obra social fue actualizada con exito`,
+  //           })
+  //         : Promise.reject({
+  //             err: true,
+  //             status: res.status || "00",
+  //             statusText: "No es posible actualizar la obra social",
+  //           })
+  //     )
+  //     .then((data) => dispatch({ type: "CONFIRM_ACTION", payload: data }))
+  //     .catch((err) => dispatch({ type: "HANDLE_ERROR", payload: err }));
+  // };
 };
 // export const dateUser = (payload) => {
 //   return function (dispatch) {

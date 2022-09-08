@@ -204,7 +204,7 @@ router.post("/", async (req, res, next) => {
     next(error);
   }
 });
-router.patch("/", async (req, res, next) => {
+router.put("/active", async (req, res, next) => {
   const { patientId } = req.body;
 
   const patient = await Patient.findOne({ where: { id: patientId } });

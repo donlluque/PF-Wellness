@@ -204,7 +204,7 @@ router.post("/", async (req, res, next) => {
     next(error);
   }
 });
-router.patch("/", async (req, res, next) => {
+router.put("/active", async (req, res, next) => {
   const { patientId } = req.body;
 
   const patient = await Patient.findOne({ where: { id: patientId } });
@@ -217,7 +217,7 @@ router.patch("/", async (req, res, next) => {
   res.send("cambiado");
 });
 
-router.patch("/wellness", async (req, res) => {
+router.put("/wellness", async (req, res) => {
   const { prepaid, patientId } = req.body;
   try {
     const patient = await Patient.findOne({

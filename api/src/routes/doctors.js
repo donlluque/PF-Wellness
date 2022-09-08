@@ -230,7 +230,7 @@ router.put("/", async (req, res, next) => {
   res.send(nuevoDoc);
 });
 
-router.patch("/", async (req, res, next) => {
+router.put("/", async (req, res, next) => {
   const { doctorId } = req.body;
   console.log(doctorId, "bakkkkkk");
 

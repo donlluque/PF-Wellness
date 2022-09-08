@@ -249,7 +249,7 @@ export const postDoctors = (form) => {
 export const disableDoctor = (doctorId) => {
   return async (dispatch) => {
     try {
-      let response = await axios.patch(`${baseURL}/doctors`, doctorId);
+      let response = await axios.put(`${baseURL}/doctors`, doctorId);
       return dispatch({
         type: "CONFIRM_ACTION",
         payload: response.data,
@@ -828,7 +828,7 @@ export const getOnePatient = (id) => {
 export const disablePatient = (patientId) => {
   return async (dispatch) => {
     try {
-      let response = await axios.patch(`${baseURL}/patients`, patientId);
+      let response = await axios.put(`${baseURL}/patients/active`, patientId);
       return dispatch({
         type: "CONFIRM_ACTION",
         payload: response.data,
@@ -1190,12 +1190,12 @@ export const sendEmailCancelacion = (payload) => {
 export const putWellness = (patientId) => {
   return async (dispatch) => {
     try {
-      let response = await axios.patch(`${baseURL}/patients/wellness`, {
+      let response = await axios.put(`${baseURL}/patients/wellness`, {
         patientId,
         prepaid: "Wellness",
       });
       return dispatch({
-        type: "SEND_EMAIL_CANCEL",
+        type: "CONFIRM_ACTION",
         payload: response.data,
       });
     } catch (error) {

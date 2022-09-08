@@ -249,10 +249,16 @@ export const postDoctors = (form) => {
 export const disableDoctor = (doctorId) => {
   return async (dispatch) => {
     try {
-      let response = await axios.put(`${baseURL}/doctors`, doctorId);
-      return dispatch({
-        type: "CONFIRM_ACTION",
-        payload: response.data,
+      await axios.put(`${baseURL}/doctors`, doctorId).then((response) => {
+        Promise.resolve({
+          status: 200 || "00",
+          statusText: `El doctor fue deshabilitado con exito!`,
+        }).then(
+          dispatch({
+            type: "CONFIRM_ACTION",
+            payload: response.data,
+          })
+        );
       });
     } catch (error) {
       console.log(error);

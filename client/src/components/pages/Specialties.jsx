@@ -44,7 +44,7 @@ function Specialties() {
       rgba(230, 255, 250, 0.7),
       rgba(230, 255, 250, 0.7)
     ),
-    url(http://noticias.unsam.edu.ar/wp-content/uploads/2014/04/Kinesiologie.jpg)"
+    url(https://noticias.unsam.edu.ar/wp-content/uploads/2014/04/Kinesiologie.jpg)"
         mb={2}
         flexDirection="column"
       >

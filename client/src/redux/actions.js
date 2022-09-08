@@ -748,27 +748,41 @@ export const addReview = (payload) => {
 };
 
 export const getReviews = () => {
-  return function (dispatch) {
-    fetch(`${baseURL}/review`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        dispatch({
-          type: "GET_REVIEWS",
-          payload: json,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+  return async (dispatch) => {
+    try {
+      let response = await axios.get(`${baseURL}/review`);
+      return dispatch({
+        type: "GET_REVIEWS",
+        payload: response.data,
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
+
+// export const getReviews = () => {
+//   return function (dispatch) {
+//     fetch(`${baseURL}/review`, {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         "Access-Control-Allow-Origin": "*",
+//       },
+//       mode: "cors",
+//     })
+//       .then((res) => res.json())
+//       .then((json) => {
+//         dispatch({
+//           type: "GET_REVIEWS",
+//           payload: json,
+//         });
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   };
+// };
 
 export const sendEmailForm = (payload) => {
   return async (dispatch) => {

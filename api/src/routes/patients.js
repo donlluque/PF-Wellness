@@ -217,7 +217,7 @@ router.patch("/", async (req, res, next) => {
   res.send("cambiado");
 });
 
-router.patch("/wellness", async (req, res) => {
+router.put("/wellness", async (req, res) => {
   const { prepaid, patientId } = req.body;
   try {
     const patient = await Patient.findOne({

@@ -45,7 +45,7 @@ function WellnessAsociados() {
   });
 
   const handlePayment = async () => {
-    if (!isAuthenticated) {
+    if (isAuthenticated) {
       //try {
       const generarLink = await axios.post(`${baseURL}/asociados`, input);
       console.log(generarLink);

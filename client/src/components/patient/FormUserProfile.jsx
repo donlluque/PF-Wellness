@@ -148,14 +148,12 @@ function FormUserProfile() {
     setErrors(validateForm({ ...form, [e.target.name]: e.target.value }));
   };
 
-  const llenar = Object.keys(perfil);
-
   //MENSAJE
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-      {llenar.length ? (
+      {form ? (
         <Box display={{ md: "flex" }} justifyContent="center">
           <Box display="flex" flexDirection="column" alignItems="center">
             {!putActive && (

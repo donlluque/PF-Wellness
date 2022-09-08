@@ -10,7 +10,7 @@ export function getDoctors() {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -32,7 +32,7 @@ export function getDetailDoctors(id) {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -53,8 +53,8 @@ export function cleanDoctor() {
 }
 export function filterDoctors(filter) {
   const { especialidad, obrasocial } = filter;
-  return function (dispatch) {
-    return fetch(
+  return async function (dispatch) {
+    return await fetch(
       `${baseURL}/filter?general_area=${especialidad}&prepaid_health=${obrasocial}`,
       {
         method: "GET",
@@ -62,7 +62,7 @@ export function filterDoctors(filter) {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
         },
-        mode: "no-cors",
+        mode: "cors",
       }
     )
       .then((res) =>
@@ -87,15 +87,15 @@ export function filterDoctors(filter) {
 export const putDoctor = (data) => {
   console.log("data actions", data);
 
-  return function (dispatch) {
-    return fetch(`${baseURL}/doctors`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/doctors`, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) =>
         res.ok
@@ -117,14 +117,14 @@ export const putDoctor = (data) => {
 
 //SEARCH BAR
 export function searchDoctorByName(input) {
-  return function (dispatch) {
-    return fetch(`${baseURL}/doctors/?name=${input}`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/doctors/?name=${input}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) =>
         res.ok
@@ -147,15 +147,15 @@ export function searchDoctorByName(input) {
 //POST DOCTORS
 export const postDoctors = (form) => {
   console.log("soy form", form);
-  return function (dispatch) {
-    return fetch(`${baseURL}/doctors`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/doctors`, {
       method: "POST",
       body: JSON.stringify(form),
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) =>
         res.ok
@@ -174,15 +174,15 @@ export const postDoctors = (form) => {
 };
 
 export const disableDoctor = (doctorId) => {
-  return function (dispatch) {
-    return fetch(`${baseURL}/doctors`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/doctors`, {
       method: "PATCH",
       body: JSON.stringify({ doctorId }),
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) =>
         res.ok
@@ -201,15 +201,15 @@ export const disableDoctor = (doctorId) => {
   };
 };
 export const postAbsentDoctor = (form) => {
-  return function (dispatch) {
-    return fetch(`${baseURL}/absence`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/absence`, {
       method: "POST",
       body: JSON.stringify(form),
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) =>
         res.ok
@@ -227,14 +227,14 @@ export const postAbsentDoctor = (form) => {
   };
 };
 export const getAllAbsent = () => {
-  return function (dispatch) {
-    fetch(`${baseURL}/absence`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/absence`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -249,15 +249,15 @@ export const getAllAbsent = () => {
   };
 };
 export const deleteAbsent = (id) => {
-  return function (dispatch) {
-    return fetch(`${baseURL}/absence`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/absence`, {
       method: "DELETE",
       body: JSON.stringify({ absenceId: id }),
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) =>
         res.ok
@@ -277,14 +277,14 @@ export const deleteAbsent = (id) => {
 };
 //PREPAID HEALTH
 export const getPrepaidHealth = () => {
-  return function (dispatch) {
-    fetch(`${baseURL}/prepaid_health`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/prepaid_health`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -308,7 +308,7 @@ export const getHours = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -331,7 +331,7 @@ export const getDays = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -348,15 +348,15 @@ export const getDays = () => {
 //TURNS
 export const postTurn = (form) => {
   console.log("soy post", form);
-  return function (dispatch) {
-    return fetch(`${baseURL}/dates`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/dates`, {
       method: "POST",
       body: JSON.stringify(form),
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) =>
         res.ok
@@ -381,7 +381,7 @@ export const getTurns = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -403,7 +403,7 @@ export const getTurnById = (idTurn) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -427,7 +427,7 @@ export const getTurnsByDoctor = (idCurrentDoctor) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -451,7 +451,7 @@ export const getTurnsByPatient = (idCurrentPatient) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -467,15 +467,15 @@ export const getTurnsByPatient = (idCurrentPatient) => {
 };
 
 export const deleteTurn = (id) => {
-  return function (dispatch) {
-    return fetch(`${baseURL}/dates`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/dates`, {
       method: "DELETE",
       body: JSON.stringify({ dateId: id }),
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) =>
         res.ok
@@ -504,7 +504,7 @@ export const getAllAreas = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -521,14 +521,14 @@ export const getAllAreas = () => {
 
 //PATIENT
 export const searchPatientByName = (patient) => {
-  return function (dispatch) {
-    return fetch(`${baseURL}/patients?name=${patient}`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/patients?name=${patient}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) =>
         res.ok
@@ -557,7 +557,7 @@ export const getOnePatient = (id) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -572,15 +572,15 @@ export const getOnePatient = (id) => {
   };
 };
 export const disablePatient = (patientId) => {
-  return function (dispatch) {
-    return fetch(`${baseURL}/patients`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/patients`, {
       method: "PATCH",
       body: JSON.stringify({ patientId }),
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) =>
         res.ok
@@ -607,7 +607,7 @@ export const getAllPatients = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -629,7 +629,7 @@ export const getPatientsByDoctor = (idCurrentDoctor) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -645,15 +645,15 @@ export const getPatientsByDoctor = (idCurrentDoctor) => {
 };
 //POST PATIENT
 export const postPatient = (form) => {
-  return function (dispatch) {
-    return fetch(`${baseURL}/patients`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/patients`, {
       method: "POST",
       body: JSON.stringify(form),
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) =>
         res.ok
@@ -674,15 +674,15 @@ export const postPatient = (form) => {
 //PUT PATIENT
 export const putPatient = (data) => {
   console.log("data actions", data);
-  return function (dispatch) {
-    return fetch(`${baseURL}/patients/${data.id}`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/patients/${data.id}`, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) =>
         res.ok
@@ -755,7 +755,7 @@ export const getReviews = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -793,7 +793,7 @@ export const getStats = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -854,15 +854,15 @@ export const sendEmailCancelacion = (payload) => {
 };
 
 export const putWellness = (patientId) => {
-  return function (dispatch) {
-    return fetch(`${baseURL}/patients/wellness`, {
+  return async function (dispatch) {
+    return await fetch(`${baseURL}/patients/wellness`, {
       method: "PATCH",
       body: JSON.stringify({ patientId, prepaid: "Wellness" }),
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      mode: "no-cors",
+      mode: "cors",
     })
       .then((res) =>
         res.ok

@@ -10,6 +10,7 @@ export function getDoctors() {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -31,6 +32,7 @@ export function getDetailDoctors(id) {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -60,6 +62,7 @@ export function filterDoctors(filter) {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
         },
+        mode: "no-cors",
       }
     )
       .then((res) =>
@@ -92,6 +95,7 @@ export const putDoctor = (data) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) =>
         res.ok
@@ -120,6 +124,7 @@ export function searchDoctorByName(input) {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) =>
         res.ok
@@ -150,6 +155,7 @@ export const postDoctors = (form) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) =>
         res.ok
@@ -176,6 +182,7 @@ export const disableDoctor = (doctorId) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) =>
         res.ok
@@ -202,6 +209,7 @@ export const postAbsentDoctor = (form) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) =>
         res.ok
@@ -226,6 +234,7 @@ export const getAllAbsent = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -248,6 +257,7 @@ export const deleteAbsent = (id) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) =>
         res.ok
@@ -274,6 +284,7 @@ export const getPrepaidHealth = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -297,6 +308,7 @@ export const getHours = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -319,6 +331,7 @@ export const getDays = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -343,6 +356,7 @@ export const postTurn = (form) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) =>
         res.ok
@@ -361,7 +375,14 @@ export const postTurn = (form) => {
 };
 export const getTurns = () => {
   return function (dispatch) {
-    fetch(`${baseURL}/dates`)
+    fetch(`${baseURL}/dates`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      mode: "no-cors",
+    })
       .then((res) => res.json())
       .then((data) => {
         dispatch({
@@ -382,6 +403,7 @@ export const getTurnById = (idTurn) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -405,6 +427,7 @@ export const getTurnsByDoctor = (idCurrentDoctor) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -428,6 +451,7 @@ export const getTurnsByPatient = (idCurrentPatient) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -451,6 +475,7 @@ export const deleteTurn = (id) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) =>
         res.ok
@@ -479,6 +504,7 @@ export const getAllAreas = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -502,6 +528,7 @@ export const searchPatientByName = (patient) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) =>
         res.ok
@@ -530,6 +557,7 @@ export const getOnePatient = (id) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -552,6 +580,7 @@ export const disablePatient = (patientId) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) =>
         res.ok
@@ -578,6 +607,7 @@ export const getAllPatients = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -599,6 +629,7 @@ export const getPatientsByDoctor = (idCurrentDoctor) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -622,6 +653,7 @@ export const postPatient = (form) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) =>
         res.ok
@@ -650,6 +682,7 @@ export const putPatient = (data) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) =>
         res.ok
@@ -722,6 +755,7 @@ export const getReviews = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((json) => {
@@ -759,6 +793,7 @@ export const getStats = () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -827,6 +862,7 @@ export const putWellness = (patientId) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: "no-cors",
     })
       .then((res) =>
         res.ok

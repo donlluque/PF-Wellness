@@ -279,13 +279,9 @@ function WellnessAsociados() {
             </Stack>
           </RadioGroup>
           <Box display="flex" justifyContent={"center"} m="1rem">
-            {
-              <Link href={link} isExternal>
-                <Button colorScheme="teal" onClick={() => handlePayment()}>
-                  Suscribirse
-                </Button>
-              </Link>
-            }
+            <Button colorScheme="teal" onClick={() => handlePayment()}>
+              Suscribirse
+            </Button>
           </Box>
         </Box>
       </Box>

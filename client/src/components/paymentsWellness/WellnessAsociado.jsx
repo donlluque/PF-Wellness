@@ -27,6 +27,9 @@ import { FcNext } from "react-icons/fc";
 
 function WellnessAsociados() {
   const [paymentActive, setPaymentActive] = useState(false);
+  const [mensual, setMensual] = useState(false);
+  const [semestral, setSemestral] = useState(false);
+  const [anual, setAnual] = useState(false);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const dispatch = useDispatch();
   const [link, setLink] = useState();
@@ -47,8 +50,6 @@ function WellnessAsociados() {
       console.log(error);
     }
   };
-
-  const handleChange = (e) => {};
 
   return (
     <>
@@ -131,7 +132,22 @@ function WellnessAsociados() {
 
           <RadioGroup
             colorScheme={"teal"}
-            onChange={(e) => setInput({ ...input, price: parseInt(e) })}
+            onChange={(e) => {
+              if (e === "7000") {
+                setAnual(false);
+                setSemestral(false);
+                setMensual(true);
+              } else if (e === "35000") {
+                setAnual(false);
+                setSemestral(true);
+                setMensual(false);
+              } else if (e === "63000") {
+                setAnual(true);
+                setSemestral(false);
+                setMensual(false);
+              }
+              setInput({ ...input, price: parseInt(e) });
+            }}
             value={input.price}
           >
             <Stack
@@ -150,7 +166,7 @@ function WellnessAsociados() {
                 w="15rem"
                 h="13rem"
                 borderRadius={"0.5rem"}
-                bg="white"
+                bg={mensual ? "#fdde9f" : "white"}
                 boxShadow={"2xl"}
                 display="flex"
                 flexDirection={"column"}
@@ -176,7 +192,7 @@ function WellnessAsociados() {
                 w="15rem"
                 h="13rem"
                 borderRadius={"0.5rem"}
-                bg="white"
+                bg={semestral ? "#fdde9f" : "white"}
                 boxShadow={"2xl"}
                 display="flex"
                 flexDirection={"column"}
@@ -213,7 +229,7 @@ function WellnessAsociados() {
                 w="15rem"
                 h="13rem"
                 borderRadius={"0.5rem"}
-                bg="white"
+                bg={anual ? "#fdde9f" : "white"}
                 boxShadow={"2xl"}
                 display="flex"
                 flexDirection={"column"}

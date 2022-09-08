@@ -9,16 +9,12 @@ function ConfirmPaymentTurn() {
   const dispatch = useDispatch();
   const turnos = useSelector((state) => state.turnsByPatient);
   const { dataPayment, patientDetail } = useSelector((state) => state);
-  console.log(search, "search");
-  console.log(turnos, "turnos turnsByPatient");
-  console.log(dataPayment, "dataPayment pago");
-  console.log(patientDetail, "patientDetail en el pago");
+
   var form = JSON.parse(localStorage.getItem("form"));
 
   const handleSubmit = () => {
     if (search.includes("approved")) {
       dispatch(postTurn(form));
-      // dispatch(sendEmailPago(patientDetail));
     }
   };
 
@@ -67,11 +63,7 @@ function ConfirmPaymentTurn() {
           <Button
             m="1rem"
             colorScheme={"teal"}
-            onClick={() =>
-              search.includes("approved")
-                ? dispatch(sendEmailPago(patientDetail))
-                : null
-            }
+            onClick={() => dispatch(sendEmailPago(patientDetail))}
           >
             Enviar comprobante
           </Button>

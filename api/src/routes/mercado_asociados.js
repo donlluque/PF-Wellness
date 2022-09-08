@@ -28,7 +28,7 @@ router.post("/", async (req, res, next) => {
   mercadopago.preapproval
     .create(preference)
     .then(function (response) {
-      res.status(200).redirect(response.body.init_point); // REDIRECCIONA a la pagina de MP para pagar
+      res.status(200).json(response.body.init_point); // REDIRECCIONA a la pagina de MP para pagar
       console.log(response.body.init_point);
     })
     .catch(function (error) {

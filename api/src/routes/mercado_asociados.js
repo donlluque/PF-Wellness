@@ -26,7 +26,7 @@ router.post("/", async (req, res, next) => {
     payer_email: "test_user_67403553@testuser.com",
   };
 
-  mercadopago.preapproval
+  mercadopago.preferences
     .create(preference)
     .then(function (response) {
       res.status(200).json(response.body.init_point); // REDIRECCIONA a la pagina de MP para pagar

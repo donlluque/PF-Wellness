@@ -16,16 +16,24 @@ import {
   useDisclosure,
   Radio,
   RadioGroup,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  ModalOverlay,
+  Modal,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import PaymentModal from "./PaymentModal";
 import { baseURL } from "../../index";
 import axios from "axios";
-import { MdAttachMoney } from "react-icons/md";
 import { FcNext } from "react-icons/fc";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function WellnessAsociados() {
+  const { isAuthenticated } = useAuth0();
   const [paymentActive, setPaymentActive] = useState(false);
   const [mensual, setMensual] = useState(false);
   const [semestral, setSemestral] = useState(false);
@@ -33,6 +41,7 @@ function WellnessAsociados() {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const dispatch = useDispatch();
   const [link, setLink] = useState();
+  const notAuthenticatedModal = useDisclosure();
 
   const [input, setInput] = useState({
     reason: "Wellness Asociados",
@@ -289,6 +298,25 @@ function WellnessAsociados() {
         isOpen={isOpen}
         linkPayment={link}
       />
+      <Modal
+        isCentered
+        isOpen={notAuthenticatedModal.isOpen}
+        onClose={notAuthenticatedModal.onClose}
+        colorScheme="teal"
+      >
+        <ModalOverlay />
+        <ModalContent w="80%" bgColor="green.50">
+          <ModalCloseButton />
+          <ModalHeader color="#C53030">Ups!!</ModalHeader>
+
+          <ModalBody>
+            <Text color="#C53030">Debes estar registrado</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Spacer />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

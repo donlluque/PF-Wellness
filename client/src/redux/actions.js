@@ -3,26 +3,37 @@ import axios from "axios";
 
 //DOCTORS
 export function getDoctors() {
-  return function (dispatch) {
-    fetch(`${baseURL}/doctors`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      mode: "cors",
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        dispatch({
-          type: "GET_DOCTORS",
-          payload: json,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+  return async (dispatch) => {
+    try {
+      let response = await axios.get(`${baseURL}/doctors`);
+      return dispatch({
+        type: "GET_DOCTORS",
+        payload: response.data,
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  // return function (dispatch) {
+  //   fetch(`${baseURL}/doctors`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     mode: "cors",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       dispatch({
+  //         type: "GET_DOCTORS",
+  //         payload: json,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 }
 export function getDetailDoctors(id) {
   return function (dispatch) {

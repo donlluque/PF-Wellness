@@ -674,7 +674,7 @@ router.post("/", async (req, res) => {
                                                   padding-top: 10px;
                                                 "
                                               >
-                                              <a href='https://pf-wellness.vercel.app/testimonials'>
+                                              <a href='https://pf-wellness-iota.vercel.app/testimonials'>
                                                 <button
                                                   style="
                                                     background: #38B2AC;

@@ -18,10 +18,9 @@ import {
 } from "../../../redux/actions";
 function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
   const dispatch = useDispatch();
+  const [active, setActive] = useState(false);
 
-  const { msgConfirm, doctorDetail, patientDetail } = useSelector(
-    (state) => state
-  );
+  const { doctorDetail, patientDetail } = useSelector((state) => state);
 
   return (
     <>
@@ -29,13 +28,13 @@ function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Habilitar {user}</ModalHeader>
-          {msgConfirm.status !== 200 && (
+          {!active && (
             <ModalBody>
               ¿Estas seguro que desea habilitar al {user}{" "}
               {user === "doctor" ? doctorDetail.name : patientDetail.name}?
             </ModalBody>
           )}
-          {msgConfirm.status === 200 && (
+          {active && (
             <ModalBody>
               <Alert status="success">
                 <AlertIcon />
@@ -45,7 +44,7 @@ function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
               </Alert>
             </ModalBody>
           )}
-          {msgConfirm.status !== 200 && (
+          {!active && (
             <ModalFooter>
               <Button
                 colorScheme="teal"
@@ -59,6 +58,7 @@ function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
                 colorScheme="teal"
                 mr={3}
                 onClick={() => {
+                  setActive(true);
                   user === "doctor"
                     ? dispatch(disableDoctor(doctorDetail.id))
                     : dispatch(disablePatient(patientDetail.id));
@@ -68,7 +68,7 @@ function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
               </Button>
             </ModalFooter>
           )}
-          {msgConfirm.status === 200 && (
+          {active && (
             <ModalFooter>
               <Button
                 colorScheme="teal"
@@ -78,6 +78,7 @@ function ConfirmEnable({ isOpen, onClose, idDoctor, aux, setAux, name, user }) {
                   dispatch(cleanConfirm());
                   onClose();
                   setAux(!aux);
+                  setActive(false);
                 }}
               >
                 Cerrar

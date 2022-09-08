@@ -216,7 +216,7 @@ export default function NavStaff({ setInput, setPage }) {
                   });
                 }}
               >
-                Close
+                Cerrar
               </Button>
             </ModalFooter>
           </ModalContent>

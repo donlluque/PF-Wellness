@@ -345,19 +345,22 @@ function NavBar() {
       >
         <ModalOverlay />
         <ModalContent bgColor="green.50" w="60%">
+          <ModalCloseButton />
           <ModalHeader color="#C53030">Ups!!</ModalHeader>
 
           <ModalBody>
-            <Text color="#C53030">Debes verificar el email</Text>
+            <Text color="#C53030">
+              Revisa tu correo electrónico y verifica la cuenta
+            </Text>
+            <Text color="#C53030">
+              En caso de haberlo hecho, desestima este mensaje y refresca la
+              página. Muchas gracias 😀
+            </Text>
           </ModalBody>
           <ModalFooter>
             <Spacer />
           </ModalFooter>
-          <ModalBody>
-            <Text color="#C53030">
-              Si te verificaste, refresca la página. Muchas gracias 😀
-            </Text>
-          </ModalBody>
+          <ModalBody></ModalBody>
         </ModalContent>
       </Modal>
 

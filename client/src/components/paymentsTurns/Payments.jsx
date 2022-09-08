@@ -209,7 +209,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
                     <Text fontWeight="semibold" display="inline">
                       Costo consulta:
                     </Text>{" "}
-                    {input.cost}
+                    ${input.cost}
                   </ListItem>
                 )}
                 {prepaid !== "Wellness" && (
@@ -225,7 +225,7 @@ function Payments({ onClose, isOpen, onOpen, form, active }) {
                     <Text fontWeight="semibold" display="inline">
                       Monto a pagar:
                     </Text>{" "}
-                    {input.price}
+                    ${input.price}
                   </ListItem>
                 )}
               </List>

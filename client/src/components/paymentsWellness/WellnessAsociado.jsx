@@ -1,13 +1,9 @@
 import {
   Box,
-  Container,
   Heading,
-  Image,
   Stack,
-  Flex,
   List,
   Button,
-  Icon,
   ListItem,
   ListIcon,
   Center,
@@ -16,20 +12,32 @@ import {
   useDisclosure,
   Radio,
   RadioGroup,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  ModalOverlay,
+  Modal,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import PaymentModal from "./PaymentModal";
 import { baseURL } from "../../index";
 import axios from "axios";
-import { MdAttachMoney } from "react-icons/md";
 import { FcNext } from "react-icons/fc";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function WellnessAsociados() {
+  const { isAuthenticated } = useAuth0();
   const [paymentActive, setPaymentActive] = useState(false);
+  const [mensual, setMensual] = useState(false);
+  const [semestral, setSemestral] = useState(false);
+  const [anual, setAnual] = useState(false);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const dispatch = useDispatch();
   const [link, setLink] = useState();
+  const notAuthenticatedModal = useDisclosure();
 
   const [input, setInput] = useState({
     reason: "Wellness Asociados",
@@ -37,18 +45,21 @@ function WellnessAsociados() {
   });
 
   const handlePayment = async () => {
-    setPaymentActive(true);
-    onOpen();
-    try {
+    if (isAuthenticated) {
+      //try {
       const generarLink = await axios.post(`${baseURL}/asociados`, input);
       console.log(generarLink);
+      window.open(generarLink);
       setLink(generarLink.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      //} catch (error) {
 
-  const handleChange = (e) => {};
+      //}
+    } else {
+      notAuthenticatedModal.onOpen();
+    }
+    //setPaymentActive(true);
+    //onOpen();
+  };
 
   return (
     <>
@@ -131,7 +142,22 @@ function WellnessAsociados() {
 
           <RadioGroup
             colorScheme={"teal"}
-            onChange={(e) => setInput({ ...input, price: parseInt(e) })}
+            onChange={(e) => {
+              if (e === "7000") {
+                setAnual(false);
+                setSemestral(false);
+                setMensual(true);
+              } else if (e === "35000") {
+                setAnual(false);
+                setSemestral(true);
+                setMensual(false);
+              } else if (e === "63000") {
+                setAnual(true);
+                setSemestral(false);
+                setMensual(false);
+              }
+              setInput({ ...input, price: parseInt(e) });
+            }}
             value={input.price}
           >
             <Stack
@@ -150,7 +176,7 @@ function WellnessAsociados() {
                 w="15rem"
                 h="13rem"
                 borderRadius={"0.5rem"}
-                bg="white"
+                bg={mensual ? "#fdde9f" : "white"}
                 boxShadow={"2xl"}
                 display="flex"
                 flexDirection={"column"}
@@ -176,7 +202,7 @@ function WellnessAsociados() {
                 w="15rem"
                 h="13rem"
                 borderRadius={"0.5rem"}
-                bg="white"
+                bg={semestral ? "#fdde9f" : "white"}
                 boxShadow={"2xl"}
                 display="flex"
                 flexDirection={"column"}
@@ -213,7 +239,7 @@ function WellnessAsociados() {
                 w="15rem"
                 h="13rem"
                 borderRadius={"0.5rem"}
-                bg="white"
+                bg={anual ? "#fdde9f" : "white"}
                 boxShadow={"2xl"}
                 display="flex"
                 flexDirection={"column"}
@@ -261,6 +287,27 @@ function WellnessAsociados() {
         isOpen={isOpen}
         linkPayment={link}
       />
+      <Modal
+        isCentered
+        isOpen={notAuthenticatedModal.isOpen}
+        onClose={notAuthenticatedModal.onClose}
+        colorScheme="teal"
+      >
+        <ModalOverlay />
+        <ModalContent w="80%" bgColor="green.50">
+          <ModalCloseButton />
+          <ModalHeader color="#C53030">Lo sentimos!</ModalHeader>
+
+          <ModalBody>
+            <Text color="#C53030">
+              Para suscribirte debes estar logueado en la página.
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Spacer />
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

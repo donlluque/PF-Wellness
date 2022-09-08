@@ -94,7 +94,7 @@ function PatientAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
 
                   <Td>{e.doctors?.[0].name}</Td>
                   <Td>{e.doctors[0].general_area.name}</Td>
-                  <Td>{e.monto === 0 ? "-" : e.monto}</Td>
+                  <Td>{e.monto === 0 ? "-" : `$${e.monto}`}</Td>
 
                   <Td>
                     <Tooltip label="Cancelar turno">

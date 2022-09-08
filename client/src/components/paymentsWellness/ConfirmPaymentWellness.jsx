@@ -66,7 +66,7 @@ function ConfirmPaymentWellness() {
             Gracias por confiar en nosotros!
           </Text>
         </Box>
-        <a href="https://pf-wellness-iota.vercel.app/">
+        <a href="http://localhost:3000/">
           <Button
             m="1rem"
             colorScheme={"teal"}

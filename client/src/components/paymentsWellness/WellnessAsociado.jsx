@@ -50,15 +50,19 @@ function WellnessAsociados() {
   });
 
   const handlePayment = async () => {
-    setPaymentActive(true);
-    //onOpen();
-    try {
-      const generarLink = await axios.post(`${baseURL}/asociados`, input);
-      console.log(generarLink);
-      setLink(generarLink.data);
-    } catch (error) {
-      console.log(error);
+    if (isAuthenticated) {
+      try {
+        const generarLink = await axios.post(`${baseURL}/asociados`, input);
+        console.log(generarLink);
+        setLink(generarLink.data);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      notAuthenticatedModal.onOpen();
     }
+    //setPaymentActive(true);
+    //onOpen();
   };
 
   return (
@@ -300,10 +304,12 @@ function WellnessAsociados() {
         <ModalOverlay />
         <ModalContent w="80%" bgColor="green.50">
           <ModalCloseButton />
-          <ModalHeader color="#C53030">Ups!!</ModalHeader>
+          <ModalHeader color="#C53030">Lo sentimos!</ModalHeader>
 
           <ModalBody>
-            <Text color="#C53030">Debes estar registrado</Text>
+            <Text color="#C53030">
+              Para suscribirte debes estar logueado en la página.
+            </Text>
           </ModalBody>
           <ModalFooter>
             <Spacer />

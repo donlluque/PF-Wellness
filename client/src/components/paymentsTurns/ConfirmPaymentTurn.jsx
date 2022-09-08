@@ -58,10 +58,7 @@ function ConfirmPaymentTurn() {
           bgColor="teal.50"
           borderBottomRadius="2rem"
         >
-          <Text mb="1rem">
-            Hemos enviado un mail con la confirmación del turno. Por favor
-            revisa tu correo electronico.
-          </Text>
+          <Text mb="1rem">Su turno ha sido confirmado con exito</Text>
           <Text colorScheme="teal" fontWeight="semibold" m="1rem" mb="0">
             Gracias por confiar en nosotros!
           </Text>

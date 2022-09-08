@@ -27,6 +27,7 @@ router.post("/", async (req, res, next) => {
       failure: "http://www.failure.com", //no la vamos a usar, por si falla el pago con tarjeta
       pending: "http://www.pending.com", //no la vamos a usar, para pagos en efectivo o pedido de autorizacion de tarjeta
     },
+    auto_return: "approved",
   };
 
   mercadopago.preferences

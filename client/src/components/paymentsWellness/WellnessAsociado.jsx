@@ -41,7 +41,7 @@ function WellnessAsociados() {
 
   const handlePayment = async () => {
     setPaymentActive(true);
-    onOpen();
+    //onOpen();
     try {
       const generarLink = await axios.post(`${baseURL}/asociados`, input);
       console.log(generarLink);
@@ -271,6 +271,18 @@ function WellnessAsociados() {
           </Box>
         </Box>
       </Box>
+      {paymentActive && (
+        <Box>
+          <iframe
+            src={link}
+            width="100%"
+            height="500"
+            title="wellness"
+            allow="fullscreen"
+            allowpaymentrequest
+          ></iframe>
+        </Box>
+      )}
       <PaymentModal
         paymentActive={paymentActive}
         onClose={onClose}

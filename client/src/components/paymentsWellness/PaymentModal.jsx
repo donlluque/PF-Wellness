@@ -33,6 +33,7 @@ function PaymentModal({ onClose, isOpen, paymentActive, linkPayment }) {
                 height="500"
                 title="wellness"
                 allow="fullscreen"
+                allowpaymentrequest
               ></iframe>
             </Box>
           </ModalBody>

@@ -19,12 +19,10 @@ router.post("/", async (req, res, next) => {
       //unit_price: parseInt(req.body.price), TIENE QUE SER UN NUMERO por eso arriba esta el parseInt por si viene un STRING
     },
 
-    back_urls: {
+    back_url: {
       success: "https://pf-wellness.vercel.app/", // redireccionar de nuevo a Wellness componente de PAGO EXITOSO
-      failure: "http://www.failure.com", //no la vamos a usar, por si falla el pago con tarjeta
-      pending: "http://www.pending.com", //no la vamos a usar, para pagos en efectivo o pedido de autorizacion de tarjeta
     },
-    
+
     payer_email: "test_user_67403553@testuser.com",
   };
 

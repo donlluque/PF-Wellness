@@ -10,14 +10,8 @@ function ConfirmPaymentWellness() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state);
 
-  const handleSubmit = () => {
-    if (search.includes("approved")) {
-      dispatch(putWellness(user.id));
-    }
-  };
-
   useEffect(() => {
-    handleSubmit();
+    dispatch(putWellness(user.id));
   }, []);
 
   return (
@@ -86,6 +80,5 @@ function ConfirmPaymentWellness() {
     </>
   );
 }
-
 
 export default ConfirmPaymentWellness;

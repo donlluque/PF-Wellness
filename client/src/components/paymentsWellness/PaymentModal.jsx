@@ -28,11 +28,10 @@ function PaymentModal({ onClose, isOpen, paymentActive, linkPayment }) {
           <ModalBody>
             <Box>
               <iframe
-                border="3px solid black"
                 src={linkPayment}
                 width="100%"
                 height="500"
-                title="prueba"
+                title="wellness"
                 allow="fullscreen"
               ></iframe>
             </Box>

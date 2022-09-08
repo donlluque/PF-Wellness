@@ -67,7 +67,7 @@ function ConfirmPaymentWellness() {
             Gracias por confiar en nosotros!
           </Text>
         </Box>
-        <a href={`${baseURL}`}>
+        <a href="https://pf-wellness.vercel.app/">
           <Button
             m="1rem"
             colorScheme={"teal"}

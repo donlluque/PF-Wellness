@@ -45,11 +45,11 @@ function WellnessAsociados() {
   });
 
   const handlePayment = async () => {
-    if (isAuthenticated) {
+    if (!isAuthenticated) {
       //try {
       const generarLink = await axios.post(`${baseURL}/asociados`, input);
       console.log(generarLink);
-      window.open(generarLink);
+      window.location.href = generarLink.data;
       setLink(generarLink.data);
       //} catch (error) {
 

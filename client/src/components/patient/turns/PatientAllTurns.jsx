@@ -40,6 +40,9 @@ function PatientAllTurns({ nextTurns, prevTurns, setAuxRender, auxRender }) {
   const { turnsByPatient, turnById } = useSelector((state) => state);
   const { id } = useParams();
 
+  console.log(turnById, "turnById");
+  console.log(turnsByPatient, "turnsByPatient");
+
   useEffect(() => {
     dispatch(getTurnsByPatient(id));
     dispatch(getHours());

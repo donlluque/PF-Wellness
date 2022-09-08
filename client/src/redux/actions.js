@@ -643,7 +643,7 @@ export const getTurnsByDoctor = (idCurrentDoctor) => {
 export const getTurnsByPatient = (idCurrentPatient) => {
   return async (dispatch) => {
     try {
-      let data = await axios.get(`${baseURL}/dates`).data;
+      let data = (await axios.get(`${baseURL}/dates`)).data;
       return dispatch({
         type: "GET_TURNS_BY_PATIENT",
         payload: { data, idCurrentPatient },
@@ -1113,16 +1113,12 @@ export const sendEmailForm = (payload) => {
 //estadisticas
 export const getStats = () => {
   return async (dispatch) => {
-    try {
-      let response = await axios.get(`${baseURL}/stats`);
+    let response = await axios.get(`${baseURL}/stats`);
 
-      return dispatch({
-        type: "GET_STATS",
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    return dispatch({
+      type: "GET_STATS",
+      payload: response.data,
+    });
   };
   // return function (dispatch) {
   //   fetch(`${baseURL}/stats`, {

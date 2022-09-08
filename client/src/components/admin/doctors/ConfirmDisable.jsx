@@ -25,10 +25,9 @@ function ConfirmDisable({
   user,
 }) {
   const dispatch = useDispatch();
+  const [active, setActive] = useState(false);
 
-  const { msgConfirm, doctorDetail, patientDetail } = useSelector(
-    (state) => state
-  );
+  const { doctorDetail, patientDetail } = useSelector((state) => state);
 
   return (
     <>
@@ -36,21 +35,21 @@ function ConfirmDisable({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Deshabilitar {user}</ModalHeader>
-          {msgConfirm.status !== 200 && (
+          {!active && (
             <ModalBody>
               ¿Estas seguro que desea deshabilitar al {user}{" "}
               {user === "doctor" ? doctorDetail.name : patientDetail.name}?
             </ModalBody>
           )}
-          {msgConfirm.status === 200 && (
+          {active && (
             <ModalBody>
               <Alert status="success">
                 <AlertIcon />
-                {msgConfirm.statusText}
+                El doctor ha sido deshabilitado con exito!
               </Alert>
             </ModalBody>
           )}
-          {msgConfirm.status !== 200 && (
+          {!active && (
             <ModalFooter>
               <Button
                 colorScheme="teal"
@@ -64,6 +63,7 @@ function ConfirmDisable({
                 colorScheme="teal"
                 mr={3}
                 onClick={() => {
+                  setActive(true);
                   user === "doctor"
                     ? dispatch(disableDoctor(doctorDetail.id))
                     : dispatch(disablePatient(patientDetail.id));
@@ -73,7 +73,7 @@ function ConfirmDisable({
               </Button>
             </ModalFooter>
           )}
-          {msgConfirm.status === 200 && (
+          {active && (
             <ModalFooter>
               <Button
                 colorScheme="teal"
@@ -83,6 +83,7 @@ function ConfirmDisable({
                   dispatch(cleanConfirm());
                   onClose();
                   setAux(!aux);
+                  setActive(false);
                 }}
               >
                 Cerrar

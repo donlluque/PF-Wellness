@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { putWellness, sendEmailWellness } from "../../redux/actions";
-import { baseURL } from "../../index";
 
 function ConfirmPaymentWellness() {
   const { search } = useLocation();
@@ -67,7 +66,7 @@ function ConfirmPaymentWellness() {
             Gracias por confiar en nosotros!
           </Text>
         </Box>
-        <a href="https://pf-wellness.vercel.app/">
+        <a href="https://pf-wellness-iota.vercel.app/">
           <Button
             m="1rem"
             colorScheme={"teal"}

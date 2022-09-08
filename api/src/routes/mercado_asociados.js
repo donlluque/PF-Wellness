@@ -22,7 +22,7 @@ router.post("/", async (req, res, next) => {
     back_url: {
       success: "https://pf-wellness.vercel.app/payment/wellness-prepaid",
     }, // redireccionar de nuevo a Wellness componente de PAGO EXITOSO
-
+    auto_return: "approved",
     payer_email: "test_user_67403553@testuser.com",
   };
 

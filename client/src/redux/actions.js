@@ -609,7 +609,7 @@ export const getTurnsByDoctor = (idCurrentDoctor) => {
   console.log(idCurrentDoctor, "idCurrentDoctor");
   return async (dispatch) => {
     try {
-      let data = await axios.get(`${baseURL}/dates`).data;
+      let data = (await axios.get(`${baseURL}/dates`)).data;
       return dispatch({
         type: "GET_TURNS_BY_DOCTOR",
         payload: { data, idCurrentDoctor },

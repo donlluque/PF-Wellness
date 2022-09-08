@@ -4,7 +4,13 @@ import axios from "axios";
 //DOCTORS
 export function getDoctors() {
   return function (dispatch) {
-    fetch(`${baseURL}/doctors`)
+    fetch(`${baseURL}/doctors`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((json) => {
         dispatch({
@@ -19,7 +25,13 @@ export function getDoctors() {
 }
 export function getDetailDoctors(id) {
   return function (dispatch) {
-    fetch(`${baseURL}/doctors/${id}`)
+    fetch(`${baseURL}/doctors/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((json) => {
         dispatch({
@@ -41,7 +53,14 @@ export function filterDoctors(filter) {
   const { especialidad, obrasocial } = filter;
   return function (dispatch) {
     return fetch(
-      `${baseURL}/filter?general_area=${especialidad}&prepaid_health=${obrasocial}`
+      `${baseURL}/filter?general_area=${especialidad}&prepaid_health=${obrasocial}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
     )
       .then((res) =>
         res.ok
@@ -69,7 +88,10 @@ export const putDoctor = (data) => {
     return fetch(`${baseURL}/doctors`, {
       method: "PUT",
       body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     })
       .then((res) =>
         res.ok
@@ -92,7 +114,13 @@ export const putDoctor = (data) => {
 //SEARCH BAR
 export function searchDoctorByName(input) {
   return function (dispatch) {
-    return fetch(`${baseURL}/doctors/?name=${input}`)
+    return fetch(`${baseURL}/doctors/?name=${input}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) =>
         res.ok
           ? res.json()
@@ -118,7 +146,10 @@ export const postDoctors = (form) => {
     return fetch(`${baseURL}/doctors`, {
       method: "POST",
       body: JSON.stringify(form),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     })
       .then((res) =>
         res.ok
@@ -141,7 +172,10 @@ export const disableDoctor = (doctorId) => {
     return fetch(`${baseURL}/doctors`, {
       method: "PATCH",
       body: JSON.stringify({ doctorId }),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     })
       .then((res) =>
         res.ok
@@ -164,7 +198,10 @@ export const postAbsentDoctor = (form) => {
     return fetch(`${baseURL}/absence`, {
       method: "POST",
       body: JSON.stringify(form),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     })
       .then((res) =>
         res.ok
@@ -183,7 +220,13 @@ export const postAbsentDoctor = (form) => {
 };
 export const getAllAbsent = () => {
   return function (dispatch) {
-    fetch(`${baseURL}/absence`)
+    fetch(`${baseURL}/absence`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((json) => {
         dispatch({
@@ -201,7 +244,10 @@ export const deleteAbsent = (id) => {
     return fetch(`${baseURL}/absence`, {
       method: "DELETE",
       body: JSON.stringify({ absenceId: id }),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     })
       .then((res) =>
         res.ok
@@ -222,7 +268,13 @@ export const deleteAbsent = (id) => {
 //PREPAID HEALTH
 export const getPrepaidHealth = () => {
   return function (dispatch) {
-    fetch(`${baseURL}/prepaid_health`)
+    fetch(`${baseURL}/prepaid_health`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         dispatch({
@@ -239,7 +291,13 @@ export const getPrepaidHealth = () => {
 //HOURS
 export const getHours = () => {
   return function (dispatch) {
-    fetch(`${baseURL}/hours_working`)
+    fetch(`${baseURL}/hours_working`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         dispatch({
@@ -255,7 +313,13 @@ export const getHours = () => {
 //DAYS
 export const getDays = () => {
   return function (dispatch) {
-    fetch(`${baseURL}/work_days`)
+    fetch(`${baseURL}/work_days`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         dispatch({
@@ -275,7 +339,10 @@ export const postTurn = (form) => {
     return fetch(`${baseURL}/dates`, {
       method: "POST",
       body: JSON.stringify(form),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     })
       .then((res) =>
         res.ok
@@ -309,7 +376,13 @@ export const getTurns = () => {
 };
 export const getTurnById = (idTurn) => {
   return function (dispatch) {
-    fetch(`${baseURL}/dates`)
+    fetch(`${baseURL}/dates`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         dispatch({
@@ -326,7 +399,13 @@ export const getTurnById = (idTurn) => {
 export const getTurnsByDoctor = (idCurrentDoctor) => {
   console.log(idCurrentDoctor, "idCurrentDoctor");
   return function (dispatch) {
-    fetch(`${baseURL}/dates`)
+    fetch(`${baseURL}/dates`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         dispatch({
@@ -343,7 +422,13 @@ export const getTurnsByDoctor = (idCurrentDoctor) => {
 export const getTurnsByPatient = (idCurrentPatient) => {
   console.log(idCurrentPatient, "idCurrentPatient");
   return function (dispatch) {
-    fetch(`${baseURL}/dates`)
+    fetch(`${baseURL}/dates`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         dispatch({
@@ -362,7 +447,10 @@ export const deleteTurn = (id) => {
     return fetch(`${baseURL}/dates`, {
       method: "DELETE",
       body: JSON.stringify({ dateId: id }),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     })
       .then((res) =>
         res.ok
@@ -385,7 +473,13 @@ export const dataPayment = (form) => ({ type: "DATA_PAYMENT", payload: form });
 //AREAS GENERALES
 export const getAllAreas = () => {
   return function (dispatch) {
-    fetch(`${baseURL}/general_area`)
+    fetch(`${baseURL}/general_area`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((json) => {
         dispatch({
@@ -402,7 +496,13 @@ export const getAllAreas = () => {
 //PATIENT
 export const searchPatientByName = (patient) => {
   return function (dispatch) {
-    return fetch(`${baseURL}/patients?name=${patient}`)
+    return fetch(`${baseURL}/patients?name=${patient}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) =>
         res.ok
           ? res.json()
@@ -424,7 +524,13 @@ export const searchPatientByName = (patient) => {
 
 export const getOnePatient = (id) => {
   return function (dispatch) {
-    fetch(`${baseURL}/patients/${id}`)
+    fetch(`${baseURL}/patients/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((json) => {
         dispatch({
@@ -442,7 +548,10 @@ export const disablePatient = (patientId) => {
     return fetch(`${baseURL}/patients`, {
       method: "PATCH",
       body: JSON.stringify({ patientId }),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     })
       .then((res) =>
         res.ok
@@ -463,7 +572,13 @@ export const disablePatient = (patientId) => {
 
 export const getAllPatients = () => {
   return function (dispatch) {
-    fetch(`${baseURL}/patients`)
+    fetch(`${baseURL}/patients`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((json) => {
         dispatch({
@@ -478,7 +593,13 @@ export const getAllPatients = () => {
 };
 export const getPatientsByDoctor = (idCurrentDoctor) => {
   return function (dispatch) {
-    fetch(`${baseURL}/dates`)
+    fetch(`${baseURL}/dates`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         dispatch({
@@ -497,7 +618,10 @@ export const postPatient = (form) => {
     return fetch(`${baseURL}/patients`, {
       method: "POST",
       body: JSON.stringify(form),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     })
       .then((res) =>
         res.ok
@@ -522,7 +646,10 @@ export const putPatient = (data) => {
     return fetch(`${baseURL}/patients/${data.id}`, {
       method: "PUT",
       body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     })
       .then((res) =>
         res.ok
@@ -589,7 +716,13 @@ export const addReview = (payload) => {
 
 export const getReviews = () => {
   return function (dispatch) {
-    fetch(`${baseURL}/review`)
+    fetch(`${baseURL}/review`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((json) => {
         dispatch({
@@ -620,7 +753,13 @@ export const sendEmailForm = (payload) => {
 //estadisticas
 export const getStats = () => {
   return function (dispatch) {
-    fetch(`${baseURL}/stats`)
+    fetch(`${baseURL}/stats`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         dispatch({
@@ -684,7 +823,10 @@ export const putWellness = (patientId) => {
     return fetch(`${baseURL}/patients/wellness`, {
       method: "PATCH",
       body: JSON.stringify({ patientId, prepaid: "Wellness" }),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     })
       .then((res) =>
         res.ok
